@@ -1,0 +1,19 @@
+{{ $page := . }}
+{{ $site := $page.Site }}
+{{ $section := $site.GetPage "section" "faq" }}
+{{ if $section }}
+  {{ $limit := 1 }}
+  {{ with $site.Params.homeWidgets.faq.limit }}
+    {{ $limit = . }}
+  {{ end }}
+  {{ $questions := $section.RegularPages.ByWeight }}
+  {{ if gt (len $questions) 0 }}
+    {{ $questions = first $limit $questions }}
+    <section class="gm-section gm-faq" id="faq">
+      <div class="gm-container">
+        <h2 class="gm-section__title">{{ $section.Title }}</h2>
+        {{ partial "components/faq-list.html" (dict "items" $questions "active" 0) }}
+      </div>
+    </section>
+  {{ end }}
+{{ end }}

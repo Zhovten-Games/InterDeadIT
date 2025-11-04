@@ -1,0 +1,49 @@
+<header class="gm-header">
+  <div class="gm-container gm-header__bar">
+    <div class="gm-header__logo" data-header-logo>
+      <a class="gm-header__logoLink" href="{{ "/" | relLangURL }}" aria-label="{{ i18n "header.wordmark" }}">
+        <img
+          src="{{ "assets/images/logo-png.png" | relURL }}"
+          alt="InterDead logo"
+          class="gm-header__logoImage"
+        />
+      </a>
+    </div>
+    <div class="gm-header__wordmark">{{ i18n "header.wordmark" }}</div>
+    <nav class="gm-header__nav" aria-label="Primary actions">
+      <div class="gm-header__actions" data-header-actions>
+        <div class="gm-header__cta" data-show="adult">
+          <a
+            class="gm-btn gm-btn--primary"
+            id="gm-ctaStartHeader"
+            href="https://discord.gg/vAWYg3jFEp"
+            rel="noopener"
+            target="_blank"
+          >{{ i18n "gm.ctastart" }}</a>
+        </div>
+        <div class="gm-header__cta" data-show="demo">
+          <a
+            class="gm-btn"
+            id="gm-ctaDemoHeader"
+            href="https://discord.gg/vAWYg3jFEp"
+            rel="noopener"
+            target="_blank"
+          >{{ i18n "gm.ctademo" }}</a>
+        </div>
+      </div>
+    </nav>
+    <div class="gm-header__lang">
+      <span class="gm-header__langLabel">{{ i18n "header.lang.label" }}</span>
+      <button
+        class="gm-header__langTrigger"
+        type="button"
+        data-modal-trigger="language"
+        aria-haspopup="dialog"
+        aria-controls="gm-langModal"
+        aria-label="{{ printf "%s: %s" (i18n "header.lang.label") .Site.Language.LanguageName }}"
+      >
+        <span class="gm-header__langValue">{{ .Site.Language.LanguageName }}</span>
+      </button>
+    </div>
+  </div>
+</header>

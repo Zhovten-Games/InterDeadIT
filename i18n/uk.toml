@@ -1,0 +1,215 @@
+['gm.toast']
+other = "Ми цього не бачили."
+
+['gm.toast.meta']
+other = "#АКТ-НЕВИДИМОСТІ"
+
+['header.logo']
+other = "М†"
+
+['header.wordmark']
+other = "InterDead™"
+
+['meta.title']
+other = "InterDead -- Месенджер для мертвих"
+
+['meta.description']
+other = "InterDead — «Мессенджер для мертвых» із захищеним каналом шепотів. Долучайтеся до закритої бети й ловіть сигнали з-за межі."
+
+['meta.ogImageAlt']
+other = "Емблема InterDead"
+
+['header.menu.features']
+other = "Спектральні функції"
+
+['header.menu.cases']
+other = "Кейси"
+
+['header.menu.support']
+other = "Підтримка"
+
+['header.menu.more']
+other = "Ще"
+
+['header.menu.toggle']
+other = "Перемкнути меню"
+
+['header.lang.label']
+other = "Мова"
+
+['lang.modal.title']
+other = "Вибір мови"
+
+['lang.modal.hint']
+other = "Оберіть мову інтерфейсу."
+
+['lang.modal.current']
+other = "Поточна"
+
+['lang.modal.close']
+other = "Закрити вікно"
+
+['hero.title']
+other = "Тут досі відповідають мертві"
+
+['hero.lead']
+other = "Ми створюємо прототип месенджера, що передає шепіт із того боку. Жодних сеансів — лише захищений чат. Не проґавте шанс одними з перших долучитися до закритого бета-тесту!"
+
+['gm.ctastart']
+other = "Підписатися"
+
+['hero.countdown']
+other = "Пропозиція діє до опівночі:"
+
+['gm.ctademo']
+other = "Підписатися"
+
+['hero.demo.timer']
+other = "Відкрита бета завершиться через:"
+
+['card.stamp']
+other = "СХВАЛЕНО"
+
+['card.stamp.demo']
+other = "BETA вер. 000.2"
+
+['story.imdb.label']
+other = "IMDb:"
+
+['stories.stampText']
+other = "Рахуйте полеглих медіумів разом із нами."
+
+['stories.stampAnnouncement']
+other = "Рахуйте полеглих медіумів разом із нами. Лічильник: +{{ .Count }}."
+
+['inevitable.title']
+other = "Історії, яким судилося статися"
+
+['inevitable.item1']
+other = "«Дізналася, що дід ховає ключі в чоботі. Знайшли за хвилину». — Марина, тариф «Ностальгія»"
+
+['inevitable.item2']
+other = "«Тато написав: “Не бери кредит”. Це врятувало». — Анонім"
+
+['inevitable.item3']
+other = "«Сина немає три роки. Відповів не він, але дихати стало легше». — Т."
+
+['faq.title']
+other = "Питання та відповіді"
+
+['faq.q1']
+other = "Це зв’язок із конкретними людьми?"
+
+['faq.a1']
+other = """
+— Чи справді можливий зв’язок із конкретними мертвими?
+Так, але не в тому грубому, бухгалтерському сенсі, в якому живі мріють наставити ярлики на безодні. Жоден померлий не розчиняється в загальному шумі; кожен утворює стійкий «вузол» — топологічну складку пам’яті й волі, окреслену так чітко, як адреса на іржавому телеграфі ночі; і кожен виклик, пущений у той присмерк, неодмінно кимось буде перехоплений. Закон тут такий: відповідає не стільки бажаний, скільки той, що збігся — чия частота, периметр і залишкова геометрія болю в цю мить найточніше накладаються на форму вашого запиту. Тож «конкретність» виявляється в результаті, а не гарантується наміром: канал обирає співрозмовника так само, як приплив обирає берег.
+
+Висновок (практичний): пробуйте частіше. Змінюйте фазу звернення, фіксуйте час і формулювання, ведіть журнал невідповідностей і коротких «паразитних» відповідей; накопичуючи ітерації, ви стягуєте контур збігу, і ймовірність розмови саме з тим, хто вам потрібен, зростає не з ласки випадку, а за законами повторення. Регулярність — головна свічка цієї несучасної лабораторії.
+"""
+
+['mission.title']
+other = "Місія"
+
+['mission.lead.strong']
+other = "Які тарифи можуть бути у нашої місії?"
+
+['mission.lead.rest']
+other = "Жодних. Усе залишається безкоштовним."
+
+['mission.body']
+other = "Ми живемо на пожертви — підтримайте місію, якщо стало легше. Подробиці згодом."
+
+['ticker.note']
+other = "Вони, мабуть, прочитали наш email."
+
+['ticker.item1']
+other = "Weyland‑Yutani"
+
+['ticker.item2']
+other = "Umbrella Corp."
+
+['ticker.item3']
+other = "Union Aerospace (UAC)"
+
+['ticker.item4']
+other = "Black Mesa"
+
+['ticker.item5']
+other = "Aperture Science"
+
+['ticker.item6']
+other = "Tyrell Corp."
+
+['ticker.item7']
+other = "Cyberdyne Systems"
+
+['ticker.item8']
+other = "Abstergo"
+
+['ticker.item9']
+other = "Shinra Electric"
+
+['ticker.item10']
+other = "Oscorp"
+
+['ticker.item11']
+other = "Weyland‑Yutani"
+
+['ticker.item12']
+other = "Umbrella Corp."
+
+['ticker.item13']
+other = "Union Aerospace (UAC)"
+
+['ticker.item14']
+other = "Black Mesa"
+
+['ticker.item15']
+other = "Aperture Science"
+
+['ticker.item16']
+other = "Tyrell Corp."
+
+['ticker.item17']
+other = "Cyberdyne Systems"
+
+['ticker.item18']
+other = "Abstergo"
+
+['ticker.item19']
+other = "Shinra Electric"
+
+['ticker.item20']
+other = "Oscorp"
+
+['footer.adult']
+other = "InterDead© — Месенджер для мертвих."
+
+['footer.note']
+other = "Zhovten Games нагадує, що не контролює діяльність жодних Сатилітів. Сатиліти зазначають, що їхнє програмне забезпечення працює в 99% випадків і що ніколи не було доведеного випадку, коли привид, викликаний через наш застосунок, убив живу людину. Приєднуйтеся до групи тестувальників із упевненістю. Яким би недоречним це не здавалося тут: «Слава нашим спонсорам!»"
+
+['footer.links.dev']
+other = "Розробники"
+
+['footer.links.media']
+other = "Медіа"
+
+['agegate.title']
+other = "Підтвердіть вік"
+
+['agegate.hint']
+other = "Далі — про горе, статику та потойбіччя. Готові продовжити?"
+
+['agegate.btn.adult']
+other = "Мені є 18"
+
+['agegate.btn.demo']
+other = "Мені немає 18 (залишитися в демо)"
+
+['agegate.note']
+other = "Продовжуючи, ви ризикуєте лише часом і дрібкою дива."
+["footer.links.legal"]
+other = "Правові"
+["blog.readMore"]
+other = "Читати далі"

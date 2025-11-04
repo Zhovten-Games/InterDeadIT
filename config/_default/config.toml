@@ -1,0 +1,90 @@
+baseURL = "https://interdead.phantom-draft.com/"
+title = "InterDead"
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = true
+enableRobotsTXT = true
+canonifyURLs = false
+staticDir = ["static", "assets"]
+
+theme = "InterDead"
+
+disableKinds = ["taxonomy", "term"]
+
+[permalinks]
+  blog = "/blog/:slug/"
+  stories = "/stories/:slug/"
+  reviews = "/reviews/:slug/"
+  faq = "/faq/:slug/"
+
+[outputs]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  page = ["HTML"]
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+
+[params]
+  repository = "https://github.com/Zhovten-Games/InterDead"
+  defaultImage = "assets/images/logo.png"
+  ogType = "website"
+  twitterCard = "summary_large_image"
+
+  [params.homeWidgets]
+    [params.homeWidgets.stories]
+      limit = 4
+      ids = []
+
+    [params.homeWidgets.faq]
+      limit = 1
+
+[services]
+  [services.googleAnalytics]
+    ID = "G-CL4WM6BEXF"
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    languageCode = "en"
+    weight = 1
+    contentDir = "content/en"
+    title = "InterDead — Messenger for the dead"
+    [languages.en.params]
+      description = "InterDead — the encrypted bridge once whispered as ‘Messenger for the dead.’ Join the closed beta to trace signals from beyond."
+      legalTitle = "User Agreement"
+      blogTitle = "Blog"
+
+  [languages.ru]
+    languageName = "Русский"
+    languageCode = "ru"
+    weight = 2
+    contentDir = "content/ru"
+    title = "InterDead — мессенджер для мёртвых"
+    [languages.ru.params]
+      description = "InterDead — «Мессенджер для мертвых» с защищённым каналом шёпотов. Вступайте в закрытую бету и ловите сигналы из-за грани."
+      legalTitle = "Пользовательское соглашение"
+      blogTitle = "Блог"
+
+  [languages.uk]
+    languageName = "Українська"
+    languageCode = "uk"
+    weight = 3
+    contentDir = "content/uk"
+    title = "InterDead — месенджер для мертвих"
+    [languages.uk.params]
+      description = "InterDead — «Месенджер для мертвих» із захищеним каналом шепотів. Долучайтеся до закритої бети та ловіть сигнали з-за межі."
+      legalTitle = "Користувацька угода"
+      blogTitle = "Блог"
+
+  [languages.ja]
+    languageName = "日本語"
+    languageCode = "ja"
+    weight = 4
+    contentDir = "content/ja"
+    title = "InterDead — 死者のためのメッセンジャー"
+    [languages.ja.params]
+      description = "InterDead――かつて“死者のためのメッセンジャー”と囁かれた暗号化された橋。クローズドベータに参加して、彼方からの信号を追いかけてください。"
+      legalTitle = "利用規約"
+      blogTitle = "ブログ"

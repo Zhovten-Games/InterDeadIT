@@ -1,0 +1,18 @@
+{{ $items := .items }}
+{{ if gt (len $items) 0 }}
+  {{ $activeIndex := -1 }}
+  {{ with .active }}
+    {{ $activeIndex = . }}
+  {{ end }}
+  <div class="gm-faq__list" role="list">
+    {{ range $index, $item := $items }}
+      {{ $isActive := and (ge $activeIndex 0) (eq $index $activeIndex) }}
+      <div class="gm-faq__item{{ if $isActive }} gm-faq__item--active{{ end }}" role="listitem">
+        <div class="gm-faq__q" data-faq-question>
+          <span class="gm-faq__icon">?</span><strong>{{ $item.Title }}</strong>
+        </div>
+        <div class="gm-faq__a">{{ $item.Content | safeHTML }}</div>
+      </div>
+    {{ end }}
+  </div>
+{{ end }}

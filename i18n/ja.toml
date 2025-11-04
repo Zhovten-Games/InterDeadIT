@@ -1,0 +1,215 @@
+['gm.toast']
+other = "見なかったことにしましょう。"
+
+['gm.toast.meta']
+other = "#不可視化処理"
+
+['header.logo']
+other = "М†"
+
+['header.wordmark']
+other = "InterDead™"
+
+['meta.title']
+other = "InterDead -- 死者のためのメッセンジャー"
+
+['meta.description']
+other = "InterDead — «Мессенджер для мертвых»として囁かれてきた暗号化ブリッジ。クローズドベータに参加し、彼岸からの信号を追跡しよう。"
+
+['meta.ogImageAlt']
+other = "InterDeadのエンブレム"
+
+['header.menu.features']
+other = "機能"
+
+['header.menu.cases']
+other = "ケースファイル"
+
+['header.menu.support']
+other = "サポート"
+
+['header.menu.more']
+other = "その他"
+
+['header.menu.toggle']
+other = "ナビゲーションを開閉"
+
+['header.lang.label']
+other = "言語"
+
+['lang.modal.title']
+other = "言語を選択"
+
+['lang.modal.hint']
+other = "表示言語を選んでください。"
+
+['lang.modal.current']
+other = "現在"
+
+['lang.modal.close']
+other = "ダイアログを閉じる"
+
+['hero.title']
+other = "ここでは今も死者が応答します"
+
+['hero.lead']
+other = "私たちはあの世からのささやきを届けるメッセンジャーを試作しています。降霊術ではなく、安全なチャットです。クローズドベータにいち早く参加するチャンスをお見逃しなく。"
+
+['gm.ctastart']
+other = "登録する"
+
+['hero.countdown']
+other = "オファーは真夜中まで:"
+
+['gm.ctademo']
+other = "登録する"
+
+['hero.demo.timer']
+other = "オープンベータ終了まで:"
+
+['card.stamp']
+other = "承認済み"
+
+['card.stamp.demo']
+other = "ベータ ver. 000.2"
+
+['story.imdb.label']
+other = "IMDb："
+
+['stories.stampText']
+other = "共に倒れた霊媒たちを数えましょう。"
+
+['stories.stampAnnouncement']
+other = "共に倒れた霊媒たちを数えましょう。累計：+{{ .Count }}。"
+
+['inevitable.title']
+other = "起こるべくして起きた結果"
+
+['inevitable.item1']
+other = "「祖父がブーツに鍵を隠していたと知った。1分で見つかった」— マリーナ、プラン「ノスタルジア」"
+
+['inevitable.item2']
+other = "「父が『そのローンは組むな』とメッセージを送ってきた。救われた」— 匿名"
+
+['inevitable.item3']
+other = "「息子がいなくなって3年。返信は彼ではなかったが、また息ができた」— T."
+
+['faq.title']
+other = "質問と回答"
+
+['faq.q1']
+other = "特定の人物とつながりますか?"
+
+['faq.a1']
+other = """
+――特定の死者と交信することは可能か。
+可能である。だが、生者が深淵に札を打つような粗雑な簿記の理屈で保証されるものではない。死者は雑音へと溶け失せはしない。各々は記憶と意志の〈結び目〉――夜の錆びた電信に刻まれた住所のごとく明瞭な位相の襞――として存し、黄昏へ放たれた呼びかけは必ず誰かに捕捉される。ここでの法はこうだ。応えるのは、望まれた者というより、符合した者である――その周波、周縁、痛みの残余幾何が、今この瞬間あなたの問いの形状に最も正確に重なる者。ゆえに「特定性」は意図によって担保されるのではなく、結果において顕れる。潮が岸を選ぶように、経路が対話者を選ぶのだ。
+
+結論（実務的だが）：頻繁に試みよ。呼びかけの位相を変え、時刻と言い回しを記録し、不一致や短い「寄生的」応答を記帳せよ。反復を重ねるほど符合の輪郭は収斂し、求めるその者との対話確率は幸運ではなく反復の法則によって高まる。規則性こそ、この時代遅れの小さな実験室に灯す主たる燭である。
+"""
+
+['mission.title']
+other = "ミッション"
+
+['mission.lead.strong']
+other = "この使命に料金プランがあるとでも?"
+
+['mission.lead.rest']
+other = "ありません。ずっと無料です。"
+
+['mission.body']
+other = "私たちは寄付で活動しています――重さが和らいだなら支援してください。詳細は後日。"
+
+['ticker.note']
+other = "たぶん私たちのメールを読んでくれたはずです。"
+
+['ticker.item1']
+other = "Weyland‑Yutani"
+
+['ticker.item2']
+other = "Umbrella Corp."
+
+['ticker.item3']
+other = "Union Aerospace (UAC)"
+
+['ticker.item4']
+other = "Black Mesa"
+
+['ticker.item5']
+other = "Aperture Science"
+
+['ticker.item6']
+other = "Tyrell Corp."
+
+['ticker.item7']
+other = "Cyberdyne Systems"
+
+['ticker.item8']
+other = "Abstergo"
+
+['ticker.item9']
+other = "Shinra Electric"
+
+['ticker.item10']
+other = "Oscorp"
+
+['ticker.item11']
+other = "Weyland‑Yutani"
+
+['ticker.item12']
+other = "Umbrella Corp."
+
+['ticker.item13']
+other = "Union Aerospace (UAC)"
+
+['ticker.item14']
+other = "Black Mesa"
+
+['ticker.item15']
+other = "Aperture Science"
+
+['ticker.item16']
+other = "Tyrell Corp."
+
+['ticker.item17']
+other = "Cyberdyne Systems"
+
+['ticker.item18']
+other = "Abstergo"
+
+['ticker.item19']
+other = "Shinra Electric"
+
+['ticker.item20']
+other = "Oscorp"
+
+['footer.adult']
+other = "InterDead© — 死者のためのメッセンジャー。"
+
+['footer.note']
+other = "Zhovten Games は、いかなるサティライトの活動も管理していないことを皆さまにお伝えします。サティライト側は、自分たちのソフトウェアは99%の時間で動作し、これまでに当社アプリで呼び出された幽霊が生者を殺したと証明された事例は一度もないと述べています。どうぞ安心してテスターグループに参加してください。ここでは場違いに聞こえるかもしれませんが、「我らがスポンサーに栄光あれ！」"
+
+['footer.links.dev']
+other = "開発チーム"
+
+['footer.links.media']
+other = "メディア"
+
+['agegate.title']
+other = "年齢を確認してください"
+
+['agegate.hint']
+other = "この先には悲嘆、静電気、あの世に関する内容があります。続行しますか?"
+
+['agegate.btn.adult']
+other = "18歳以上です"
+
+['agegate.btn.demo']
+other = "18歳未満です（デモを続ける）"
+
+['agegate.note']
+other = "続けても失うのは時間と少しの驚きだけです。"
+["footer.links.legal"]
+other = "リーガル"
+["blog.readMore"]
+other = "続きを読む"

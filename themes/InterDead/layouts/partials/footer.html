@@ -1,0 +1,32 @@
+<footer class="gm-footer" id="offer">
+  <div class="gm-container">
+    <div class="gm-footer__inner">
+      <div class="gm-footer__links">
+        <div class="gm-footer__linkGroup">
+          <span class="gm-footer__linkLabel">{{ i18n "footer.links.dev" }}</span>
+          <a class="gm-footer__link" href="https://www.linkedin.com/company/zhovten-games/" target="_blank" rel="noopener"
+            >LinkedIn</a
+          >
+          <a class="gm-footer__link" href="https://github.com/Zhovten-Games" target="_blank" rel="noopener">GitHub</a>
+        </div>
+        <div class="gm-footer__linkGroup">
+          <span class="gm-footer__linkLabel">{{ i18n "footer.links.media" }}</span>
+          <a class="gm-footer__link" href="https://discord.gg/vAWYg3jFEp" target="_blank" rel="noopener">Discord</a>
+        </div>
+        <div class="gm-footer__linkGroup">
+          <span class="gm-footer__linkLabel">{{ i18n "footer.links.legal" }}</span>
+          {{- $legalPage := .Site.GetPage (printf "/%s/pages/user-agreement" .Lang) -}}
+          {{- if $legalPage -}}
+            <a class="gm-footer__link" href="{{ $legalPage.RelPermalink }}">{{ $legalPage.Title }}</a>
+          {{- else -}}
+            <a class="gm-footer__link" href="{{ (printf "/%s/pages/user-agreement/" .Lang) | relURL }}">User Agreement</a>
+          {{- end -}}
+        </div>
+      </div>
+      <div class="gm-footer__note" data-show="adult">
+        <p class="gm-text--fine">{{ i18n "footer.adult" }}</p>
+      </div>
+      <p class="gm-text--fine gm-footer__disclaimer">{{ i18n "footer.note" }}</p>
+    </div>
+  </div>
+</footer>

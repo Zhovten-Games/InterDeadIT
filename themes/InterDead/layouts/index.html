@@ -1,0 +1,83 @@
+{{ define "main" }}
+  <section class="gm-hero">
+    <div class="gm-container">
+      <div class="gm-hero__layout">
+        <div class="gm-hero__copy">
+          <h1 class="gm-hero__title">{{ i18n "hero.title" }}</h1>
+          <p class="gm-hero__lead">{{ i18n "hero.lead" }}</p>
+          <div class="gm-hero__cta" data-cta-anchor data-show="adult">
+            <a
+              class="gm-btn gm-btn--primary"
+              id="gm-ctaStart"
+              href="https://discord.gg/vAWYg3jFEp"
+              rel="noopener"
+              target="_blank"
+            >{{ i18n "gm.ctastart" }}</a>
+            <span class="gm-badge gm-badge--countdown">
+              <span>{{ i18n "hero.countdown" }}</span>
+              <span class="gm-hero__timer" id="gm-timer">--:--:--</span>
+            </span>
+          </div>
+          <div class="gm-hero__cta gm-hero__cta--demo" data-cta-anchor data-show="demo">
+            <a
+              class="gm-btn gm-btn--primary"
+              id="gm-ctaDemo"
+              href="https://discord.gg/vAWYg3jFEp"
+              rel="noopener"
+              target="_blank"
+            >{{ i18n "gm.ctademo" }}</a>
+          </div>
+          <div class="gm-hero__beta" data-show="demo">
+            <span class="gm-badge">
+              <span>{{ i18n "hero.demo.timer" }}</span>
+              <span class="gm-hero__timer" id="gm-beta-timer">--:--:--</span>
+            </span>
+          </div>
+        </div>
+        <div class="gm-hero__media gm-card">
+          <div class="gm-card__stamp gm-card__stamp--demo" data-show="demo">{{ i18n "card.stamp.demo" }}</div>
+          <div class="gm-card__stamp" data-show="adult">{{ i18n "card.stamp" }}</div>
+          <div class="gm-hero__logoFrame" data-hero-media>
+            <img
+              src="{{ "assets/images/logo-png.png" | relURL }}"
+              alt="{{ i18n "meta.ogImageAlt" }}"
+              class="gm-hero__logoImage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {{ partial "widgets/stories.html" . }}
+  {{ partial "widgets/reviews.html" . }}
+  {{ partial "widgets/faq.html" . }}
+  <section class="gm-section gm-mission" id="mission">
+    <div class="gm-container">
+      <h2 class="gm-section__title">{{ i18n "mission.title" }}</h2>
+      <div class="gm-card">
+        <p>
+          <strong>{{ i18n "mission.lead.strong" }}</strong>
+          <span>{{ i18n "mission.lead.rest" }}</span>
+        </p>
+        <p class="gm-text--fine">{{ i18n "mission.body" }}</p>
+      </div>
+    </div>
+  </section>
+  <section class="gm-section gm-sponsors gm-section--full" id="sponsors">
+    <div class="gm-container gm-container--fluid">
+      <div class="gm-sponsors__inner">
+        <div class="gm-ticker">
+          <div class="gm-ticker__note">{{ i18n "ticker.note" }}</div>
+          <div class="gm-ticker__viewport">
+            <div class="gm-ticker__track">
+              {{- range $i := seq 1 20 -}}
+              {{- $key := printf "ticker.item%d" $i -}}
+              <span class="gm-logoChip"><span class="gm-logoChip__mark"></span>{{ i18n $key }}</span>
+              {{- end -}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{{ end }}

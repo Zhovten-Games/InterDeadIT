@@ -1,0 +1,6 @@
+name = "InterDead"
+author = "Zhovten Games"
+license = "MIT"
+licenselink = "https://opensource.org/licenses/MIT"
+description = "Custom theme for the InterDead landing page."
+min_version = "0.120.0"

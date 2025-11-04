@@ -1,0 +1,108 @@
+{{ $page := . }}
+{{ $site := $page.Site }}
+{{ $section := $site.GetPage "section" "stories" }}
+{{ if $section }}
+  {{ $limit := 4 }}
+  {{ with $site.Params.homeWidgets.stories.limit }}
+    {{ $limit = . }}
+  {{ end }}
+  {{ $ids := $site.Params.homeWidgets.stories.ids }}
+  {{ $stories := $section.RegularPages }}
+  {{ if gt (len $ids) 0 }}
+    {{ $selected := slice }}
+    {{ range $ids }}
+      {{ $candidate := first 1 (where $stories "TranslationKey" .) }}
+      {{ if eq (len $candidate) 0 }}
+        {{ $candidate = first 1 (where $stories "Params.widgetID" .) }}
+      {{ end }}
+      {{ if eq (len $candidate) 0 }}
+        {{ $candidate = first 1 (where $stories "File.ContentBaseName" .) }}
+      {{ end }}
+      {{ if eq (len $candidate) 0 }}
+        {{ $candidate = first 1 (where $stories "Slug" .) }}
+      {{ end }}
+      {{ with index $candidate 0 }}
+        {{ $selected = $selected | append . }}
+      {{ end }}
+    {{ end }}
+    {{ $stories = $selected }}
+  {{ else }}
+    {{ $stories = $stories.ByWeight }}
+  {{ end }}
+  {{ if gt (len $stories) 0 }}
+    {{ $stories = first $limit $stories }}
+    <section class="gm-section gm-stories gm-section--full" id="stories">
+      <div class="gm-container gm-container--fluid">
+        <div class="gm-stories__intro">
+          <h2 class="gm-section__title gm-title">{{ $section.Title }}</h2>
+        </div>
+        <div class="gm-slider gm-slider--wide" aria-label="{{ $section.Title }}" aria-roledescription="carousel">
+          <button class="gm-slider__nav gm-slider__nav--prev" aria-label="Previous">‹</button>
+          <div class="gm-slider__viewport">
+            <div class="gm-slider__track js-slider-track">
+              {{ range $index, $story := $stories }}
+                <article
+                  class="gm-slider__slide"
+                  aria-roledescription="slide"
+                  data-mediums="{{ add $index 1 }}"
+                >
+                  <h3>
+                    <a href="{{ $story.RelPermalink }}">{{ $story.Title | htmlEscape }}</a>
+                  </h3>
+                  <div class="gm-slider__text">{{ $story.Content | safeHTML }}</div>
+                </article>
+              {{ end }}
+            </div>
+          </div>
+          {{ $pathID := printf "gm-stamp-path-%s" $page.Language.Lang }}
+          {{ $stampText := i18n "stories.stampText" }}
+          {{ $stampAnnounce := i18n "stories.stampAnnouncement" (dict "Count" "__COUNT__") }}
+          <div
+            class="gm-slider__scoreboard"
+            data-scoreboard
+            data-stamp-text="{{ $stampText | plainify | htmlEscape }}"
+            data-stamp-announce="{{ $stampAnnounce | plainify | htmlEscape }}"
+            role="status"
+            aria-live="polite"
+            aria-label="{{ i18n "stories.stampAnnouncement" (dict "Count" 1) | plainify | htmlEscape }}"
+          >
+            <div class="gm-slider__scoreboardInner" data-scoreboard-inner>
+              <span class="gm-slider__stampCore" aria-hidden="true">
+                <span class="gm-slider__stampIcon">☠</span>
+                <span class="gm-slider__stampCount" data-scoreboard-count aria-hidden="true">+1</span>
+              </span>
+              <svg
+                class="gm-slider__stampRing"
+                viewBox="0 0 200 200"
+                role="presentation"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <defs>
+                  <path id="{{ $pathID }}" d="M100,100 m0,-88 a88,88 0 1,1 0,176 a88,88 0 1,1 0,-176" />
+                </defs>
+                <text class="gm-slider__stampText">
+                  <textPath
+                    href="#{{ $pathID }}"
+                    startOffset="50%"
+                    text-anchor="middle"
+                    lengthAdjust="spacingAndGlyphs"
+                    textLength="550"
+                    data-scoreboard-text
+                  >
+                    {{ $stampText | plainify | htmlEscape }}
+                  </textPath>
+                </text>
+              </svg>
+              <span class="gm-visually-hidden" data-scoreboard-announcer>
+                {{ i18n "stories.stampAnnouncement" (dict "Count" 1) | plainify | htmlEscape }}
+              </span>
+            </div>
+          </div>
+          <button class="gm-slider__nav gm-slider__nav--next" aria-label="Next">›</button>
+          <div class="gm-slider__dots js-slider-dots" aria-hidden="true"></div>
+        </div>
+      </div>
+    </section>
+  {{ end }}
+{{ end }}

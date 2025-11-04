@@ -1,0 +1,28 @@
+{{ define "main" }}
+  <section class="gm-section gm-collection">
+    <div class="gm-container">
+      <header class="gm-collection__header">
+        <h1 class="gm-section__title">{{ .Title }}</h1>
+        {{ with .Description }}
+        <p class="gm-collection__description">{{ . }}</p>
+        {{ end }}
+      </header>
+      {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
+      <div class="gm-collection__grid">
+        {{ range $paginator.Pages }}
+        <article class="gm-card gm-collection__item">
+          <h2 class="gm-collection__itemTitle"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+          {{ with .Date }}
+          <p class="gm-text--fine">{{ .Format "02 Jan 2006" }}</p>
+          {{ end }}
+          {{ with .Summary }}
+          <p>{{ . }}</p>
+          {{ end }}
+          <a class="gm-link" href="{{ .RelPermalink }}">{{ i18n "blog.readMore" }}</a>
+        </article>
+        {{ end }}
+      </div>
+      {{ template "_internal/pagination.html" $paginator }}
+    </div>
+  </section>
+{{ end }}

@@ -1,0 +1,215 @@
+['gm.toast']
+other = "We did not see that."
+
+['gm.toast.meta']
+other = "#ACT-OF-INVISIBILITY"
+
+['header.logo']
+other = "М†"
+
+['header.wordmark']
+other = "InterDead™"
+
+['meta.title']
+other = "InterDead -- Messenger for the dead"
+
+['meta.description']
+other = "InterDead — the encrypted bridge once whispered as “Messenger for the dead.” Join the closed beta to trace signals from beyond."
+
+['meta.ogImageAlt']
+other = "InterDead emblem"
+
+['header.menu.features']
+other = "Spectral features"
+
+['header.menu.cases']
+other = "Case files"
+
+['header.menu.support']
+other = "Support"
+
+['header.menu.more']
+other = "More"
+
+['header.menu.toggle']
+other = "Toggle navigation"
+
+['header.lang.label']
+other = "Language"
+
+['lang.modal.title']
+other = "Switch language"
+
+['lang.modal.hint']
+other = "Choose the interface language."
+
+['lang.modal.current']
+other = "Current"
+
+['lang.modal.close']
+other = "Close dialog"
+
+['hero.title']
+other = "The dead still answer here"
+
+['hero.lead']
+other = "We prototype a messenger that relays whisper-level echoes from the other side. No séances, only secure chat. Don't miss the chance to be among the first to join the closed beta."
+
+['gm.ctastart']
+other = "Subscribe"
+
+['hero.countdown']
+other = "Offer ends at midnight:"
+
+['gm.ctademo']
+other = "Subscribe"
+
+['hero.demo.timer']
+other = "Open beta closes in:"
+
+['card.stamp']
+other = "APPROVED"
+
+['card.stamp.demo']
+other = "BETA ver. 000.2"
+
+['story.imdb.label']
+other = "IMDb:"
+
+['stories.stampText']
+other = "Count the fallen mediums with us."
+
+['stories.stampAnnouncement']
+other = "Count the fallen mediums with us. Mediums tallied: +{{ .Count }}."
+
+['inevitable.title']
+other = "Outcomes that were meant to happen"
+
+['inevitable.item1']
+other = "“Grandpa kept the keys in his boot. Found them in one minute.” — Marina, “Nostalgia” plan"
+
+['inevitable.item2']
+other = "“Dad texted: ‘Do not take that loan.’ Saved me.” — Anonymous"
+
+['inevitable.item3']
+other = "“Three years without my son. The reply was not him, but I breathed again.” — T."
+
+['faq.title']
+other = "Questions & Answers"
+
+['faq.q1']
+other = "Is this a link to specific people?"
+
+['faq.a1']
+other = """
+— Is communion with a specific dead person possible?
+Yes, though not in the crude bookkeeping sense by which the living hope to pin labels upon the abyss. No deceased dissolves into the general noise; each becomes a persistent “knot”—a topological pleat of memory and will, outlined as sharply as an address on the rusted telegraph of night; and any call sent into that dusk will be intercepted by someone. The rule is thus: it is not the desired one who answers, but the coincident—the one whose frequency, perimeter, and residual geometry of pain most exactly overlay the shape of your request in that moment. Hence “specificity” appears in the result rather than being guaranteed by intention: the channel chooses its interlocutor as the tide chooses its shore.
+
+Conclusion (practical, oddly enough): try more often. Vary the phase of address, record time and wording, keep a log of mismatches and brief “parasitic” replies; by accumulating iterations you tighten the contour of coincidence, and the likelihood of speaking with the very one you need grows not by the grace of luck but by the law of repetition. Regularity is the chief candle in this anachronistic laboratory.
+"""
+
+['mission.title']
+other = "Mission"
+
+['mission.lead.strong']
+other = "What tariffs could exist on a mission like ours?"
+
+['mission.lead.rest']
+other = "None. It stays free."
+
+['mission.body']
+other = "We live on donations—support the mission if it eased the weight. Details coming soon."
+
+['ticker.note']
+other = "They probably read our email."
+
+['ticker.item1']
+other = "Weyland‑Yutani"
+
+['ticker.item2']
+other = "Umbrella Corp."
+
+['ticker.item3']
+other = "Union Aerospace (UAC)"
+
+['ticker.item4']
+other = "Black Mesa"
+
+['ticker.item5']
+other = "Aperture Science"
+
+['ticker.item6']
+other = "Tyrell Corp."
+
+['ticker.item7']
+other = "Cyberdyne Systems"
+
+['ticker.item8']
+other = "Abstergo"
+
+['ticker.item9']
+other = "Shinra Electric"
+
+['ticker.item10']
+other = "Oscorp"
+
+['ticker.item11']
+other = "Weyland‑Yutani"
+
+['ticker.item12']
+other = "Umbrella Corp."
+
+['ticker.item13']
+other = "Union Aerospace (UAC)"
+
+['ticker.item14']
+other = "Black Mesa"
+
+['ticker.item15']
+other = "Aperture Science"
+
+['ticker.item16']
+other = "Tyrell Corp."
+
+['ticker.item17']
+other = "Cyberdyne Systems"
+
+['ticker.item18']
+other = "Abstergo"
+
+['ticker.item19']
+other = "Shinra Electric"
+
+['ticker.item20']
+other = "Oscorp"
+
+['footer.adult']
+other = "InterDead© — Messenger for the dead."
+
+['footer.note']
+other = "Zhovten Games reminds you that it does not control the activities of any Satilites. The Satilites note that their software works 99% of the time and that there has never been a proven case of a ghost summoned through our app killing a living person. Join the tester group with confidence. However out of place this may sound here: \"Glory to our sponsors!\""
+
+['footer.links.dev']
+other = "Developers"
+
+['footer.links.media']
+other = "Media"
+
+['agegate.title']
+other = "Confirm your age"
+
+['agegate.hint']
+other = "The following content references grief, static, and the afterlife. Ready to continue?"
+
+['agegate.btn.adult']
+other = "I am 18 or older"
+
+['agegate.btn.demo']
+other = "I am under 18 (stay in demo)"
+
+['agegate.note']
+other = "By continuing you risk nothing but your time and a pinch of wonder."
+["footer.links.legal"]
+other = "Legal"
+["blog.readMore"]
+other = "Read more"

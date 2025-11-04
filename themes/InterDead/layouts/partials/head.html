@@ -1,0 +1,66 @@
+{{- $title := .Title | default .Site.Title -}}
+{{- $description := .Params.description | default .Site.Language.Params.description -}}
+{{- $image := .Params.image | default .Site.Params.defaultImage -}}
+{{- $canonical := .Permalink -}}
+{{- $lang := .Language.Lang -}}
+{{- $ogType := .Site.Params.ogType | default "website" -}}
+{{- $twitterCard := .Site.Params.twitterCard | default "summary_large_image" -}}
+<!DOCTYPE html>
+<html lang="{{ $lang }}">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ $title }}</title>
+    {{- with $description }}
+    <meta name="description" content="{{ . | plainify }}" />
+    <meta property="og:description" content="{{ . | plainify }}" />
+    <meta name="twitter:description" content="{{ . | plainify }}" />
+    {{- end }}
+    <link rel="canonical" href="{{ $canonical }}" />
+    <meta property="og:type" content="{{ $ogType }}" />
+    <meta property="og:title" content="{{ $title }}" />
+    <meta property="og:url" content="{{ $canonical }}" />
+    {{- with $image }}
+    <meta property="og:image" content="{{ . | absURL }}" />
+    <meta name="twitter:image" content="{{ . | absURL }}" />
+    {{- end }}
+    <meta property="og:site_name" content="{{ .Site.Title }}" />
+    <meta property="og:locale" content="{{ .Language.LanguageCode }}" />
+    <meta name="twitter:card" content="{{ $twitterCard }}" />
+    <meta name="twitter:title" content="{{ $title }}" />
+    {{- with .Params.ogImageAlt | default (i18n "meta.ogImageAlt") }}
+    <meta property="og:image:alt" content="{{ . | plainify }}" />
+    {{- end }}
+    <link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}" />
+    {{- range .Translations }}
+    <link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}" />
+    {{- end }}
+    <link rel="alternate" hreflang="x-default" href="{{ .Site.Home.Permalink }}" />
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ "assets/favicons/apple-touch-icon.png" | relURL }}" />
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ "assets/favicons/favicon-32x32.png" | relURL }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ "assets/favicons/favicon-16x16.png" | relURL }}" />
+    <link rel="manifest" href="{{ "assets/favicons/site.webmanifest" | relURL }}" />
+    <meta name="theme-color" content="#0c0a12" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Serif+JP:wght@200..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}" />
+    {{- if hugo.IsServer }}
+    {{ else }}
+    {{- end }}
+    {{- with .Site.Config.Services.GoogleAnalytics.ID }}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      gtag('config', '{{ . }}');
+    </script>
+    {{- end }}
+  </head>
+  <body data-mode="{{ or (index .Site.Params "defaultMode") "demo" }}">

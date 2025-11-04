@@ -1,0 +1,9 @@
+{{- $imdb := .Params.imdb -}}
+{{- if $imdb }}
+  {{- $label := i18n "story.imdb.label" -}}
+  <div class="gm-storyMeta">
+    <p class="gm-storyMeta__item">
+      {{ $label }} <a href="{{ $imdb }}" rel="nofollow noopener noreferrer" target="_blank">{{ $imdb }}</a>
+    </p>
+  </div>
+{{- end }}

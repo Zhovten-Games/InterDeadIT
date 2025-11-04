@@ -1,0 +1,54 @@
+<div
+  class="gm-modal gm-langModal"
+  data-modal="language"
+  id="gm-langModal"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+  aria-labelledby="gm-langModalTitle"
+>
+  <div class="gm-modal__dialog gm-ageGate__dialog">
+    <div class="gm-modal__header">
+      <h2 class="gm-modal__title" id="gm-langModalTitle">{{ i18n "lang.modal.title" }}</h2>
+      <button
+        class="gm-modal__close"
+        type="button"
+        data-modal-close
+        aria-label="{{ i18n "lang.modal.close" }}"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <p class="gm-modal__hint">{{ i18n "lang.modal.hint" }}</p>
+    <ul class="gm-modal__options" role="list">
+      {{- $current := .Site.Language.Lang -}}
+      {{- $page := . -}}
+      {{- range .Site.Languages }}
+      {{- $lang := . -}}
+      {{- $isCurrent := eq $lang.Lang $current -}}
+      {{- $href := (printf "/%s/" $lang.Lang | relURL) -}}
+      {{- if $isCurrent -}}
+        {{- $href = $page.RelPermalink -}}
+      {{- else -}}
+        {{- range $translation := $page.Translations -}}
+          {{- if eq $translation.Lang $lang.Lang -}}
+            {{- $href = $translation.RelPermalink -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+      <li>
+        <a
+          class="gm-modal__option{{ if $isCurrent }} gm-modal__option--current{{ end }}"
+          href="{{ $href }}"
+          {{ if $isCurrent }}aria-current="true"{{ end }}
+        >
+          <span class="gm-modal__optionLabel">{{ $lang.LanguageName }}</span>
+          {{- if $isCurrent -}}
+          <span class="gm-modal__badge">{{ i18n "lang.modal.current" }}</span>
+          {{- end -}}
+        </a>
+      </li>
+      {{- end -}}
+    </ul>
+  </div>
+</div>
