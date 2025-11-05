@@ -1,9 +1,3 @@
-['gm.toast']
-other = "Мы этого не видели."
-
-['gm.toast.meta']
-other = "#АКТ-НЕВИДИМОСТИ"
-
 ['header.logo']
 other = "М†"
 
@@ -66,9 +60,6 @@ other = "Подписаться"
 
 ['hero.demo.timer']
 other = "Открытая бета закончится через:"
-
-['card.stamp']
-other = "ОДОБРЕНО"
 
 ['card.stamp.demo']
 other = "BETA вер. 000.2"

@@ -1,9 +1,3 @@
-['gm.toast']
-other = "見なかったことにしましょう。"
-
-['gm.toast.meta']
-other = "#不可視化処理"
-
 ['header.logo']
 other = "М†"
 
@@ -66,9 +60,6 @@ other = "登録する"
 
 ['hero.demo.timer']
 other = "オープンベータ終了まで:"
-
-['card.stamp']
-other = "承認済み"
 
 ['card.stamp.demo']
 other = "ベータ ver. 000.2"

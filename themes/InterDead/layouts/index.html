@@ -8,35 +8,34 @@
           <div class="gm-hero__cta" data-cta-anchor data-show="adult">
             <a
               class="gm-btn gm-btn--primary"
-              id="gm-ctaStart"
               href="https://discord.gg/vAWYg3jFEp"
               rel="noopener"
               target="_blank"
+              data-cta="start"
             >{{ i18n "gm.ctastart" }}</a>
             <span class="gm-badge gm-badge--countdown">
               <span>{{ i18n "hero.countdown" }}</span>
-              <span class="gm-hero__timer" id="gm-timer">--:--:--</span>
+              <span class="gm-hero__timer" data-countdown="primary">--:--:--</span>
             </span>
           </div>
           <div class="gm-hero__cta gm-hero__cta--demo" data-cta-anchor data-show="demo">
             <a
               class="gm-btn gm-btn--primary"
-              id="gm-ctaDemo"
               href="https://discord.gg/vAWYg3jFEp"
               rel="noopener"
               target="_blank"
+              data-cta="demo"
             >{{ i18n "gm.ctademo" }}</a>
           </div>
           <div class="gm-hero__beta" data-show="demo">
             <span class="gm-badge">
               <span>{{ i18n "hero.demo.timer" }}</span>
-              <span class="gm-hero__timer" id="gm-beta-timer">--:--:--</span>
+              <span class="gm-hero__timer" data-countdown="beta">--:--:--</span>
             </span>
           </div>
         </div>
         <div class="gm-hero__media gm-card">
           <div class="gm-card__stamp gm-card__stamp--demo" data-show="demo">{{ i18n "card.stamp.demo" }}</div>
-          <div class="gm-card__stamp" data-show="adult">{{ i18n "card.stamp" }}</div>
           <div class="gm-hero__logoFrame" data-hero-media>
             <img
               src="{{ "assets/images/logo-png.png" | relURL }}"

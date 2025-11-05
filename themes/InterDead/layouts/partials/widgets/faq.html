@@ -9,7 +9,7 @@
   {{ $questions := $section.RegularPages.ByWeight }}
   {{ if gt (len $questions) 0 }}
     {{ $questions = first $limit $questions }}
-    <section class="gm-section gm-faq" id="faq">
+    <section class="gm-section gm-faq" id="faq" data-faq-root>
       <div class="gm-container">
         <h2 class="gm-section__title">{{ $section.Title }}</h2>
         {{ partial "components/faq-list.html" (dict "items" $questions "active" 0) }}

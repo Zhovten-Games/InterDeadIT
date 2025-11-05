@@ -1,6 +1,9 @@
 <footer class="gm-footer" id="offer">
   <div class="gm-container">
     <div class="gm-footer__inner">
+      <div class="gm-footer__note" data-show="adult">
+        <p class="gm-text--fine">{{ i18n "footer.adult" }}</p>
+      </div>
       <div class="gm-footer__links">
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.dev" }}</span>
@@ -22,9 +25,6 @@
             <a class="gm-footer__link" href="{{ (printf "/%s/pages/user-agreement/" .Lang) | relURL }}">User Agreement</a>
           {{- end -}}
         </div>
-      </div>
-      <div class="gm-footer__note" data-show="adult">
-        <p class="gm-text--fine">{{ i18n "footer.adult" }}</p>
       </div>
       <p class="gm-text--fine gm-footer__disclaimer">{{ i18n "footer.note" }}</p>
     </div>

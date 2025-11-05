@@ -1,9 +1,4 @@
 {{ partial "head.html" . }}
-    <div aria-hidden="true" class="gm-noise"></div>
-    <div class="gm-toast" id="gm-toast">
-      <span>{{ i18n "gm.toast" }}</span>
-      <span class="gm-mono">{{ i18n "gm.toast.meta" }}</span>
-    </div>
     {{ partial "header.html" . }}
     <main class="gm-main">
       {{ block "main" . }}{{ end }}
@@ -11,6 +6,6 @@
     {{ partial "footer.html" . }}
     {{ partial "language-modal.html" . }}
     {{ partial "age-gate.html" . }}
-    <script src="{{ "js/app.js" | relURL }}" defer></script>
+    <script type="module" src="{{ "js/app.js" | relURL }}"></script>
   </body>
 </html>

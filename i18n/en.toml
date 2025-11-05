@@ -1,9 +1,3 @@
-['gm.toast']
-other = "We did not see that."
-
-['gm.toast.meta']
-other = "#ACT-OF-INVISIBILITY"
-
 ['header.logo']
 other = "М†"
 
@@ -66,9 +60,6 @@ other = "Subscribe"
 
 ['hero.demo.timer']
 other = "Open beta closes in:"
-
-['card.stamp']
-other = "APPROVED"
 
 ['card.stamp.demo']
 other = "BETA ver. 000.2"

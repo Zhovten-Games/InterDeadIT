@@ -14,8 +14,12 @@
     <h2 class="gm-ageGate__title" id="gm-gtitle">{{ i18n "agegate.title" }}</h2>
     <p class="gm-ageGate__hint">{{ i18n "agegate.hint" }}</p>
     <div class="gm-ageGate__row">
-      <button class="gm-btn gm-btn--primary" id="gm-btnAdult" type="button">{{ i18n "agegate.btn.adult" }}</button>
-      <button class="gm-btn" id="gm-btnDemo" type="button">{{ i18n "agegate.btn.demo" }}</button>
+      <button
+        class="gm-btn gm-btn--primary"
+        type="button"
+        data-age-gate-action="adult"
+      >{{ i18n "agegate.btn.adult" }}</button>
+      <button class="gm-btn" type="button" data-age-gate-action="demo">{{ i18n "agegate.btn.demo" }}</button>
     </div>
     <p class="gm-ageGate__note">{{ i18n "agegate.note" }}</p>
   </div>
