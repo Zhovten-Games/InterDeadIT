@@ -1,7 +1,7 @@
 baseURL = "https://interdead.phantom-draft.com/"
 title = "InterDead"
 defaultContentLanguage = "en"
-defaultContentLanguageInSubdir = true
+defaultContentLanguageInSubdir = false
 enableRobotsTXT = true
 canonifyURLs = false
 staticDir = ["static", "assets"]
