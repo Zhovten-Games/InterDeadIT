@@ -18,11 +18,13 @@
         </div>
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.legal" }}</span>
-          {{- $legalPage := .Site.GetPage (printf "/%s/pages/user-agreement" .Lang) -}}
-          {{- if $legalPage -}}
-            <a class="gm-footer__link" href="{{ $legalPage.RelPermalink }}">{{ $legalPage.Title }}</a>
-          {{- else -}}
-            <a class="gm-footer__link" href="{{ (printf "/%s/pages/user-agreement/" .Lang) | relURL }}">User Agreement</a>
+          {{- $termsPage := .Site.GetPage "/pages/terms-of-use" -}}
+          {{- $privacyPage := .Site.GetPage "/pages/privacy-policy" -}}
+          {{- if $termsPage -}}
+            <a class="gm-footer__link" href="{{ $termsPage.RelPermalink }}">{{ $termsPage.Title }}</a>
+          {{- end -}}
+          {{- if $privacyPage -}}
+            <a class="gm-footer__link" href="{{ $privacyPage.RelPermalink }}">{{ $privacyPage.Title }}</a>
           {{- end -}}
         </div>
       </div>

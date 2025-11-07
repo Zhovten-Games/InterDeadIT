@@ -1,9 +1,10 @@
 import ModalInstance from './ModalInstance.js';
 
 export default class ModalService {
-  constructor({ storage, eventTarget = typeof document !== 'undefined' ? document : null } = {}) {
+  constructor({ storage, eventTarget = typeof document !== 'undefined' ? document : null, scrollController = null } = {}) {
     this.storage = storage;
     this.eventTarget = eventTarget;
+    this.scrollController = scrollController;
     this.modals = new Map();
     this.activeModal = null;
     this.handleKeydown = this.handleKeydown.bind(this);
@@ -30,6 +31,9 @@ export default class ModalService {
     }
     const opened = instance.open();
     if (opened) {
+      if (instance.shouldLockScroll()) {
+        this.scrollController?.lock(instance.id);
+      }
       this.activeModal = instance;
       this.eventTarget?.addEventListener('keydown', this.handleKeydown);
     }
@@ -44,6 +48,9 @@ export default class ModalService {
     if (closed && this.activeModal && this.activeModal.id === instance.id) {
       this.activeModal = null;
       this.eventTarget?.removeEventListener('keydown', this.handleKeydown);
+    }
+    if (closed && instance.shouldLockScroll()) {
+      this.scrollController?.unlock(instance.id);
     }
   }
 

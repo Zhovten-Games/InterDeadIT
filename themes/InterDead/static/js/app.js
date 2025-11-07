@@ -14,9 +14,11 @@ import ModalTriggerController from './presentation/controllers/ModalTriggerContr
 import ModalCloseController from './presentation/controllers/ModalCloseController.js';
 import ModalView from './infrastructure/ui/ModalView.js';
 import ModalDomMapper from './infrastructure/ui/ModalDomMapper.js';
+import DocumentScrollController from './infrastructure/ui/DocumentScrollController.js';
 
 const storage = new LocalStorageAdapter();
-const modalService = new ModalService({ storage, eventTarget: document });
+const scrollController = new DocumentScrollController({ target: document.body });
+const modalService = new ModalService({ storage, eventTarget: document, scrollController });
 const modalMapper = new ModalDomMapper();
 Array.from(document.querySelectorAll('[data-modal]')).forEach(element => {
   const entity = modalMapper.createEntity(element);
@@ -47,7 +49,6 @@ const ageService = new AgeModeService(storage);
 const ageGateController = new AgeGateController({
   body: document.body,
   adultButton: document.querySelector('[data-age-gate-action="adult"]'),
-  demoButton: document.querySelector('[data-age-gate-action="demo"]'),
   ageService,
   modalService,
   onModeChange: () => headerActionsController.refresh(),

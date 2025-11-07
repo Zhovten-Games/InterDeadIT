@@ -1,9 +1,16 @@
+export const MODAL_SCROLL_BEHAVIORS = Object.freeze({
+  FREE: 'free',
+  LOCK: 'lock',
+});
+
 export default class ModalEntity {
-  constructor({ id, storageKey = '', auto = false, closeOnOverlay = true }) {
+  constructor({ id, storageKey = '', auto = false, closeOnOverlay = true, scrollBehavior = MODAL_SCROLL_BEHAVIORS.FREE }) {
     this.id = id;
     this.storageKey = storageKey;
     this.auto = auto;
     this.closeOnOverlay = closeOnOverlay;
+    const normalizedScroll = typeof scrollBehavior === 'string' ? scrollBehavior.toLowerCase() : '';
+    this.scrollBehavior = normalizedScroll === MODAL_SCROLL_BEHAVIORS.LOCK ? MODAL_SCROLL_BEHAVIORS.LOCK : MODAL_SCROLL_BEHAVIORS.FREE;
   }
 
   shouldAutoOpen(storage) {
@@ -21,5 +28,9 @@ export default class ModalEntity {
       return;
     }
     storage?.set(this.storageKey, 'hidden');
+  }
+
+  shouldLockScroll() {
+    return this.scrollBehavior === MODAL_SCROLL_BEHAVIORS.LOCK;
   }
 }

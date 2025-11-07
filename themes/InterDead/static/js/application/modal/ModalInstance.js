@@ -34,6 +34,13 @@ export default class ModalInstance {
     return closed;
   }
 
+  shouldLockScroll() {
+    if (!this.entity) {
+      return false;
+    }
+    return this.entity.shouldLockScroll();
+  }
+
   shouldAutoOpen() {
     if (!this.entity) {
       return false;

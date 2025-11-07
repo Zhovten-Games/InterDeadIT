@@ -7,20 +7,44 @@
   data-modal-auto="true"
   data-modal-storage="gm_age_mode"
   data-modal-close-on-overlay="false"
+  data-modal-scroll="lock"
   id="gm-ageGate"
   role="dialog"
 >
   <div class="gm-modal__dialog gm-ageGate__dialog">
-    <h2 class="gm-ageGate__title" id="gm-gtitle">{{ i18n "agegate.title" }}</h2>
-    <p class="gm-ageGate__hint">{{ i18n "agegate.hint" }}</p>
+    {{- $termsPage := .Site.GetPage "/pages/terms-of-use" -}}
+    {{- $privacyPage := .Site.GetPage "/pages/privacy-policy" -}}
+    {{- $termsTitle := cond $termsPage $termsPage.Title (i18n "agegate.links.terms") -}}
+    {{- $privacyTitle := cond $privacyPage $privacyPage.Title (i18n "agegate.links.privacy") -}}
+    {{- $context := dict "TermsURL" (cond $termsPage $termsPage.RelPermalink "") "PrivacyURL" (cond $privacyPage $privacyPage.RelPermalink "") "LinkedInURL" "https://www.linkedin.com/company/zhovten-games/" "TermsTitle" $termsTitle "PrivacyTitle" $privacyTitle -}}
+    <span class="gm-visually-hidden" id="gm-gtitle">{{ i18n "agegate.accessibleTitle" }}</span>
+    <div class="gm-ageGate__content">
+      <div class="gm-ageGate__section gm-ageGate__section--primary">
+        {{ (i18n "agegate.sectionPrimary" $context) | markdownify }}
+      </div>
+      <div class="gm-ageGate__section gm-ageGate__section--secondary">
+        {{ (i18n "agegate.sectionSecondary" $context) | markdownify }}
+      </div>
+    </div>
     <div class="gm-ageGate__row">
       <button
         class="gm-btn gm-btn--primary"
         type="button"
         data-age-gate-action="adult"
       >{{ i18n "agegate.btn.adult" }}</button>
-      <button class="gm-btn" type="button" data-age-gate-action="demo">{{ i18n "agegate.btn.demo" }}</button>
+      <div class="gm-ageGate__lang">
+        <span class="gm-ageGate__langLabel">{{ i18n "header.lang.label" }}</span>
+        <button
+          class="gm-ageGate__langTrigger"
+          type="button"
+          data-modal-trigger="language"
+          aria-haspopup="dialog"
+          aria-controls="gm-langModal"
+          aria-label="{{ printf "%s: %s" (i18n "header.lang.label") .Site.Language.LanguageName }}"
+        >
+          <span class="gm-ageGate__langValue">{{ .Site.Language.LanguageName }}</span>
+        </button>
+      </div>
     </div>
-    <p class="gm-ageGate__note">{{ i18n "agegate.note" }}</p>
   </div>
 </div>

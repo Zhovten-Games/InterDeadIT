@@ -186,20 +186,41 @@ other = "Developers"
 ['footer.links.media']
 other = "Media"
 
-['agegate.title']
-other = "Confirm your age"
-
-['agegate.hint']
-other = "The following content references grief, static, and the afterlife. Ready to continue?"
-
 ['agegate.btn.adult']
-other = "I am 18 or older"
+other = "Enter"
 
-['agegate.btn.demo']
-other = "I am under 18 (stay in demo)"
+['agegate.accessibleTitle']
+other = "Zhovten Games welcome window"
 
-['agegate.note']
-other = "By continuing you risk nothing but your time and a pinch of wonder."
+['agegate.links.terms']
+other = "Terms of Use"
+
+['agegate.links.privacy']
+other = "Privacy Policy"
+
+['agegate.sectionPrimary']
+other = """
+## Welcome
+
+Welcome. You’ve reached the entry point into the meta-universe of Zhovten Games—a portal into the project’s atmosphere. After this window closes we stay “in character”: the site speaks in-world to deepen immersion. If you ever need to step outside the fiction, the legal documents and contacts are below.
+
+- [{{ .TermsTitle }}]({{ .TermsURL }})
+- [{{ .PrivacyTitle }}]({{ .PrivacyURL }})
+- [Contact via LinkedIn]({{ .LinkedInURL }})
+
+By clicking “Enter,” you confirm that you are 18+ and accept the terms.
+"""
+
+['agegate.sectionSecondary']
+other = """
+## Field note
+
+<em>Writing by the cold light of a monitor whose fan saws the night with the patience of a watchmaker, I record this—if only to keep my reason from drifting—that my inspiration came not from parlour mediums or theatrical illusions, but from the work of Dr. Mary Florescu, who once turned communication with the dead into a subject of academic inquiry. Perhaps also from director William Castle, whose invention of Illusion-O allowed crowds in cinemas to see ghosts—surely the greatest mass experiment in contact with the beyond, deftly disguised as entertainment. I have always admired how elegantly some can merge science and spectacle, hiding one within the other.</em>
+
+<em>And yet even that experiment pales beside another—one I have at last managed to awaken, when formulas gave way to intuition and the screen began to answer...</em>
+
+<em>—record ends.</em>
+"""
 ["footer.links.legal"]
 other = "Legal"
 ["blog.readMore"]
