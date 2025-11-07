@@ -27,11 +27,12 @@ export default class ModalInstance {
     if (!this.entity || !this.view) {
       return false;
     }
+    const wasOpen = this.view?.isOpen === true;
     const closed = this.view.close();
-    if (closed && options.remember) {
+    if ((closed || wasOpen) && options.remember) {
       this.entity.remember(this.storage);
     }
-    return closed;
+    return closed || wasOpen;
   }
 
   shouldLockScroll() {

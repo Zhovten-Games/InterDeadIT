@@ -12,8 +12,17 @@ export default class ModalTriggerController {
       }
       trigger.addEventListener('click', event => {
         event.preventDefault();
-        this.modalService.open(target);
+        const resume = this._shouldResume(trigger);
+        this.modalService.open(target, { resume });
       });
     });
+  }
+
+  _shouldResume(trigger) {
+    const value = trigger?.dataset?.modalResume;
+    if (value == null) {
+      return false;
+    }
+    return value !== 'false';
   }
 }
