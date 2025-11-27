@@ -10,6 +10,13 @@ A dedicated Cloudflare Worker for Discord OAuth hand-off and EFBD trigger ingest
 ## Environment
 - `INTERDEAD_CORE`: D1 binding to the shared `interdead_core` database.
 - `IDENTITY_DISCORD_CLIENT_ID`, `IDENTITY_DISCORD_CLIENT_SECRET`, `IDENTITY_DISCORD_REDIRECT_URI`: Discord OAuth credentials per environment.
+- `IDENTITY_JWT_SECRET`: Secret used to sign OAuth state and session cookies.
 - `EFBD_API_BASE`: Optional override for EFBD upstream if not co-located.
+
+## Session and state handling
+- The `/auth/discord/start` route issues a signed `discord_oauth_state` cookie (10-minute lifetime) and redirects to Discord with
+  the same state token.
+- `/auth/discord/callback` validates the state from both the query and cookie, exchanges the code for a Discord access token,
+  persists the profile in `profiles`, and returns a signed `interdead_session` cookie.
 
 Deploy the Worker from this folder (`workers/interdead-auth/`) to avoid leaking credentials into the frontend bundle. The Hugo site reads the Worker base URL from `params.api.*` and exposes it via `window.__INTERDEAD_CONFIG__`.
