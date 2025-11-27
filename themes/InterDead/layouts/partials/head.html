@@ -65,8 +65,34 @@
     {{- $featureFlags := .Site.Params.featureFlags | default dict -}}
     {{- $api := .Site.Params.api | default dict -}}
     {{- $auth := .Site.Params.auth | default dict -}}
+    {{- $envBaseUrl := getenv (default "" $api.envVarBaseUrl) -}}
     <script>
-      window.__INTERDEAD_CONFIG__ = {{ dict "featureFlags" $featureFlags "api" $api "auth" $auth | jsonify | safeJS }};
+      (() => {
+        const config = {{ dict "featureFlags" $featureFlags "api" $api "auth" $auth | jsonify | safeJS }};
+        const hostname = window.location.hostname;
+        const apiBaseFromEnv = {{ $envBaseUrl | jsonify | safeJS }};
+        const envBaseMap = {
+          ...config.api.baseUrlByHost,
+          'dev.interdead.phantom-draft.com': config.api.baseUrlByHost?.['dev.interdead.phantom-draft.com'] || config.api.devBaseUrl,
+          'staging.interdead.phantom-draft.com': config.api.baseUrlByHost?.['staging.interdead.phantom-draft.com'] || config.api.stagingBaseUrl,
+          'interdead.phantom-draft.com': config.api.baseUrlByHost?.['interdead.phantom-draft.com'] || config.api.prodBaseUrl,
+          'localhost': config.api.baseUrlByHost?.localhost || config.api.devBaseUrl,
+        };
+        const baseUrlCandidates = [
+          apiBaseFromEnv,
+          config.api.baseUrl,
+          envBaseMap[hostname],
+          config.api.defaultBaseUrl,
+          config.api.prodBaseUrl,
+          config.api.devBaseUrl,
+          config.api.stagingBaseUrl,
+        ];
+        const selectedBaseUrl = baseUrlCandidates.find(
+          (url) => typeof url === 'string' && url.trim().length > 0,
+        );
+        config.api.baseUrl = selectedBaseUrl || '';
+        window.__INTERDEAD_CONFIG__ = config;
+      })();
     </script>
   </head>
   <body data-mode="{{ or (index .Site.Params "defaultMode") "demo" }}">
