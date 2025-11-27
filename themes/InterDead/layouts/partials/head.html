@@ -62,5 +62,11 @@
       gtag('config', '{{ . }}');
     </script>
     {{- end }}
+    {{- $featureFlags := .Site.Params.featureFlags | default dict -}}
+    {{- $api := .Site.Params.api | default dict -}}
+    {{- $auth := .Site.Params.auth | default dict -}}
+    <script>
+      window.__INTERDEAD_CONFIG__ = {{ dict "featureFlags" $featureFlags "api" $api "auth" $auth | jsonify | safeJS }};
+    </script>
   </head>
   <body data-mode="{{ or (index .Site.Params "defaultMode") "demo" }}">

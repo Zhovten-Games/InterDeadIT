@@ -4,8 +4,6 @@ import AgeModeService from './application/age/AgeModeService.js';
 import AgeGateController from './presentation/controllers/AgeGateController.js';
 import HeaderActionsController from './presentation/controllers/HeaderActionsController.js';
 import HeaderLogoController from './presentation/controllers/HeaderLogoController.js';
-import CtaLinkService from './application/cta/CtaLinkService.js';
-import CtaController from './presentation/controllers/CtaController.js';
 import MetadataController from './presentation/controllers/MetadataController.js';
 import CountdownController from './presentation/controllers/CountdownController.js';
 import SliderController from './presentation/controllers/SliderController.js';
@@ -15,6 +13,13 @@ import ModalCloseController from './presentation/controllers/ModalCloseControlle
 import ModalView from './infrastructure/ui/ModalView.js';
 import ModalDomMapper from './infrastructure/ui/ModalDomMapper.js';
 import DocumentScrollController from './infrastructure/ui/DocumentScrollController.js';
+import FeatureFlagService from './application/config/FeatureFlagService.js';
+import EventBus from './application/events/EventBus.js';
+import DiscordAuthService from './application/auth/DiscordAuthService.js';
+import DiscordOAuthAdapter from './infrastructure/auth/DiscordOAuthAdapter.js';
+import AuthButtonController from './presentation/controllers/AuthButtonController.js';
+import EfbdApiAdapter from './infrastructure/efbd/EfbdApiAdapter.js';
+import EfbdScaleBridgeService from './application/efbd/EfbdScaleBridgeService.js';
 
 const storage = new LocalStorageAdapter();
 const scrollController = new DocumentScrollController({ target: document.body });
@@ -69,20 +74,43 @@ modalCloseController.init();
 
 modalService.autoShow();
 
-const CTA_URL = 'https://discord.gg/vAWYg3jFEp';
-const ctaService = new CtaLinkService({ url: CTA_URL, target: '_blank' });
-const ctaController = new CtaController({
-  startButtons: [
-    document.querySelector('[data-cta="start"]'),
-    document.querySelector('[data-header-cta="start"]'),
+const runtimeConfig = window.__INTERDEAD_CONFIG__ ?? {};
+const featureFlags = new FeatureFlagService(runtimeConfig.featureFlags);
+const eventBus = new EventBus();
+const apiConfig = {
+  baseUrl: runtimeConfig.api?.baseUrl || runtimeConfig.api?.defaultBaseUrl,
+  defaultBaseUrl: runtimeConfig.api?.defaultBaseUrl,
+  identityStartPath: runtimeConfig.api?.identityStartPath,
+  efbdTriggerPath: runtimeConfig.api?.efbdTriggerPath,
+};
+
+const heroCta = document.querySelector('.gm-hero__cta[data-cta-anchor]');
+const authCopy = {
+  idle: heroCta?.dataset?.authCopyIdle || heroCta?.querySelector('[data-auth-status]')?.textContent || '',
+  disabled: heroCta?.dataset?.authCopyDisabled || '',
+  loading: heroCta?.dataset?.authCopyLoading || '',
+  error: heroCta?.dataset?.authCopyError || '',
+};
+
+const authAdapter = new DiscordOAuthAdapter({ apiConfig });
+const authService = new DiscordAuthService({ authAdapter, eventBus, featureFlags });
+const authButtonController = new AuthButtonController({
+  buttons: [
+    document.querySelector('[data-auth-button="hero"]'),
+    document.querySelector('[data-auth-button="header"]'),
   ],
-  demoButtons: [
-    document.querySelector('[data-cta="demo"]'),
-    document.querySelector('[data-header-cta="demo"]'),
-  ],
-  ctaService,
+  helperElement: document.querySelector('[data-auth-helper]'),
+  authService,
+  featureFlags,
+  copy: authCopy,
 });
-ctaController.init();
+authButtonController.init();
+
+const efbdAdapter = new EfbdApiAdapter({ apiConfig });
+const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFlags, eventBus });
+window.InterdeadPorts = window.InterdeadPorts || {};
+window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
+  efbdBridge.emitTrigger({ axis, value, ...context });
 
 const countdownController = new CountdownController({
   primaryElement: document.querySelector('[data-countdown="primary"]'),

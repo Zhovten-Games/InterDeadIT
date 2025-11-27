@@ -58,6 +58,24 @@ other = "Пропозиція діє до опівночі:"
 ['gm.ctademo']
 other = "Підписатися"
 
+['auth.discord.cta']
+other = "Sign in with Discord"
+
+['auth.discord.status.idle']
+other = "Connect to Discord to reserve your InterDead profile."
+
+['auth.discord.status.disabled']
+other = "Discord login is temporarily offline. Try again after the bridge syncs."
+
+['auth.discord.status.loading']
+other = "Opening Discord authorization..."
+
+['auth.discord.status.error']
+other = "We could not start Discord login. Please retry."
+
+['auth.efbd.hint']
+other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
+
 ['hero.demo.timer']
 other = "Відкрита бета завершиться через:"
 

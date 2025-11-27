@@ -1,0 +1,8 @@
+name = "interdead-auth"
+main = "src/worker.js"
+compatibility_date = "2024-11-27"
+
+[[d1_databases]]
+binding = "INTERDEAD_CORE"
+database_name = "interdead_core"
+database_id = "6874f882-d442-4e0f-a362-3da5f30c646a"

@@ -5,14 +5,22 @@
         <div class="gm-hero__copy">
           <h1 class="gm-hero__title">{{ i18n "hero.title" }}</h1>
           <p class="gm-hero__lead">{{ i18n "hero.lead" }}</p>
-          <div class="gm-hero__cta" data-cta-anchor data-show="adult">
-            <a
-              class="gm-btn gm-btn--primary"
-              href="https://discord.gg/vAWYg3jFEp"
-              rel="noopener"
-              target="_blank"
-              data-cta="start"
-            >{{ i18n "gm.ctastart" }}</a>
+          <div
+            class="gm-hero__cta"
+            data-cta-anchor
+            data-show="adult"
+            data-auth-copy-idle="{{ i18n "auth.discord.status.idle" }}"
+            data-auth-copy-disabled="{{ i18n "auth.discord.status.disabled" }}"
+            data-auth-copy-loading="{{ i18n "auth.discord.status.loading" }}"
+            data-auth-copy-error="{{ i18n "auth.discord.status.error" }}"
+          >
+            <button class="auth-button auth-button--discord" type="button" data-auth-button="hero" data-cta="start">
+              <span class="auth-button__icon" aria-hidden="true">
+                <span class="auth-button__glyph">◎</span>
+              </span>
+              <span class="auth-button__label">{{ i18n "auth.discord.cta" }}</span>
+              <span class="auth-button__status" data-auth-status>{{ i18n "auth.discord.status.idle" }}</span>
+            </button>
             <span class="gm-badge gm-badge--countdown">
               <span>{{ i18n "hero.countdown" }}</span>
               <span class="gm-hero__timer" data-countdown="primary">--:--:--</span>
@@ -33,6 +41,9 @@
               <span class="gm-hero__timer" data-countdown="beta">--:--:--</span>
             </span>
           </div>
+          <p class="gm-hero__authHint" data-auth-helper>
+            {{ i18n "auth.efbd.hint" }}
+          </p>
         </div>
         <div class="gm-hero__media gm-card">
           <div class="gm-card__stamp gm-card__stamp--demo" data-show="demo">{{ i18n "card.stamp.demo" }}</div>

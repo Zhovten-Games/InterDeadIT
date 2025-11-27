@@ -13,13 +13,12 @@
     <nav class="gm-header__nav" aria-label="Primary actions">
       <div class="gm-header__actions" data-header-actions>
         <div class="gm-header__cta" data-show="adult">
-          <a
-            class="gm-btn gm-btn--primary"
-            href="https://discord.gg/vAWYg3jFEp"
-            rel="noopener"
-            target="_blank"
-            data-header-cta="start"
-          >{{ i18n "gm.ctastart" }}</a>
+          <button class="auth-button auth-button--discord auth-button--compact" type="button" data-auth-button="header">
+            <span class="auth-button__icon" aria-hidden="true">
+              <span class="auth-button__glyph">◎</span>
+            </span>
+            <span class="auth-button__label">{{ i18n "auth.discord.cta" }}</span>
+          </button>
         </div>
         <div class="gm-header__cta" data-show="demo">
           <a

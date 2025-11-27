@@ -40,6 +40,31 @@ disableKinds = ["taxonomy", "term"]
     [params.homeWidgets.faq]
       limit = 1
 
+  [params.featureFlags]
+    identityCoreEnabled = true
+    efbdScaleEnabled = true
+
+  [params.api]
+    defaultBaseUrl = "https://api.interdead.phantom-draft.com"
+    devBaseUrl = "https://api.dev.interdead.phantom-draft.com"
+    stagingBaseUrl = "https://api.staging.interdead.phantom-draft.com"
+    prodBaseUrl = "https://api.interdead.phantom-draft.com"
+    identityStartPath = "/auth/discord/start"
+    efbdTriggerPath = "/efbd/trigger"
+    envVarBaseUrl = "INTERDEAD_API_BASE_URL"
+
+  [params.auth]
+    workerProjectPath = "workers/interdead-auth"
+    d1Binding = "INTERDEAD_CORE"
+    sessionBinding = "INTERDEAD_SESSION"
+    ownerDiscord = "Identity/Infra guild maintainers"
+    ownerCloudflare = "SRE/Platform"
+
+    [params.auth.redirects]
+      dev = "https://dev.interdead.phantom-draft.com/auth/discord/callback"
+      staging = "https://staging.interdead.phantom-draft.com/auth/discord/callback"
+      prod = "https://interdead.phantom-draft.com/auth/discord/callback"
+
 [services]
   [services.googleAnalytics]
     ID = "G-CL4WM6BEXF"
