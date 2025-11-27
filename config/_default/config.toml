@@ -45,6 +45,7 @@ disableKinds = ["taxonomy", "term"]
     efbdScaleEnabled = true
 
   [params.api]
+    baseUrl = "https://api.interdead.phantom-draft.com"
     defaultBaseUrl = "https://api.interdead.phantom-draft.com"
     devBaseUrl = "https://api.dev.interdead.phantom-draft.com"
     stagingBaseUrl = "https://api.staging.interdead.phantom-draft.com"
