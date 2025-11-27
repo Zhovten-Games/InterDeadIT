@@ -45,10 +45,10 @@ disableKinds = ["taxonomy", "term"]
     efbdScaleEnabled = true
 
   [params.api]
-    defaultBaseUrl = "https://api.interdead.phantom-draft.com"
-    devBaseUrl = "https://api.dev.interdead.phantom-draft.com"
-    stagingBaseUrl = "https://api.staging.interdead.phantom-draft.com"
-    prodBaseUrl = "https://api.interdead.phantom-draft.com"
+    defaultBaseUrl = "https://interdead-auth.oksana-dubinetska.workers.dev"
+    devBaseUrl = "https://interdead-auth.oksana-dubinetska.workers.dev"
+    stagingBaseUrl = "https://interdead-auth.oksana-dubinetska.workers.dev"
+    prodBaseUrl = "https://interdead-auth.oksana-dubinetska.workers.dev"
     identityStartPath = "/auth/discord/start"
     efbdTriggerPath = "/efbd/trigger"
     envVarBaseUrl = "INTERDEAD_API_BASE_URL"
