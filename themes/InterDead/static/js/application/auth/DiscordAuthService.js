@@ -31,10 +31,10 @@ export default class DiscordAuthService {
         return { status: 'ready', navigation };
       }
       this.eventBus?.emit?.(EVENTS.FAILED, { reason: 'missingNavigation' });
-      return { status: 'error', reason: 'missingNavigation' };
+      return { status: 'error' };
     } catch (error) {
       this.eventBus?.emit?.(EVENTS.FAILED, { reason: 'exception', error });
-      return { status: 'error', error, reason: 'exception' };
+      return { status: 'error', error };
     }
   }
 }

@@ -8,7 +8,7 @@ export default class AuthButtonController {
       idle: copy.idle || '',
       disabled: copy.disabled || '',
       loading: copy.loading || '',
-      error: copy.error || 'Unable to start Discord login. Please try again.',
+      error: copy.error || '',
     };
     this.statusElements = this.buttons
       .map(button => button?.querySelector?.('[data-auth-status]'))
@@ -48,9 +48,9 @@ export default class AuthButtonController {
     this.updateStatus(this.copy.loading);
   }
 
-  setErrorState(text) {
+  setErrorState() {
     this.setButtonsState({ disabled: false, loading: false });
-    this.updateStatus(text || this.copy.error);
+    this.updateStatus(this.copy.error);
   }
 
   setButtonsState({ disabled, loading }) {
@@ -93,10 +93,6 @@ export default class AuthButtonController {
     }
     if (result?.status === 'disabled') {
       this.setDisabledState();
-      return;
-    }
-    if (result?.reason === 'missingNavigation') {
-      this.setErrorState('Unable to prepare the Discord login link. Please try again.');
       return;
     }
     this.setErrorState();
