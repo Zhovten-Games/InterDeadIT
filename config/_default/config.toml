@@ -45,6 +45,7 @@ disableKinds = ["taxonomy", "term"]
     efbdScaleEnabled = true
 
   [params.api]
+    baseUrl = "https://api.interdead.phantom-draft.com"
     defaultBaseUrl = "https://api.interdead.phantom-draft.com"
     devBaseUrl = "https://api.dev.interdead.phantom-draft.com"
     stagingBaseUrl = "https://api.staging.interdead.phantom-draft.com"
@@ -52,6 +53,12 @@ disableKinds = ["taxonomy", "term"]
     identityStartPath = "/auth/discord/start"
     efbdTriggerPath = "/efbd/trigger"
     envVarBaseUrl = "INTERDEAD_API_BASE_URL"
+
+    [params.api.baseUrlByHost]
+      "dev.interdead.phantom-draft.com" = "https://api.dev.interdead.phantom-draft.com"
+      "staging.interdead.phantom-draft.com" = "https://api.staging.interdead.phantom-draft.com"
+      "interdead.phantom-draft.com" = "https://api.interdead.phantom-draft.com"
+      "localhost" = "https://api.dev.interdead.phantom-draft.com"
 
   [params.auth]
     workerProjectPath = "workers/interdead-auth"
