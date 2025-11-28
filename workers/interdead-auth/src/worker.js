@@ -56,7 +56,18 @@ class DiscordAuthController {
   }
 
   getSiteBaseUrl() {
-    return this.env.INTERDEAD_SITE_BASE_URL || DEFAULT_SITE_BASE_URL;
+    const candidate = this.env.INTERDEAD_SITE_BASE_URL?.trim();
+    if (!candidate) {
+      return DEFAULT_SITE_BASE_URL;
+    }
+
+    try {
+      const resolved = new URL(candidate, DEFAULT_SITE_BASE_URL);
+      return resolved.toString();
+    } catch (error) {
+      console.warn('Falling back to default site base URL', { candidate, error });
+      return DEFAULT_SITE_BASE_URL;
+    }
   }
 
   buildIdentity(cookies) {
