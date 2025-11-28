@@ -1,6 +1,18 @@
 name = "interdead-auth"
 main = "src/worker.js"
-compatibility_date = "2024-11-27"
+compatibility_date = "2024-11-28"
+
+workers_dev = false
+preview_urls = false
+
+routes = [
+  { pattern = "api.interdead.phantom-draft.com", zone_name = "phantom-draft.com", custom_domain = true }
+]
+
+[vars]
+IDENTITY_DISCORD_CLIENT_ID = "1441616910436270261"
+IDENTITY_DISCORD_REDIRECT_URI = "https://api.interdead.phantom-draft.com/auth/discord/callback"
+INTERDEAD_SITE_BASE_URL = "https://interdead.phantom-draft.com"
 
 [[d1_databases]]
 binding = "INTERDEAD_CORE"
