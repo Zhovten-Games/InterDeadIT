@@ -11,6 +11,7 @@ import {
 import { CookieSessionStore, timingSafeEqual } from './session.js';
 
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize';
+const DEFAULT_SITE_BASE_URL = 'https://interdead.phantom-draft.com';
 
 class D1TableAdapter {
   constructor(binding) {
@@ -52,6 +53,10 @@ class DiscordAuthController {
       discordUrl.searchParams.set('state', stateToken);
     }
     return discordUrl.toString();
+  }
+
+  getSiteBaseUrl() {
+    return this.env.INTERDEAD_SITE_BASE_URL || DEFAULT_SITE_BASE_URL;
   }
 
   buildIdentity(cookies) {
@@ -157,7 +162,16 @@ class DiscordAuthController {
     }
 
     const redirectTo = state.redirect || '/';
-    const response = Response.redirect(redirectTo, 302);
+    const siteBaseUrl = this.getSiteBaseUrl();
+    let redirectUrl;
+    try {
+      redirectUrl = new URL(redirectTo, siteBaseUrl);
+    } catch (error) {
+      console.error('Failed to construct redirect URL', { redirectTo, siteBaseUrl, error });
+      return new Response('Invalid redirect target', { status: 400 });
+    }
+
+    const response = Response.redirect(redirectUrl.toString(), 302);
     sessionStore.collectCookies().forEach((cookie) => {
       response.headers.append('Set-Cookie', cookie);
     });
