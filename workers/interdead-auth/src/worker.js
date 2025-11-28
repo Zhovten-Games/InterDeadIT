@@ -115,7 +115,12 @@ class DiscordAuthController {
       return new Response('Failed to issue OAuth state', { status: 500 });
     }
     const authorizeUrl = this.buildAuthorizeUrl(stateToken);
-    const response = Response.redirect(authorizeUrl, 302);
+    const response = new Response(null, {
+      status: 302,
+      headers: {
+        Location: authorizeUrl,
+      },
+    });
     sessionStore.collectCookies().forEach((cookie) => {
       response.headers.append('Set-Cookie', cookie);
     });
