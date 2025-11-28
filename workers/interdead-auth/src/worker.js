@@ -172,17 +172,28 @@ class DiscordAuthController {
       return new Response('Failed to complete Discord login (session)', { status: 500 });
     }
 
-    const redirectTo = state.redirect || '/';
-    const siteBaseUrl = this.getSiteBaseUrl();
-    let redirectUrl;
-    try {
-      redirectUrl = new URL(redirectTo, siteBaseUrl);
-    } catch (error) {
-      console.error('Failed to construct redirect URL', { redirectTo, siteBaseUrl, error });
-      return new Response('Invalid redirect target', { status: 400 });
+    const rawRedirect =
+      state && typeof state.redirect === 'string' && state.redirect.trim()
+        ? state.redirect.trim()
+        : '/';
+
+    const siteBaseUrl = this.getSiteBaseUrl().replace(/\/+$/, '');
+    let redirectLocation;
+
+    if (/^https?:\/\//i.test(rawRedirect)) {
+      redirectLocation = rawRedirect;
+    } else if (rawRedirect.startsWith('/')) {
+      redirectLocation = `${siteBaseUrl}${rawRedirect}`;
+    } else {
+      redirectLocation = `${siteBaseUrl}/${rawRedirect}`;
     }
 
-    const response = Response.redirect(redirectUrl.toString(), 302);
+    const response = new Response(null, {
+      status: 302,
+      headers: {
+        Location: redirectLocation,
+      },
+    });
     sessionStore.collectCookies().forEach((cookie) => {
       response.headers.append('Set-Cookie', cookie);
     });
