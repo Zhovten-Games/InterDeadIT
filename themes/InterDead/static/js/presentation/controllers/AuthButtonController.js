@@ -8,7 +8,7 @@ export default class AuthButtonController {
       idle: copy.idle || '',
       disabled: copy.disabled || '',
       loading: copy.loading || '',
-      error: copy.error || '',
+      error: copy.error || 'Unable to start Discord login. Please try again.',
     };
     this.statusElements = this.buttons
       .map(button => button?.querySelector?.('[data-auth-status]'))
@@ -48,9 +48,9 @@ export default class AuthButtonController {
     this.updateStatus(this.copy.loading);
   }
 
-  setErrorState() {
+  setErrorState(text) {
     this.setButtonsState({ disabled: false, loading: false });
-    this.updateStatus(this.copy.error);
+    this.updateStatus(text || this.copy.error);
   }
 
   setButtonsState({ disabled, loading }) {
@@ -84,17 +84,26 @@ export default class AuthButtonController {
       this.setDisabledState();
       return;
     }
+    console.info('[InterDead][UI] Auth button clicked');
     this.setLoadingState();
     const result = await this.authService?.beginLogin?.();
     if (result?.status === 'ready' && result.navigation?.url) {
+      console.info('[InterDead][UI] Opening Discord login', result.navigation);
       const target = result.navigation.target || '_self';
       window.open(result.navigation.url, target, 'noopener');
       return;
     }
     if (result?.status === 'disabled') {
+      console.warn('[InterDead][UI] Auth flow disabled');
       this.setDisabledState();
       return;
     }
+    if (result?.reason === 'missingNavigation') {
+      this.setErrorState('Unable to prepare the Discord login link. Please try again.');
+      console.error('[InterDead][UI] Missing navigation from auth service', result);
+      return;
+    }
+    console.error('[InterDead][UI] Auth flow failed', result);
     this.setErrorState();
   }
 }

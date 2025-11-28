@@ -1,6 +1,15 @@
+import { createIdentityCore, ProfileMetadata } from '@interdead/identity-core';
+import {
+  CloudflareScaleRepositoryAdapter,
+  CloudflareTriggerLogAdapter,
+  ConsoleLogger,
+  InMemoryTriggerLogRepository,
+  ScaleIngestionService,
+  SystemClock,
+  assertAxisCode,
+} from '@interdead/efbd-scale';
+
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize';
-const DISCORD_TOKEN_URL = 'https://discord.com/api/oauth2/token';
-const DISCORD_USER_URL = 'https://discord.com/api/users/@me';
 
 class CryptoService {
   constructor(secret) {
@@ -24,224 +33,245 @@ class CryptoService {
   }
 }
 
-class StateService {
-  constructor(secret) {
+class CookieSessionStore {
+  constructor(secret, cookies, options = {}) {
     this.crypto = new CryptoService(secret);
-    this.cookieName = 'discord_oauth_state';
+    this.cookies = new Map(cookies);
+    this.pendingCookies = [];
+    this.stateKey = 'discord_oauth_state';
+    this.sessionKey = 'interdead_session';
+    this.stateTtlSeconds = options.stateTtlSeconds ?? 600;
+    this.sessionTtlSeconds = options.sessionTtlSeconds ?? 60 * 60 * 24 * 30;
   }
 
-  async issueState(payload) {
-    const statePayload = {
-      ...payload,
-      nonce: crypto.randomUUID(),
-      issuedAt: Date.now(),
-    };
-    const encoded = base64UrlEncode(JSON.stringify(statePayload));
+  async set(key, value) {
+    await this.storeAndEncode(key, value, this.stateTtlSeconds);
+  }
+
+  async get(key) {
+    const raw = this.cookies.get(key);
+    if (!raw) {
+      return undefined;
+    }
+    return this.decode(raw).catch(() => undefined);
+  }
+
+  async delete(key) {
+    this.cookies.delete(key);
+    this.pendingCookies.push(this.buildCookie(key, 'deleted', 0));
+  }
+
+  async storeAndEncode(key, value, ttlSeconds) {
+    const encoded = await this.encode(value);
+    this.cookies.set(key, encoded);
+    this.pendingCookies.push(this.buildCookie(key, encoded, ttlSeconds));
+    return encoded;
+  }
+
+  async decode(token) {
+    const [encoded, signature] = token.split('.');
+    if (!encoded || !signature) {
+      throw new Error('Invalid token format');
+    }
+    const expected = await this.crypto.sign(encoded);
+    if (!expected || !timingSafeEqual(expected, signature)) {
+      throw new Error('Token signature mismatch');
+    }
+    const decoded = base64UrlDecode(encoded);
+    try {
+      return JSON.parse(decoded);
+    } catch (error) {
+      return decoded;
+    }
+  }
+
+  getRaw(key) {
+    return this.cookies.get(key);
+  }
+
+  async decodeToken(token) {
+    return this.decode(token);
+  }
+
+  async readSession() {
+    const raw = this.cookies.get(this.sessionKey);
+    if (!raw) {
+      return undefined;
+    }
+    return this.decode(raw).catch(() => undefined);
+  }
+
+  async issueSession(profile) {
+    return this.storeAndEncode(
+      this.sessionKey,
+      {
+        profileId: profile.profileId,
+        displayName: profile.displayName,
+        issuedAt: Date.now(),
+      },
+      this.sessionTtlSeconds,
+    );
+  }
+
+  collectCookies() {
+    return [...this.pendingCookies];
+  }
+
+  buildCookie(name, value, maxAge) {
+    return `${name}=${value}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${maxAge}`;
+  }
+
+  async encode(value) {
+    const serialized = typeof value === 'string' ? value : JSON.stringify(value);
+    const encoded = base64UrlEncode(serialized);
     const signature = await this.crypto.sign(encoded);
     if (!signature) {
-      throw new Error('Discord state signing key is missing');
+      throw new Error('Session signing key is missing');
     }
     return `${encoded}.${signature}`;
   }
-
-  async verifyState(stateToken, cookieValue) {
-    if (!stateToken) {
-      return null;
-    }
-    const [encoded, signature] = stateToken.split('.');
-    if (!encoded || !signature) {
-      return null;
-    }
-    const expectedSignature = await this.crypto.sign(encoded);
-    if (!expectedSignature || !timingSafeEqual(expectedSignature, signature)) {
-      return null;
-    }
-    if (cookieValue && !timingSafeEqual(cookieValue, stateToken)) {
-      return null;
-    }
-    const decoded = base64UrlDecode(encoded);
-    return JSON.parse(decoded);
-  }
-
-  buildCookie(value) {
-    return `${this.cookieName}=${value}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=600`;
-  }
-
-  clearCookie() {
-    return `${this.cookieName}=deleted; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=0`;
-  }
 }
 
-class SessionService {
-  constructor(secret) {
-    this.crypto = new CryptoService(secret);
-    this.cookieName = 'interdead_session';
+class D1TableAdapter {
+  constructor(binding) {
+    this.binding = binding;
   }
 
-  async issueSession(payload, ttlSeconds = 60 * 60 * 24 * 30) {
-    const basePayload = {
-      ...payload,
-      exp: Math.floor(Date.now() / 1000) + ttlSeconds,
-    };
-    const header = base64UrlEncode(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
-    const body = base64UrlEncode(JSON.stringify(basePayload));
-    const unsigned = `${header}.${body}`;
-    const signature = await this.crypto.sign(unsigned);
-    if (!signature) {
-      return `session-${payload.profileId || 'anonymous'}`;
+  async execute(query, params = []) {
+    const statement = this.binding.prepare(query);
+    const bound = params.length ? statement.bind(...params) : statement;
+    const lowered = query.trim().toLowerCase();
+    if (lowered.startsWith('select')) {
+      return bound.all();
     }
-    return `${unsigned}.${signature}`;
-  }
-
-  buildCookie(value) {
-    return `${this.cookieName}=${value}; Path=/; HttpOnly; Secure; SameSite=Lax; Max-Age=${60 * 60 * 24 * 30}`;
-  }
-}
-
-class DiscordApiClient {
-  constructor(env) {
-    this.clientId = env.IDENTITY_DISCORD_CLIENT_ID;
-    this.clientSecret = env.IDENTITY_DISCORD_CLIENT_SECRET;
-    this.redirectUri = env.IDENTITY_DISCORD_REDIRECT_URI;
-  }
-
-  isConfigured() {
-    return Boolean(this.clientId && this.clientSecret && this.redirectUri);
-  }
-
-  buildAuthorizeUrl(stateToken) {
-    const discordUrl = new URL(DISCORD_AUTHORIZE_URL);
-    discordUrl.searchParams.set('client_id', this.clientId);
-    discordUrl.searchParams.set('response_type', 'code');
-    discordUrl.searchParams.set('scope', 'identify');
-    discordUrl.searchParams.set('redirect_uri', this.redirectUri);
-    if (stateToken) {
-      discordUrl.searchParams.set('state', stateToken);
-    }
-    return discordUrl.toString();
-  }
-
-  async exchangeCode(code) {
-    const body = new URLSearchParams({
-      client_id: this.clientId,
-      client_secret: this.clientSecret,
-      grant_type: 'authorization_code',
-      code,
-      redirect_uri: this.redirectUri,
-    });
-
-    const response = await fetch(DISCORD_TOKEN_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-      body,
-    });
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const token = await response.json();
-    return token?.access_token ? token.access_token : null;
-  }
-
-  async fetchUser(accessToken) {
-    const response = await fetch(DISCORD_USER_URL, {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    });
-    if (!response.ok) {
-      return null;
-    }
-    return response.json();
-  }
-}
-
-class ProfileRepository {
-  constructor(database) {
-    this.database = database;
-  }
-
-  async saveDiscordProfile(discordUser) {
-    if (!this.database || !discordUser?.id) {
-      return null;
-    }
-    const payload = {
-      discordId: discordUser.id,
-      username: discordUser.username,
-      globalName: discordUser.global_name,
-      avatar: discordUser.avatar,
-      linkedAt: new Date().toISOString(),
-    };
-
-    await this.database.prepare(
-      'INSERT INTO profiles (profile_id, data) VALUES (?1, ?2) ON CONFLICT(profile_id) DO UPDATE SET data=?2',
-    )
-      .bind(discordUser.id, JSON.stringify(payload))
-      .run();
-
-    return { profileId: discordUser.id, username: discordUser.username, globalName: discordUser.global_name };
+    await bound.run();
+    return { results: [] };
   }
 }
 
 class DiscordAuthController {
   constructor(env) {
     this.env = env;
-    this.discordApi = new DiscordApiClient(env);
-    this.stateService = new StateService(env.IDENTITY_JWT_SECRET || env.IDENTITY_DISCORD_CLIENT_SECRET);
-    this.sessionService = new SessionService(env.IDENTITY_JWT_SECRET || env.IDENTITY_DISCORD_CLIENT_SECRET);
-    this.repository = new ProfileRepository(env.INTERDEAD_CORE);
   }
 
-  async buildStartRedirect(requestUrl) {
-    if (!this.discordApi.isConfigured()) {
+  isConfigured() {
+    return Boolean(
+      this.env.IDENTITY_DISCORD_CLIENT_ID &&
+        this.env.IDENTITY_DISCORD_CLIENT_SECRET &&
+        this.env.IDENTITY_DISCORD_REDIRECT_URI,
+    );
+  }
+
+  buildAuthorizeUrl(stateToken) {
+    const discordUrl = new URL(DISCORD_AUTHORIZE_URL);
+    discordUrl.searchParams.set('client_id', this.env.IDENTITY_DISCORD_CLIENT_ID);
+    discordUrl.searchParams.set('response_type', 'code');
+    discordUrl.searchParams.set('scope', 'identify');
+    discordUrl.searchParams.set('redirect_uri', this.env.IDENTITY_DISCORD_REDIRECT_URI);
+    if (stateToken) {
+      discordUrl.searchParams.set('state', stateToken);
+    }
+    return discordUrl.toString();
+  }
+
+  buildIdentity(cookies) {
+    const sessionStore = new CookieSessionStore(
+      this.env.IDENTITY_JWT_SECRET || this.env.IDENTITY_DISCORD_CLIENT_SECRET,
+      cookies,
+    );
+    const cloudflareBindings = this.env.INTERDEAD_CORE
+      ? { table: new D1TableAdapter(this.env.INTERDEAD_CORE), kv: this.env.IDENTITY_KV }
+      : undefined;
+
+    const identity = createIdentityCore({
+      discord: this.isConfigured()
+        ? {
+            clientId: this.env.IDENTITY_DISCORD_CLIENT_ID,
+            clientSecret: this.env.IDENTITY_DISCORD_CLIENT_SECRET,
+            redirectUri: this.env.IDENTITY_DISCORD_REDIRECT_URI,
+          }
+        : undefined,
+      cloudflare: cloudflareBindings,
+      sessionStore,
+      logger: console,
+    });
+
+    return { identity, sessionStore };
+  }
+
+  async buildStartRedirect(requestUrl, cookies) {
+    if (!this.isConfigured()) {
       return new Response('Discord authentication is disabled', { status: 503 });
     }
 
+    const { identity, sessionStore } = this.buildIdentity(cookies);
     const redirectTarget = requestUrl.searchParams.get('redirect') || '/';
-    const stateToken = await this.stateService.issueState({ redirect: redirectTarget });
-    const authorizeUrl = this.discordApi.buildAuthorizeUrl(stateToken);
+    const existingSession = await sessionStore.readSession();
+    const statePayload = {
+      redirect: redirectTarget,
+      profileId: existingSession?.profileId ?? crypto.randomUUID(),
+      issuedAt: Date.now(),
+    };
+
+    await identity.linkService.beginDiscordLogin(sessionStore.stateKey, statePayload);
+    const stateToken = sessionStore.getRaw(sessionStore.stateKey);
+    if (!stateToken) {
+      return new Response('Failed to issue OAuth state', { status: 500 });
+    }
+    const authorizeUrl = this.buildAuthorizeUrl(stateToken);
     const response = Response.redirect(authorizeUrl, 302);
-    response.headers.append('Set-Cookie', this.stateService.buildCookie(stateToken));
+    sessionStore.collectCookies().forEach((cookie) => {
+      response.headers.append('Set-Cookie', cookie);
+    });
     return response;
   }
 
   async handleCallback(url, cookies) {
-    if (!this.discordApi.isConfigured()) {
+    if (!this.isConfigured()) {
       return new Response('Discord authentication is disabled', { status: 503 });
     }
 
+    const { identity, sessionStore } = this.buildIdentity(cookies);
     const code = url.searchParams.get('code');
     const stateToken = url.searchParams.get('state');
     if (!code || !stateToken) {
       return new Response('Missing OAuth parameters', { status: 400 });
     }
 
-    const state = await this.stateService.verifyState(stateToken, cookies.get(this.stateService.cookieName));
-    if (!state) {
+    const storedToken = sessionStore.getRaw(sessionStore.stateKey);
+    if (!storedToken || !timingSafeEqual(storedToken, stateToken)) {
       return new Response('Invalid OAuth state', { status: 400 });
     }
 
-    const accessToken = await this.discordApi.exchangeCode(code);
-    if (!accessToken) {
-      return new Response('Failed to exchange Discord code', { status: 502 });
+    let state;
+    try {
+      state = await sessionStore.decodeToken(stateToken);
+    } catch (error) {
+      return new Response('Invalid OAuth state token', { status: 400 });
     }
 
-    const user = await this.discordApi.fetchUser(accessToken);
-    if (!user) {
-      return new Response('Failed to fetch Discord profile', { status: 502 });
-    }
-
-    const profile = await this.repository.saveDiscordProfile(user);
-    const sessionToken = await this.sessionService.issueSession({
-      profileId: profile?.profileId,
-      discordId: user.id,
-      username: user.username,
-      globalName: user.global_name,
+    const profileId = state?.profileId || crypto.randomUUID();
+    const metadata = new ProfileMetadata({
+      profileId,
+      displayName: state?.displayName || 'Discord traveler',
+      avatarUrl: state?.avatarUrl,
     });
+
+    let identityAggregate;
+    try {
+      identityAggregate = await identity.linkService.completeDiscordLogin(profileId, code, metadata);
+    } catch (error) {
+      return new Response('Failed to complete Discord login', { status: 502 });
+    }
+
+    await sessionStore.delete(sessionStore.stateKey);
+    await sessionStore.issueSession(identityAggregate.state.metadata);
 
     const redirectTo = state.redirect || '/';
     const response = Response.redirect(redirectTo, 302);
-    response.headers.append('Set-Cookie', this.sessionService.buildCookie(sessionToken));
-    response.headers.append('Set-Cookie', this.stateService.clearCookie());
+    sessionStore.collectCookies().forEach((cookie) => {
+      response.headers.append('Set-Cookie', cookie);
+    });
     return response;
   }
 }
@@ -253,29 +283,84 @@ class EfbdController {
 
   async handleTrigger(request) {
     const trigger = await request.json().catch(() => null);
-    if (!trigger?.axis && !trigger?.axisCode) {
+    const axisCandidate = trigger?.axisCode || trigger?.axis;
+    if (!axisCandidate) {
       return new Response('Invalid trigger', { status: 400 });
     }
-    await this.persistTrigger(trigger);
+
+    let axisCode;
+    try {
+      axisCode = assertAxisCode(String(axisCandidate));
+    } catch (error) {
+      return new Response('Unknown axis code', { status: 400 });
+    }
+
+    const increment = this.normalizeIncrement(trigger?.value);
+    if (increment === null) {
+      return new Response('Invalid trigger score', { status: 400 });
+    }
+
+    const ingestion = this.buildIngestionService(increment);
+    if (!ingestion) {
+      return new Response('EFBD scale persistence unavailable', { status: 503 });
+    }
+
+    try {
+      await ingestion.recordTriggers({
+        profileId: this.resolveProfileId(trigger),
+        triggers: [
+          {
+            axis: axisCode,
+            source: trigger?.source || 'interdead-it',
+            metadata: trigger?.metadata,
+          },
+        ],
+      });
+    } catch (error) {
+      return new Response('Failed to persist trigger', { status: 502 });
+    }
+
     return new Response(null, { status: 204 });
   }
 
-  async persistTrigger(trigger) {
-    const db = this.env.INTERDEAD_CORE;
-    if (!db) {
-      return;
+  buildIngestionService(increment) {
+    const repository = this.buildScaleRepository();
+    if (!repository) {
+      return null;
     }
-    const profileId = trigger.profileId || trigger.profile_id || 'anonymous';
-    const axisCode = trigger.axisCode || trigger.axis;
-    const score = Number.isFinite(trigger.value) ? trigger.value : 0;
-    const triggerSource = trigger.source || 'interdead-it';
+    const triggerLogRepository = this.buildTriggerLogRepository();
+    const clock = new SystemClock();
+    const logger = new ConsoleLogger();
+    return new ScaleIngestionService(repository, triggerLogRepository, clock, logger, {
+      maxIncrementPerEvent: increment,
+    });
+  }
 
-    await db.prepare(
-      'INSERT INTO efbd_scale (profile_id, axis_code, score, trigger_source, updated_at) VALUES (?1, ?2, ?3, ?4, datetime("now")) ' +
-      'ON CONFLICT(profile_id, axis_code) DO UPDATE SET score=excluded.score, trigger_source=excluded.trigger_source, updated_at=excluded.updated_at',
-    )
-      .bind(profileId, axisCode, score, triggerSource)
-      .run();
+  buildScaleRepository() {
+    if (!this.env.INTERDEAD_CORE) {
+      return null;
+    }
+    return new CloudflareScaleRepositoryAdapter(this.env.INTERDEAD_CORE);
+  }
+
+  buildTriggerLogRepository() {
+    if (this.env.IDENTITY_KV) {
+      return new CloudflareTriggerLogAdapter(this.env.IDENTITY_KV, 'efbd-trigger-log');
+    }
+    return new InMemoryTriggerLogRepository();
+  }
+
+  normalizeIncrement(rawValue) {
+    const value = rawValue ?? 1;
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric) || numeric <= 0) {
+      return null;
+    }
+    return Math.min(Math.floor(numeric), 100);
+  }
+
+  resolveProfileId(trigger) {
+    return trigger?.profileId || trigger?.profile_id || 'anonymous';
   }
 }
 
@@ -287,7 +372,7 @@ export default {
     const efbdController = new EfbdController(env);
 
     if (request.method === 'GET' && url.pathname === '/auth/discord/start') {
-      return authController.buildStartRedirect(url);
+      return authController.buildStartRedirect(url, cookies);
     }
 
     if (request.method === 'GET' && url.pathname === '/auth/discord/callback') {

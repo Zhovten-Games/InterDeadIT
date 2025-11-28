@@ -23,18 +23,22 @@ export default class DiscordAuthService {
       return { status: 'disabled' };
     }
 
+    console.info('[InterDead][Auth] Starting Discord login flow');
     this.eventBus?.emit?.(EVENTS.REQUESTED, {});
     try {
       const navigation = await this.authAdapter?.getDiscordLoginNavigation?.();
       if (navigation?.url) {
+        console.info('[InterDead][Auth] Discord navigation ready', navigation);
         this.eventBus?.emit?.(EVENTS.COMPLETED, navigation);
         return { status: 'ready', navigation };
       }
+      console.warn('[InterDead][Auth] Discord navigation missing URL', navigation);
       this.eventBus?.emit?.(EVENTS.FAILED, { reason: 'missingNavigation' });
-      return { status: 'error' };
+      return { status: 'error', reason: 'missingNavigation' };
     } catch (error) {
+      console.error('[InterDead][Auth] Discord login flow failed', error);
       this.eventBus?.emit?.(EVENTS.FAILED, { reason: 'exception', error });
-      return { status: 'error', error };
+      return { status: 'error', error, reason: 'exception' };
     }
   }
 }

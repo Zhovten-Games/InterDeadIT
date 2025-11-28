@@ -65,8 +65,49 @@
     {{- $featureFlags := .Site.Params.featureFlags | default dict -}}
     {{- $api := .Site.Params.api | default dict -}}
     {{- $auth := .Site.Params.auth | default dict -}}
+    {{- $envBaseUrl := getenv (default "" $api.envVarBaseUrl) -}}
     <script>
-      window.__INTERDEAD_CONFIG__ = {{ dict "featureFlags" $featureFlags "api" $api "auth" $auth | jsonify | safeJS }};
+      (() => {
+        const config = {{ dict "featureFlags" $featureFlags "api" $api "auth" $auth | jsonify | safeJS }};
+        const hostname = window.location.hostname;
+        const apiBaseFromEnv = {{ $envBaseUrl | jsonify | safeJS }};
+        const singleHostBaseUrl = (() => {
+          const apiHostValues = Object.values(config.api.baseUrlByHost || {}).filter(
+            url => typeof url === 'string' && url.trim().length > 0,
+          );
+          return apiHostValues.length === 1 ? apiHostValues[0] : '';
+        })();
+        const envBaseMap = {
+          ...config.api.baseUrlByHost,
+          'interdead.phantom-draft.com': config.api.baseUrlByHost?.['interdead.phantom-draft.com'] || config.api.prodBaseUrl,
+        };
+        const envMappedBaseUrl = envBaseMap[hostname];
+        const baseUrlCandidates = [
+          { source: 'envVar', value: apiBaseFromEnv },
+          { source: 'config.baseUrl', value: config.api.baseUrl },
+          { source: `hostMap:${hostname}`, value: envMappedBaseUrl },
+          { source: 'config.defaultBaseUrl', value: config.api.defaultBaseUrl },
+          { source: 'singleHostBaseUrl', value: singleHostBaseUrl },
+          { source: 'config.prodBaseUrl', value: config.api.prodBaseUrl },
+        ];
+        const selectedBaseCandidate = baseUrlCandidates.find(
+          ({ value }) => typeof value === 'string' && value.trim().length > 0,
+        );
+        const selectedBaseUrl = selectedBaseCandidate?.value || '';
+        config.api.baseUrl = selectedBaseUrl;
+        const baseUrlLogPayload = {
+          hostname,
+          selectedSource: selectedBaseCandidate?.source || 'none',
+          baseUrl: selectedBaseUrl,
+          candidates: baseUrlCandidates,
+        };
+        if (selectedBaseUrl) {
+          console.info('[InterDead][Config] Selected API base URL', baseUrlLogPayload);
+        } else {
+          console.warn('[InterDead][Config] Failed to resolve API base URL; check configuration', baseUrlLogPayload);
+        }
+        window.__INTERDEAD_CONFIG__ = config;
+      })();
     </script>
   </head>
   <body data-mode="{{ or (index .Site.Params "defaultMode") "demo" }}">
