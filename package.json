@@ -22,6 +22,6 @@
   "homepage": "https://github.com/Zhovten-Games/InterDeadIT#readme",
   "dependencies": {
     "@interdead/efbd-scale": "^0.1.3",
-    "@interdead/identity-core": "^0.1.4"
+    "@interdead/identity-core": "^0.1.6"
   }
 }
