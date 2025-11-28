@@ -246,24 +246,29 @@ class EfbdController {
 
 export default {
   async fetch(request, env) {
-    const url = new URL(request.url);
-    const cookies = parseCookies(request.headers.get('Cookie'));
-    const authController = new DiscordAuthController(env);
-    const efbdController = new EfbdController(env);
+    try {
+      const url = new URL(request.url);
+      const cookies = parseCookies(request.headers.get('Cookie'));
+      const authController = new DiscordAuthController(env);
+      const efbdController = new EfbdController(env);
 
-    if (request.method === 'GET' && url.pathname === '/auth/discord/start') {
-      return authController.buildStartRedirect(url, cookies);
+      if (request.method === 'GET' && url.pathname === '/auth/discord/start') {
+        return authController.buildStartRedirect(url, cookies);
+      }
+
+      if (request.method === 'GET' && url.pathname === '/auth/discord/callback') {
+        return authController.handleCallback(url, cookies);
+      }
+
+      if (request.method === 'POST' && url.pathname === '/efbd/trigger') {
+        return efbdController.handleTrigger(request);
+      }
+
+      return new Response('Not found', { status: 404 });
+    } catch (error) {
+      console.error('Unhandled worker error', error);
+      return new Response('Internal server error', { status: 500 });
     }
-
-    if (request.method === 'GET' && url.pathname === '/auth/discord/callback') {
-      return authController.handleCallback(url, cookies);
-    }
-
-    if (request.method === 'POST' && url.pathname === '/efbd/trigger') {
-      return efbdController.handleTrigger(request);
-    }
-
-    return new Response('Not found', { status: 404 });
   },
 };
 
