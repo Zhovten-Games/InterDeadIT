@@ -145,7 +145,16 @@ class DiscordAuthController {
     }
 
     await sessionStore.delete(sessionStore.stateKey);
-    await sessionStore.issueSession(identityAggregate.state.metadata);
+
+    const profile =
+      identityAggregate?.state?.metadata ? identityAggregate.state.metadata : metadata;
+
+    try {
+      await sessionStore.issueSession(profile);
+    } catch (error) {
+      console.error('Failed to issue session', error);
+      return new Response('Failed to complete Discord login (session)', { status: 500 });
+    }
 
     const redirectTo = state.redirect || '/';
     const response = Response.redirect(redirectTo, 302);
