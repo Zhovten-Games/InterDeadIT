@@ -64,4 +64,49 @@ Testing
 
 ---
 
+Ознакомьтесь, пожалуйста со старым ТЗ:
+
+InterDeadIT/doc/interdead-efbd-profile-enhancements-spec
+
+Не было сделано/не получилось:
+
+1. Обратный отсчет по прежнему доступен для тех, кто авторизовался. Нужно исправить.
+2. Контент: у нас есть блок "Stories that should never have happened", а следующий "Outcomes that were meant to happen". Во всех локалях название второго блока должно начинаться с того же слова, что название предыдущего, в случае с англ "Stories".
+3. “Nostalgia” plan -- не убрано из отзывов, у нас нет планов, нужно убрать во всех локалях этот момент.
+
+Это нужно доработать. Также:
+
+4. На странице профиля сейчас "You are not authenticated. Please sign in from the home page to view your profile." на этом месте пусть будет нижний блок "EFBD dossier" (в мобильной версии, пусть они друг под другом), а саму надпись:
+
+>> You are not authenticated. Please sign in from the home page to view your profile.
+
+... оставьте только для НЕавторизованных вместо всего юзерского контента на странице.
+
+5. Дублирующиеся данные:
+
+>>
+
+Display name
+Username
+
+... под блоком с аватаром просто уберите, пусть будет только ID.
+
+Следуйте нашим идеалам в /README (в корне репозитория).
+
+Summary
+
+    Home hero countdown now reacts to authentication by toggling visibility and stopping the timer for signed-in sessions while leaving it active for guests.
+
+Profile page hides EFBD and identity content when unauthenticated, fills all repeated identity fields consistently, and leaves only the Profile ID in the details table to avoid duplicate display of names.
+
+Localization tweaks align the “inevitable” stories block headings with the preceding stories title across locales and remove “Nostalgia” plan wording from Marina’s reviews in every language variant.
+
+Testing
+
+    ⚠️ map:preview (fails in container: missing libatk for Puppeteer)
+
+✅ map:test
+
+---
+
 ...

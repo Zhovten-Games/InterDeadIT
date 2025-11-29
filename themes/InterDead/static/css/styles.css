@@ -1683,10 +1683,6 @@ body[data-mode="demo"] [data-show~="demo"] {
   padding: 20px;
 }
 
-.gm-profile__card--efbd {
-  grid-column: span 2;
-}
-
 .gm-profile__identity {
   display: flex;
   flex-direction: column;
@@ -1852,10 +1848,6 @@ body[data-mode="demo"] [data-show~="demo"] {
 }
 
 @media (max-width: 960px) {
-  .gm-profile__card--efbd {
-    grid-column: span 1;
-  }
-
   .gm-profile__identityHeader {
     grid-template-columns: 1fr;
     justify-items: center;

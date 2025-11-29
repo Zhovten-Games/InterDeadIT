@@ -1,3 +1,3 @@
 ---
-title: "Outcomes that were meant to happen"
+title: "Stories that were meant to happen"
 ---
