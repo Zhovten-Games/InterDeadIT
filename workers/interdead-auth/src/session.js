@@ -89,12 +89,21 @@ class CookieSessionStore {
     return this.decode(token);
   }
 
-  async readSession() {
+  async readSession(options = {}) {
     const raw = this.cookies.get(this.sessionKey);
     if (!raw) {
       return undefined;
     }
-    return this.decode(raw).catch(() => undefined);
+
+    try {
+      const session = await this.decode(raw);
+      if (options.refresh === true && session) {
+        await this.storeAndEncode(this.sessionKey, session, this.sessionTtlSeconds);
+      }
+      return session;
+    } catch (error) {
+      return undefined;
+    }
   }
 
   async issueSession(profile) {
@@ -103,6 +112,8 @@ class CookieSessionStore {
       {
         profileId: profile.profileId,
         displayName: profile.displayName,
+        username: profile.username,
+        avatarUrl: profile.avatarUrl,
         issuedAt: Date.now(),
       },
       this.sessionTtlSeconds,

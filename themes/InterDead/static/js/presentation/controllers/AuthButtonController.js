@@ -1,18 +1,32 @@
+import { AUTH_SESSION_EVENTS } from '../../application/auth/AuthStateService.js';
+
 export default class AuthButtonController {
-  constructor({ buttons = [], helperElement, authService, featureFlags, copy = {} }) {
+  constructor({
+    buttons = [],
+    helperElement,
+    authService,
+    featureFlags,
+    authStateService,
+    eventBus,
+    copy = {},
+  }) {
     this.buttons = buttons;
     this.helperElement = helperElement;
     this.authService = authService;
     this.featureFlags = featureFlags;
+    this.authStateService = authStateService;
+    this.eventBus = eventBus;
     this.copy = {
       idle: copy.idle || '',
       disabled: copy.disabled || '',
       loading: copy.loading || '',
       error: copy.error || 'Unable to start Discord login. Please try again.',
+      authenticated: copy.authenticated || '',
     };
     this.statusElements = this.buttons
       .map(button => button?.querySelector?.('[data-auth-status]'))
       .filter(Boolean);
+    this.unsubscribe = null;
   }
 
   init() {
@@ -23,6 +37,10 @@ export default class AuthButtonController {
       }
       button.addEventListener('click', event => this.handleClick(event));
     });
+    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, session =>
+      this.applySession(session),
+    );
+    this.applySession(this.authStateService?.getState?.());
   }
 
   applyInitialState() {
@@ -31,6 +49,10 @@ export default class AuthButtonController {
       return;
     }
     this.setIdleState();
+  }
+
+  dispose() {
+    this.unsubscribe?.();
   }
 
   setIdleState() {
@@ -46,6 +68,14 @@ export default class AuthButtonController {
   setLoadingState() {
     this.setButtonsState({ disabled: true, loading: true });
     this.updateStatus(this.copy.loading);
+  }
+
+  setAuthenticatedState(displayName) {
+    this.setButtonsState({ disabled: true, loading: false });
+    const statusText = this.copy.authenticated
+      ? this.copy.authenticated.replace('{name}', displayName || '')
+      : '';
+    this.updateStatus(statusText);
   }
 
   setErrorState(text) {
@@ -84,6 +114,11 @@ export default class AuthButtonController {
       this.setDisabledState();
       return;
     }
+    const currentSession = this.authStateService?.getState?.();
+    if (currentSession?.authenticated) {
+      this.setAuthenticatedState(currentSession.displayName);
+      return;
+    }
     console.info('[InterDead][UI] Auth button clicked');
     this.setLoadingState();
     const result = await this.authService?.beginLogin?.();
@@ -105,5 +140,14 @@ export default class AuthButtonController {
     }
     console.error('[InterDead][UI] Auth flow failed', result);
     this.setErrorState();
+  }
+
+  applySession(session) {
+    if (!session || session.authenticated !== true) {
+      this.setIdleState();
+      return;
+    }
+
+    this.setAuthenticatedState(session.displayName || session.username);
   }
 }

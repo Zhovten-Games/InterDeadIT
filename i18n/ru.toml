@@ -73,6 +73,33 @@ other = "Opening Discord authorization..."
 ['auth.discord.status.error']
 other = "We could not start Discord login. Please retry."
 
+['auth.discord.status.authenticated']
+other = "Вы вошли как {name}"
+
+['auth.badge.loggedInAs']
+other = "Вход выполнен как"
+
+['auth.badge.viewProfile']
+other = "Открыть профиль"
+
+['profile.title']
+other = "Ваш профиль"
+
+['profile.lead']
+other = "Ниже отображаются данные вашей текущей сессии."
+
+['profile.unauthenticated']
+other = "Вы не авторизованы. Войдите на главной странице, чтобы увидеть профиль."
+
+['profile.fields.displayName']
+other = "Отображаемое имя"
+
+['profile.fields.username']
+other = "Имя пользователя"
+
+['profile.fields.profileId']
+other = "ID профиля"
+
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 

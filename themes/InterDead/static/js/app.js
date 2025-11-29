@@ -16,8 +16,12 @@ import DocumentScrollController from './infrastructure/ui/DocumentScrollControll
 import FeatureFlagService from './application/config/FeatureFlagService.js';
 import EventBus from './application/events/EventBus.js';
 import DiscordAuthService from './application/auth/DiscordAuthService.js';
+import AuthStateService from './application/auth/AuthStateService.js';
 import DiscordOAuthAdapter from './infrastructure/auth/DiscordOAuthAdapter.js';
+import AuthSessionAdapter from './infrastructure/auth/AuthSessionAdapter.js';
 import AuthButtonController from './presentation/controllers/AuthButtonController.js';
+import AuthBadgeController from './presentation/controllers/AuthBadgeController.js';
+import ProfilePageController from './presentation/controllers/ProfilePageController.js';
 import EfbdApiAdapter from './infrastructure/efbd/EfbdApiAdapter.js';
 import EfbdScaleBridgeService from './application/efbd/EfbdScaleBridgeService.js';
 
@@ -81,8 +85,11 @@ const apiConfig = {
   baseUrl: runtimeConfig.api?.baseUrl || runtimeConfig.api?.defaultBaseUrl,
   defaultBaseUrl: runtimeConfig.api?.defaultBaseUrl,
   identityStartPath: runtimeConfig.api?.identityStartPath,
+  identitySessionPath: runtimeConfig.api?.identitySessionPath,
   efbdTriggerPath: runtimeConfig.api?.efbdTriggerPath,
 };
+
+const profileLink = document.body?.dataset?.profileUrl || '';
 
 const heroCta = document.querySelector('.gm-hero__cta[data-cta-anchor]');
 const authCopy = {
@@ -90,10 +97,13 @@ const authCopy = {
   disabled: heroCta?.dataset?.authCopyDisabled || '',
   loading: heroCta?.dataset?.authCopyLoading || '',
   error: heroCta?.dataset?.authCopyError || '',
+  authenticated: heroCta?.dataset?.authCopyAuthenticated || '',
 };
 
 const authAdapter = new DiscordOAuthAdapter({ apiConfig });
+const authSessionAdapter = new AuthSessionAdapter({ apiConfig });
 const authService = new DiscordAuthService({ authAdapter, eventBus, featureFlags });
+const authStateService = new AuthStateService({ sessionAdapter: authSessionAdapter, eventBus });
 const authButtonController = new AuthButtonController({
   buttons: [
     document.querySelector('[data-auth-button="hero"]'),
@@ -102,9 +112,26 @@ const authButtonController = new AuthButtonController({
   helperElement: document.querySelector('[data-auth-helper]'),
   authService,
   featureFlags,
+  authStateService,
+  eventBus,
   copy: authCopy,
 });
 authButtonController.init();
+
+const authBadgeController = new AuthBadgeController({
+  authStateService,
+  eventBus,
+  profileLink,
+  badgeElements: [
+    document.querySelector('[data-auth-badge="header"]'),
+    document.querySelector('[data-auth-badge="hero"]'),
+  ],
+  ctaContainers: [
+    document.querySelector('.gm-header__cta[data-show="adult"]'),
+    document.querySelector('[data-auth-button="hero"]'),
+  ],
+});
+authBadgeController.init();
 
 const efbdAdapter = new EfbdApiAdapter({ apiConfig });
 const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFlags, eventBus });
@@ -128,9 +155,30 @@ const faqController = new FaqController({
 });
 faqController.init();
 
+const profilePageRoot = document.querySelector('[data-profile-page-root]');
+const profilePageController = profilePageRoot
+  ? new ProfilePageController({
+      authStateService,
+      eventBus,
+      elements: {
+        authenticatedBlock: document.querySelector('[data-profile-authenticated]'),
+        unauthenticatedBlock: document.querySelector('[data-profile-unauthenticated]'),
+        displayName: document.querySelector('[data-profile-display-name]'),
+        username: document.querySelector('[data-profile-username]'),
+        profileId: document.querySelector('[data-profile-id]'),
+        avatar: document.querySelector('[data-profile-avatar]'),
+      },
+    })
+  : null;
+profilePageController?.init?.();
+authStateService.refresh?.();
+
 window.addEventListener('beforeunload', () => {
   headerLogoController.dispose?.();
   headerActionsController.dispose?.();
   countdownController.stop?.();
   sliderController.dispose?.();
+  authBadgeController.dispose?.();
+  authButtonController.dispose?.();
+  profilePageController?.dispose?.();
 });

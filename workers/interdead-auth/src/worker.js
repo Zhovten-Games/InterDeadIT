@@ -169,9 +169,15 @@ class DiscordAuthController {
 
     const profile =
       identityAggregate?.state?.metadata ? identityAggregate.state.metadata : metadata;
+    const discordLink = identityAggregate?.state?.discordLink;
 
     try {
-      await sessionStore.issueSession(profile);
+      await sessionStore.issueSession({
+        profileId: profile.profileId,
+        displayName: profile.displayName,
+        avatarUrl: profile.avatarUrl || discordLink?.avatarUrl,
+        username: discordLink?.username,
+      });
     } catch (error) {
       console.error('Failed to issue session', error);
       return new Response('Failed to complete Discord login (session)', { status: 500 });
@@ -199,6 +205,41 @@ class DiscordAuthController {
         Location: redirectLocation,
       },
     });
+    sessionStore.collectCookies().forEach((cookie) => {
+      response.headers.append('Set-Cookie', cookie);
+    });
+    return response;
+  }
+
+  async handleSessionStatus(cookies) {
+    const { sessionStore } = this.buildIdentity(cookies);
+    const session = await sessionStore.readSession({ refresh: true });
+    if (!session) {
+      return new Response(JSON.stringify({ authenticated: false }), {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store',
+        },
+      });
+    }
+
+    const response = new Response(
+      JSON.stringify({
+        authenticated: true,
+        profileId: session.profileId,
+        displayName: session.displayName,
+        avatarUrl: session.avatarUrl,
+        username: session.username,
+      }),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Cache-Control': 'no-store',
+        },
+      },
+    );
     sessionStore.collectCookies().forEach((cookie) => {
       response.headers.append('Set-Cookie', cookie);
     });
@@ -308,6 +349,10 @@ export default {
 
       if (request.method === 'GET' && url.pathname === '/auth/discord/callback') {
         return authController.handleCallback(url, cookies);
+      }
+
+      if (request.method === 'GET' && url.pathname === '/auth/session') {
+        return authController.handleSessionStatus(cookies);
       }
 
       if (request.method === 'POST' && url.pathname === '/efbd/trigger') {

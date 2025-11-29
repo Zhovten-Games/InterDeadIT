@@ -20,6 +20,29 @@
             <span class="auth-button__label">{{ i18n "auth.discord.cta" }}</span>
           </button>
         </div>
+        <div class="gm-header__cta gm-header__cta--badge">
+          <a
+            class="auth-badge auth-badge--hidden"
+            data-auth-badge="header"
+            data-auth-badge-link
+            aria-label="{{ i18n "auth.badge.viewProfile" }}"
+          >
+            <span class="auth-badge__avatar" data-auth-badge-avatar>
+              <img
+                src=""
+                alt=""
+                loading="lazy"
+                data-auth-badge-avatar-img
+                class="auth-badge__avatarImage"
+              />
+            </span>
+            <span class="auth-badge__meta">
+              <span class="auth-badge__label" data-i18n="auth.badge.loggedInAs">{{ i18n "auth.badge.loggedInAs" }}</span>
+              <span class="auth-badge__name" data-auth-badge-name></span>
+              <span class="auth-badge__username" data-auth-badge-username></span>
+            </span>
+          </a>
+        </div>
         <div class="gm-header__cta" data-show="demo">
           <a
             class="gm-btn"

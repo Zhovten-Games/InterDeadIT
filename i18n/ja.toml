@@ -73,6 +73,33 @@ other = "Opening Discord authorization..."
 ['auth.discord.status.error']
 other = "We could not start Discord login. Please retry."
 
+['auth.discord.status.authenticated']
+other = "ログイン中: {name}"
+
+['auth.badge.loggedInAs']
+other = "ログイン中"
+
+['auth.badge.viewProfile']
+other = "プロフィールを見る"
+
+['profile.title']
+other = "プロフィール"
+
+['profile.lead']
+other = "現在のログインから取得したセッション情報を表示します。"
+
+['profile.unauthenticated']
+other = "未ログインです。トップページからサインインしてプロフィールを確認してください。"
+
+['profile.fields.displayName']
+other = "表示名"
+
+['profile.fields.username']
+other = "ユーザー名"
+
+['profile.fields.profileId']
+other = "プロフィールID"
+
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 

@@ -51,6 +51,7 @@ disableKinds = ["taxonomy", "term"]
     stagingBaseUrl = "https://api.staging.interdead.phantom-draft.com"
     prodBaseUrl = "https://api.interdead.phantom-draft.com"
     identityStartPath = "/auth/discord/start"
+    identitySessionPath = "/auth/session"
     efbdTriggerPath = "/efbd/trigger"
     envVarBaseUrl = "HUGO_INTERDEAD_API_BASE_URL"
 

@@ -1,0 +1,18 @@
+{{- $home := slice .Site.Home -}}
+{{- $pages := where .Site.RegularPages ".Params.sitemap_exclude" "!=" true -}}
+{{- $pages = where $pages ".Params.robots" "!=" "noindex,nofollow" -}}
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {{- range $home }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- with .Lastmod }}<lastmod>{{ .Format "2006-01-02T15:04:05Z07:00" }}</lastmod>{{ end }}
+  </url>
+  {{- end }}
+  {{- range $pages }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- with .Lastmod }}<lastmod>{{ .Format "2006-01-02T15:04:05Z07:00" }}</lastmod>{{ end }}
+  </url>
+  {{- end }}
+</urlset>

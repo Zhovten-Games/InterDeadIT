@@ -1,0 +1,47 @@
+{{ define "main" }}
+  <section class="gm-section gm-profile" data-profile-page-root>
+    <div class="gm-container">
+      <h1 class="gm-section__title" data-i18n="profile.title">{{ i18n "profile.title" }}</h1>
+      <p class="gm-section__lead" data-i18n="profile.lead">{{ i18n "profile.lead" }}</p>
+
+      <div class="gm-card gm-profile__card" data-profile-authenticated hidden>
+        <div class="gm-profile__badge">
+          <div class="auth-badge">
+            <span class="auth-badge__avatar" data-profile-avatar>
+              <img
+                src=""
+                alt=""
+                loading="lazy"
+                class="auth-badge__avatarImage"
+                data-profile-avatar-img
+              />
+            </span>
+            <span class="auth-badge__meta">
+              <span class="auth-badge__label" data-i18n="auth.badge.loggedInAs">{{ i18n "auth.badge.loggedInAs" }}</span>
+              <span class="auth-badge__name" data-profile-display-name></span>
+              <span class="auth-badge__username" data-profile-username></span>
+            </span>
+          </div>
+        </div>
+        <div class="gm-profile__table">
+          <div class="gm-profile__row">
+            <div class="gm-profile__label" data-i18n="profile.fields.displayName">{{ i18n "profile.fields.displayName" }}</div>
+            <div class="gm-profile__value" data-profile-display-name></div>
+          </div>
+          <div class="gm-profile__row">
+            <div class="gm-profile__label" data-i18n="profile.fields.username">{{ i18n "profile.fields.username" }}</div>
+            <div class="gm-profile__value" data-profile-username></div>
+          </div>
+          <div class="gm-profile__row">
+            <div class="gm-profile__label" data-i18n="profile.fields.profileId">{{ i18n "profile.fields.profileId" }}</div>
+            <div class="gm-profile__value" data-profile-id></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="gm-card gm-profile__card" data-profile-unauthenticated>
+        <p class="gm-profile__empty" data-i18n="profile.unauthenticated">{{ i18n "profile.unauthenticated" }}</p>
+      </div>
+    </div>
+  </section>
+{{ end }}
