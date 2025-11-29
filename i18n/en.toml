@@ -28,6 +28,12 @@ other = "More"
 ['header.menu.toggle']
 other = "Toggle navigation"
 
+['breadcrumbs.label']
+other = "Breadcrumbs"
+
+['breadcrumbs.home']
+other = "Home"
+
 ['header.lang.label']
 other = "Language"
 
@@ -86,7 +92,7 @@ other = "View profile"
 other = "Your profile"
 
 ['profile.lead']
-other = "Session data from your current login is shown below."
+other = "Session data from your current login and your EFBD dossier are shown below."
 
 ['profile.unauthenticated']
 other = "You are not authenticated. Please sign in from the home page to view your profile."
@@ -99,6 +105,42 @@ other = "Username"
 
 ['profile.fields.profileId']
 other = "Profile ID"
+
+['profile.efbd.title']
+other = "EFBD dossier"
+
+['profile.efbd.lead']
+other = "Your EFBD scale snapshot mirrors the triggers recorded for this profile."
+
+['profile.efbd.updated']
+other = "Summary updated"
+
+['profile.efbd.lastUpdated']
+other = "Updated"
+
+['profile.efbd.empty']
+other = "No EFBD triggers have been recorded for this profile yet."
+
+['profile.efbd.unauthenticated']
+other = "Sign in to view EFBD scale details."
+
+['profile.efbd.error']
+other = "EFBD scale data is unavailable right now."
+
+['profile.efbd.axes.social']
+other = "Social Echo"
+
+['profile.efbd.axes.mind']
+other = "Mind Static"
+
+['profile.efbd.axes.decline']
+other = "Decline"
+
+['profile.efbd.axes.exposure']
+other = "Exposure"
+
+['profile.efbd.axes.abandon']
+other = "Abandon"
 
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
@@ -119,10 +161,10 @@ other = "Count the fallen mediums with us."
 other = "Count the fallen mediums with us. Mediums tallied: +{{ .Count }}."
 
 ['inevitable.title']
-other = "Outcomes that were meant to happen"
+other = "Истории that were meant to happen"
 
 ['inevitable.item1']
-other = "“Grandpa kept the keys in his boot. Found them in one minute.” — Marina, “Nostalgia” plan"
+other = "“Grandpa kept the keys in his boot. Found them in one minute.” — Marina"
 
 ['inevitable.item2']
 other = "“Dad texted: ‘Do not take that loan.’ Saved me.” — Anonymous"

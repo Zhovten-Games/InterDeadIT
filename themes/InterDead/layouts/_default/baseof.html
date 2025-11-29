@@ -1,6 +1,7 @@
 {{ partial "head.html" . }}
     {{ partial "header.html" . }}
     <main class="gm-main">
+      {{ partial "breadcrumbs.html" . }}
       {{ block "main" . }}{{ end }}
     </main>
     {{ partial "footer.html" . }}

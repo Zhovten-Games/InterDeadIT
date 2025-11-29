@@ -1,8 +1,9 @@
 export default class HeaderActionsController {
-  constructor({ header, actionsContainer, anchors = [] }) {
+  constructor({ header, actionsContainer, anchors = [], stickyWhenNoAnchor = false }) {
     this.header = header;
     this.actionsContainer = actionsContainer;
     this.anchors = anchors;
+    this.stickyWhenNoAnchor = stickyWhenNoAnchor;
     this.boundUpdate = this.updateVisibility.bind(this);
   }
 
@@ -30,7 +31,7 @@ export default class HeaderActionsController {
     }
     const anchor = this.getVisibleAnchor();
     if (!anchor) {
-      this.actionsContainer.classList.remove('gm-header__actions--visible');
+      this.actionsContainer.classList.toggle('gm-header__actions--visible', this.stickyWhenNoAnchor);
       return;
     }
     const rect = anchor.getBoundingClientRect();

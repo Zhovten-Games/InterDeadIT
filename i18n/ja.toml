@@ -28,6 +28,12 @@ other = "その他"
 ['header.menu.toggle']
 other = "ナビゲーションを開閉"
 
+['breadcrumbs.label']
+other = "パンくずリスト"
+
+['breadcrumbs.home']
+other = "ホーム"
+
 ['header.lang.label']
 other = "言語"
 
@@ -86,7 +92,7 @@ other = "プロフィールを見る"
 other = "プロフィール"
 
 ['profile.lead']
-other = "現在のログインから取得したセッション情報を表示します。"
+other = "現在のログイン情報とEFBDドシエを表示します。"
 
 ['profile.unauthenticated']
 other = "未ログインです。トップページからサインインしてプロフィールを確認してください。"
@@ -99,6 +105,42 @@ other = "ユーザー名"
 
 ['profile.fields.profileId']
 other = "プロフィールID"
+
+['profile.efbd.title']
+other = "EFBDドシエ"
+
+['profile.efbd.lead']
+other = "このプロフィールで記録されたトリガーから作成されたEFBDスケールのスナップショットです。"
+
+['profile.efbd.updated']
+other = "更新日時"
+
+['profile.efbd.lastUpdated']
+other = "更新"
+
+['profile.efbd.empty']
+other = "まだEFBDトリガーは記録されていません。"
+
+['profile.efbd.unauthenticated']
+other = "サインインしてEFBDスケールの詳細を表示してください。"
+
+['profile.efbd.error']
+other = "現在EFBDスケールデータを取得できません。"
+
+['profile.efbd.axes.social']
+other = "ソーシャルエコー"
+
+['profile.efbd.axes.mind']
+other = "マインドノイズ"
+
+['profile.efbd.axes.decline']
+other = "衰退"
+
+['profile.efbd.axes.exposure']
+other = "暴露"
+
+['profile.efbd.axes.abandon']
+other = "放棄"
 
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
@@ -119,10 +161,10 @@ other = "共に倒れた霊媒たちを数えましょう。"
 other = "共に倒れた霊媒たちを数えましょう。累計：+{{ .Count }}。"
 
 ['inevitable.title']
-other = "起こるべくして起きた結果"
+other = "Истории 起こるべくして起きた結果"
 
 ['inevitable.item1']
-other = "「祖父がブーツに鍵を隠していたと知った。1分で見つかった」— マリーナ、プラン「ノスタルジア」"
+other = "「祖父がブーツに鍵を隠していたと知った。1分で見つかった」— マリーナ"
 
 ['inevitable.item2']
 other = "「父が『そのローンは組むな』とメッセージを送ってきた。救われた」— 匿名"

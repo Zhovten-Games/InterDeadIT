@@ -28,6 +28,12 @@ other = "Ще"
 ['header.menu.toggle']
 other = "Перемкнути меню"
 
+['breadcrumbs.label']
+other = "Хлібні крихти"
+
+['breadcrumbs.home']
+other = "Головна"
+
 ['header.lang.label']
 other = "Мова"
 
@@ -86,7 +92,7 @@ other = "Відкрити профіль"
 other = "Ваш профіль"
 
 ['profile.lead']
-other = "Нижче показані дані вашої поточної сесії."
+other = "Нижче показані дані поточної сесії та досьє EFBD."
 
 ['profile.unauthenticated']
 other = "Ви не авторизовані. Увійдіть на головній сторінці, щоб переглянути профіль."
@@ -99,6 +105,42 @@ other = "Ім'я користувача"
 
 ['profile.fields.profileId']
 other = "ID профілю"
+
+['profile.efbd.title']
+other = "Досьє EFBD"
+
+['profile.efbd.lead']
+other = "Знімок шкали EFBD відображає тригери, записані для цього профілю."
+
+['profile.efbd.updated']
+other = "Підсумок оновлено"
+
+['profile.efbd.lastUpdated']
+other = "Оновлено"
+
+['profile.efbd.empty']
+other = "Для цього профілю ще немає тригерів EFBD."
+
+['profile.efbd.unauthenticated']
+other = "Увійдіть, щоб переглянути деталі шкали EFBD."
+
+['profile.efbd.error']
+other = "Дані шкали EFBD зараз недоступні."
+
+['profile.efbd.axes.social']
+other = "Соціальний відгук"
+
+['profile.efbd.axes.mind']
+other = "Шум розуму"
+
+['profile.efbd.axes.decline']
+other = "Згасання"
+
+['profile.efbd.axes.exposure']
+other = "Експозиція"
+
+['profile.efbd.axes.abandon']
+other = "Полишення"
 
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
@@ -119,10 +161,10 @@ other = "Рахуйте полеглих медіумів разом із нам
 other = "Рахуйте полеглих медіумів разом із нами. Лічильник: +{{ .Count }}."
 
 ['inevitable.title']
-other = "Історії, яким судилося статися"
+other = "Истории, яким судилося статися"
 
 ['inevitable.item1']
-other = "«Дізналася, що дід ховає ключі в чоботі. Знайшли за хвилину». — Марина, тариф «Ностальгія»"
+other = "«Дізналася, що дід ховає ключі в чоботі. Знайшли за хвилину». — Марина"
 
 ['inevitable.item2']
 other = "«Тато написав: “Не бери кредит”. Це врятувало». — Анонім"

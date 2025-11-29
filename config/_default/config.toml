@@ -53,6 +53,7 @@ disableKinds = ["taxonomy", "term"]
     identityStartPath = "/auth/discord/start"
     identitySessionPath = "/auth/session"
     efbdTriggerPath = "/efbd/trigger"
+    efbdSummaryPath = "/efbd/summary"
     envVarBaseUrl = "HUGO_INTERDEAD_API_BASE_URL"
 
     [params.api.baseUrlByHost]

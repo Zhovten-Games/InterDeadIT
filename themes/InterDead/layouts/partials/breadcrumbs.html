@@ -1,0 +1,24 @@
+{{ if not .IsHome }}
+  {{ $home := dict "title" (i18n "breadcrumbs.home") "url" ("/" | relLangURL) "current" false }}
+  {{ $items := slice $home }}
+  {{ $section := .CurrentSection }}
+  {{ if and $section (ne $section.RelPermalink .RelPermalink) }}
+    {{ $items = $items | append (dict "title" $section.Title "url" $section.RelPermalink "current" false) }}
+  {{ end }}
+  {{ $items = $items | append (dict "title" .Title "url" .RelPermalink "current" true) }}
+  <nav class="gm-breadcrumbs" aria-label="{{ i18n "breadcrumbs.label" }}">
+    <div class="gm-container gm-breadcrumbs__container">
+      <ol class="gm-breadcrumbs__list">
+        {{ range $items }}
+          <li class="gm-breadcrumbs__item {{ if .current }}gm-breadcrumbs__item--current{{ end }}">
+            {{ if .current }}
+              <span class="gm-breadcrumbs__link" aria-current="page">{{ .title }}</span>
+            {{ else }}
+              <a class="gm-breadcrumbs__link" href="{{ .url }}">{{ .title }}</a>
+            {{ end }}
+          </li>
+        {{ end }}
+      </ol>
+    </div>
+  </nav>
+{{ end }}

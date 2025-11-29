@@ -28,6 +28,12 @@ other = "Ещё"
 ['header.menu.toggle']
 other = "Открыть меню"
 
+['breadcrumbs.label']
+other = "Навигация"
+
+['breadcrumbs.home']
+other = "Главная"
+
 ['header.lang.label']
 other = "Язык"
 
@@ -86,7 +92,7 @@ other = "Открыть профиль"
 other = "Ваш профиль"
 
 ['profile.lead']
-other = "Ниже отображаются данные вашей текущей сессии."
+other = "Ниже отображаются данные текущей сессии и досье EFBD."
 
 ['profile.unauthenticated']
 other = "Вы не авторизованы. Войдите на главной странице, чтобы увидеть профиль."
@@ -99,6 +105,42 @@ other = "Имя пользователя"
 
 ['profile.fields.profileId']
 other = "ID профиля"
+
+['profile.efbd.title']
+other = "Досье EFBD"
+
+['profile.efbd.lead']
+other = "Снимок шкалы EFBD отражает зафиксированные для этого профиля триггеры."
+
+['profile.efbd.updated']
+other = "Резюме обновлено"
+
+['profile.efbd.lastUpdated']
+other = "Обновлено"
+
+['profile.efbd.empty']
+other = "Для этого профиля ещё нет триггеров EFBD."
+
+['profile.efbd.unauthenticated']
+other = "Войдите, чтобы увидеть детали шкалы EFBD."
+
+['profile.efbd.error']
+other = "Данные шкалы EFBD сейчас недоступны."
+
+['profile.efbd.axes.social']
+other = "Социальный отклик"
+
+['profile.efbd.axes.mind']
+other = "Шум разума"
+
+['profile.efbd.axes.decline']
+other = "Угасание"
+
+['profile.efbd.axes.exposure']
+other = "Экспозиция"
+
+['profile.efbd.axes.abandon']
+other = "Оставление"
 
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
@@ -122,7 +164,7 @@ other = "Считайте мёртвых медиумов вместе с нам
 other = "Истории, которым было суждено случиться"
 
 ['inevitable.item1']
-other = "«Узнала, что дед прячет ключи в сапоге. Нашли за минуту». — Марина, тариф «Ностальгия»"
+other = "«Узнала, что дед прячет ключи в сапоге. Нашли за минуту». — Марина"
 
 ['inevitable.item2']
 other = "«Папа написал: “Не бери кредит”. Это спасло». — Аноним"

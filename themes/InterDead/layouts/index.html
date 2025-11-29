@@ -11,11 +11,11 @@
             data-show="adult"
             data-auth-copy-idle="{{ i18n "auth.discord.status.idle" }}"
             data-auth-copy-disabled="{{ i18n "auth.discord.status.disabled" }}"
-            data-auth-copy-loading="{{ i18n "auth.discord.status.loading" }}"
-            data-auth-copy-error="{{ i18n "auth.discord.status.error" }}"
-            data-auth-copy-authenticated="{{ i18n "auth.discord.status.authenticated" }}"
-          >
-            <button class="auth-button auth-button--discord" type="button" data-auth-button="hero" data-cta="start">
+          data-auth-copy-loading="{{ i18n "auth.discord.status.loading" }}"
+          data-auth-copy-error="{{ i18n "auth.discord.status.error" }}"
+          data-auth-copy-authenticated="{{ i18n "auth.discord.status.authenticated" }}"
+        >
+            <button class="auth-button auth-button--discord gm-hero__ctaItem" type="button" data-auth-button="hero" data-cta="start">
               <span class="auth-button__icon" aria-hidden="true">
                 <span class="auth-button__glyph">◎</span>
               </span>
@@ -43,7 +43,7 @@
                 <span class="auth-badge__username" data-auth-badge-username></span>
               </span>
             </a>
-            <span class="gm-badge gm-badge--countdown">
+            <span class="gm-badge gm-badge--countdown gm-hero__countdown gm-hero__ctaItem">
               <span>{{ i18n "hero.countdown" }}</span>
               <span class="gm-hero__timer" data-countdown="primary">--:--:--</span>
             </span>
@@ -57,7 +57,7 @@
               data-cta="demo"
             >{{ i18n "gm.ctademo" }}</a>
           </div>
-          <div class="gm-hero__beta" data-show="demo">
+          <div class="gm-hero__beta gm-hero__countdown" data-show="demo">
             <span class="gm-badge">
               <span>{{ i18n "hero.demo.timer" }}</span>
               <span class="gm-hero__timer" data-countdown="beta">--:--:--</span>

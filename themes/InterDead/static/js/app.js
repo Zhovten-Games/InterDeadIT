@@ -24,6 +24,7 @@ import AuthBadgeController from './presentation/controllers/AuthBadgeController.
 import ProfilePageController from './presentation/controllers/ProfilePageController.js';
 import EfbdApiAdapter from './infrastructure/efbd/EfbdApiAdapter.js';
 import EfbdScaleBridgeService from './application/efbd/EfbdScaleBridgeService.js';
+import HomeAuthController from './presentation/controllers/HomeAuthController.js';
 
 const storage = new LocalStorageAdapter();
 const scrollController = new DocumentScrollController({ target: document.body });
@@ -41,10 +42,13 @@ const metadataController = new MetadataController({
 });
 metadataController.syncWithLocation();
 
+const ctaAnchors = Array.from(document.querySelectorAll('[data-cta-anchor]'));
+
 const headerActionsController = new HeaderActionsController({
   header: document.querySelector('.gm-header'),
   actionsContainer: document.querySelector('[data-header-actions]'),
-  anchors: Array.from(document.querySelectorAll('[data-cta-anchor]')),
+  anchors: ctaAnchors,
+  stickyWhenNoAnchor: ctaAnchors.length === 0,
 });
 headerActionsController.boot();
 
@@ -87,6 +91,7 @@ const apiConfig = {
   identityStartPath: runtimeConfig.api?.identityStartPath,
   identitySessionPath: runtimeConfig.api?.identitySessionPath,
   efbdTriggerPath: runtimeConfig.api?.efbdTriggerPath,
+  efbdSummaryPath: runtimeConfig.api?.efbdSummaryPath,
 };
 
 const profileLink = document.body?.dataset?.profileUrl || '';
@@ -160,6 +165,7 @@ const profilePageController = profilePageRoot
   ? new ProfilePageController({
       authStateService,
       eventBus,
+      efbdService: efbdBridge,
       elements: {
         authenticatedBlock: document.querySelector('[data-profile-authenticated]'),
         unauthenticatedBlock: document.querySelector('[data-profile-unauthenticated]'),
@@ -167,11 +173,37 @@ const profilePageController = profilePageRoot
         username: document.querySelector('[data-profile-username]'),
         profileId: document.querySelector('[data-profile-id]'),
         avatar: document.querySelector('[data-profile-avatar]'),
+        efbdCard: document.querySelector('[data-profile-efbd-card]'),
+        efbdStatus: document.querySelector('[data-profile-efbd-status]'),
+        efbdUpdated: document.querySelector('[data-profile-efbd-updated]'),
+        efbdAxes: document.querySelector('[data-profile-efbd-axes]'),
       },
     })
   : null;
 profilePageController?.init?.();
 authStateService.refresh?.();
+
+const heroRoot = document.querySelector('.gm-hero');
+const heroCountdownBlocks = [
+  document.querySelector('.gm-hero__countdown'),
+  document.querySelector('.gm-hero__beta'),
+];
+const homeAuthController = heroRoot
+  ? new HomeAuthController({
+      root: heroRoot,
+      countdownBlocks: heroCountdownBlocks,
+      authStateService,
+      eventBus,
+      onAuthenticationChange: authenticated => {
+        if (authenticated) {
+          countdownController.stop();
+        } else {
+          countdownController.start();
+        }
+      },
+    })
+  : null;
+homeAuthController?.init?.();
 
 window.addEventListener('beforeunload', () => {
   headerLogoController.dispose?.();
@@ -181,4 +213,5 @@ window.addEventListener('beforeunload', () => {
   authBadgeController.dispose?.();
   authButtonController.dispose?.();
   profilePageController?.dispose?.();
+  homeAuthController?.dispose?.();
 });

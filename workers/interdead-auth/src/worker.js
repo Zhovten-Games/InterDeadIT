@@ -5,6 +5,7 @@ import {
   ConsoleLogger,
   InMemoryTriggerLogRepository,
   ScaleIngestionService,
+  ScaleQueryService,
   SystemClock,
   assertAxisCode,
 } from '@interdead/efbd-scale';
@@ -335,7 +336,7 @@ class EfbdController {
     this.env = env;
   }
 
-  async handleTrigger(request) {
+  async handleTrigger(request, cookies = new Map()) {
     const trigger = await request.json().catch(() => null);
     const axisCandidate = trigger?.axisCode || trigger?.axis;
     if (!axisCandidate) {
@@ -354,6 +355,8 @@ class EfbdController {
       return new Response('Invalid trigger score', { status: 400 });
     }
 
+    const { sessionStore, session } = await this.readSession(cookies);
+
     const ingestion = this.buildIngestionService(increment);
     if (!ingestion) {
       return new Response('EFBD scale persistence unavailable', { status: 503 });
@@ -361,7 +364,7 @@ class EfbdController {
 
     try {
       await ingestion.recordTriggers({
-        profileId: this.resolveProfileId(trigger),
+        profileId: this.resolveProfileId(trigger, session?.profileId),
         triggers: [
           {
             axis: axisCode,
@@ -374,7 +377,32 @@ class EfbdController {
       return new Response('Failed to persist trigger', { status: 502 });
     }
 
-    return new Response(null, { status: 204 });
+    const response = new Response(null, { status: 204 });
+    this.appendSessionCookies(response, sessionStore);
+    return response;
+  }
+
+  async handleSummary(cookies = new Map()) {
+    const { sessionStore, session } = await this.readSession(cookies);
+    if (!session?.profileId) {
+      return this.buildJsonResponse({ authenticated: false, reason: 'unauthorized' }, 401, sessionStore);
+    }
+
+    const queryService = this.buildQueryService();
+    if (!queryService) {
+      return this.buildJsonResponse({ error: 'EFBD repository unavailable' }, 503, sessionStore);
+    }
+
+    let snapshot;
+    try {
+      snapshot = await queryService.fetchSnapshot(session.profileId);
+    } catch (error) {
+      console.error('Failed to query EFBD snapshot', error);
+      return this.buildJsonResponse({ error: 'Failed to fetch EFBD snapshot' }, 502, sessionStore);
+    }
+
+    const payload = this.serializeSnapshot(snapshot);
+    return this.buildJsonResponse({ authenticated: true, profileId: snapshot.profileId, ...payload }, 200, sessionStore);
   }
 
   buildIngestionService(increment) {
@@ -388,6 +416,15 @@ class EfbdController {
     return new ScaleIngestionService(repository, triggerLogRepository, clock, logger, {
       maxIncrementPerEvent: increment,
     });
+  }
+
+  buildQueryService() {
+    const repository = this.buildScaleRepository();
+    if (!repository) {
+      return null;
+    }
+    const clock = new SystemClock();
+    return new ScaleQueryService(repository, clock);
   }
 
   buildScaleRepository() {
@@ -413,8 +450,63 @@ class EfbdController {
     return Math.min(Math.floor(numeric), 100);
   }
 
-  resolveProfileId(trigger) {
+  resolveProfileId(trigger, sessionProfileId) {
+    if (sessionProfileId) {
+      return sessionProfileId;
+    }
     return trigger?.profileId || trigger?.profile_id || 'anonymous';
+  }
+
+  buildSessionStore(cookies) {
+    const secret = this.env.IDENTITY_JWT_SECRET || this.env.IDENTITY_DISCORD_CLIENT_SECRET;
+    if (!secret) {
+      return null;
+    }
+    return new CookieSessionStore(secret, cookies);
+  }
+
+  async readSession(cookies) {
+    const sessionStore = this.buildSessionStore(cookies);
+    if (!sessionStore) {
+      return { sessionStore: null, session: null };
+    }
+    const session = await sessionStore.readSession({ refresh: true });
+    return { sessionStore, session };
+  }
+
+  appendSessionCookies(response, sessionStore) {
+    if (!sessionStore) {
+      return;
+    }
+    sessionStore.collectCookies().forEach((cookie) => {
+      response.headers.append('Set-Cookie', cookie);
+    });
+  }
+
+  buildJsonResponse(body, status, sessionStore) {
+    const response = new Response(JSON.stringify(body ?? {}), {
+      status,
+      headers: {
+        'Content-Type': 'application/json',
+        'Cache-Control': 'no-store',
+      },
+    });
+    this.appendSessionCookies(response, sessionStore);
+    return response;
+  }
+
+  serializeSnapshot(snapshot) {
+    const axes = Array.from(snapshot.axisScores.values()).map((axis) => ({
+      code: axis.axis,
+      value: axis.value,
+      lastUpdated: axis.lastUpdated?.toISOString?.() ?? null,
+      lastTriggerSource: axis.lastTriggerSource || null,
+    }));
+
+    return {
+      updatedAt: snapshot.updatedAt?.toISOString?.() ?? null,
+      axes,
+    };
   }
 }
 
@@ -452,7 +544,12 @@ export default {
       }
 
       if (request.method === 'POST' && url.pathname === '/efbd/trigger') {
-        const response = await efbdController.handleTrigger(request);
+        const response = await efbdController.handleTrigger(request, cookies);
+        return cors.apply(request, response);
+      }
+
+      if (request.method === 'GET' && url.pathname === '/efbd/summary') {
+        const response = await efbdController.handleSummary(cookies);
         return cors.apply(request, response);
       }
 
