@@ -9,7 +9,7 @@ export default class AuthStateService {
   constructor({ sessionAdapter, eventBus }) {
     this.sessionAdapter = sessionAdapter;
     this.eventBus = eventBus;
-    this.state = { authenticated: false, profileId: null, displayName: null };
+    this.state = { authenticated: null, profileId: null, displayName: null };
   }
 
   getState() {

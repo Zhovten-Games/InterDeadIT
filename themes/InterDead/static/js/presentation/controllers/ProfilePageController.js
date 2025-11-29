@@ -50,11 +50,20 @@ export default class ProfilePageController {
 
   async handleSessionChange(session) {
     this.currentSession = session;
-    if (session?.authenticated) {
+    const isAuthenticated = session?.authenticated === true;
+    const isUnauthenticated = session?.authenticated === false;
+
+    if (isAuthenticated) {
       await this.requestSummary();
-    } else {
-      this.renderEfbd(null, { reason: 'unauthenticated' });
+      return;
     }
+
+    if (isUnauthenticated) {
+      this.renderEfbd(null, { reason: 'unauthenticated' });
+      return;
+    }
+
+    this.renderEfbd(null, { reason: 'pending' });
   }
 
   async requestSummary() {
@@ -81,12 +90,13 @@ export default class ProfilePageController {
   }
 
   renderProfile(session) {
-    const authenticated = Boolean(session?.authenticated);
-    this.toggleVisibility(this.authenticatedBlocks, authenticated);
-    this.toggleVisibility(this.unauthenticatedBlocks, !authenticated);
+    const isAuthenticated = session?.authenticated === true;
+    const isUnauthenticated = session?.authenticated === false;
+    this.toggleVisibility(this.authenticatedBlocks, isAuthenticated);
+    this.toggleVisibility(this.unauthenticatedBlocks, isUnauthenticated);
 
-    if (!authenticated) {
-      this.clearFields();
+    if (!isAuthenticated) {
+      this.clearFields({ reason: isUnauthenticated ? 'unauthenticated' : 'pending' });
       return;
     }
 
@@ -198,7 +208,7 @@ export default class ProfilePageController {
     return date.toLocaleString();
   }
 
-  clearFields() {
+  clearFields(meta = null) {
     this.setText(this.displayNameFields, '');
     this.setText(this.usernameFields, '');
     this.setText(this.profileIdFields, '');
@@ -210,7 +220,9 @@ export default class ProfilePageController {
         avatarImage.alt = '';
       }
     }
-    this.renderEfbd(null, { reason: 'unauthenticated' });
+    if (meta) {
+      this.renderEfbd(null, meta);
+    }
   }
 
   setText(target, text) {

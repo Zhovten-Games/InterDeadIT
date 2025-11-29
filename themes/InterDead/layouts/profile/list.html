@@ -6,7 +6,7 @@
         <p class="gm-section__lead" data-i18n="profile.lead">{{ i18n "profile.lead" }}</p>
       </header>
 
-      <div class="gm-profile__layout" data-profile-authenticated>
+      <div class="gm-profile__layout" data-profile-authenticated hidden>
         <div class="gm-card gm-profile__card gm-profile__card--identity" data-profile-authenticated hidden>
           <div class="gm-profile__identity">
             <div class="gm-profile__identityHeader">
@@ -41,6 +41,7 @@
           data-efbd-empty-text="{{ i18n "profile.efbd.empty" }}"
           data-efbd-unauthenticated-text="{{ i18n "profile.efbd.unauthenticated" }}"
           data-efbd-error-text="{{ i18n "profile.efbd.error" }}"
+          hidden
         >
           <div class="gm-profile__cardHeader">
             <div>
@@ -113,7 +114,7 @@
         </div>
       </div>
 
-      <div class="gm-card gm-profile__card gm-profile__card--unauth" data-profile-unauthenticated>
+      <div class="gm-card gm-profile__card gm-profile__card--unauth" data-profile-unauthenticated hidden>
         <p class="gm-profile__empty" data-i18n="profile.unauthenticated">{{ i18n "profile.unauthenticated" }}</p>
       </div>
     </div>

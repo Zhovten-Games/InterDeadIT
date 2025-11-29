@@ -109,4 +109,44 @@ Testing
 
 ---
 
+Ознакомьтесь, пожалуйста со старым ТЗ:
+
+InterDeadIT/doc/interdead-efbd-profile-enhancements-spec
+
+Не было сделано/не получилось:
+
+1. Контент: у нас есть блок "Stories that should never have happened", а следующий "Outcomes that were meant to happen". Во всех локалях название второго блока должно начинаться с того же слова, что название предыдущего, в случае с англ "Stories".
+
+ -- На главной "Outcomes that were meant to happen" так и осталось, а нужно вначале Stories.
+
+Также я далее писал:
+
+2. На странице профиля сейчас "You are not authenticated. Please sign in from the home page to view your profile." на этом месте пусть будет нижний блок "EFBD dossier" (в мобильной версии, пусть они друг под другом), а саму надпись:
+
+>> You are not authenticated. Please sign in from the home page to view your profile.
+
+... оставьте только для НЕавторизованных вместо ВСЕГО юзерского контента на странице профиля.
+
+ -- Этот пункт нужно корректно закончить.
+
+---
+
+Уточнение: следуйте нашим идеалам в README в корне репо.
+
+Summary
+
+    Updated the English reviews section title to start with “Stories” for consistency with the preceding block.
+
+Adjusted the Japanese reviews title to begin with the “Stories” noun for alignment with the prior section.
+
+Reworked the profile page layout to show identity details alongside the EFBD dossier for authenticated users while displaying the unauthenticated notice separately.
+
+Simplified the profile grid styling so the EFBD dossier can sit next to the identity card on larger screens.
+
+Testing
+
+    ⚠️ git commit -am "Align reviews heading and profile unauth layout" (pre-commit map:preview optional step failed due to missing libatk; other map checks completed.)
+
+---
+
 ...

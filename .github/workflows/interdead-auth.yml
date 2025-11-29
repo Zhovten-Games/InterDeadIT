@@ -3,7 +3,7 @@ name: Deploy interdead-auth Worker
 on:
   push:
     branches:
-      - main          # если у тебя основная ветка называется иначе — поменяй
+      - main
     paths:
       - "workers/interdead-auth/**"
       - ".github/workflows/interdead-auth.yml"
