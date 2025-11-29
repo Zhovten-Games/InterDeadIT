@@ -12,6 +12,85 @@ import { CookieSessionStore, timingSafeEqual } from './session.js';
 
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize';
 const DEFAULT_SITE_BASE_URL = 'https://interdead.phantom-draft.com';
+const DEFAULT_ALLOWED_ORIGINS = [DEFAULT_SITE_BASE_URL];
+
+class CorsService {
+  constructor(env) {
+    this.allowedOrigins = this.buildAllowedOrigins(env);
+  }
+
+  buildAllowedOrigins(env) {
+    const configuredOrigins = [env.INTERDEAD_SITE_BASE_URL, env.INTERDEAD_ALLOWED_ORIGINS]
+      .filter(Boolean)
+      .flatMap((origin) => origin.split(',').map((value) => value.trim()))
+      .filter(Boolean);
+
+    const normalized = [...configuredOrigins, ...DEFAULT_ALLOWED_ORIGINS]
+      .map((value) => this.normalizeOrigin(value))
+      .filter(Boolean);
+
+    return new Set(normalized);
+  }
+
+  normalizeOrigin(value) {
+    try {
+      return new URL(value).origin;
+    } catch (error) {
+      console.warn('Invalid CORS origin ignored', { value, error });
+      return null;
+    }
+  }
+
+  resolveOrigin(request) {
+    const requestOrigin = request.headers.get('Origin');
+    if (!requestOrigin) {
+      return null;
+    }
+    if (this.allowedOrigins.has(requestOrigin)) {
+      return requestOrigin;
+    }
+    return null;
+  }
+
+  apply(request, response) {
+    const origin = this.resolveOrigin(request);
+    if (!origin) {
+      return response;
+    }
+
+    const headers = new Headers(response.headers);
+    this.applyCorsHeaders(headers, origin);
+
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  }
+
+  applyCorsHeaders(headers, origin) {
+    headers.set('Access-Control-Allow-Origin', origin);
+    headers.set('Access-Control-Allow-Credentials', 'true');
+    headers.append('Vary', 'Origin');
+  }
+
+  buildPreflightResponse(request) {
+    const origin = this.resolveOrigin(request);
+    if (!origin) {
+      return null;
+    }
+
+    const headers = new Headers();
+    this.applyCorsHeaders(headers, origin);
+    headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
+    headers.set(
+      'Access-Control-Allow-Headers',
+      request.headers.get('Access-Control-Request-Headers') || 'Content-Type',
+    );
+    headers.set('Access-Control-Max-Age', '86400');
+    return new Response(null, { status: 204, headers });
+  }
+}
 
 class D1TableAdapter {
   constructor(binding) {
@@ -56,18 +135,7 @@ class DiscordAuthController {
   }
 
   getSiteBaseUrl() {
-    const candidate = this.env.INTERDEAD_SITE_BASE_URL?.trim();
-    if (!candidate) {
-      return DEFAULT_SITE_BASE_URL;
-    }
-
-    try {
-      const resolved = new URL(candidate, DEFAULT_SITE_BASE_URL);
-      return resolved.toString();
-    } catch (error) {
-      console.warn('Falling back to default site base URL', { candidate, error });
-      return DEFAULT_SITE_BASE_URL;
-    }
+    return resolveSiteBaseUrl(this.env);
   }
 
   buildIdentity(cookies) {
@@ -247,6 +315,21 @@ class DiscordAuthController {
   }
 }
 
+function resolveSiteBaseUrl(env) {
+  const candidate = env.INTERDEAD_SITE_BASE_URL?.trim();
+  if (!candidate) {
+    return DEFAULT_SITE_BASE_URL;
+  }
+
+  try {
+    const resolved = new URL(candidate, DEFAULT_SITE_BASE_URL);
+    return resolved.toString();
+  } catch (error) {
+    console.warn('Falling back to default site base URL', { candidate, error });
+    return DEFAULT_SITE_BASE_URL;
+  }
+}
+
 class EfbdController {
   constructor(env) {
     this.env = env;
@@ -337,32 +420,46 @@ class EfbdController {
 
 export default {
   async fetch(request, env) {
+    const cors = new CorsService(env);
+
     try {
       const url = new URL(request.url);
       const cookies = parseCookies(request.headers.get('Cookie'));
       const authController = new DiscordAuthController(env);
       const efbdController = new EfbdController(env);
 
+      if (request.method === 'OPTIONS') {
+        const preflight = cors.buildPreflightResponse(request);
+        if (preflight) {
+          return preflight;
+        }
+        return new Response(null, { status: 204 });
+      }
+
       if (request.method === 'GET' && url.pathname === '/auth/discord/start') {
-        return authController.buildStartRedirect(url, cookies);
+        const response = await authController.buildStartRedirect(url, cookies);
+        return cors.apply(request, response);
       }
 
       if (request.method === 'GET' && url.pathname === '/auth/discord/callback') {
-        return authController.handleCallback(url, cookies);
+        const response = await authController.handleCallback(url, cookies);
+        return cors.apply(request, response);
       }
 
       if (request.method === 'GET' && url.pathname === '/auth/session') {
-        return authController.handleSessionStatus(cookies);
+        const response = await authController.handleSessionStatus(cookies);
+        return cors.apply(request, response);
       }
 
       if (request.method === 'POST' && url.pathname === '/efbd/trigger') {
-        return efbdController.handleTrigger(request);
+        const response = await efbdController.handleTrigger(request);
+        return cors.apply(request, response);
       }
 
-      return new Response('Not found', { status: 404 });
+      return cors.apply(request, new Response('Not found', { status: 404 }));
     } catch (error) {
       console.error('Unhandled worker error', error);
-      return new Response('Internal server error', { status: 500 });
+      return cors.apply(request, new Response('Internal server error', { status: 500 }));
     }
   },
 };
