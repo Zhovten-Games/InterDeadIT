@@ -161,7 +161,7 @@ other = "Count the fallen mediums with us."
 other = "Count the fallen mediums with us. Mediums tallied: +{{ .Count }}."
 
 ['inevitable.title']
-other = "Истории that were meant to happen"
+other = "Stories that were meant to happen"
 
 ['inevitable.item1']
 other = "“Grandpa kept the keys in his boot. Found them in one minute.” — Marina"

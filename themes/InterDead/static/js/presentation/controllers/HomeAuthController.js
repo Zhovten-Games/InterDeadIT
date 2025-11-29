@@ -1,9 +1,17 @@
 import { AUTH_SESSION_EVENTS } from '../../application/auth/AuthStateService.js';
 
 export default class HomeAuthController {
-  constructor({ root, countdownBlocks = [], authStateService, eventBus, onAuthenticationChange }) {
+  constructor({
+    root,
+    countdownBlocks = [],
+    countdownController = null,
+    authStateService,
+    eventBus,
+    onAuthenticationChange,
+  }) {
     this.root = root;
     this.countdownBlocks = countdownBlocks;
+    this.countdownController = countdownController;
     this.authStateService = authStateService;
     this.eventBus = eventBus;
     this.onAuthenticationChange = onAuthenticationChange;
@@ -30,6 +38,13 @@ export default class HomeAuthController {
       if (!block) return;
       block.classList.toggle('gm-hero__countdown--hidden', authenticated);
     });
+    if (this.countdownController) {
+      if (authenticated) {
+        this.countdownController.stop();
+      } else {
+        this.countdownController.start();
+      }
+    }
 
     this.onAuthenticationChange?.(authenticated);
   }

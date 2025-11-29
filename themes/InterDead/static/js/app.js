@@ -148,7 +148,6 @@ const countdownController = new CountdownController({
   primaryElement: document.querySelector('[data-countdown="primary"]'),
   betaElement: document.querySelector('[data-countdown="beta"]'),
 });
-countdownController.start();
 
 const sliderController = new SliderController({
   sliderElement: document.querySelector('.gm-slider'),
@@ -167,11 +166,11 @@ const profilePageController = profilePageRoot
       eventBus,
       efbdService: efbdBridge,
       elements: {
-        authenticatedBlock: document.querySelector('[data-profile-authenticated]'),
-        unauthenticatedBlock: document.querySelector('[data-profile-unauthenticated]'),
-        displayName: document.querySelector('[data-profile-display-name]'),
-        username: document.querySelector('[data-profile-username]'),
-        profileId: document.querySelector('[data-profile-id]'),
+        authenticatedBlock: Array.from(document.querySelectorAll('[data-profile-authenticated]')),
+        unauthenticatedBlock: Array.from(document.querySelectorAll('[data-profile-unauthenticated]')),
+        displayName: Array.from(document.querySelectorAll('[data-profile-display-name]')),
+        username: Array.from(document.querySelectorAll('[data-profile-username]')),
+        profileId: Array.from(document.querySelectorAll('[data-profile-id]')),
         avatar: document.querySelector('[data-profile-avatar]'),
         efbdCard: document.querySelector('[data-profile-efbd-card]'),
         efbdStatus: document.querySelector('[data-profile-efbd-status]'),
@@ -192,15 +191,9 @@ const homeAuthController = heroRoot
   ? new HomeAuthController({
       root: heroRoot,
       countdownBlocks: heroCountdownBlocks,
+      countdownController,
       authStateService,
       eventBus,
-      onAuthenticationChange: authenticated => {
-        if (authenticated) {
-          countdownController.stop();
-        } else {
-          countdownController.start();
-        }
-      },
     })
   : null;
 homeAuthController?.init?.();

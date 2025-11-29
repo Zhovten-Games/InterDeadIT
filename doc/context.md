@@ -43,3 +43,25 @@ Testing
 
 ---
 
+Работаем внутри каталога InterDeadIT:
+ -- Выполните, пожалуйста, задания описанные в InterDeadIT/doc/interdead-efbd-profile-enhancements-spec
+Уточнение:
+ -- Реализация ядер, которые мы не трогаем, находятся в: InterDeadCore
+
+Summary
+
+    Added a session-bound EFBD summary endpoint with query support, refreshed server wiring, and exposed the new /efbd/summary path through client adapters and feature bridge logic.
+
+Rebuilt the profile page into a dossier layout with EFBD axis rendering, updated controller behavior, and new styling for avatars and scale metadata.
+
+Introduced breadcrumbs and homepage auth/countdown visibility tweaks, including sticky header actions, equal-height CTAs, and countdown hiding after authentication.
+
+Expanded localization with EFBD strings, breadcrumb labels, and removal of “Nostalgia” plan references, plus added coverage for the EFBD summary adapter.
+
+Testing
+
+    ❌ npm test *(fails: missing module /workspace/testerer-deploy.github.io/person/src/application/services/WeightedScoreEngine.js)*
+
+---
+
+...

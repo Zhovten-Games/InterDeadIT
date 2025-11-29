@@ -9,6 +9,14 @@ export default class ProfilePageController {
     this.eventBus = eventBus;
     this.efbdService = efbdService;
     this.elements = elements;
+    this.authenticatedBlocks = this.collectList(elements.authenticatedBlock);
+    if (elements.efbdCard) {
+      this.authenticatedBlocks.push(elements.efbdCard);
+    }
+    this.unauthenticatedBlocks = this.collectList(elements.unauthenticatedBlock);
+    this.displayNameFields = this.collectList(elements.displayName);
+    this.usernameFields = this.collectList(elements.username);
+    this.profileIdFields = this.collectList(elements.profileId);
     this.axisRows = this.collectAxisRows(elements.efbdAxes);
     this.copy = {
       empty: elements.efbdCard?.dataset?.efbdEmptyText || '',
@@ -74,17 +82,18 @@ export default class ProfilePageController {
 
   renderProfile(session) {
     const authenticated = Boolean(session?.authenticated);
-    this.toggleVisibility(this.elements.authenticatedBlock, authenticated);
-    this.toggleVisibility(this.elements.unauthenticatedBlock, !authenticated);
+    this.toggleVisibility(this.authenticatedBlocks, authenticated);
+    this.toggleVisibility(this.unauthenticatedBlocks, !authenticated);
 
     if (!authenticated) {
       this.clearFields();
       return;
     }
 
-    this.setText(this.elements.displayName, session.displayName || session.username || '—');
-    this.setText(this.elements.username, session.username ? `@${session.username}` : '—');
-    this.setText(this.elements.profileId, session.profileId || '—');
+    const displayName = session.displayName || session.username || '—';
+    this.setText(this.displayNameFields, displayName);
+    this.setText(this.usernameFields, session.username ? `@${session.username}` : '—');
+    this.setText(this.profileIdFields, session.profileId || '—');
     this.renderAvatar(session);
   }
 
@@ -190,9 +199,9 @@ export default class ProfilePageController {
   }
 
   clearFields() {
-    this.setText(this.elements.displayName, '');
-    this.setText(this.elements.username, '');
-    this.setText(this.elements.profileId, '');
+    this.setText(this.displayNameFields, '');
+    this.setText(this.usernameFields, '');
+    this.setText(this.profileIdFields, '');
     if (this.elements.avatar) {
       this.elements.avatar.classList.add('gm-profile__avatarFrame--empty');
       const avatarImage = this.elements.avatar.querySelector('[data-profile-avatar-img]');
@@ -206,11 +215,27 @@ export default class ProfilePageController {
 
   setText(target, text) {
     if (!target) return;
+    if (Array.isArray(target)) {
+      target.forEach(node => {
+        if (node) {
+          node.textContent = text;
+        }
+      });
+      return;
+    }
     target.textContent = text;
   }
 
   toggleVisibility(target, show) {
     if (!target) return;
+    if (Array.isArray(target)) {
+      target.forEach(node => {
+        if (node) {
+          node.hidden = !show;
+        }
+      });
+      return;
+    }
     target.hidden = !show;
   }
 
@@ -228,5 +253,18 @@ export default class ProfilePageController {
       });
     });
     return rows;
+  }
+
+  collectList(source) {
+    if (!source) {
+      return [];
+    }
+    if (Array.isArray(source)) {
+      return source.filter(Boolean);
+    }
+    if (source instanceof NodeList) {
+      return Array.from(source).filter(Boolean);
+    }
+    return [source];
   }
 }
