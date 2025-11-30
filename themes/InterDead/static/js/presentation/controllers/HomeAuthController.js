@@ -36,13 +36,13 @@ export default class HomeAuthController {
     }
     this.countdownBlocks.forEach(block => {
       if (!block) return;
-      block.classList.toggle('gm-hero__countdown--hidden', !authenticated);
+      block.classList.toggle('gm-hero__countdown--hidden', authenticated);
     });
     if (this.countdownController) {
       if (authenticated) {
-        this.countdownController.start();
-      } else {
         this.countdownController.stop();
+      } else {
+        this.countdownController.start();
       }
     }
 
