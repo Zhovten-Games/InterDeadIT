@@ -13,3 +13,8 @@
 ### БЭМ
 - Stick to Block-Element-Modifier naming (`gm-block__element--modifier`) for any new styles or DOM hooks so that JavaScript can target predictable classes.
 - Avoid using `id` selectors in new markup and scripts; rely on BEM classes or `data-*` attributes to keep components reusable and styles collision-free.
+
+### Auth visibility guard
+- Use `AuthVisibilityService` as the single source of truth for authenticated/unauthenticated UI states (hero countdown, profile page, shortcodes).
+- Subscribe through the shared event bus or via `window.InterdeadPorts.authVisibility.onChange` to ensure components switch without flicker.
+- Query `getSnapshot()`/`isAuthenticated()` instead of re-checking session payloads in controllers or shortcode wrappers.

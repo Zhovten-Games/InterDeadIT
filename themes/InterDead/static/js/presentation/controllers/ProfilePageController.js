@@ -1,11 +1,11 @@
-import { AUTH_SESSION_EVENTS } from '../../application/auth/AuthStateService.js';
 import { EFBD_EVENTS } from '../../application/efbd/EfbdScaleBridgeService.js';
+import { AUTH_VISIBILITY_EVENTS } from '../../application/auth/AuthVisibilityService.js';
 
 const AXIS_CODES = ['EBF-SOCIAL', 'EBF-MIND', 'EBF-DECLINE', 'EBF-EXPOSURE', 'EBF-ABANDON'];
 
 export default class ProfilePageController {
-  constructor({ authStateService, eventBus, efbdService, elements = {} }) {
-    this.authStateService = authStateService;
+  constructor({ authVisibilityService, eventBus, efbdService, elements = {} }) {
+    this.authVisibilityService = authVisibilityService;
     this.eventBus = eventBus;
     this.efbdService = efbdService;
     this.elements = elements;
@@ -27,20 +27,19 @@ export default class ProfilePageController {
     this.unsubscribeEfbd = null;
     this.pendingSummary = false;
     this.currentSession = null;
+    this.currentVisibility = null;
   }
 
   init() {
-    this.unsubscribeAuth = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, session => {
-      this.renderProfile(session);
-      this.handleSessionChange(session);
+    this.unsubscribeAuth = this.eventBus?.on?.(AUTH_VISIBILITY_EVENTS.UPDATED, visibility => {
+      this.handleVisibilityChange(visibility);
     });
     this.unsubscribeEfbd = this.eventBus?.on?.(EFBD_EVENTS.SUMMARY_LOADED, payload => {
       this.renderEfbd(payload);
     });
 
-    const initialSession = this.authStateService?.getState?.();
-    this.renderProfile(initialSession);
-    this.handleSessionChange(initialSession);
+    const initialVisibility = this.authVisibilityService?.getSnapshot?.();
+    this.handleVisibilityChange(initialVisibility);
   }
 
   dispose() {
@@ -48,17 +47,20 @@ export default class ProfilePageController {
     this.unsubscribeEfbd?.();
   }
 
-  async handleSessionChange(session) {
-    this.currentSession = session;
-    const isAuthenticated = session?.authenticated === true;
-    const isUnauthenticated = session?.authenticated === false;
+  async handleVisibilityChange(visibility) {
+    this.currentVisibility = visibility;
+    const status = visibility?.status || 'pending';
+    const session = status === 'authenticated' ? visibility?.session : null;
 
-    if (isAuthenticated) {
+    this.currentSession = session;
+    this.renderProfile({ status, session });
+
+    if (status === 'authenticated') {
       await this.requestSummary();
       return;
     }
 
-    if (isUnauthenticated) {
+    if (status === 'unauthenticated') {
       this.renderEfbd(null, { reason: 'unauthenticated' });
       return;
     }
@@ -89,9 +91,12 @@ export default class ProfilePageController {
     this.renderEfbd(null, { error: true });
   }
 
-  renderProfile(session) {
-    const isAuthenticated = session?.authenticated === true;
-    const isUnauthenticated = session?.authenticated === false;
+  renderProfile(visibility) {
+    const status = visibility?.status || 'pending';
+    const session = status === 'authenticated' ? visibility?.session : null;
+    const isAuthenticated = status === 'authenticated';
+    const isUnauthenticated = status === 'unauthenticated';
+
     this.toggleVisibility(this.authenticatedBlocks, isAuthenticated);
     this.toggleVisibility(this.unauthenticatedBlocks, isUnauthenticated);
 
@@ -100,10 +105,10 @@ export default class ProfilePageController {
       return;
     }
 
-    const displayName = session.displayName || session.username || '—';
+    const displayName = session?.displayName || session?.username || '—';
     this.setText(this.displayNameFields, displayName);
-    this.setText(this.usernameFields, session.username ? `@${session.username}` : '—');
-    this.setText(this.profileIdFields, session.profileId || '—');
+    this.setText(this.usernameFields, session?.username ? `@${session.username}` : '—');
+    this.setText(this.profileIdFields, session?.profileId || '—');
     this.renderAvatar(session);
   }
 
@@ -240,15 +245,30 @@ export default class ProfilePageController {
 
   toggleVisibility(target, show) {
     if (!target) return;
+
+    const applyToggle = node => {
+      if (!node) return;
+      node.hidden = false;
+      const hiddenClass = this.resolveHiddenClass(node);
+      node.classList.toggle(hiddenClass, !show);
+    };
+
     if (Array.isArray(target)) {
-      target.forEach(node => {
-        if (node) {
-          node.hidden = !show;
-        }
-      });
+      target.forEach(applyToggle);
       return;
     }
-    target.hidden = !show;
+
+    applyToggle(target);
+  }
+
+  resolveHiddenClass(node) {
+    const baseClass = Array.from(node.classList || []).find(
+      name => name.startsWith('gm-profile__') && !name.includes('--'),
+    );
+    if (baseClass) {
+      return `${baseClass}--hidden`;
+    }
+    return 'gm-visibility--hidden';
   }
 
   collectAxisRows(root) {

@@ -105,6 +105,13 @@ img, iframe {
   padding: 0;
 }
 
+.gm-visibility--hidden,
+.gm-profile__layout--hidden,
+.gm-profile__card--hidden {
+  display: none !important;
+  visibility: hidden;
+}
+
 .gm-section--full {
   padding-left: 0;
   padding-right: 0;

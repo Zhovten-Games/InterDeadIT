@@ -17,6 +17,7 @@ import FeatureFlagService from './application/config/FeatureFlagService.js';
 import EventBus from './application/events/EventBus.js';
 import DiscordAuthService from './application/auth/DiscordAuthService.js';
 import AuthStateService from './application/auth/AuthStateService.js';
+import AuthVisibilityService from './application/auth/AuthVisibilityService.js';
 import DiscordOAuthAdapter from './infrastructure/auth/DiscordOAuthAdapter.js';
 import AuthSessionAdapter from './infrastructure/auth/AuthSessionAdapter.js';
 import AuthButtonController from './presentation/controllers/AuthButtonController.js';
@@ -109,6 +110,7 @@ const authAdapter = new DiscordOAuthAdapter({ apiConfig });
 const authSessionAdapter = new AuthSessionAdapter({ apiConfig });
 const authService = new DiscordAuthService({ authAdapter, eventBus, featureFlags });
 const authStateService = new AuthStateService({ sessionAdapter: authSessionAdapter, eventBus });
+const authVisibilityService = new AuthVisibilityService({ authStateService, eventBus });
 const authButtonController = new AuthButtonController({
   buttons: [
     document.querySelector('[data-auth-button="hero"]'),
@@ -122,6 +124,7 @@ const authButtonController = new AuthButtonController({
   copy: authCopy,
 });
 authButtonController.init();
+authVisibilityService.init();
 
 const authBadgeController = new AuthBadgeController({
   authStateService,
@@ -162,7 +165,7 @@ faqController.init();
 const profilePageRoot = document.querySelector('[data-profile-page-root]');
 const profilePageController = profilePageRoot
   ? new ProfilePageController({
-      authStateService,
+      authVisibilityService,
       eventBus,
       efbdService: efbdBridge,
       elements: {
@@ -192,11 +195,17 @@ const homeAuthController = heroRoot
       root: heroRoot,
       countdownBlocks: heroCountdownBlocks,
       countdownController,
-      authStateService,
+      authVisibilityService,
       eventBus,
     })
   : null;
 homeAuthController?.init?.();
+
+window.InterdeadPorts.authVisibility = {
+  getSnapshot: () => authVisibilityService.getSnapshot?.(),
+  onChange: listener => authVisibilityService.onChange?.(listener),
+  isAuthenticated: () => authVisibilityService.isAuthenticated?.(),
+};
 
 window.addEventListener('beforeunload', () => {
   headerLogoController.dispose?.();
@@ -207,4 +216,5 @@ window.addEventListener('beforeunload', () => {
   authButtonController.dispose?.();
   profilePageController?.dispose?.();
   homeAuthController?.dispose?.();
+  authVisibilityService.dispose?.();
 });
