@@ -1807,11 +1807,6 @@ body[data-mode="demo"] [data-show~="demo"] {
 }
 
 @media (max-width: 550px) {
-  .gm-header__logo {
-    opacity: 1;
-    pointer-events: auto;
-  }
-
   .gm-header__actions .auth-button__label {
     display: none;
   }
