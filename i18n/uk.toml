@@ -28,6 +28,33 @@ other = "Ще"
 ['header.menu.toggle']
 other = "Перемкнути меню"
 
+['menu.about']
+other = "Про нас"
+
+['menu.stories']
+other = "Історії"
+
+['menu.reviews']
+other = "Відгуки"
+
+['menu.faq']
+other = "FAQ"
+
+['menu.blog']
+other = "Блог"
+
+['menu.modal.title']
+other = "Навігація"
+
+['menu.modal.hint']
+other = "Перейдіть до розділу або відкрийте сторінку."
+
+['menu.modal.close']
+other = "Закрити меню"
+
+['menu.option.open']
+other = "Відкрити посилання"
+
 ['breadcrumbs.label']
 other = "Хлібні крихти"
 

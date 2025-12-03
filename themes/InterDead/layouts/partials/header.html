@@ -9,7 +9,18 @@
         />
       </a>
     </div>
-    <div class="gm-header__wordmark">{{ i18n "header.wordmark" }}</div>
+    <div class="gm-header__wordmark">
+      <button
+        class="gm-header__wordmarkButton"
+        type="button"
+        data-modal-trigger="menu"
+        aria-haspopup="dialog"
+        aria-controls="gm-menuModal"
+        aria-label="{{ i18n "header.menu.toggle" }}"
+      >
+        <span class="gm-header__wordmarkLabel">{{ i18n "header.wordmark" }}</span>
+      </button>
+    </div>
     <nav class="gm-header__nav" aria-label="Primary actions">
       <div class="gm-header__actions" data-header-actions>
         <div class="gm-header__cta" data-show="adult">

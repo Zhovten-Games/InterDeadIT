@@ -10,6 +10,7 @@ import SliderController from './presentation/controllers/SliderController.js';
 import FaqController from './presentation/controllers/FaqController.js';
 import ModalTriggerController from './presentation/controllers/ModalTriggerController.js';
 import ModalCloseController from './presentation/controllers/ModalCloseController.js';
+import MenuModalController from './presentation/controllers/MenuModalController.js';
 import ModalView from './infrastructure/ui/ModalView.js';
 import ModalDomMapper from './infrastructure/ui/ModalDomMapper.js';
 import DocumentScrollController from './infrastructure/ui/DocumentScrollController.js';
@@ -82,6 +83,17 @@ const modalCloseController = new ModalCloseController({
 modalCloseController.init();
 
 modalService.autoShow();
+
+const isHome = document.body?.dataset?.isHome === 'true';
+const headerElement = document.querySelector('.gm-header');
+const menuModalController = new MenuModalController({
+  modalService,
+  modalId: 'menu',
+  options: Array.from(document.querySelectorAll('[data-menu-option]')),
+  isHome,
+  scrollOffset: headerElement?.offsetHeight || 0,
+});
+menuModalController.init();
 
 const runtimeConfig = window.__INTERDEAD_CONFIG__ ?? {};
 const featureFlags = new FeatureFlagService(runtimeConfig.featureFlags);
@@ -216,5 +228,6 @@ window.addEventListener('beforeunload', () => {
   authButtonController.dispose?.();
   profilePageController?.dispose?.();
   homeAuthController?.dispose?.();
+  menuModalController?.dispose?.();
   authVisibilityService.dispose?.();
 });

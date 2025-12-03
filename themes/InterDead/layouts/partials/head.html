@@ -50,10 +50,20 @@
       href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Serif+JP:wght@200..900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}" />
+    {{- $styleAsset := resources.Get "css/styles.css" | resources.Minify | fingerprint }}
+    {{- .Scratch.Set "interdeadStyles" $styleAsset }}
+    <link
+      rel="stylesheet"
+      href="{{ $styleAsset.RelPermalink }}"
+      integrity="{{ $styleAsset.Data.Integrity }}"
+      crossorigin="anonymous"
+    />
+    {{- $jsOptions := dict "targetPath" "js/app.js" "format" "esm" "minify" (not hugo.IsServer) }}
     {{- if hugo.IsServer }}
-    {{ else }}
+      {{- $jsOptions = merge $jsOptions (dict "sourcemap" "inline") }}
     {{- end }}
+    {{- $scriptAsset := resources.Get "js/app.js" | js.Build $jsOptions | fingerprint }}
+    {{- .Scratch.Set "interdeadScript" $scriptAsset }}
     {{- with .Site.Config.Services.GoogleAnalytics.ID }}
     <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
     <script>
@@ -116,4 +126,5 @@
   <body
     data-mode="{{ or (index .Site.Params "defaultMode") "demo" }}"
     data-profile-url="{{ "/profile/" | relLangURL }}"
+    data-is-home="{{ if .IsHome }}true{{ else }}false{{ end }}"
   >

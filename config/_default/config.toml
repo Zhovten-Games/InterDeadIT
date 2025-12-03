@@ -32,6 +32,35 @@ disableKinds = ["taxonomy", "term"]
   ogType = "website"
   twitterCard = "summary_large_image"
 
+  [params.navigation]
+    [[params.navigation.items]]
+      id = "about"
+      i18nKey = "menu.about"
+      url = "/about/"
+
+    [[params.navigation.items]]
+      id = "stories"
+      i18nKey = "menu.stories"
+      url = "/#stories"
+      targetId = "stories"
+
+    [[params.navigation.items]]
+      id = "reviews"
+      i18nKey = "menu.reviews"
+      url = "/#reviews"
+      targetId = "reviews"
+
+    [[params.navigation.items]]
+      id = "faq"
+      i18nKey = "menu.faq"
+      url = "/#faq"
+      targetId = "faq"
+
+    [[params.navigation.items]]
+      id = "blog"
+      i18nKey = "menu.blog"
+      url = "/blog/"
+
   [params.homeWidgets]
     [params.homeWidgets.stories]
       limit = 4

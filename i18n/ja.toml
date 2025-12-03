@@ -28,6 +28,33 @@ other = "その他"
 ['header.menu.toggle']
 other = "ナビゲーションを開閉"
 
+['menu.about']
+other = "概要"
+
+['menu.stories']
+other = "ストーリー"
+
+['menu.reviews']
+other = "レビュー"
+
+['menu.faq']
+other = "FAQ"
+
+['menu.blog']
+other = "ブログ"
+
+['menu.modal.title']
+other = "ナビゲーション"
+
+['menu.modal.hint']
+other = "セクションへ移動するかページを開きます。"
+
+['menu.modal.close']
+other = "メニューを閉じる"
+
+['menu.option.open']
+other = "リンクを開く"
+
 ['breadcrumbs.label']
 other = "パンくずリスト"
 

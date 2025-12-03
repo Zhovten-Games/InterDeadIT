@@ -1,20 +1,24 @@
-# InterDead Landing
+╭────────────────────────╮  ╭────────────────────────╮  ╭────────╮
+│ [Proto](../InterDeadProto) │  │ [Core](../InterDeadCore) │  │  IT    │
+╰────────────────────────╯  ╰────────────────────────╯  ╰════════╯
 
-## Приступая к работе
+## Introduction
 
-### Архитектура
-- We follow a hexagonal (ports and adapters) layout: domain entities stay pure and unaware of the browser, application services orchestrate domain logic, infrastructure adapters talk to the DOM, storage, or other external APIs, and presentation controllers wire everything together.
-- When extending the app, introduce new domain types for business rules, keep adapters thin and replaceable, and favour dependency injection through constructors so that layers remain decoupled.
+InterDeadIT is the entry point into the metaverse: a Hugo-powered landing that introduces the narrative, hosts playable mini-games, and bridges visitors into the identity and EFBD cores. It keeps content and UI controllers thin while delegating authentication, profile rendering, and scoring to the shared services.
 
-### ООП
-- Prefer class-based modules with single responsibilities and explicit public methods; compose behaviour instead of letting controllers grow monolithic.
-- Share cross-cutting behaviour via small base classes or interfaces (ports) and keep state private to each instance unless it must be shared through services.
+## Installation
 
-### БЭМ
-- Stick to Block-Element-Modifier naming (`gm-block__element--modifier`) for any new styles or DOM hooks so that JavaScript can target predictable classes.
-- Avoid using `id` selectors in new markup and scripts; rely on BEM classes or `data-*` attributes to keep components reusable and styles collision-free.
+No local installation is required for players. For contributors, clone the repository and use the Hugo toolchain defined in `config/` and `themes/`. Dependency management follows the site’s Hugo modules plus the shared Prettier configuration described below.
 
-### Auth visibility guard
-- Use `AuthVisibilityService` as the single source of truth for authenticated/unauthenticated UI states (hero countdown, profile page, shortcodes).
-- Subscribe through the shared event bus or via `window.InterdeadPorts.authVisibility.onChange` to ensure components switch without flicker.
-- Query `getSnapshot()`/`isAuthenticated()` instead of re-checking session payloads in controllers or shortcode wrappers.
+## Usage Examples
+
+- Home and profile pages subscribe to `AuthVisibilityService` from the shared ports to toggle CTAs, countdowns, and profile snapshots for authenticated and guest visitors.
+- Shortcodes and controllers reference shared event buses so new sections can reuse the same auth visibility stream without duplicating session parsing.
+- Content authors can add new localized pages under `content/` and `i18n/`, keeping BEM-friendly hooks in templates for JS controllers.
+
+## Additional Notes
+
+- Deployment flow: Hugo site builds from this repository, ships static assets to Cloudflare, and binds to a Worker that integrates D1 (for EFBD and identity persistence) alongside role bindings to the Core packages and Discord application callbacks.
+- Prettier is included as a formatting tool to keep Markdown, templates, and scripts consistent with the core packages. Run `npm run format` or `npm run format:check` from this directory after installing dependencies.
+- Architecture reminder: stay aligned with the hexagonal pattern used across the metaverse — keep adapters thin, reuse the shared event bus, and avoid leaking DOM specifics into domain logic.
+- Cloudflare Workers auto-deploy only when files inside the workflow directory change; if you need to redeploy without workflow edits, run `npx wrangler deploy` from that workflow directory.

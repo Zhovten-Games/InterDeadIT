@@ -312,6 +312,40 @@ img, iframe {
   white-space: nowrap;
   font-size: 0.88rem;
   flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+.gm-header__wordmarkButton {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(12, 15, 22, 0.9);
+  color: inherit;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font: inherit;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+}
+
+.gm-header__wordmarkButton:hover,
+.gm-header__wordmarkButton:focus-visible {
+  border-color: rgba(var(--color-accent-rgb), 0.5);
+  background: rgba(12, 16, 26, 0.96);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.gm-header__wordmarkLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .gm-header__nav {
@@ -1355,7 +1389,8 @@ img, iframe {
 }
 
 .gm-modal__option:hover,
-.gm-modal__option:focus-visible {
+.gm-modal__option:focus-visible,
+.gm-modal__option:focus-within {
   border-color: rgba(var(--color-accent-rgb), 0.45);
   background: rgba(12, 16, 26, 0.96);
   outline: none;
@@ -1379,6 +1414,66 @@ img, iframe {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+}
+
+.gm-modal__optionBody {
+  appearance: none;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  text-align: left;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+}
+
+.gm-modal__optionBody:focus-visible {
+  outline: none;
+}
+
+.gm-modal__optionBody:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.gm-modal__optionIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: border-color var(--transition-fast), background var(--transition-fast), transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.gm-modal__optionIcon:hover,
+.gm-modal__optionIcon:focus-visible {
+  border-color: rgba(var(--color-accent-rgb), 0.55);
+  background: rgba(var(--color-accent-rgb), 0.12);
+  transform: translateY(-1px);
+  outline: none;
+}
+
+.gm-modal__option--inactive {
+  opacity: 0.85;
+}
+
+.gm-modal__option--inactive .gm-modal__optionBody {
+  cursor: not-allowed;
 }
 
 .gm-modal__close {

@@ -28,6 +28,33 @@ other = "More"
 ['header.menu.toggle']
 other = "Toggle navigation"
 
+['menu.about']
+other = "About"
+
+['menu.stories']
+other = "Stories"
+
+['menu.reviews']
+other = "Reviews"
+
+['menu.faq']
+other = "FAQ"
+
+['menu.blog']
+other = "Blog"
+
+['menu.modal.title']
+other = "Navigate"
+
+['menu.modal.hint']
+other = "Jump to a section or open a page."
+
+['menu.modal.close']
+other = "Close navigation"
+
+['menu.option.open']
+other = "Open link"
+
 ['breadcrumbs.label']
 other = "Breadcrumbs"
 

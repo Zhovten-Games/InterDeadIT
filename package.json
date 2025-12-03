@@ -1,27 +1,14 @@
 {
-  "name": "interdeadit",
+  "name": "interdead-it",
   "version": "1.0.0",
-  "description": "- We follow a hexagonal (ports and adapters) layout: domain entities stay pure and unaware of the browser, application services orchestrate domain logic, infrastructure adapters talk to the DOM, storage, or other external APIs, and presentation controllers wire everything together.\r - When extending the app, introduce new domain types for business rules, keep adapters thin and replaceable, and favour dependency injection through constructors so that layers remain decoupled.",
-  "main": "index.js",
-  "directories": {
-    "test": "tests"
-  },
+  "description": "Landing entry point for the InterDead metaverse with Hugo, Workers, and shared cores.",
+  "license": "MIT",
+  "type": "commonjs",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "format": "prettier --write \"**/*.{md,html,js,ts,json}\"",
+    "format:check": "prettier --check \"**/*.{md,html,js,ts,json}\""
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Zhovten-Games/InterDeadIT.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Zhovten-Games/InterDeadIT/issues"
-  },
-  "homepage": "https://github.com/Zhovten-Games/InterDeadIT#readme",
-  "dependencies": {
-    "@interdead/efbd-scale": "^0.1.3",
-    "@interdead/identity-core": "^0.1.6"
+  "devDependencies": {
+    "prettier": "^3.3.0"
   }
 }

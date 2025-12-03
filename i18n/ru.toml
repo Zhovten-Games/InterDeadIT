@@ -28,6 +28,33 @@ other = "Ещё"
 ['header.menu.toggle']
 other = "Открыть меню"
 
+['menu.about']
+other = "О нас"
+
+['menu.stories']
+other = "Истории"
+
+['menu.reviews']
+other = "Отзывы"
+
+['menu.faq']
+other = "FAQ"
+
+['menu.blog']
+other = "Блог"
+
+['menu.modal.title']
+other = "Навигация"
+
+['menu.modal.hint']
+other = "Перейдите к разделу или откройте страницу."
+
+['menu.modal.close']
+other = "Закрыть меню"
+
+['menu.option.open']
+other = "Открыть ссылку"
+
 ['breadcrumbs.label']
 other = "Навигация"
 

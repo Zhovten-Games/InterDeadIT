@@ -6,7 +6,18 @@
     </main>
     {{ partial "footer.html" . }}
     {{ partial "language-modal.html" . }}
+    {{ partial "menu-modal.html" . }}
     {{ partial "age-gate.html" . }}
+    {{- $scriptAsset := .Scratch.Get "interdeadScript" -}}
+    {{- if $scriptAsset -}}
+    <script
+      type="module"
+      src="{{ $scriptAsset.RelPermalink }}"
+      integrity="{{ $scriptAsset.Data.Integrity }}"
+      crossorigin="anonymous"
+    ></script>
+    {{- else -}}
     <script type="module" src="{{ "js/app.js" | relURL }}"></script>
+    {{- end -}}
   </body>
 </html>
