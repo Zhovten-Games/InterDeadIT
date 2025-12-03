@@ -5,13 +5,12 @@
 {{- $lang := .Language.Lang -}}
 {{- $ogType := .Site.Params.ogType | default "website" -}}
 {{- $twitterCard := .Site.Params.twitterCard | default "summary_large_image" -}}
-{{- $logoAsset := .Scratch.Get "interdeadLogo" -}}
+{{- $page := . -}}
+{{- $logoAsset := $page.Scratch.Get "interdeadLogo" -}}
 {{- if not $logoAsset -}}
   {{- with resources.Get "images/logo.png" -}}
     {{- $logoAsset = . | fingerprint -}}
-  {{- end -}}
-  {{- with $logoAsset -}}
-    {{- .Scratch.Set "interdeadLogo" . -}}
+    {{- $page.Scratch.Set "interdeadLogo" $logoAsset -}}
   {{- end -}}
 {{- end -}}
 {{- $appleTouchIcon := resources.Get "favicons/apple-touch-icon.png" | fingerprint -}}

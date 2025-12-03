@@ -2,14 +2,22 @@
   <div class="gm-container gm-header__bar">
     <div class="gm-header__logo" data-header-logo>
       <a class="gm-header__logoLink" href="{{ "/" | relLangURL }}" aria-label="{{ i18n "header.wordmark" }}">
-        {{- $logoAsset := .Scratch.Get "interdeadLogo" -}}
+        {{- $page := . -}}
+        {{- $logoAsset := $page.Scratch.Get "interdeadLogo" -}}
         {{- if not $logoAsset -}}
           {{- with resources.Get "images/logo.png" -}}
             {{- $logoAsset = . | fingerprint -}}
+            {{- $page.Scratch.Set "interdeadLogo" $logoAsset -}}
           {{- end -}}
         {{- end -}}
         {{- $logoSrc := cond $logoAsset $logoAsset.RelPermalink ("assets/images/logo.png" | relURL) -}}
-        <img src="{{ $logoSrc }}" alt="InterDead logo" class="gm-header__logoImage" />
+        {{- $logoIntegrity := cond $logoAsset $logoAsset.Data.Integrity "" -}}
+        <img
+          src="{{ $logoSrc }}"
+          alt="InterDead logo"
+          class="gm-header__logoImage"
+          {{- if $logoIntegrity }} integrity="{{ $logoIntegrity }}" crossorigin="anonymous"{{ end -}}
+        />
       </a>
     </div>
     <div class="gm-header__wordmark">
