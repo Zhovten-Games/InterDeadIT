@@ -5,6 +5,34 @@
 {{- $lang := .Language.Lang -}}
 {{- $ogType := .Site.Params.ogType | default "website" -}}
 {{- $twitterCard := .Site.Params.twitterCard | default "summary_large_image" -}}
+{{- $logoAsset := .Scratch.Get "interdeadLogo" -}}
+{{- if not $logoAsset -}}
+  {{- with resources.Get "images/logo.png" -}}
+    {{- $logoAsset = . | fingerprint -}}
+  {{- end -}}
+  {{- with $logoAsset -}}
+    {{- .Scratch.Set "interdeadLogo" . -}}
+  {{- end -}}
+{{- end -}}
+{{- $appleTouchIcon := resources.Get "favicons/apple-touch-icon.png" | fingerprint -}}
+{{- $favicon32 := resources.Get "favicons/favicon-32x32.png" | fingerprint -}}
+{{- $favicon16 := resources.Get "favicons/favicon-16x16.png" | fingerprint -}}
+{{- $siteManifest := resources.Get "favicons/site.webmanifest" | fingerprint -}}
+{{- $imageAsset := nil -}}
+{{- $imageIsRemote := hasPrefix $image "http" -}}
+{{- if and $image (not $imageIsRemote) -}}
+  {{- $trimmedImagePath := strings.TrimPrefix "/" $image -}}
+  {{- $imageResource := resources.GetMatch $trimmedImagePath -}}
+  {{- if not $imageResource -}}
+    {{- $imageResource = resources.GetMatch (strings.TrimPrefix "assets/" $trimmedImagePath) -}}
+  {{- end -}}
+  {{- with $imageResource -}}
+    {{- $imageAsset = . | fingerprint -}}
+  {{- end -}}
+{{- end -}}
+{{- if and (not $imageAsset) (not $imageIsRemote) $logoAsset -}}
+  {{- $imageAsset = $logoAsset -}}
+{{- end -}}
 <!DOCTYPE html>
 <html lang="{{ $lang }}">
   <head>
@@ -23,9 +51,14 @@
     <meta property="og:type" content="{{ $ogType }}" />
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:url" content="{{ $canonical }}" />
-    {{- with $image }}
+    {{- if $imageAsset }}
+    <meta property="og:image" content="{{ $imageAsset.Permalink }}" />
+    <meta name="twitter:image" content="{{ $imageAsset.Permalink }}" />
+    {{- else }}
+      {{- with $image }}
     <meta property="og:image" content="{{ . | absURL }}" />
     <meta name="twitter:image" content="{{ . | absURL }}" />
+      {{- end }}
     {{- end }}
     <meta property="og:site_name" content="{{ .Site.Title }}" />
     <meta property="og:locale" content="{{ .Language.LanguageCode }}" />
@@ -39,10 +72,35 @@
     <link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}" />
     {{- end }}
     <link rel="alternate" hreflang="x-default" href="{{ .Site.Home.Permalink }}" />
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ "assets/favicons/apple-touch-icon.png" | relURL }}" />
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ "assets/favicons/favicon-32x32.png" | relURL }}" />
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ "assets/favicons/favicon-16x16.png" | relURL }}" />
-    <link rel="manifest" href="{{ "assets/favicons/site.webmanifest" | relURL }}" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ $appleTouchIcon.RelPermalink }}"
+      integrity="{{ $appleTouchIcon.Data.Integrity }}"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ $favicon32.RelPermalink }}"
+      integrity="{{ $favicon32.Data.Integrity }}"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ $favicon16.RelPermalink }}"
+      integrity="{{ $favicon16.Data.Integrity }}"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="manifest"
+      href="{{ $siteManifest.RelPermalink }}"
+      integrity="{{ $siteManifest.Data.Integrity }}"
+      crossorigin="anonymous"
+    />
     <meta name="theme-color" content="#0c0a12" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

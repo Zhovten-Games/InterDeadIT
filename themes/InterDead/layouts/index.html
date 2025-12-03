@@ -70,11 +70,14 @@
         <div class="gm-hero__media gm-card">
           <div class="gm-card__stamp gm-card__stamp--demo" data-show="demo">{{ i18n "card.stamp.demo" }}</div>
           <div class="gm-hero__logoFrame" data-hero-media>
-            <img
-              src="{{ "assets/images/logo-png.png" | relURL }}"
-              alt="{{ i18n "meta.ogImageAlt" }}"
-              class="gm-hero__logoImage"
-            />
+            {{- $logoAsset := .Scratch.Get "interdeadLogo" -}}
+            {{- if not $logoAsset -}}
+              {{- with resources.Get "images/logo.png" -}}
+                {{- $logoAsset = . | fingerprint -}}
+              {{- end -}}
+            {{- end -}}
+            {{- $logoSrc := cond $logoAsset $logoAsset.RelPermalink ("assets/images/logo.png" | relURL) -}}
+            <img src="{{ $logoSrc }}" alt="{{ i18n "meta.ogImageAlt" }}" class="gm-hero__logoImage" />
           </div>
         </div>
       </div>
