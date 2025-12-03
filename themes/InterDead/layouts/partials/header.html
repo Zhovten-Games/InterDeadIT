@@ -2,7 +2,7 @@
   <div class="gm-container gm-header__bar">
     <div class="gm-header__logo" data-header-logo>
         <a class="gm-header__logoLink" href="{{ "/" | relLangURL }}" aria-label="{{ i18n "header.wordmark" }}">
-          {{- $logo := resources.Get "images/logo.png" | fingerprint -}}
+          {{- $logo := resources.Get "images/logo_png.png" | fingerprint -}}
           <img
             src="{{ $logo.RelPermalink }}"
             alt="InterDead logo"

@@ -5,7 +5,7 @@
 {{- $lang := .Language.Lang -}}
 {{- $ogType := .Site.Params.ogType | default "website" -}}
 {{- $twitterCard := .Site.Params.twitterCard | default "summary_large_image" -}}
-{{- $logo := resources.Get "images/logo.png" | fingerprint -}}
+{{- $logo := resources.Get "images/logo_png.png" | fingerprint -}}
 {{- $appleTouchIcon := resources.Get "favicons/apple-touch-icon.png" | fingerprint -}}
 {{- $favicon32 := resources.Get "favicons/favicon-32x32.png" | fingerprint -}}
 {{- $favicon16 := resources.Get "favicons/favicon-16x16.png" | fingerprint -}}

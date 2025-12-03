@@ -28,7 +28,7 @@ disableKinds = ["taxonomy", "term"]
 
 [params]
   repository = "https://github.com/Zhovten-Games/InterDead"
-  defaultImage = "assets/images/logo.png"
+  defaultImage = "assets/images/logo_png.png"
   ogType = "website"
   twitterCard = "summary_large_image"
 

@@ -36,6 +36,6 @@ No local installation is required for players. For contributors, clone the repos
 - To drive the widget, construct a `SliderService` with a prepared collection and a `SliderView` instance (which already implements pointer tracking, fade timers, and scoreboard animation) and call `init()` once the DOM is ready.
 
 ## Asset fingerprinting examples
-- Header and hero assets use Hugo Pipes directly. The header logo resolves via `resources.Get "images/logo.png" | fingerprint`, passing the resulting `RelPermalink` and `Data.Integrity` into the `<img>` element so browsers can cache-bust and verify the content hash automatically.
+- Header and hero assets use Hugo Pipes directly. The header logo resolves via `resources.Get "images/logo_png.png" | fingerprint`, passing the resulting `RelPermalink` and `Data.Integrity` into the `<img>` element so browsers can cache-bust and verify the content hash automatically.
 - Favicons and manifests follow the same pattern in `head.html`, keeping Hugo-managed fingerprints in link tags. When a page provides `.Params.image` Hugo uses that value as-is; otherwise the logo fingerprint becomes the fallback `og:image`/`twitter:image`, avoiding the deprecated `utils/image-asset.html` helper.
 - The same fingerprinting pipeline powers hashed CSS/JS bundles elsewhere in the theme: Hugo Pipes emits cache-safe URLs while templates simply read the `RelPermalink` or `Permalink` from the processed resource.
