@@ -4,11 +4,34 @@
   "description": "Landing entry point for the InterDead metaverse with Hugo, Workers, and shared cores.",
   "license": "MIT",
   "type": "commonjs",
+
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"**/*.{md,html,js,ts,json}\"",
     "format:check": "prettier --check \"**/*.{md,html,js,ts,json}\""
   },
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zhovten-Games/InterDeadIT.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/Zhovten-Games/InterDeadIT/issues"
+  },
+  "homepage": "https://github.com/Zhovten-Games/InterDeadIT#readme",
+
+  "dependencies": {
+    "@interdead/efbd-scale": "^0.1.3",
+    "@interdead/identity-core": "^0.1.6"
+  },
   "devDependencies": {
-    "prettier": "^3.7.3"
+    "prettier": "^3.3.0"
   }
 }
