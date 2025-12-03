@@ -1,24 +1,16 @@
 <header class="gm-header">
   <div class="gm-container gm-header__bar">
     <div class="gm-header__logo" data-header-logo>
-      <a class="gm-header__logoLink" href="{{ "/" | relLangURL }}" aria-label="{{ i18n "header.wordmark" }}">
-        {{- $page := . -}}
-        {{- $logoAsset := $page.Scratch.Get "interdeadLogo" -}}
-        {{- if not $logoAsset -}}
-          {{- with resources.Get "images/logo.png" -}}
-            {{- $logoAsset = . | fingerprint -}}
-            {{- $page.Scratch.Set "interdeadLogo" $logoAsset -}}
-          {{- end -}}
-        {{- end -}}
-        {{- $logoSrc := cond $logoAsset $logoAsset.RelPermalink ("assets/images/logo.png" | relURL) -}}
-        {{- $logoIntegrity := cond $logoAsset $logoAsset.Data.Integrity "" -}}
-        <img
-          src="{{ $logoSrc }}"
-          alt="InterDead logo"
-          class="gm-header__logoImage"
-          {{- if $logoIntegrity }} integrity="{{ $logoIntegrity }}" crossorigin="anonymous"{{ end -}}
-        />
-      </a>
+        <a class="gm-header__logoLink" href="{{ "/" | relLangURL }}" aria-label="{{ i18n "header.wordmark" }}">
+          {{- $logo := resources.Get "images/logo.png" | fingerprint -}}
+          <img
+            src="{{ $logo.RelPermalink }}"
+            alt="InterDead logo"
+            class="gm-header__logoImage"
+            integrity="{{ $logo.Data.Integrity }}"
+            crossorigin="anonymous"
+          />
+        </a>
     </div>
     <div class="gm-header__wordmark">
       <button
@@ -29,7 +21,8 @@
         aria-controls="gm-menuModal"
         aria-label="{{ i18n "header.menu.toggle" }}"
       >
-        <span class="gm-header__wordmarkLabel">{{ i18n "header.wordmark" }}</span>
+        <span class="gm-header__wordmarkLabel gm-header__wordmarkLabel--full">{{ i18n "header.wordmark" }}</span>
+        <span class="gm-header__wordmarkLabel gm-header__wordmarkLabel--compact" aria-hidden="true">ID</span>
       </button>
     </div>
     <nav class="gm-header__nav" aria-label="Primary actions">
@@ -86,7 +79,10 @@
         aria-controls="gm-langModal"
         aria-label="{{ printf "%s: %s" (i18n "header.lang.label") .Site.Language.LanguageName }}"
       >
-        <span class="gm-header__langValue">{{ .Site.Language.LanguageName }}</span>
+        <span class="gm-header__langValue">
+          <span class="gm-header__langValueFull">{{ .Site.Language.LanguageName }}</span>
+          <span class="gm-header__langValueShort" aria-hidden="true">{{ strings.ToUpper .Site.Language.Lang }}</span>
+        </span>
       </button>
     </div>
   </div>

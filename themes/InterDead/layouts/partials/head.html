@@ -5,32 +5,21 @@
 {{- $lang := .Language.Lang -}}
 {{- $ogType := .Site.Params.ogType | default "website" -}}
 {{- $twitterCard := .Site.Params.twitterCard | default "summary_large_image" -}}
-{{- $page := . -}}
-{{- $logoAsset := $page.Scratch.Get "interdeadLogo" -}}
-{{- if not $logoAsset -}}
-  {{- with resources.Get "images/logo.png" -}}
-    {{- $logoAsset = . | fingerprint -}}
-    {{- $page.Scratch.Set "interdeadLogo" $logoAsset -}}
-  {{- end -}}
-{{- end -}}
+{{- $logo := resources.Get "images/logo.png" | fingerprint -}}
 {{- $appleTouchIcon := resources.Get "favicons/apple-touch-icon.png" | fingerprint -}}
 {{- $favicon32 := resources.Get "favicons/favicon-32x32.png" | fingerprint -}}
 {{- $favicon16 := resources.Get "favicons/favicon-16x16.png" | fingerprint -}}
 {{- $siteManifest := resources.Get "favicons/site.webmanifest" | fingerprint -}}
-{{- $imageAsset := nil -}}
-{{- $imageIsRemote := hasPrefix $image "http" -}}
-{{- if and $image (not $imageIsRemote) -}}
-  {{- $trimmedImagePath := strings.TrimPrefix "/" $image -}}
-  {{- $imageResource := resources.GetMatch $trimmedImagePath -}}
-  {{- if not $imageResource -}}
-    {{- $imageResource = resources.GetMatch (strings.TrimPrefix "assets/" $trimmedImagePath) -}}
+{{- $imageIsRemote := and $image (hasPrefix $image "http") -}}
+{{- $ogImage := "" -}}
+{{- if $image -}}
+  {{- if $imageIsRemote -}}
+    {{- $ogImage = $image -}}
+  {{- else -}}
+    {{- $ogImage = $image | absURL -}}
   {{- end -}}
-  {{- with $imageResource -}}
-    {{- $imageAsset = . | fingerprint -}}
-  {{- end -}}
-{{- end -}}
-{{- if and (not $imageAsset) (not $imageIsRemote) $logoAsset -}}
-  {{- $imageAsset = $logoAsset -}}
+{{- else if $logo -}}
+  {{- $ogImage = $logo.Permalink -}}
 {{- end -}}
 <!DOCTYPE html>
 <html lang="{{ $lang }}">
@@ -50,14 +39,9 @@
     <meta property="og:type" content="{{ $ogType }}" />
     <meta property="og:title" content="{{ $title }}" />
     <meta property="og:url" content="{{ $canonical }}" />
-    {{- if $imageAsset }}
-    <meta property="og:image" content="{{ $imageAsset.Permalink }}" />
-    <meta name="twitter:image" content="{{ $imageAsset.Permalink }}" />
-    {{- else }}
-      {{- with $image }}
-    <meta property="og:image" content="{{ . | absURL }}" />
-    <meta name="twitter:image" content="{{ . | absURL }}" />
-      {{- end }}
+    {{- with $ogImage }}
+    <meta property="og:image" content="{{ . }}" />
+    <meta name="twitter:image" content="{{ . }}" />
     {{- end }}
     <meta property="og:site_name" content="{{ .Site.Title }}" />
     <meta property="og:locale" content="{{ .Language.LanguageCode }}" />

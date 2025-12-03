@@ -67,24 +67,14 @@
             {{ i18n "auth.efbd.hint" }}
           </p>
         </div>
-        <div class="gm-hero__media gm-card">
-          <div class="gm-card__stamp gm-card__stamp--demo" data-show="demo">{{ i18n "card.stamp.demo" }}</div>
-          <div class="gm-hero__logoFrame" data-hero-media>
-            {{- $page := . -}}
-            {{- $logoAsset := $page.Scratch.Get "interdeadLogo" -}}
-            {{- if not $logoAsset -}}
-              {{- with resources.Get "images/logo.png" -}}
-                {{- $logoAsset = . | fingerprint -}}
-                {{- $page.Scratch.Set "interdeadLogo" $logoAsset -}}
-              {{- end -}}
-            {{- end -}}
-            {{- $logoSrc := cond $logoAsset $logoAsset.RelPermalink ("assets/images/logo.png" | relURL) -}}
-            {{- $logoIntegrity := cond $logoAsset $logoAsset.Data.Integrity "" -}}
-            <img
-              src="{{ $logoSrc }}"
-              alt="{{ i18n "meta.ogImageAlt" }}"
-              class="gm-hero__logoImage"
-              {{- if $logoIntegrity }} integrity="{{ $logoIntegrity }}" crossorigin="anonymous"{{ end -}}
+          <div class="gm-hero__media gm-card">
+            <div class="gm-card__stamp gm-card__stamp--demo" data-show="demo">{{ i18n "card.stamp.demo" }}</div>
+            <div class="gm-hero__logoFrame" data-hero-media>
+              {{- $logo := resources.Get "images/logo.png" | fingerprint -}}
+              <img
+                src="{{ $logo.RelPermalink }}"
+                alt="{{ i18n "meta.ogImageAlt" }}"
+                class="gm-hero__logoImage"
             />
           </div>
         </div>

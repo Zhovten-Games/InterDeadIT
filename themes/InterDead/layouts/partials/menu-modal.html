@@ -1,4 +1,9 @@
 {{- $navigation := .Site.Params.navigation.items | default slice -}}
+{{- $currentNavId := "" -}}
+{{- if not .IsHome -}}
+  {{- with .CurrentSection }}{{ $currentNavId = .Section }}{{ end -}}
+  {{- if eq $currentNavId "" }}{{ with .Section }}{{ $currentNavId = . }}{{ end }}{{ end -}}
+{{- end -}}
 {{- if gt (len $navigation) 0 -}}
 <div
   class="gm-modal gm-menuModal"
@@ -24,12 +29,14 @@
     <p class="gm-modal__hint">{{ i18n "menu.modal.hint" }}</p>
     <ul class="gm-modal__options gm-menuModal__options" role="list">
       {{- range $navigation }}
+        {{- $id := .id | default "" -}}
         {{- $labelKey := .i18nKey | default .label | default "" -}}
         {{- $label := cond (ne $labelKey "") (i18n $labelKey) "" -}}
         {{- $href := .url | default "" | relLangURL -}}
         {{- $targetId := .targetId | default "" -}}
         {{- $targetAttr := .target | default "" -}}
-        {{- $disableBody := and (not $.IsHome) (ne $targetId "") -}}
+        {{- $bodyHref := cond (and $.IsHome (ne $targetId "")) (printf "#%s" $targetId) $href -}}
+        {{- $disableBody := and (not $.IsHome) (and (ne $id "") (eq $id $currentNavId)) -}}
       <li>
         <div
           class="gm-modal__option gm-menuModal__option{{ if $disableBody }} gm-modal__option--inactive{{ end }}"
@@ -38,23 +45,25 @@
           {{- if $targetId }} data-menu-target="{{ $targetId }}"{{ end }}
           {{- if $disableBody }} aria-disabled="true"{{ end }}
         >
-          <button
+          <a
             class="gm-modal__optionBody"
-            type="button"
+            href="{{ $bodyHref }}"
             data-menu-option-body
-            {{- if $disableBody }} disabled{{ end }}
+            {{- if $disableBody }} aria-disabled="true" data-menu-body-disabled="true" tabindex="-1"{{ end }}
           >
             <span class="gm-modal__optionLabel">{{ $label }}</span>
-          </button>
-          <a
-            class="gm-modal__optionIcon"
-            href="{{ $href }}"
-            data-menu-option-link
-            {{- if $targetAttr }} target="{{ $targetAttr }}"{{ end }}
-            aria-label="{{ printf "%s: %s" (i18n "menu.option.open") $label }}"
-          >
-            ↗
           </a>
+          {{- if $.IsHome }}
+            <a
+              class="gm-modal__optionIcon"
+              href="{{ $href }}"
+              data-menu-option-link
+              {{- if $targetAttr }} target="{{ $targetAttr }}"{{ end }}
+              aria-label="{{ printf "%s: %s" (i18n "menu.option.open") $label }}"
+            >
+              ↗
+            </a>
+          {{- end }}
         </div>
       </li>
       {{- end }}

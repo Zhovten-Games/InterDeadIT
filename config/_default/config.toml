@@ -41,19 +41,19 @@ disableKinds = ["taxonomy", "term"]
     [[params.navigation.items]]
       id = "stories"
       i18nKey = "menu.stories"
-      url = "/#stories"
+      url = "/stories/"
       targetId = "stories"
 
     [[params.navigation.items]]
       id = "reviews"
       i18nKey = "menu.reviews"
-      url = "/#reviews"
+      url = "/reviews/"
       targetId = "reviews"
 
     [[params.navigation.items]]
       id = "faq"
       i18nKey = "menu.faq"
-      url = "/#faq"
+      url = "/faq/"
       targetId = "faq"
 
     [[params.navigation.items]]

@@ -24,12 +24,16 @@ export default class MenuModalController {
       const link = option?.querySelector?.('[data-menu-option-link]');
       const targetId = option?.dataset?.menuTarget || '';
       const url = option?.dataset?.menuUrl || '';
-      const bodyDisabled = body?.hasAttribute('disabled');
+      const bodyDisabled =
+        body?.hasAttribute('disabled') || body?.dataset?.menuBodyDisabled === 'true';
+      const shouldScroll = this.isHome && !!targetId;
 
       if (body && !bodyDisabled) {
         const handleBodyClick = (event) => {
-          event.preventDefault();
-          this.handleBodyAction({ targetId, url });
+          if (shouldScroll) {
+            event.preventDefault();
+          }
+          this.handleBodyAction({ targetId, url, shouldScroll });
         };
         body.addEventListener('click', handleBodyClick);
         this.cleanups.push(() => body.removeEventListener('click', handleBodyClick));
@@ -45,8 +49,8 @@ export default class MenuModalController {
     });
   }
 
-  handleBodyAction({ targetId, url } = {}) {
-    if (this.isHome && targetId) {
+  handleBodyAction({ targetId, url, shouldScroll } = {}) {
+    if (shouldScroll && targetId) {
       const scrolled = this.scrollToTarget(targetId);
       if (scrolled) {
         this.modalService.close(this.modalId);
