@@ -1,7 +1,7 @@
 ---
-title: "Пользовательское соглашение Zhovten Games"
-description: "Актуальные условия использования сайта и прототипов Zhovten Games."
-slug: "terms-of-use"
+title: 'Пользовательское соглашение Zhovten Games'
+description: 'Актуальные условия использования сайта и прототипов Zhovten Games.'
+slug: 'terms-of-use'
 date: 2025-11-07
 lastmod: 2025-11-07
 ---

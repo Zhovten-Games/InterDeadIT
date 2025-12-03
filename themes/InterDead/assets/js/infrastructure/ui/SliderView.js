@@ -38,14 +38,16 @@ export default class SliderView extends SliderViewPort {
   }
 
   isReady() {
-    return Boolean(this.slider && this.track && this.dotsContainer && this.prevControl && this.nextControl);
+    return Boolean(
+      this.slider && this.track && this.dotsContainer && this.prevControl && this.nextControl,
+    );
   }
 
   prepareSlides(collection) {
     if (!this.track) {
       return;
     }
-    collection.forEach(entity => {
+    collection.forEach((entity) => {
       const element = this.mapper?.getElement(entity);
       if (element) {
         this.track.appendChild(element);
@@ -54,7 +56,7 @@ export default class SliderView extends SliderViewPort {
   }
 
   applyMediums(collection) {
-    collection.forEach(entity => {
+    collection.forEach((entity) => {
       this.mapper?.updateElementMediums(entity);
     });
   }
@@ -87,7 +89,7 @@ export default class SliderView extends SliderViewPort {
   bindNavigation({ onPrev, onNext }) {
     if (this.prevControl) {
       this.prevControl.removeEventListener('click', this.prevHandler);
-      this.prevHandler = event => {
+      this.prevHandler = (event) => {
         event.preventDefault();
         onPrev();
       };
@@ -95,7 +97,7 @@ export default class SliderView extends SliderViewPort {
     }
     if (this.nextControl) {
       this.nextControl.removeEventListener('click', this.nextHandler);
-      this.nextHandler = event => {
+      this.nextHandler = (event) => {
         event.preventDefault();
         onNext();
       };
@@ -108,10 +110,10 @@ export default class SliderView extends SliderViewPort {
       return;
     }
     this.unbindSwipe();
-    const handlePointerDown = event => {
+    const handlePointerDown = (event) => {
       this.pointerDownX = event.clientX;
     };
-    const handlePointerUp = event => {
+    const handlePointerUp = (event) => {
       if (this.pointerDownX == null) {
         return;
       }

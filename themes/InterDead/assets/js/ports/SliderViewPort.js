@@ -40,7 +40,9 @@ export default class SliderViewPort {
   }
 
   getScoreboardAnnounceTemplate() {
-    throw new Error('SliderViewPort#getScoreboardAnnounceTemplate must be implemented by subclasses.');
+    throw new Error(
+      'SliderViewPort#getScoreboardAnnounceTemplate must be implemented by subclasses.',
+    );
   }
 
   updateScoreboard(_options) {

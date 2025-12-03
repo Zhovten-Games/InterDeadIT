@@ -1,4 +1,4 @@
 ---
-title: "About"
-description: "Learn more about InterDead."
+title: 'About'
+description: 'Learn more about InterDead.'
 ---

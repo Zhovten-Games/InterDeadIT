@@ -7,7 +7,7 @@ export default class CtaController {
 
   init() {
     const attributes = this.ctaService?.getAttributes?.() ?? null;
-    this.startButtons.forEach(button => {
+    this.startButtons.forEach((button) => {
       if (!button) {
         return;
       }
@@ -20,9 +20,11 @@ export default class CtaController {
           }
         });
       }
-      button.addEventListener('click', event => this.handleStartClick(event));
+      button.addEventListener('click', (event) => this.handleStartClick(event));
     });
-    this.demoButtons.forEach(button => button?.addEventListener('click', () => this.handleDemoClick()));
+    this.demoButtons.forEach((button) =>
+      button?.addEventListener('click', () => this.handleDemoClick()),
+    );
   }
 
   handleStartClick(event) {

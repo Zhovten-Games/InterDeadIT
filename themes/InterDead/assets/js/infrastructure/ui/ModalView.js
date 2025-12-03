@@ -16,7 +16,7 @@ export default class ModalView extends ModalViewPort {
     this.element.setAttribute('aria-hidden', 'false');
     this.isOpen = true;
     if (onOverlay) {
-      this.handleOverlayClick = event => {
+      this.handleOverlayClick = (event) => {
         if (event.target === this.element) {
           onOverlay();
         }

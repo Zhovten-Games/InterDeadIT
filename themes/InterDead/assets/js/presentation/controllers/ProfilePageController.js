@@ -31,10 +31,10 @@ export default class ProfilePageController {
   }
 
   init() {
-    this.unsubscribeAuth = this.eventBus?.on?.(AUTH_VISIBILITY_EVENTS.UPDATED, visibility => {
+    this.unsubscribeAuth = this.eventBus?.on?.(AUTH_VISIBILITY_EVENTS.UPDATED, (visibility) => {
       this.handleVisibilityChange(visibility);
     });
-    this.unsubscribeEfbd = this.eventBus?.on?.(EFBD_EVENTS.SUMMARY_LOADED, payload => {
+    this.unsubscribeEfbd = this.eventBus?.on?.(EFBD_EVENTS.SUMMARY_LOADED, (payload) => {
       this.renderEfbd(payload);
     });
 
@@ -146,11 +146,11 @@ export default class ProfilePageController {
 
     this.setText(this.elements.efbdUpdated, this.formatDate(summary.updatedAt));
     const axisMap = new Map();
-    summary.axes.forEach(axis => {
+    summary.axes.forEach((axis) => {
       axisMap.set(axis.code, axis);
     });
 
-    AXIS_CODES.forEach(code => {
+    AXIS_CODES.forEach((code) => {
       const axisRow = this.axisRows.get(code);
       if (!axisRow) return;
       const axis = axisMap.get(code);
@@ -162,7 +162,7 @@ export default class ProfilePageController {
 
   renderEmptyAxes(meta = {}) {
     this.setText(this.elements.efbdUpdated, '—');
-    this.axisRows.forEach(row => {
+    this.axisRows.forEach((row) => {
       this.setText(row.value, '—');
       this.setText(row.updated, '—');
       this.setText(row.source, '');
@@ -233,7 +233,7 @@ export default class ProfilePageController {
   setText(target, text) {
     if (!target) return;
     if (Array.isArray(target)) {
-      target.forEach(node => {
+      target.forEach((node) => {
         if (node) {
           node.textContent = text;
         }
@@ -246,7 +246,7 @@ export default class ProfilePageController {
   toggleVisibility(target, show) {
     if (!target) return;
 
-    const applyToggle = node => {
+    const applyToggle = (node) => {
       if (!node) return;
       node.hidden = false;
       const hiddenClass = this.resolveHiddenClass(node);
@@ -263,7 +263,7 @@ export default class ProfilePageController {
 
   resolveHiddenClass(node) {
     const baseClass = Array.from(node.classList || []).find(
-      name => name.startsWith('gm-profile__') && !name.includes('--'),
+      (name) => name.startsWith('gm-profile__') && !name.includes('--'),
     );
     if (baseClass) {
       return `${baseClass}--hidden`;
@@ -276,7 +276,7 @@ export default class ProfilePageController {
     if (!root || !root.querySelectorAll) {
       return rows;
     }
-    root.querySelectorAll('[data-axis-code]').forEach(node => {
+    root.querySelectorAll('[data-axis-code]').forEach((node) => {
       rows.set(node.dataset.axisCode, {
         root: node,
         value: node.querySelector('[data-axis-value]'),

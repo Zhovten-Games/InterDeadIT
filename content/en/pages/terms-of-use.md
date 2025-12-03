@@ -1,7 +1,7 @@
 ---
-title: "Zhovten Games Terms of Use"
-description: "Current terms for using the Zhovten Games site and prototypes."
-slug: "terms-of-use"
+title: 'Zhovten Games Terms of Use'
+description: 'Current terms for using the Zhovten Games site and prototypes.'
+slug: 'terms-of-use'
 date: 2025-11-07
 lastmod: 2025-11-07
 ---

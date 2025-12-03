@@ -5,11 +5,11 @@ export default class ModalCloseController {
   }
 
   init() {
-    this.controls.forEach(control => {
+    this.controls.forEach((control) => {
       if (!control) {
         return;
       }
-      control.addEventListener('click', event => {
+      control.addEventListener('click', (event) => {
         event.preventDefault();
         this.handleClose(control);
       });

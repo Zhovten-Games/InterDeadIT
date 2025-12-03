@@ -1,11 +1,9 @@
 const BASE64_TEXT_ENCODER = new TextEncoder();
 const BASE64_TEXT_DECODER = new TextDecoder();
-const BASE64_BTOA = typeof btoa === 'function'
-  ? btoa
-  : (input) => Buffer.from(input, 'binary').toString('base64');
-const BASE64_ATOB = typeof atob === 'function'
-  ? atob
-  : (input) => Buffer.from(input, 'base64').toString('binary');
+const BASE64_BTOA =
+  typeof btoa === 'function' ? btoa : (input) => Buffer.from(input, 'binary').toString('base64');
+const BASE64_ATOB =
+  typeof atob === 'function' ? atob : (input) => Buffer.from(input, 'base64').toString('binary');
 
 class CryptoService {
   constructor(secret) {
@@ -150,10 +148,7 @@ function base64UrlEncodeBuffer(buffer) {
   for (let i = 0; i < bytes.byteLength; i += 1) {
     binary += String.fromCharCode(bytes[i]);
   }
-  return BASE64_BTOA(binary)
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_')
-    .replace(/=+$/, '');
+  return BASE64_BTOA(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
 function base64UrlDecode(encoded) {

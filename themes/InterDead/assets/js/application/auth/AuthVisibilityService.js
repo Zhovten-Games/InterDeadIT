@@ -13,7 +13,9 @@ export default class AuthVisibilityService {
   }
 
   init() {
-    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, session => this.applySession(session));
+    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, (session) =>
+      this.applySession(session),
+    );
     this.emit();
   }
 
@@ -107,7 +109,10 @@ export default class AuthVisibilityService {
       return null;
     }
 
-    const base = typeof window !== 'undefined' && window.location?.origin ? window.location.origin : 'https://example.com';
+    const base =
+      typeof window !== 'undefined' && window.location?.origin
+        ? window.location.origin
+        : 'https://example.com';
 
     try {
       const url = new URL(value, base);

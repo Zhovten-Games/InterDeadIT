@@ -5,7 +5,10 @@ export default class ModalDomMapper {
     if (!element) {
       return null;
     }
-    const scrollBehavior = element?.dataset?.modalScroll === 'lock' ? MODAL_SCROLL_BEHAVIORS.LOCK : MODAL_SCROLL_BEHAVIORS.FREE;
+    const scrollBehavior =
+      element?.dataset?.modalScroll === 'lock'
+        ? MODAL_SCROLL_BEHAVIORS.LOCK
+        : MODAL_SCROLL_BEHAVIORS.FREE;
     return new ModalEntity({
       id: element?.dataset?.modal || null,
       storageKey: element?.dataset?.modalStorage || '',

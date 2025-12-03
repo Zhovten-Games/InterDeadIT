@@ -5,12 +5,12 @@ export default class ModalTriggerController {
   }
 
   init() {
-    this.triggers.forEach(trigger => {
+    this.triggers.forEach((trigger) => {
       const target = trigger?.dataset?.modalTrigger;
       if (!trigger || !target) {
         return;
       }
-      trigger.addEventListener('click', event => {
+      trigger.addEventListener('click', (event) => {
         event.preventDefault();
         const resume = this._shouldResume(trigger);
         this.modalService.open(target, { resume });

@@ -1,7 +1,7 @@
 ---
-title: "Zhovten Games 利用規約"
-description: "Zhovten Games のサイトとプロトタイプを利用するための最新条件。"
-slug: "terms-of-use"
+title: 'Zhovten Games 利用規約'
+description: 'Zhovten Games のサイトとプロトタイプを利用するための最新条件。'
+slug: 'terms-of-use'
 date: 2025-11-07
 lastmod: 2025-11-07
 ---

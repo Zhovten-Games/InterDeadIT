@@ -3,7 +3,9 @@
  */
 import assert from 'assert';
 import ModalService from '../../landing/themes/InterDead/static/js/application/modal/ModalService.js';
-import ModalEntity, { MODAL_SCROLL_BEHAVIORS } from '../../landing/themes/InterDead/static/js/domain/modal/ModalEntity.js';
+import ModalEntity, {
+  MODAL_SCROLL_BEHAVIORS,
+} from '../../landing/themes/InterDead/static/js/domain/modal/ModalEntity.js';
 import ModalViewPort from '../../landing/themes/InterDead/static/js/ports/ModalViewPort.js';
 
 class StubView extends ModalViewPort {
@@ -35,8 +37,8 @@ describe('Landing ModalService resume behaviour', () => {
     const scrollEvents = [];
     const modalService = new ModalService({
       scrollController: {
-        lock: id => scrollEvents.push(`lock:${id}`),
-        unlock: id => scrollEvents.push(`unlock:${id}`),
+        lock: (id) => scrollEvents.push(`lock:${id}`),
+        unlock: (id) => scrollEvents.push(`unlock:${id}`),
       },
     });
 
@@ -74,8 +76,14 @@ describe('Landing ModalService resume behaviour', () => {
 
   it('supports nested resume chains', () => {
     const modalService = new ModalService();
-    modalService.register({ entity: new ModalEntity({ id: 'ageGate' }), view: new StubView('ageGate') });
-    modalService.register({ entity: new ModalEntity({ id: 'language' }), view: new StubView('language') });
+    modalService.register({
+      entity: new ModalEntity({ id: 'ageGate' }),
+      view: new StubView('ageGate'),
+    });
+    modalService.register({
+      entity: new ModalEntity({ id: 'language' }),
+      view: new StubView('language'),
+    });
     modalService.register({ entity: new ModalEntity({ id: 'info' }), view: new StubView('info') });
 
     modalService.open('ageGate');

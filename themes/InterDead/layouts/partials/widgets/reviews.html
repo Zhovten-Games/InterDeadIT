@@ -1,19 +1,15 @@
-{{ $section := .Site.GetPage "section" "reviews" }}
-{{ if $section }}
-  {{ $reviews := $section.RegularPages.ByWeight }}
-  {{ if gt (len $reviews) 0 }}
-    {{ $reviews = first 3 $reviews }}
-    <section class="gm-section gm-inevitable" id="reviews">
-      <div class="gm-container">
-        <h2 class="gm-section__title">{{ $section.Title }}</h2>
-        <div class="gm-grid gm-grid--cols-3">
-          {{ range $reviews }}
-            <article class="gm-card">
-              <p>{{ with .Summary }}{{ . }}{{ else }}{{ .Plain }}{{ end }}</p>
-            </article>
-          {{ end }}
-        </div>
-      </div>
-    </section>
-  {{ end }}
-{{ end }}
+{{ $section := .Site.GetPage "section" "reviews" }} {{ if $section }} {{ $reviews :=
+$section.RegularPages.ByWeight }} {{ if gt (len $reviews) 0 }} {{ $reviews = first 3 $reviews }}
+<section class="gm-section gm-inevitable" id="reviews">
+  <div class="gm-container">
+    <h2 class="gm-section__title">{{ $section.Title }}</h2>
+    <div class="gm-grid gm-grid--cols-3">
+      {{ range $reviews }}
+      <article class="gm-card">
+        <p>{{ with .Summary }}{{ . }}{{ else }}{{ .Plain }}{{ end }}</p>
+      </article>
+      {{ end }}
+    </div>
+  </div>
+</section>
+{{ end }} {{ end }}

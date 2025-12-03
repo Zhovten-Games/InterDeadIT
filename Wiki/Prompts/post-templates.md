@@ -15,10 +15,12 @@ Final weight (итоговая «тяжесть»): <what settles on the narrato
 No-use list (запреты): <words/imagery to avoid; clichés; forbidden terms>
 
 Required structure (структура):
+
 - Grounding → Assertion-of-purpose → Named phenomenon → 2–3 domain-fitting metaphors
   → Nod to skeptics → Vow/assurance → Concrete sensory details → Weighted closing metaphor.
 
 Tone & limits (тон и ограничения):
+
 - Field-journal register, sober and exact; avoid mixed metaphors and empty adjectives.
 - Length 80–160 words total; 1–2 sentences; semicolons/em dashes allowed.
 - Output only the final sentence(s) — no notes, no lists, no explanations.
@@ -33,10 +35,12 @@ Style anchor (пример стиля, не копировать дословн�
 "Writing this by lantern on a splintered packing-crate while the katabatic wind saws the canvas like a tireless rat, I set down—if only to shackle my own recollection—that beyond those granite teeth which the charts flatter with infant names there yawns a geometry that jeers at Euclid, a Cyclopean palimpsest where stone remembers epochs as ice remembers the breath of comets; and though the sober brethren of Miskatonic will call it the rhetoric of a frost-numbed mind, I swear that in those vitreous corridors, where the aurora went like a fever through the bones of the sky, ancient engines murmured with the patient malice of buried gods, and the pressure of their antiquity—older than salt, older than grief, older than the first comfortable lie we dignified as science—settled upon my chest with the slow, millstone certainty of an abyss grinding a world to meal."
 
 Edit mode (режим правок): FREE (свободный), unless specified LIGHT.
+
 - FREE: may rephrase broadly while preserving the draft’s core meaning and key images.
 - LIGHT: keep ≥85% of wording; only tighten syntax, fix logic, and swap weak metaphors.
 
 Constraints (ограничения):
+
 - 80–160 words; 1–2 sentences; semicolons/em dashes allowed.
 - No mixed metaphors; no empty intensifiers; precise, motivated terminology.
 - Output only the revised sentence(s).

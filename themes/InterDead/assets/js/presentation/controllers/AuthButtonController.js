@@ -24,20 +24,20 @@ export default class AuthButtonController {
       authenticated: copy.authenticated || '',
     };
     this.statusElements = this.buttons
-      .map(button => button?.querySelector?.('[data-auth-status]'))
+      .map((button) => button?.querySelector?.('[data-auth-status]'))
       .filter(Boolean);
     this.unsubscribe = null;
   }
 
   init() {
     this.applyInitialState();
-    this.buttons.forEach(button => {
+    this.buttons.forEach((button) => {
       if (!button) {
         return;
       }
-      button.addEventListener('click', event => this.handleClick(event));
+      button.addEventListener('click', (event) => this.handleClick(event));
     });
-    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, session =>
+    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, (session) =>
       this.applySession(session),
     );
     this.applySession(this.authStateService?.getState?.());
@@ -84,7 +84,7 @@ export default class AuthButtonController {
   }
 
   setButtonsState({ disabled, loading }) {
-    this.buttons.forEach(button => {
+    this.buttons.forEach((button) => {
       if (!button) {
         return;
       }
@@ -97,7 +97,7 @@ export default class AuthButtonController {
   }
 
   updateStatus(text) {
-    [...this.statusElements, this.helperElement].forEach(element => {
+    [...this.statusElements, this.helperElement].forEach((element) => {
       if (element && typeof text === 'string' && text.trim()) {
         element.textContent = text;
         element.hidden = false;

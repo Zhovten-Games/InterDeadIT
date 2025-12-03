@@ -31,7 +31,10 @@ export default class HeaderActionsController {
     }
     const anchor = this.getVisibleAnchor();
     if (!anchor) {
-      this.actionsContainer.classList.toggle('gm-header__actions--visible', this.stickyWhenNoAnchor);
+      this.actionsContainer.classList.toggle(
+        'gm-header__actions--visible',
+        this.stickyWhenNoAnchor,
+      );
       return;
     }
     const rect = anchor.getBoundingClientRect();

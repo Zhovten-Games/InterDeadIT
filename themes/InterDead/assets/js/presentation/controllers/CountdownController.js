@@ -4,7 +4,7 @@ export default class CountdownController {
   constructor({ primaryElement, betaElement }) {
     this.primaryElement = primaryElement;
     this.betaElement = betaElement;
-    this.timer = new CountdownTimer({ onTick: value => this.render(value) });
+    this.timer = new CountdownTimer({ onTick: (value) => this.render(value) });
   }
 
   start() {

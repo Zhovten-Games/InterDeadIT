@@ -28,7 +28,7 @@ export default class CountdownTimer {
     const minutes = Math.floor((remaining % 3_600_000) / 60_000);
     const seconds = Math.floor((remaining % 60_000) / 1000);
     const formatted = [hours, minutes, seconds]
-      .map(value => String(value).padStart(2, '0'))
+      .map((value) => String(value).padStart(2, '0'))
       .join(':');
     this.onTick?.(formatted);
   }

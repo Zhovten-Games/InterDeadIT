@@ -1,9 +1,9 @@
 ---
-title: "特定の人物とつながりますか?"
-slug: "is-this-specific"
+title: '特定の人物とつながりますか?'
+slug: 'is-this-specific'
 weight: 1
-translationKey: "faq-specific"
-summary: "交信は可能だが、経路は最も符合する者を選ぶ。"
+translationKey: 'faq-specific'
+summary: '交信は可能だが、経路は最も符合する者を選ぶ。'
 ---
 
 特定の死者と交信することは可能か。

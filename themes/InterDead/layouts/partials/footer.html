@@ -7,24 +7,40 @@
       <div class="gm-footer__links">
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.dev" }}</span>
-          <a class="gm-footer__link" href="https://www.linkedin.com/company/zhovten-games/" target="_blank" rel="noopener"
+          <a
+            class="gm-footer__link"
+            href="https://www.linkedin.com/company/zhovten-games/"
+            target="_blank"
+            rel="noopener"
             >LinkedIn</a
           >
-          <a class="gm-footer__link" href="https://github.com/Zhovten-Games" target="_blank" rel="noopener">GitHub</a>
+          <a
+            class="gm-footer__link"
+            href="https://github.com/Zhovten-Games"
+            target="_blank"
+            rel="noopener"
+            >GitHub</a
+          >
         </div>
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.media" }}</span>
-          <a class="gm-footer__link" href="https://discord.gg/vAWYg3jFEp" target="_blank" rel="noopener">Discord</a>
+          <a
+            class="gm-footer__link"
+            href="https://discord.gg/vAWYg3jFEp"
+            target="_blank"
+            rel="noopener"
+            >Discord</a
+          >
         </div>
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.legal" }}</span>
-          {{- $termsPage := .Site.GetPage "/pages/terms-of-use" -}}
-          {{- $privacyPage := .Site.GetPage "/pages/privacy-policy" -}}
-          {{- if $termsPage -}}
-            <a class="gm-footer__link" href="{{ $termsPage.RelPermalink }}">{{ $termsPage.Title }}</a>
-          {{- end -}}
-          {{- if $privacyPage -}}
-            <a class="gm-footer__link" href="{{ $privacyPage.RelPermalink }}">{{ $privacyPage.Title }}</a>
+          {{- $termsPage := .Site.GetPage "/pages/terms-of-use" -}} {{- $privacyPage :=
+          .Site.GetPage "/pages/privacy-policy" -}} {{- if $termsPage -}}
+          <a class="gm-footer__link" href="{{ $termsPage.RelPermalink }}">{{ $termsPage.Title }}</a>
+          {{- end -}} {{- if $privacyPage -}}
+          <a class="gm-footer__link" href="{{ $privacyPage.RelPermalink }}"
+            >{{ $privacyPage.Title }}</a
+          >
           {{- end -}}
         </div>
       </div>

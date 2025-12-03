@@ -1,5 +1,11 @@
 export default class MenuModalController {
-  constructor({ modalService, modalId = 'menu', options = [], isHome = false, scrollOffset = 0 } = {}) {
+  constructor({
+    modalService,
+    modalId = 'menu',
+    options = [],
+    isHome = false,
+    scrollOffset = 0,
+  } = {}) {
     this.modalService = modalService;
     this.modalId = modalId;
     this.options = options;
@@ -13,7 +19,7 @@ export default class MenuModalController {
       return;
     }
 
-    this.options.forEach(option => {
+    this.options.forEach((option) => {
       const body = option?.querySelector?.('[data-menu-option-body]');
       const link = option?.querySelector?.('[data-menu-option-link]');
       const targetId = option?.dataset?.menuTarget || '';
@@ -21,7 +27,7 @@ export default class MenuModalController {
       const bodyDisabled = body?.hasAttribute('disabled');
 
       if (body && !bodyDisabled) {
-        const handleBodyClick = event => {
+        const handleBodyClick = (event) => {
           event.preventDefault();
           this.handleBodyAction({ targetId, url });
         };
@@ -69,7 +75,7 @@ export default class MenuModalController {
   }
 
   dispose() {
-    this.cleanups.forEach(cleanup => cleanup());
+    this.cleanups.forEach((cleanup) => cleanup());
     this.cleanups = [];
   }
 }

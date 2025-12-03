@@ -18,13 +18,11 @@ export default class FaqController {
     }
     const item = question.closest('.gm-faq__item');
     const list = this.root.querySelector('.gm-faq__list');
-    list
-      .querySelectorAll('.gm-faq__item')
-      .forEach(element => {
-        if (element !== item) {
-          element.classList.remove('gm-faq__item--active');
-        }
-      });
+    list.querySelectorAll('.gm-faq__item').forEach((element) => {
+      if (element !== item) {
+        element.classList.remove('gm-faq__item--active');
+      }
+    });
     item.classList.toggle('gm-faq__item--active');
   }
 }

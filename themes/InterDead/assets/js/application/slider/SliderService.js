@@ -20,7 +20,7 @@ export default class SliderService {
     this.collection.normalizeMediums();
     this.view.prepareSlides(this.collection);
     this.view.applyMediums(this.collection);
-    this.view.renderDots(this.collection.length, index => this.go(index));
+    this.view.renderDots(this.collection.length, (index) => this.go(index));
     this.view.bindNavigation({
       onPrev: () => this.go(this.index - 1),
       onNext: () => this.go(this.index + 1),

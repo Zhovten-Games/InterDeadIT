@@ -20,12 +20,12 @@ export default class EventBus {
     }
     this.listeners.set(
       eventName,
-      current.filter(cb => cb !== listener),
+      current.filter((cb) => cb !== listener),
     );
   }
 
   emit(eventName, payload) {
     const current = this.listeners.get(eventName) ?? [];
-    current.forEach(listener => listener(payload));
+    current.forEach((listener) => listener(payload));
   }
 }

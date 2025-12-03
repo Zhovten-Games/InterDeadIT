@@ -118,8 +118,8 @@ class DiscordAuthController {
   isConfigured() {
     return Boolean(
       this.env.IDENTITY_DISCORD_CLIENT_ID &&
-        this.env.IDENTITY_DISCORD_CLIENT_SECRET &&
-        this.env.IDENTITY_DISCORD_REDIRECT_URI,
+      this.env.IDENTITY_DISCORD_CLIENT_SECRET &&
+      this.env.IDENTITY_DISCORD_REDIRECT_URI,
     );
   }
 
@@ -229,15 +229,20 @@ class DiscordAuthController {
 
     let identityAggregate;
     try {
-      identityAggregate = await identity.linkService.completeDiscordLogin(profileId, code, metadata);
+      identityAggregate = await identity.linkService.completeDiscordLogin(
+        profileId,
+        code,
+        metadata,
+      );
     } catch (error) {
       return new Response('Failed to complete Discord login', { status: 502 });
     }
 
     await sessionStore.delete(sessionStore.stateKey);
 
-    const profile =
-      identityAggregate?.state?.metadata ? identityAggregate.state.metadata : metadata;
+    const profile = identityAggregate?.state?.metadata
+      ? identityAggregate.state.metadata
+      : metadata;
     const discordLink = identityAggregate?.state?.discordLink;
 
     try {
@@ -385,7 +390,11 @@ class EfbdController {
   async handleSummary(cookies = new Map()) {
     const { sessionStore, session } = await this.readSession(cookies);
     if (!session?.profileId) {
-      return this.buildJsonResponse({ authenticated: false, reason: 'unauthorized' }, 401, sessionStore);
+      return this.buildJsonResponse(
+        { authenticated: false, reason: 'unauthorized' },
+        401,
+        sessionStore,
+      );
     }
 
     const queryService = this.buildQueryService();
@@ -402,7 +411,11 @@ class EfbdController {
     }
 
     const payload = this.serializeSnapshot(snapshot);
-    return this.buildJsonResponse({ authenticated: true, profileId: snapshot.profileId, ...payload }, 200, sessionStore);
+    return this.buildJsonResponse(
+      { authenticated: true, profileId: snapshot.profileId, ...payload },
+      200,
+      sessionStore,
+    );
   }
 
   buildIngestionService(increment) {

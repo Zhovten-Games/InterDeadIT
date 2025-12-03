@@ -1,13 +1,7 @@
 import { AUTH_SESSION_EVENTS } from '../../application/auth/AuthStateService.js';
 
 export default class AuthBadgeController {
-  constructor({
-    authStateService,
-    eventBus,
-    badgeElements = [],
-    ctaContainers = [],
-    profileLink,
-  }) {
+  constructor({ authStateService, eventBus, badgeElements = [], ctaContainers = [], profileLink }) {
     this.authStateService = authStateService;
     this.eventBus = eventBus;
     this.badgeElements = badgeElements;
@@ -17,7 +11,7 @@ export default class AuthBadgeController {
   }
 
   init() {
-    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, session =>
+    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, (session) =>
       this.applySession(session),
     );
     const currentState = this.authStateService?.getState?.();
@@ -35,14 +29,14 @@ export default class AuthBadgeController {
   }
 
   toggleCtas(showCta) {
-    this.ctaContainers.forEach(container => {
+    this.ctaContainers.forEach((container) => {
       if (!container) return;
       container.classList.toggle('gm-cta--hidden', !showCta);
     });
   }
 
   renderBadges(session) {
-    this.badgeElements.forEach(root => {
+    this.badgeElements.forEach((root) => {
       if (!root) return;
       const nameElement = root.querySelector('[data-auth-badge-name]');
       const usernameElement = root.querySelector('[data-auth-badge-username]');

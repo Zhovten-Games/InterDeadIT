@@ -14,7 +14,7 @@ describe('AuthVisibilityService', () => {
   it('sanitizes the authenticated session payload before exposing it', () => {
     const { eventBus, visibilityService } = createService();
     const updates = [];
-    visibilityService.onChange(state => updates.push(state));
+    visibilityService.onChange((state) => updates.push(state));
     visibilityService.init();
 
     eventBus.emit(AUTH_SESSION_EVENTS.UPDATED, {
@@ -32,7 +32,7 @@ describe('AuthVisibilityService', () => {
     assert.strictEqual(snapshot.session.username, 'janedoe');
     assert.strictEqual(snapshot.session.avatarUrl.endsWith('/avatar.png'), true);
     assert.deepStrictEqual(
-      updates.map(item => item.status),
+      updates.map((item) => item.status),
       ['pending', 'authenticated'],
     );
   });
@@ -40,7 +40,7 @@ describe('AuthVisibilityService', () => {
   it('emits unauthenticated visibility when the payload is missing or invalid', () => {
     const { eventBus, visibilityService } = createService({ authenticated: false });
     const updates = [];
-    visibilityService.onChange(state => updates.push(state));
+    visibilityService.onChange((state) => updates.push(state));
     visibilityService.init();
 
     eventBus.emit(AUTH_SESSION_EVENTS.UPDATED, {});
@@ -50,7 +50,7 @@ describe('AuthVisibilityService', () => {
     assert.strictEqual(snapshot.status, 'unauthenticated');
     assert.strictEqual(snapshot.session, null);
     assert.deepStrictEqual(
-      updates.map(item => item.status),
+      updates.map((item) => item.status),
       ['unauthenticated', 'pending', 'unauthenticated'],
     );
   });

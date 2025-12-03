@@ -32,7 +32,7 @@ const storage = new LocalStorageAdapter();
 const scrollController = new DocumentScrollController({ target: document.body });
 const modalService = new ModalService({ storage, eventTarget: document, scrollController });
 const modalMapper = new ModalDomMapper();
-Array.from(document.querySelectorAll('[data-modal]')).forEach(element => {
+Array.from(document.querySelectorAll('[data-modal]')).forEach((element) => {
   const entity = modalMapper.createEntity(element);
   const view = new ModalView(element);
   modalService.register({ entity, view });
@@ -111,7 +111,10 @@ const profileLink = document.body?.dataset?.profileUrl || '';
 
 const heroCta = document.querySelector('.gm-hero__cta[data-cta-anchor]');
 const authCopy = {
-  idle: heroCta?.dataset?.authCopyIdle || heroCta?.querySelector('[data-auth-status]')?.textContent || '',
+  idle:
+    heroCta?.dataset?.authCopyIdle ||
+    heroCta?.querySelector('[data-auth-status]')?.textContent ||
+    '',
   disabled: heroCta?.dataset?.authCopyDisabled || '',
   loading: heroCta?.dataset?.authCopyLoading || '',
   error: heroCta?.dataset?.authCopyError || '',
@@ -182,7 +185,9 @@ const profilePageController = profilePageRoot
       efbdService: efbdBridge,
       elements: {
         authenticatedBlock: Array.from(document.querySelectorAll('[data-profile-authenticated]')),
-        unauthenticatedBlock: Array.from(document.querySelectorAll('[data-profile-unauthenticated]')),
+        unauthenticatedBlock: Array.from(
+          document.querySelectorAll('[data-profile-unauthenticated]'),
+        ),
         displayName: Array.from(document.querySelectorAll('[data-profile-display-name]')),
         username: Array.from(document.querySelectorAll('[data-profile-username]')),
         profileId: Array.from(document.querySelectorAll('[data-profile-id]')),
@@ -215,7 +220,7 @@ homeAuthController?.init?.();
 
 window.InterdeadPorts.authVisibility = {
   getSnapshot: () => authVisibilityService.getSnapshot?.(),
-  onChange: listener => authVisibilityService.onChange?.(listener),
+  onChange: (listener) => authVisibilityService.onChange?.(listener),
   isAuthenticated: () => authVisibilityService.isAuthenticated?.(),
 };
 

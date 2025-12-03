@@ -1,10 +1,10 @@
 ---
-title: "— The Dead Room (2015)."
-slug: "the-dead-room"
+title: '— The Dead Room (2015).'
+slug: 'the-dead-room'
 weight: 2
-translationKey: "story-the-dead-room"
-summary: "ホリーの脈は不可視を測り、農家は圧力と減算で応じた。"
-imdb: "https://www.imdb.com/title/tt3952108/"
+translationKey: 'story-the-dead-room'
+summary: 'ホリーの脈は不可視を測り、農家は圧力と減算で応じた。'
+imdb: 'https://www.imdb.com/title/tt3952108/'
 ---
 
 ホリー――その脈は不可視を測る音叉――は、灯のついたマッチを瓶へ運び込むように農家へ入った。現象は対話ではなく圧力で応じた。空気と否定から成る原初の文法である。計測器は走り、閾は折り畳まれ、見えざるものは納屋の神のぎこちなさで自己を主張した。後に残ったのはスペクタクルではなく減算であった。つい先ほどまで人が立っていた空所を中心に隊の幾何は組み替えられ、記録に最も雄弁に刻まれたのは、彼女の名の最後の、切り詰められた音節だけだった。彼女は生き残らなかった。家はついに、彼女なしで呼吸する術を覚えたのだ。

@@ -1,10 +1,10 @@
 ---
-title: "— Grave Encounters (2011)."
-slug: "grave-encounters"
+title: '— Grave Encounters (2011).'
+slug: 'grave-encounters'
 weight: 3
-translationKey: "story-grave-encounters"
-summary: "ヒューストン・グレイは命題へ締め上がる抱擁で解体された。"
-imdb: "https://www.imdb.com/title/tt1703199/"
+translationKey: 'story-grave-encounters'
+summary: 'ヒューストン・グレイは命題へ締め上がる抱擁で解体された。'
+imdb: 'https://www.imdb.com/title/tt1703199/'
 ---
 
 ヒューストン・グレイ――テレビの従順なる死霊術師、拍子とコロンで出来た男――は、媒介者というより「移動する字幕」、差し込みショットの飾りにすぎなかった。だが精神病院は、食べられる恐怖を識別するのに資格証を要しない。彼が慎重な告白――自分には何も見えず、観客を調律しているだけだ――をほどく前に、廊下は彼を館の常駐幾何学へと通報し、その幾何学は命題へ締め上がる抱擁で応じた。彼は嘘つきと新参のために用意された手際で解体された。喉は塞がれ、地平は傾き、カメラは慄然とする。扉が飢えているなら、偽の鍵でも回るのだ。

@@ -1,7 +1,11 @@
 import ModalInstance from './ModalInstance.js';
 
 export default class ModalService {
-  constructor({ storage, eventTarget = typeof document !== 'undefined' ? document : null, scrollController = null } = {}) {
+  constructor({
+    storage,
+    eventTarget = typeof document !== 'undefined' ? document : null,
+    scrollController = null,
+  } = {}) {
     this.storage = storage;
     this.eventTarget = eventTarget;
     this.scrollController = scrollController;
@@ -73,7 +77,7 @@ export default class ModalService {
   }
 
   autoShow(predicate) {
-    this.modals.forEach(instance => {
+    this.modals.forEach((instance) => {
       if (instance.shouldAutoOpen() && (!predicate || predicate(instance))) {
         this.open(instance.id);
       }
@@ -139,6 +143,6 @@ export default class ModalService {
     if (!id || !this.resumeStack.length) {
       return;
     }
-    this.resumeStack = this.resumeStack.filter(item => item !== id);
+    this.resumeStack = this.resumeStack.filter((item) => item !== id);
   }
 }

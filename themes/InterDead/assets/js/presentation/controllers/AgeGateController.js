@@ -16,7 +16,7 @@ export default class AgeGateController {
       this.updateBodyMode(persistedMode);
       this.onModeChange?.(persistedMode);
     }
-    this.adultButton?.addEventListener('click', event => {
+    this.adultButton?.addEventListener('click', (event) => {
       event.preventDefault();
       this.applyMode(AGE_MODES.ADULT);
     });

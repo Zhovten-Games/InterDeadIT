@@ -1,7 +1,7 @@
 ---
-title: "Умови користування Zhovten Games"
-description: "Актуальні умови користування сайтом і прототипами Zhovten Games."
-slug: "terms-of-use"
+title: 'Умови користування Zhovten Games'
+description: 'Актуальні умови користування сайтом і прототипами Zhovten Games.'
+slug: 'terms-of-use'
 date: 2025-11-07
 lastmod: 2025-11-07
 ---

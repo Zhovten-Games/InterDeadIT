@@ -1,9 +1,9 @@
 ---
-title: "Is this a link to specific people?"
-slug: "is-this-specific"
+title: 'Is this a link to specific people?'
+slug: 'is-this-specific'
 weight: 1
-translationKey: "faq-specific"
-summary: "Communion is possible, but the channel answers with the person whose echo matches your call."
+translationKey: 'faq-specific'
+summary: 'Communion is possible, but the channel answers with the person whose echo matches your call.'
 ---
 
 Is communion with a specific dead person possible?

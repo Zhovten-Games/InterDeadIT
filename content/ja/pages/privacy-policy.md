@@ -1,7 +1,7 @@
 ---
-title: "Zhovten Games プライバシーポリシー"
-description: "Zhovten Games がサイトおよび今後のサービスでデータをどのように扱うか。"
-slug: "privacy-policy"
+title: 'Zhovten Games プライバシーポリシー'
+description: 'Zhovten Games がサイトおよび今後のサービスでデータをどのように扱うか。'
+slug: 'privacy-policy'
 date: 2025-11-07
 lastmod: 2025-11-07
 ---

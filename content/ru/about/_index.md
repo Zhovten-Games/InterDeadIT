@@ -1,4 +1,4 @@
 ---
-title: "О нас"
-description: "Узнайте больше об InterDead."
+title: 'О нас'
+description: 'Узнайте больше об InterDead.'
 ---

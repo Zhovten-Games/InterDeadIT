@@ -1,9 +1,9 @@
 ---
-title: "Т."
-slug: "t-three-years"
+title: 'Т.'
+slug: 't-three-years'
 weight: 3
-translationKey: "review-t"
-summary: "«Сина немає три роки. Відповів не він, але дихати стало легше». — Т."
+translationKey: 'review-t'
+summary: '«Сина немає три роки. Відповів не він, але дихати стало легше». — Т.'
 ---
 
 «Сина немає три роки. Відповів не він, але дихати стало легше».

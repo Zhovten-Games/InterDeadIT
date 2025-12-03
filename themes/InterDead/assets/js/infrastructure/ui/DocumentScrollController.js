@@ -1,7 +1,10 @@
 import ScrollControllerPort from '../../ports/ScrollControllerPort.js';
 
 export default class DocumentScrollController extends ScrollControllerPort {
-  constructor({ target = typeof document !== 'undefined' ? document.body : null, className = 'gm-scrollLocked' } = {}) {
+  constructor({
+    target = typeof document !== 'undefined' ? document.body : null,
+    className = 'gm-scrollLocked',
+  } = {}) {
     super();
     this.target = target;
     this.className = className;

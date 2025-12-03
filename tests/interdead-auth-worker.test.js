@@ -18,7 +18,10 @@ describe('interdead-auth worker encoding', () => {
     const [payload, signature] = token.split('.');
     const tamperedPayload = `${payload.slice(0, -1)}${payload.slice(-1) === 'a' ? 'b' : 'a'}`;
 
-    await assert.rejects(store.decodeToken(`${tamperedPayload}.${signature}`), /Token signature mismatch/);
+    await assert.rejects(
+      store.decodeToken(`${tamperedPayload}.${signature}`),
+      /Token signature mismatch/,
+    );
   });
 
   it('stores avatar and username metadata and refreshes session tokens on read', async () => {
@@ -42,6 +45,6 @@ describe('interdead-auth worker encoding', () => {
     const cookies = refreshedStore.collectCookies();
 
     assert.strictEqual(refreshedSession.displayName, profile.displayName);
-    assert.ok(cookies.some(cookie => cookie.startsWith(`${store.sessionKey}=`)));
+    assert.ok(cookies.some((cookie) => cookie.startsWith(`${store.sessionKey}=`)));
   });
 });

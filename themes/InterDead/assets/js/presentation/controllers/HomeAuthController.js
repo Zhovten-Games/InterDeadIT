@@ -19,7 +19,7 @@ export default class HomeAuthController {
   }
 
   init() {
-    this.unsubscribe = this.eventBus?.on?.(AUTH_VISIBILITY_EVENTS.UPDATED, visibility =>
+    this.unsubscribe = this.eventBus?.on?.(AUTH_VISIBILITY_EVENTS.UPDATED, (visibility) =>
       this.applyVisibility(visibility),
     );
     this.applyVisibility(this.authVisibilityService?.getSnapshot?.());
@@ -34,7 +34,7 @@ export default class HomeAuthController {
     if (this.root) {
       this.root.classList.toggle('gm-hero--authenticated', authenticated);
     }
-    this.countdownBlocks.forEach(block => {
+    this.countdownBlocks.forEach((block) => {
       if (!block) return;
       block.classList.toggle('gm-hero__countdown--hidden', authenticated);
     });

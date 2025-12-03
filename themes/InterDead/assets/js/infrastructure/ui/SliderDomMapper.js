@@ -4,7 +4,9 @@ export default class SliderDomMapper {
   constructor(elements = []) {
     this.elements = Array.from(elements).filter(Boolean);
     this.entityToElement = new Map();
-    this.collection = new SliderCollection(this.elements.map((element, index) => this.createEntity(element, index)));
+    this.collection = new SliderCollection(
+      this.elements.map((element, index) => this.createEntity(element, index)),
+    );
   }
 
   createEntity(element, index) {
