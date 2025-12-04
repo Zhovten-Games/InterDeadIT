@@ -12,11 +12,25 @@ export default class MiniGameLauncher {
     this.stateByRoot = new Map();
   }
 
+  normalizeRootId(rawId) {
+    if (typeof rawId !== 'string') {
+      return '';
+    }
+
+    return rawId
+      .trim()
+      .replace(/^['"]+/, '')
+      .replace(/['"]+$/, '');
+  }
+
   register(config = {}) {
-    const root = config.rootElement || this.document?.getElementById?.(config.rootId);
+    const normalizedRootId = this.normalizeRootId(config.rootId);
+    const root =
+      config.rootElement ||
+      this.document?.getElementById?.(normalizedRootId || config.rootId || undefined);
     if (!root) {
       this.logger?.warn?.('[InterDead][MiniGame] Missing root element for mini-game', {
-        id: config.rootId,
+        id: normalizedRootId || config.rootId,
       });
       return;
     }
