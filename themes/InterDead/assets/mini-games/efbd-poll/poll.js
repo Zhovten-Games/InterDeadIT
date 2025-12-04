@@ -34,6 +34,19 @@ export function initEfbdPoll({
     optionsProvided: options?.length || 0,
   };
 
+  let resolvedOptions = options;
+  if (typeof options === 'string') {
+    try {
+      resolvedOptions = JSON.parse(options);
+    } catch (error) {
+      logger?.error?.('[InterDead][MiniGame][Poll] Failed to parse stringified options', {
+        ...logContext,
+        parseError: error?.message,
+      });
+      resolvedOptions = [];
+    }
+  }
+
   if (!root || !mount || typeof scalePort?.recordAnswer !== 'function') {
     logger?.error?.('[InterDead][MiniGame][Poll] Missing mount or scalePort.recordAnswer', {
       ...logContext,
@@ -46,7 +59,7 @@ export function initEfbdPoll({
   }
 
   const mergedStrings = { ...defaultStrings, ...strings };
-  const normalizedOptions = normalizeOptions(options);
+  const normalizedOptions = normalizeOptions(resolvedOptions);
   if (normalizedOptions.length === 0) {
     logger?.error?.('[InterDead][MiniGame][Poll] No valid options after normalization', {
       ...logContext,
