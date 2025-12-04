@@ -1,17 +1,4 @@
-{{- $id := printf "efbd-poll-%d" now.UnixNano -}} {{- $styleAsset := resources.Get
-"mini-games/efbd-poll/styles.css" | fingerprint -}} {{- $scriptOptions := dict "targetPath"
-"js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}} {{- $scriptAsset :=
-resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}} {{-
-$runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not
-hugo.IsServer) -}} {{- $runtimeAsset := resources.Get "js/application/minigame/runtime.js" |
-js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "EBF-SOCIAL" "label"
-(i18n "profile.efbd.axes.social")) (dict "axis" "EBF-MIND" "label" (i18n "profile.efbd.axes.mind"))
-(dict "axis" "EBF-DECLINE" "label" (i18n "profile.efbd.axes.decline")) (dict "axis" "EBF-EXPOSURE"
-"label" (i18n "profile.efbd.axes.exposure")) (dict "axis" "EBF-ABANDON" "label" (i18n
-"profile.efbd.axes.abandon")) -}} {{- $strings := dict "title" (i18n "minigames.poll.title")
-"prompt" (i18n "minigames.poll.prompt") "submit" (i18n "minigames.poll.submit") "success" (i18n
-"minigames.poll.success") "error" (i18n "minigames.poll.error") "required" (i18n
-"minigames.poll.required") -}} {{- if not ($.Page.Scratch.Get "miniGameRuntimeInjected") -}}
+{{- $id := printf "efbd-poll-%d" now.UnixNano -}} {{- $styleAsset := resources.Get "mini-games/efbd-poll/styles.css" | fingerprint -}} {{- $scriptOptions := dict "targetPath" "js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}} {{- $scriptAsset := resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}} {{- $runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not hugo.IsServer) -}} {{- $runtimeAsset := resources.Get "js/application/minigame/runtime.js" | js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "EBF-SOCIAL" "label" (i18n "profile.efbd.axes.social") "i18nKey" "profile.efbd.axes.social") (dict "axis" "EBF-MIND" "label" (i18n "profile.efbd.axes.mind") "i18nKey" "profile.efbd.axes.mind") (dict "axis" "EBF-DECLINE" "label" (i18n "profile.efbd.axes.decline") "i18nKey" "profile.efbd.axes.decline") (dict "axis" "EBF-EXPOSURE" "label" (i18n "profile.efbd.axes.exposure") "i18nKey" "profile.efbd.axes.exposure") (dict "axis" "EBF-ABANDON" "label" (i18n "profile.efbd.axes.abandon") "i18nKey" "profile.efbd.axes.abandon") -}} {{- $strings := dict "title" (i18n "minigames.poll.title") "prompt" (i18n "minigames.poll.prompt") "submit" (i18n "minigames.poll.submit") "success" (i18n "minigames.poll.success") "error" (i18n "minigames.poll.error") "required" (i18n "minigames.poll.required") -}} {{- $stringKeys := dict "title" "minigames.poll.title" "prompt" "minigames.poll.prompt" "submit" "minigames.poll.submit" "success" "minigames.poll.success" "error" "minigames.poll.error" "required" "minigames.poll.required" -}} {{- if not ($.Page.Scratch.Get "miniGameRuntimeInjected") -}}
 <script
   type="module"
   src="{{ $runtimeAsset.RelPermalink }}"
@@ -21,7 +8,7 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
 {{- $.Page.Scratch.Set "miniGameRuntimeInjected" true -}} {{- end -}}
 
 <div class="gm-minigame gm-minigame--poll" id="{{ $id }}" data-minigame-root>
-  <div class="gm-minigame__fallback" data-minigame-fallback>
+  <div class="gm-minigame__fallback" data-minigame-fallback data-i18n="profile.unauthenticated">
     {{ i18n "profile.unauthenticated" }}
   </div>
   <div class="gm-minigame__mount" data-minigame-mount hidden></div>
@@ -37,6 +24,7 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
     },
     options: {{ $options | jsonify }},
     strings: {{ $strings | jsonify }},
+    stringKeys: {{ $stringKeys | jsonify }},
     locale: {{ .Site.Language.Lang | jsonify }}
   });
 </script>

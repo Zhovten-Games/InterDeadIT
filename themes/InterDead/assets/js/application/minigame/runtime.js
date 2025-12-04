@@ -3,12 +3,12 @@ import MiniGameLauncher from './MiniGameLauncher.js';
 import EfbdScaleTriggerPort from '../../infrastructure/minigame/EfbdScaleTriggerPort.js';
 
 const loader = new MiniGameAssetLoader({ documentRef: document });
+const scalePort = new EfbdScaleTriggerPort({
+  emitScaleTrigger: window?.InterdeadPorts?.emitScaleTrigger,
+});
 
 const resolvePorts = () => {
   const authVisibilityPort = window?.InterdeadPorts?.authVisibility;
-  const scalePort = new EfbdScaleTriggerPort({
-    emitScaleTrigger: window?.InterdeadPorts?.emitScaleTrigger,
-  });
   return { authVisibilityPort, scalePort };
 };
 
@@ -17,6 +17,7 @@ const launcher = new MiniGameLauncher({
   assetLoader: loader,
   documentRef: document,
   logger: console,
+  scalePort,
 });
 
 const register = (config) => {
@@ -36,5 +37,7 @@ window.InterdeadMiniGames.queue = [];
 window.addEventListener('interdead:ports-ready', () => {
   const ports = resolvePorts();
   launcher.authVisibilityPort = ports.authVisibilityPort;
+  ports.scalePort?.setEmitter?.(window?.InterdeadPorts?.emitScaleTrigger);
+  launcher.setScalePort(ports.scalePort);
   launcher.refreshAuthBindings();
 });

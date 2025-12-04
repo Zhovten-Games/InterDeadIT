@@ -6,6 +6,7 @@ const normalizeOptions = (options = []) =>
     .map((option) => ({
       axis: option.axis,
       label: option.label || option.axis,
+      i18nKey: option.i18nKey,
     }))
     .filter((option) => isAxisCode(option.axis));
 
@@ -25,6 +26,7 @@ export function initEfbdPoll({
   strings = {},
   locale = 'en',
   scalePort,
+  stringKeys = {},
 } = {}) {
   if (!root || !mount || typeof scalePort?.recordAnswer !== 'function') {
     return;
@@ -43,11 +45,17 @@ export function initEfbdPoll({
   const title = form.ownerDocument.createElement('h3');
   title.className = 'gm-poll__title';
   title.textContent = mergedStrings.title;
+  if (stringKeys.title) {
+    title.dataset.i18n = stringKeys.title;
+  }
   form.appendChild(title);
 
   const prompt = form.ownerDocument.createElement('p');
   prompt.className = 'gm-poll__prompt';
   prompt.textContent = mergedStrings.prompt;
+  if (stringKeys.prompt) {
+    prompt.dataset.i18n = stringKeys.prompt;
+  }
   form.appendChild(prompt);
 
   const optionsList = form.ownerDocument.createElement('div');
@@ -69,6 +77,9 @@ export function initEfbdPoll({
     const labelText = form.ownerDocument.createElement('span');
     labelText.className = 'gm-poll__label';
     labelText.textContent = option.label;
+    if (option.i18nKey) {
+      labelText.dataset.i18n = option.i18nKey;
+    }
 
     optionWrapper.appendChild(input);
     optionWrapper.appendChild(labelText);
@@ -82,11 +93,23 @@ export function initEfbdPoll({
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
   status.hidden = true;
+  if (stringKeys.error) {
+    status.dataset.i18nError = stringKeys.error;
+  }
+  if (stringKeys.success) {
+    status.dataset.i18nSuccess = stringKeys.success;
+  }
+  if (stringKeys.required) {
+    status.dataset.i18nRequired = stringKeys.required;
+  }
 
   const submit = form.ownerDocument.createElement('button');
   submit.type = 'submit';
   submit.className = 'gm-poll__submit';
   submit.textContent = mergedStrings.submit;
+  if (stringKeys.submit) {
+    submit.dataset.i18n = stringKeys.submit;
+  }
 
   form.appendChild(status);
   form.appendChild(submit);

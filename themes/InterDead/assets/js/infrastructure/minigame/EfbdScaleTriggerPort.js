@@ -6,6 +6,12 @@ export default class EfbdScaleTriggerPort extends IEfbdScaleWritePort {
     this.emitScaleTrigger = emitScaleTrigger || (window?.InterdeadPorts?.emitScaleTrigger ?? null);
   }
 
+  setEmitter(emitScaleTrigger) {
+    if (typeof emitScaleTrigger === 'function') {
+      this.emitScaleTrigger = emitScaleTrigger;
+    }
+  }
+
   async recordAnswer({ axis, value = 1, context = {} } = {}) {
     if (typeof axis !== 'string' || axis.trim().length === 0) {
       return { status: 'invalid' };

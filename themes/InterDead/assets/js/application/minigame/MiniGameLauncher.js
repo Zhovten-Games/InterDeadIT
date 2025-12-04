@@ -4,11 +4,13 @@ export default class MiniGameLauncher {
     assetLoader,
     documentRef = typeof document !== 'undefined' ? document : null,
     logger = console,
+    scalePort = null,
   } = {}) {
     this.authVisibilityPort = authVisibilityPort;
     this.assetLoader = assetLoader;
     this.document = documentRef;
     this.logger = logger || console;
+    this.scalePort = scalePort;
     this.stateByRoot = new Map();
   }
 
@@ -42,7 +44,12 @@ export default class MiniGameLauncher {
       previous.unsubscribe();
     }
 
-    this.stateByRoot.set(root, { initialized: false, config, mount, fallback });
+    const configWithScalePort = {
+      ...config,
+      scalePort: config.scalePort || this.scalePort,
+    };
+
+    this.stateByRoot.set(root, { initialized: false, config: configWithScalePort, mount, fallback });
     this.bindAuth(root);
   }
 
@@ -68,6 +75,25 @@ export default class MiniGameLauncher {
     Array.from(this.stateByRoot.keys()).forEach((root) => this.bindAuth(root));
   }
 
+  setScalePort(scalePort) {
+    if (!scalePort) {
+      return;
+    }
+
+    const previous = this.scalePort;
+    this.scalePort = scalePort;
+
+    this.stateByRoot.forEach((state) => {
+      if (!state?.config) {
+        return;
+      }
+
+      if (!state.config.scalePort || state.config.scalePort === previous) {
+        state.config.scalePort = scalePort;
+      }
+    });
+  }
+
   applyVisibility(root, visibility) {
     const status = visibility?.status || 'pending';
     if (status === 'authenticated') {
@@ -78,7 +104,7 @@ export default class MiniGameLauncher {
     this.renderFallback(root, status);
   }
 
-  renderFallback(root, status) {
+  renderFallback(root) {
     const state = this.stateByRoot.get(root);
     if (!state) {
       return;
@@ -89,11 +115,7 @@ export default class MiniGameLauncher {
     }
 
     if (state.fallback) {
-      if (status === 'unauthenticated') {
-        state.fallback.removeAttribute?.('hidden');
-      } else {
-        state.fallback.setAttribute?.('hidden', 'true');
-      }
+      state.fallback.removeAttribute?.('hidden');
     }
   }
 
