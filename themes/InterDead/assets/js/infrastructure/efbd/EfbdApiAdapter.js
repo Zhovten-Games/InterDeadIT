@@ -26,6 +26,7 @@ export default class EfbdApiAdapter {
       const response = await this.fetcher(new URL(this.triggerPath, baseUrl).toString(), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(trigger ?? {}),
       });
       if (response.ok) {
