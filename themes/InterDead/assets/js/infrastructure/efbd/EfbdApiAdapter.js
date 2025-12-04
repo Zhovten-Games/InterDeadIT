@@ -1,7 +1,7 @@
 export default class EfbdApiAdapter {
   constructor({ apiConfig = {}, fetcher = fetch }) {
     this.apiConfig = apiConfig;
-    this.fetcher = fetcher;
+    this.fetcher = this.bindFetcher(fetcher);
   }
 
   get baseUrl() {
@@ -15,6 +15,18 @@ export default class EfbdApiAdapter {
 
   get summaryPath() {
     return this.apiConfig.efbdSummaryPath || '/efbd/summary';
+  }
+
+  bindFetcher(fetcher) {
+    if (typeof fetcher !== 'function') {
+      return null;
+    }
+
+    if (typeof fetcher.bind === 'function') {
+      return fetcher.bind(globalThis);
+    }
+
+    return (...args) => fetcher(...args);
   }
 
   async sendTrigger(trigger) {
