@@ -20,6 +20,17 @@ export default class MiniGameAssetLoader {
       .replace(/['"]+$/, '');
   }
 
+  normalizeIntegrity(rawIntegrity) {
+    if (typeof rawIntegrity !== 'string') {
+      return '';
+    }
+
+    return rawIntegrity
+      .trim()
+      .replace(/^['"]+/, '')
+      .replace(/['"]+$/, '');
+  }
+
   async loadStyle(url, integrity = '') {
     const normalizedUrl = this.normalizeUrl(url);
     if (!normalizedUrl || this.loadedStyles.has(normalizedUrl)) {
@@ -35,8 +46,9 @@ export default class MiniGameAssetLoader {
     link.rel = 'stylesheet';
     link.href = normalizedUrl;
     link.crossOrigin = 'anonymous';
-    if (integrity) {
-      link.integrity = integrity;
+    const normalizedIntegrity = this.normalizeIntegrity(integrity);
+    if (normalizedIntegrity) {
+      link.integrity = normalizedIntegrity;
     }
 
     const completion = new Promise((resolve) => {

@@ -15,7 +15,7 @@ const defaultStrings = {
   prompt: '',
   submit: 'Submit',
   success: '',
-  error: '',
+  error: 'Something went wrong. Please try again.',
   required: '',
 };
 
@@ -148,15 +148,18 @@ export function initEfbdPoll({
   form.appendChild(status);
   form.appendChild(submit);
 
+  const fallbackErrorText = mergedStrings.error || defaultStrings.error;
+
   const setStatus = (message, variant = 'info') => {
-    if (!message) {
+    const resolvedMessage = message || (variant === 'error' ? fallbackErrorText : '');
+    if (!resolvedMessage) {
       status.hidden = true;
       status.textContent = '';
       return;
     }
     status.hidden = false;
     status.dataset.variant = variant;
-    status.textContent = message;
+    status.textContent = resolvedMessage;
   };
 
   form.addEventListener('submit', async (event) => {
@@ -187,10 +190,18 @@ export function initEfbdPoll({
       },
     });
 
+    logger?.info?.('[InterDead][MiniGame][Poll] Submitted answer', {
+      ...logContext,
+      axis,
+      status: response?.status,
+      error: response?.message || response?.error,
+    });
+
     if (response?.status === 'ok' || response?.status === 'disabled') {
       setStatus(mergedStrings.success, 'success');
     } else {
-      setStatus(mergedStrings.error, 'error');
+      const errorMessage = response?.message || response?.error || mergedStrings.error;
+      setStatus(errorMessage, 'error');
     }
 
     submit.disabled = false;
