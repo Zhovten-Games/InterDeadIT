@@ -146,7 +146,7 @@ export default class MiniGameLauncher {
     const initializer = module?.default || module?.initEfbdPoll;
 
     if (typeof initializer === 'function') {
-      initializer({
+      const initResult = await initializer({
         root,
         mount,
         options,
@@ -155,6 +155,11 @@ export default class MiniGameLauncher {
         locale,
         scalePort,
       });
+
+      if (initResult === false) {
+        return;
+      }
+
       state.initialized = true;
       this.stateByRoot.set(root, state);
     }

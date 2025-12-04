@@ -29,7 +29,7 @@ export function initEfbdPoll({
   stringKeys = {},
 } = {}) {
   if (!root || !mount || typeof scalePort?.recordAnswer !== 'function') {
-    return;
+    return false;
   }
 
   const mergedStrings = { ...defaultStrings, ...strings };
@@ -164,6 +164,8 @@ export function initEfbdPoll({
 
   mount.innerHTML = '';
   mount.appendChild(form);
+
+  return true;
 }
 
 export default initEfbdPoll;
