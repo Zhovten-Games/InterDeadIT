@@ -27,17 +27,38 @@ export function initEfbdPoll({
   locale = 'en',
   scalePort,
   stringKeys = {},
+  logger = console,
 } = {}) {
+  const logContext = {
+    id: root?.id || '(unknown)',
+    optionsProvided: options?.length || 0,
+  };
+
   if (!root || !mount || typeof scalePort?.recordAnswer !== 'function') {
+    logger?.error?.('[InterDead][MiniGame][Poll] Missing mount or scalePort.recordAnswer', {
+      ...logContext,
+      hasRoot: Boolean(root),
+      hasMount: Boolean(mount),
+      hasScalePort: Boolean(scalePort),
+      hasRecordAnswer: typeof scalePort?.recordAnswer === 'function',
+    });
     return false;
   }
 
   const mergedStrings = { ...defaultStrings, ...strings };
   const normalizedOptions = normalizeOptions(options);
+  if (normalizedOptions.length === 0) {
+    logger?.error?.('[InterDead][MiniGame][Poll] No valid options after normalization', {
+      ...logContext,
+      normalizedOptionCount: normalizedOptions.length,
+    });
+    return false;
+  }
   const form =
     root.ownerDocument?.createElement?.('form') || mount.ownerDocument?.createElement?.('form');
   if (!form) {
-    return;
+    logger?.error?.('[InterDead][MiniGame][Poll] Failed to create form element', logContext);
+    return false;
   }
 
   form.className = 'gm-poll';

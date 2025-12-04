@@ -130,8 +130,14 @@ export default class MiniGameLauncher {
       return;
     }
 
-    fallback?.setAttribute?.('hidden', 'true');
-    mount.removeAttribute?.('hidden');
+    const normalizedRootId = this.normalizeRootId(config.rootId || root?.id);
+    const logContext = {
+      id: normalizedRootId || config.rootId || root?.id,
+      rootAvailable: Boolean(root),
+      mountAvailable: Boolean(mount),
+      fallbackAvailable: Boolean(fallback),
+    };
+    this.logger?.info?.('[InterDead][MiniGame] Rendering mini-game', logContext);
 
     const {
       assets = {},
@@ -142,11 +148,49 @@ export default class MiniGameLauncher {
       scalePort,
     } = config;
     const stylePromise = this.assetLoader?.loadStyle?.(assets.styleUrl, assets.styleIntegrity);
-    const module = await this.assetLoader?.loadScriptModule?.(assets.scriptUrl);
+    if (assets?.styleUrl) {
+      this.logger?.info?.('[InterDead][MiniGame] Loading mini-game styles', {
+        ...logContext,
+        styleUrl: assets.styleUrl,
+      });
+    }
+
+    let module;
+    try {
+      module = await this.assetLoader?.loadScriptModule?.(assets.scriptUrl);
+    } catch (error) {
+      this.logger?.error?.('[InterDead][MiniGame] Failed to load mini-game module', {
+        ...logContext,
+        scriptUrl: assets.scriptUrl,
+        error,
+      });
+      this.renderFallback(root);
+      return;
+    }
+
+    if (!module) {
+      this.logger?.warn?.('[InterDead][MiniGame] Mini-game module missing after load', {
+        ...logContext,
+        scriptUrl: assets.scriptUrl,
+      });
+      this.renderFallback(root);
+      return;
+    }
+
     const initializer = module?.default || module?.initEfbdPoll;
 
-    if (typeof initializer === 'function') {
-      const initResult = await initializer({
+    if (typeof initializer !== 'function') {
+      this.logger?.warn?.('[InterDead][MiniGame] Missing initializer on mini-game module', {
+        ...logContext,
+        scriptUrl: assets.scriptUrl,
+      });
+      this.renderFallback(root);
+      return;
+    }
+
+    let initResult;
+    try {
+      initResult = await initializer({
         root,
         mount,
         options,
@@ -155,14 +199,36 @@ export default class MiniGameLauncher {
         locale,
         scalePort,
       });
-
-      if (initResult === false) {
-        return;
-      }
-
-      state.initialized = true;
-      this.stateByRoot.set(root, state);
+    } catch (error) {
+      this.logger?.error?.('[InterDead][MiniGame] Mini-game initializer threw', {
+        ...logContext,
+        scriptUrl: assets.scriptUrl,
+        error,
+      });
+      this.renderFallback(root);
+      return;
     }
+
+    this.logger?.info?.('[InterDead][MiniGame] Mini-game initializer result', {
+      ...logContext,
+      scriptUrl: assets.scriptUrl,
+      initialized: initResult,
+    });
+
+    if (initResult === false) {
+      this.logger?.warn?.('[InterDead][MiniGame] Mini-game initializer reported failure', {
+        ...logContext,
+        scriptUrl: assets.scriptUrl,
+      });
+      this.renderFallback(root);
+      return;
+    }
+
+    fallback?.setAttribute?.('hidden', 'true');
+    mount.removeAttribute?.('hidden');
+
+    state.initialized = true;
+    this.stateByRoot.set(root, state);
 
     await stylePromise;
   }
