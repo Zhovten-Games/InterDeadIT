@@ -9,9 +9,21 @@ export default class MiniGameAssetLoader {
     this.loadedScripts = new Map();
   }
 
+  normalizeUrl(rawUrl) {
+    if (typeof rawUrl !== 'string') {
+      return '';
+    }
+
+    return rawUrl
+      .trim()
+      .replace(/^['"]+/, '')
+      .replace(/['"]+$/, '');
+  }
+
   async loadStyle(url, integrity = '') {
-    if (!url || this.loadedStyles.has(url)) {
-      return this.loadedStyles.has(url);
+    const normalizedUrl = this.normalizeUrl(url);
+    if (!normalizedUrl || this.loadedStyles.has(normalizedUrl)) {
+      return this.loadedStyles.has(normalizedUrl);
     }
 
     if (!this.document?.head?.appendChild || !this.document?.createElement) {
@@ -21,7 +33,7 @@ export default class MiniGameAssetLoader {
 
     const link = this.document.createElement('link');
     link.rel = 'stylesheet';
-    link.href = url;
+    link.href = normalizedUrl;
     link.crossOrigin = 'anonymous';
     if (integrity) {
       link.integrity = integrity;
@@ -35,31 +47,32 @@ export default class MiniGameAssetLoader {
     this.document.head.appendChild(link);
     const success = await completion;
     if (success) {
-      this.loadedStyles.add(url);
+      this.loadedStyles.add(normalizedUrl);
     }
     return success;
   }
 
   async loadScriptModule(url) {
-    if (!url) {
+    const normalizedUrl = this.normalizeUrl(url);
+    if (!normalizedUrl) {
       return null;
     }
 
-    if (this.loadedScripts.has(url)) {
-      return this.loadedScripts.get(url);
+    if (this.loadedScripts.has(normalizedUrl)) {
+      return this.loadedScripts.get(normalizedUrl);
     }
 
-    const loader = import(url)
+    const loader = import(normalizedUrl)
       .then((module) => module)
       .catch((error) => {
         this.logger?.error?.('[InterDead][MiniGame] Failed to load mini-game script', {
-          url,
+          url: normalizedUrl,
           error,
         });
         return null;
       });
 
-    this.loadedScripts.set(url, loader);
+    this.loadedScripts.set(normalizedUrl, loader);
     return loader;
   }
 }
