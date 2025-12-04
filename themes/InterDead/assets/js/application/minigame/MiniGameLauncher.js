@@ -133,7 +133,14 @@ export default class MiniGameLauncher {
     fallback?.setAttribute?.('hidden', 'true');
     mount.removeAttribute?.('hidden');
 
-    const { assets = {}, strings = {}, options = [], locale = 'en', scalePort } = config;
+    const {
+      assets = {},
+      strings = {},
+      stringKeys = {},
+      options = [],
+      locale = 'en',
+      scalePort,
+    } = config;
     const stylePromise = this.assetLoader?.loadStyle?.(assets.styleUrl, assets.styleIntegrity);
     const module = await this.assetLoader?.loadScriptModule?.(assets.scriptUrl);
     const initializer = module?.default || module?.initEfbdPoll;
@@ -144,6 +151,7 @@ export default class MiniGameLauncher {
         mount,
         options,
         strings,
+        stringKeys,
         locale,
         scalePort,
       });
