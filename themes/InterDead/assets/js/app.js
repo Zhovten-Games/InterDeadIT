@@ -160,7 +160,7 @@ const efbdAdapter = new EfbdApiAdapter({ apiConfig });
 const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFlags, eventBus });
 window.InterdeadPorts = window.InterdeadPorts || {};
 window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
-  efbdBridge.emitTrigger({ axis, value, ...context });
+  efbdBridge.emitTrigger({ axis, value, context });
 
 const countdownController = new CountdownController({
   primaryElement: document.querySelector('[data-countdown="primary"]'),
