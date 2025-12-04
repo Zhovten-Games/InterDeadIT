@@ -5,17 +5,22 @@ export const AUTH_VISIBILITY_EVENTS = {
 };
 
 export default class AuthVisibilityService {
-  constructor({ authStateService, eventBus }) {
+  constructor({ authStateService, eventBus, logger = console }) {
     this.authStateService = authStateService;
     this.eventBus = eventBus;
+    this.logger = logger || console;
     this.visibility = this.normalize(this.authStateService?.getState?.());
     this.unsubscribe = null;
   }
 
   init() {
-    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, (session) =>
-      this.applySession(session),
-    );
+    this.logger?.info?.('[InterDead][AuthVisibility] Initializing', {
+      snapshot: this.visibility,
+    });
+    this.unsubscribe = this.eventBus?.on?.(AUTH_SESSION_EVENTS.UPDATED, (session) => {
+      this.logger?.info?.('[InterDead][AuthVisibility] Received session update', { session });
+      this.applySession(session);
+    });
     this.emit();
   }
 
@@ -40,7 +45,11 @@ export default class AuthVisibilityService {
   }
 
   applySession(session) {
+    this.logger?.info?.('[InterDead][AuthVisibility] Applying session', { session });
     this.visibility = this.normalize(session);
+    this.logger?.info?.('[InterDead][AuthVisibility] Visibility updated', {
+      visibility: this.visibility,
+    });
     this.emit();
     return this.visibility;
   }
@@ -51,6 +60,10 @@ export default class AuthVisibilityService {
 
   normalize(session) {
     const sanitizedSession = this.sanitizeSession(session);
+    this.logger?.info?.('[InterDead][AuthVisibility] Normalizing session', {
+      session,
+      sanitizedSession,
+    });
     if (sanitizedSession) {
       return {
         status: 'authenticated',
