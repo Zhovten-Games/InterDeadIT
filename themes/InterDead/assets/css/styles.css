@@ -1419,6 +1419,10 @@ img, iframe {
   pointer-events: none;
 }
 
+.gm-menuModal__badge {
+  margin-left: auto;
+}
+
 .gm-modal__badge {
   font-size: 0.7rem;
   text-transform: none;
@@ -1998,6 +2002,19 @@ body[data-mode="demo"] [data-show~="demo"] {
 .gm-profile__empty {
   margin: 0;
   color: var(--color-muted);
+}
+
+.gm-minigame {
+  margin: 22px 0;
+}
+
+.gm-minigame__fallback {
+  padding: 14px 16px;
+  border: 1px dashed rgba(255, 255, 255, 0.24);
+  border-radius: var(--shape-radius-tight);
+  background: rgba(12, 15, 22, 0.5);
+  color: var(--color-muted);
+  line-height: 1.5;
 }
 
 @media (max-width: 960px) {

@@ -37,21 +37,26 @@
         {{- $targetAttr := .target | default "" -}}
         {{- $bodyHref := cond (and $.IsHome (ne $targetId "")) (printf "#%s" $targetId) $href -}}
         {{- $disableBody := and (not $.IsHome) (and (ne $id "") (eq $id $currentNavId)) -}}
+        {{- $isCurrent := $disableBody -}}
       <li>
         <div
-          class="gm-modal__option gm-menuModal__option{{ if $disableBody }} gm-modal__option--inactive{{ end }}"
+          class="gm-modal__option gm-menuModal__option{{ if $isCurrent }} gm-modal__option--current gm-menuModal__option--current{{ end }}"
           data-menu-option
           data-menu-url="{{ $href }}"
           {{- if $targetId }} data-menu-target="{{ $targetId }}"{{ end }}
           {{- if $disableBody }} aria-disabled="true"{{ end }}
+          {{- if $isCurrent }} data-menu-active="true" data-menu-active-label="{{ i18n "lang.modal.current" }}"{{ end }}
         >
           <a
             class="gm-modal__optionBody"
             href="{{ $bodyHref }}"
             data-menu-option-body
-            {{- if $disableBody }} aria-disabled="true" data-menu-body-disabled="true" tabindex="-1"{{ end }}
+            {{- if $disableBody }} aria-disabled="true" data-menu-body-disabled="true" tabindex="-1" aria-current="true"{{ end }}
           >
             <span class="gm-modal__optionLabel">{{ $label }}</span>
+            {{- if $isCurrent }}
+              <span class="gm-modal__badge gm-menuModal__badge">{{ i18n "lang.modal.current" }}</span>
+            {{- end }}
           </a>
           {{- if $.IsHome }}
             <a

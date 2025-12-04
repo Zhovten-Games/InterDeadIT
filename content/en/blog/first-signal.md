@@ -17,3 +17,5 @@ The beta grid recorded its first coherent reply last night. Three operators stoo
 ### What’s next
 
 We are preparing a closed round of qualitative interviews. If you captured a transcript, please redact personal details and send it through the feedback form. Expect more invitations soon.
+
+{{< efbd-poll >}}

@@ -172,6 +172,24 @@ other = "放棄"
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
+['minigames.poll.title']
+other = "EFBD 共鳴チェック"
+
+['minigames.poll.prompt']
+other = "直近のシグナルに最も合うEFBD軸を選んでください。"
+
+['minigames.poll.submit']
+other = "回答を送信"
+
+['minigames.poll.success']
+other = "回答を記録しました。同期後にEFBDファイルを確認してください。"
+
+['minigames.poll.error']
+other = "投票を記録できませんでした。再接続してからお試しください。"
+
+['minigames.poll.required']
+other = "続行するには一つ選択してください。"
+
 ['hero.demo.timer']
 other = "オープンベータ終了まで:"
 

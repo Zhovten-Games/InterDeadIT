@@ -172,6 +172,24 @@ other = "Abandon"
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
+['minigames.poll.title']
+other = "EFBD resonance check"
+
+['minigames.poll.prompt']
+other = "Choose the EFBD axis that best matches your latest signal."
+
+['minigames.poll.submit']
+other = "Submit response"
+
+['minigames.poll.success']
+other = "Response recorded. Check your EFBD dossier after syncing."
+
+['minigames.poll.error']
+other = "We could not record your vote. Please retry after reconnecting."
+
+['minigames.poll.required']
+other = "Select one option to continue."
+
 ['hero.demo.timer']
 other = "Open beta closes in:"
 

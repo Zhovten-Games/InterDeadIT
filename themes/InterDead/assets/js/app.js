@@ -224,6 +224,12 @@ window.InterdeadPorts.authVisibility = {
   isAuthenticated: () => authVisibilityService.isAuthenticated?.(),
 };
 
+window.dispatchEvent(
+  new CustomEvent('interdead:ports-ready', {
+    detail: { ports: window.InterdeadPorts },
+  }),
+);
+
 window.addEventListener('beforeunload', () => {
   headerLogoController.dispose?.();
   headerActionsController.dispose?.();

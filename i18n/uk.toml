@@ -172,6 +172,24 @@ other = "Полишення"
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
+['minigames.poll.title']
+other = "Перевірка резонансу EFBD"
+
+['minigames.poll.prompt']
+other = "Оберіть вісь EFBD, яка найточніше описує ваш останній сигнал."
+
+['minigames.poll.submit']
+other = "Надіслати відповідь"
+
+['minigames.poll.success']
+other = "Відповідь зафіксовано. Перевірте досьє EFBD після синхронізації."
+
+['minigames.poll.error']
+other = "Не вдалося записати вибір. Спробуйте знову після перепідключення."
+
+['minigames.poll.required']
+other = "Оберіть один варіант, щоб продовжити."
+
 ['hero.demo.timer']
 other = "Відкрита бета завершиться через:"
 
