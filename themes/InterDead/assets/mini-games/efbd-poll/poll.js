@@ -13,7 +13,7 @@ const normalizeOptions = (options = []) =>
 const defaultStrings = {
   title: '',
   prompt: '',
-  submit: '',
+  submit: 'Submit',
   success: '',
   error: '',
   required: '',
@@ -140,7 +140,7 @@ export function initEfbdPoll({
   const submit = form.ownerDocument.createElement('button');
   submit.type = 'submit';
   submit.className = 'gm-poll__submit';
-  submit.textContent = mergedStrings.submit;
+  submit.textContent = mergedStrings.submit || defaultStrings.submit;
   if (stringKeys.submit) {
     submit.dataset.i18n = stringKeys.submit;
   }
