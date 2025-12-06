@@ -421,7 +421,7 @@ class DiscordAuthController {
     const profile = identityAggregate?.state?.metadata
       ? identityAggregate.state.metadata
       : metadata;
-    const discordLink = identityAggregate?.state?.discordLink;
+    discordLink = identityAggregate?.state?.discordLink;
 
     try {
       await sessionStore.issueSession({
