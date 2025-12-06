@@ -8,6 +8,7 @@ export default class AuthButtonController {
     featureFlags,
     authStateService,
     eventBus,
+    notificationService = null,
     copy = {},
   }) {
     this.buttons = buttons;
@@ -16,6 +17,7 @@ export default class AuthButtonController {
     this.featureFlags = featureFlags;
     this.authStateService = authStateService;
     this.eventBus = eventBus;
+    this.notificationService = notificationService;
     this.copy = {
       idle: copy.idle || '',
       disabled: copy.disabled || '',
@@ -126,6 +128,11 @@ export default class AuthButtonController {
       console.info('[InterDead][UI] Opening Discord login', result.navigation);
       const target = result.navigation.target || '_self';
       window.open(result.navigation.url, target, 'noopener');
+      return;
+    }
+    if (result?.status === 'error' && result.message) {
+      this.notificationService?.showError?.(result.message);
+      this.setErrorState(result.message);
       return;
     }
     if (result?.status === 'disabled') {

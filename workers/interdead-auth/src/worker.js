@@ -9,6 +9,7 @@ import {
   SystemClock,
   assertAxisCode,
 } from '@interdead/efbd-scale';
+import { DiscordOAuthAdapter } from '@interdead/identity-core';
 import { CookieSessionStore, timingSafeEqual } from './session.js';
 
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize';
@@ -110,9 +111,133 @@ class D1TableAdapter {
   }
 }
 
+class ProfileGuardRepository {
+  constructor(tableAdapter, clock = () => new Date()) {
+    this.tableAdapter = tableAdapter;
+    this.clock = clock;
+  }
+
+  async findByProfileId(profileId) {
+    if (!profileId) return null;
+    const result = await this.tableAdapter.execute(
+      `SELECT profile_id, discord_id, last_cleanup_at, last_cleanup_timezone, delete_count, completed_games
+       FROM user_profiles WHERE profile_id = ? LIMIT 1`,
+      [profileId],
+    );
+    return this.deserializeGuardRow(result?.results?.[0]);
+  }
+
+  async findByDiscordId(discordId) {
+    if (!discordId) return null;
+    const result = await this.tableAdapter.execute(
+      `SELECT profile_id, discord_id, last_cleanup_at, last_cleanup_timezone, delete_count, completed_games
+       FROM user_profiles WHERE discord_id = ? LIMIT 1`,
+      [discordId],
+    );
+    return this.deserializeGuardRow(result?.results?.[0]);
+  }
+
+  async upsertProfile({ profileId, discordId, displayName, avatarUrl }) {
+    if (!profileId) return;
+    await this.tableAdapter.execute(
+      `INSERT INTO user_profiles (profile_id, discord_id, display_name, avatar_url)
+       VALUES (?, ?, ?, ?)
+       ON CONFLICT(profile_id) DO UPDATE SET discord_id = excluded.discord_id, display_name = excluded.display_name, avatar_url = excluded.avatar_url`,
+      [profileId, discordId ?? null, displayName ?? null, avatarUrl ?? null],
+    );
+  }
+
+  async recordCleanup({ profileId, timezone }) {
+    if (!profileId) return null;
+    const now = this.clock();
+    const isoTimestamp =
+      typeof now?.toISOString === 'function' ? now.toISOString() : new Date().toISOString();
+    const current = (await this.findByProfileId(profileId)) || {};
+    const nextDeleteCount = Number(current.deleteCount ?? 0) + 1;
+    await this.tableAdapter.execute(
+      `INSERT INTO user_profiles (profile_id, last_cleanup_at, last_cleanup_timezone, delete_count)
+       VALUES (?, ?, ?, ?)
+       ON CONFLICT(profile_id) DO UPDATE SET last_cleanup_at = excluded.last_cleanup_at, last_cleanup_timezone = excluded.last_cleanup_timezone, delete_count = excluded.delete_count`,
+      [profileId, isoTimestamp, timezone || current.timezone || 'UTC', nextDeleteCount],
+    );
+    return {
+      timestamp: isoTimestamp,
+      timezone: timezone || current.timezone || 'UTC',
+      deleteCount: nextDeleteCount,
+    };
+  }
+
+  async resetCleanupWindow(profileId) {
+    if (!profileId) return;
+    await this.tableAdapter.execute(
+      `UPDATE user_profiles SET delete_count = 0, last_cleanup_at = NULL, last_cleanup_timezone = NULL WHERE profile_id = ?`,
+      [profileId],
+    );
+  }
+
+  async markCompleted(profileId, gameId) {
+    if (!profileId || !gameId) return;
+    const current = (await this.findByProfileId(profileId)) || {};
+    const completed = new Set(current.completedGames || []);
+    completed.add(gameId);
+    await this.tableAdapter.execute(
+      `INSERT INTO user_profiles (profile_id, completed_games)
+       VALUES (?, ?)
+       ON CONFLICT(profile_id) DO UPDATE SET completed_games = excluded.completed_games`,
+      [profileId, JSON.stringify(Array.from(completed))],
+    );
+  }
+
+  async clearCompleted(profileId) {
+    if (!profileId) return;
+    await this.tableAdapter.execute(
+      `UPDATE user_profiles SET completed_games = NULL WHERE profile_id = ?`,
+      [profileId],
+    );
+  }
+
+  deserializeGuardRow(row) {
+    if (!row) return null;
+    let completedGames = [];
+    if (row.completed_games) {
+      try {
+        completedGames = JSON.parse(row.completed_games);
+      } catch (error) {
+        completedGames = [];
+      }
+    }
+    return {
+      profileId: row.profile_id || null,
+      discordId: row.discord_id || null,
+      lastCleanupAt: row.last_cleanup_at || null,
+      timezone: row.last_cleanup_timezone || null,
+      deleteCount: row.delete_count ?? 0,
+      completedGames,
+    };
+  }
+
+  isCleanupBlocked(guard) {
+    if (!guard || !guard.deleteCount || guard.deleteCount <= 2) {
+      return false;
+    }
+    if (!guard.lastCleanupAt) {
+      return false;
+    }
+    const lastCleanup = new Date(guard.lastCleanupAt);
+    if (Number.isNaN(lastCleanup.getTime())) {
+      return false;
+    }
+    const now = this.clock();
+    const diffMs = now.getTime() - lastCleanup.getTime();
+    const hours = diffMs / (1000 * 60 * 60);
+    return hours < 24;
+  }
+}
+
 class DiscordAuthController {
-  constructor(env) {
+  constructor(env, guardRepository) {
     this.env = env;
+    this.guardRepository = guardRepository;
   }
 
   isConfigured() {
@@ -133,6 +258,13 @@ class DiscordAuthController {
       discordUrl.searchParams.set('state', stateToken);
     }
     return discordUrl.toString();
+  }
+
+  buildGuardResponse(message) {
+    return new Response(JSON.stringify({ error: 'login_blocked', message }), {
+      status: 429,
+      headers: { 'Content-Type': 'application/json' },
+    });
   }
 
   getSiteBaseUrl() {
@@ -164,6 +296,17 @@ class DiscordAuthController {
     return { identity, sessionStore };
   }
 
+  buildDiscordAdapter() {
+    if (!this.isConfigured()) {
+      return null;
+    }
+    return new DiscordOAuthAdapter({
+      clientId: this.env.IDENTITY_DISCORD_CLIENT_ID,
+      clientSecret: this.env.IDENTITY_DISCORD_CLIENT_SECRET,
+      redirectUri: this.env.IDENTITY_DISCORD_REDIRECT_URI,
+    });
+  }
+
   async buildStartRedirect(requestUrl, cookies) {
     if (!this.isConfigured()) {
       return new Response('Discord authentication is disabled', { status: 503 });
@@ -172,6 +315,14 @@ class DiscordAuthController {
     const { identity, sessionStore } = this.buildIdentity(cookies);
     const redirectTarget = requestUrl.searchParams.get('redirect') || '/';
     const existingSession = await sessionStore.readSession();
+    if (this.guardRepository && existingSession?.profileId) {
+      const guard = await this.guardRepository.findByProfileId(existingSession.profileId);
+      if (this.guardRepository.isCleanupBlocked(guard)) {
+        return this.buildGuardResponse(
+          'Account cleanup limit reached. Please try again after cooldown.',
+        );
+      }
+    }
     const statePayload = {
       redirect: redirectTarget,
       profileId: existingSession?.profileId ?? crypto.randomUUID(),
@@ -220,12 +371,38 @@ class DiscordAuthController {
       return new Response('Invalid OAuth state token', { status: 400 });
     }
 
-    const profileId = state?.profileId || crypto.randomUUID();
+    const oauthAdapter = this.buildDiscordAdapter();
+    let discordLink;
+    try {
+      discordLink = await oauthAdapter?.exchangeCode(code);
+    } catch (error) {
+      console.error('Failed to exchange Discord code before guard checks', error);
+      return new Response('Failed to complete Discord login', { status: 502 });
+    }
+
+    let profileId = state?.profileId;
+    if (!profileId && discordLink?.discordId && this.guardRepository) {
+      const existing = await this.guardRepository.findByDiscordId(discordLink.discordId);
+      profileId = existing?.profileId;
+    }
+    const resolvedProfileId = profileId || crypto.randomUUID();
     const metadata = new ProfileMetadata({
-      profileId,
-      displayName: state?.displayName || 'Discord traveler',
-      avatarUrl: state?.avatarUrl,
+      profileId: resolvedProfileId,
+      displayName: state?.displayName || discordLink?.username || 'Discord traveler',
+      avatarUrl: state?.avatarUrl || discordLink?.avatarUrl,
     });
+
+    if (this.guardRepository && discordLink) {
+      const guard = await this.guardRepository.findByDiscordId(discordLink.discordId);
+      if (this.guardRepository.isCleanupBlocked(guard)) {
+        return this.buildGuardResponse(
+          'Account is temporarily locked after repeated cleanups. Please wait 24 hours.',
+        );
+      }
+      if (guard?.deleteCount > 2 && !this.guardRepository.isCleanupBlocked(guard)) {
+        await this.guardRepository.resetCleanupWindow(guard.profileId);
+      }
+    }
 
     let identityAggregate;
     try {
@@ -233,6 +410,7 @@ class DiscordAuthController {
         profileId,
         code,
         metadata,
+        { discordLink },
       );
     } catch (error) {
       return new Response('Failed to complete Discord login', { status: 502 });
@@ -255,6 +433,15 @@ class DiscordAuthController {
     } catch (error) {
       console.error('Failed to issue session', error);
       return new Response('Failed to complete Discord login (session)', { status: 500 });
+    }
+
+    if (this.guardRepository) {
+      await this.guardRepository.upsertProfile({
+        profileId: profile.profileId,
+        discordId: discordLink?.discordId,
+        displayName: profile.displayName,
+        avatarUrl: profile.avatarUrl || discordLink?.avatarUrl,
+      });
     }
 
     const rawRedirect =
@@ -319,6 +506,34 @@ class DiscordAuthController {
     });
     return response;
   }
+
+  async handleCleanup(request, cookies) {
+    const { identity, sessionStore } = this.buildIdentity(cookies);
+    const session = await sessionStore.readSession();
+    if (!session?.profileId) {
+      return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401 });
+    }
+    const timezone =
+      request.headers.get('X-Timezone') || (await request.json().catch(() => ({})))?.timezone;
+    try {
+      await identity.repository.delete(session.profileId);
+    } catch (error) {
+      console.error('Failed to remove profile from repository', error);
+    }
+    if (this.guardRepository) {
+      await this.guardRepository.recordCleanup({ profileId: session.profileId, timezone });
+      await this.guardRepository.clearCompleted(session.profileId);
+    }
+    await sessionStore.delete(sessionStore.sessionKey);
+    const response = new Response(JSON.stringify({ status: 'ok' }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    });
+    sessionStore.collectCookies().forEach((cookie) => {
+      response.headers.append('Set-Cookie', cookie);
+    });
+    return response;
+  }
 }
 
 function resolveSiteBaseUrl(env) {
@@ -337,8 +552,9 @@ function resolveSiteBaseUrl(env) {
 }
 
 class EfbdController {
-  constructor(env) {
+  constructor(env, guardRepository) {
     this.env = env;
+    this.guardRepository = guardRepository;
   }
 
   async handleTrigger(request, cookies = new Map()) {
@@ -361,6 +577,25 @@ class EfbdController {
     }
 
     const { sessionStore, session } = await this.readSession(cookies);
+    const profileId = this.resolveProfileId(trigger, session?.profileId);
+    if (this.guardRepository && profileId) {
+      const guard = await this.guardRepository.findByProfileId(profileId);
+      const gameId = trigger?.source || trigger?.context?.source || 'efbd-poll';
+      if (guard?.completedGames?.includes?.(gameId)) {
+        return this.buildJsonResponse(
+          { error: 'replay_blocked', message: 'Mini-game already completed.' },
+          409,
+          sessionStore,
+        );
+      }
+      if (this.guardRepository.isCleanupBlocked(guard)) {
+        return this.buildJsonResponse(
+          { error: 'replay_blocked', message: 'Account is locked during cleanup cooldown.' },
+          429,
+          sessionStore,
+        );
+      }
+    }
 
     const ingestion = this.buildIngestionService(increment);
     if (!ingestion) {
@@ -369,7 +604,7 @@ class EfbdController {
 
     try {
       await ingestion.recordTriggers({
-        profileId: this.resolveProfileId(trigger, session?.profileId),
+        profileId,
         triggers: [
           {
             axis: axisCode,
@@ -378,6 +613,10 @@ class EfbdController {
           },
         ],
       });
+      if (this.guardRepository && profileId) {
+        const gameId = trigger?.source || trigger?.context?.source || 'efbd-poll';
+        await this.guardRepository.markCompleted(profileId, gameId);
+      }
     } catch (error) {
       return new Response('Failed to persist trigger', { status: 502 });
     }
@@ -526,12 +765,15 @@ class EfbdController {
 export default {
   async fetch(request, env) {
     const cors = new CorsService(env);
+    const guardRepository = env.INTERDEAD_CORE
+      ? new ProfileGuardRepository(new D1TableAdapter(env.INTERDEAD_CORE), () => new Date())
+      : null;
 
     try {
       const url = new URL(request.url);
       const cookies = parseCookies(request.headers.get('Cookie'));
-      const authController = new DiscordAuthController(env);
-      const efbdController = new EfbdController(env);
+      const authController = new DiscordAuthController(env, guardRepository);
+      const efbdController = new EfbdController(env, guardRepository);
 
       if (request.method === 'OPTIONS') {
         const preflight = cors.buildPreflightResponse(request);
@@ -553,6 +795,11 @@ export default {
 
       if (request.method === 'GET' && url.pathname === '/auth/session') {
         const response = await authController.handleSessionStatus(cookies);
+        return cors.apply(request, response);
+      }
+
+      if (request.method === 'POST' && url.pathname === '/auth/profile/cleanup') {
+        const response = await authController.handleCleanup(request, cookies);
         return cors.apply(request, response);
       }
 

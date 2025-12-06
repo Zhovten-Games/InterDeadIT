@@ -357,3 +357,6 @@ other = """
 other = "Правові"
 ["blog.readMore"]
 other = "Читати далі"
+
+[profile.delete]
+other = "Delete profile"

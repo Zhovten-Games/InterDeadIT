@@ -41,9 +41,13 @@ export default class EfbdApiAdapter {
         credentials: 'include',
         body: JSON.stringify(trigger ?? {}),
       });
+      const payload = await response.json().catch(() => ({}));
       if (response.ok) {
-        const payload = await response.json().catch(() => ({}));
         return { status: 'ok', payload };
+      }
+
+      if (response.status === 409 || response.status === 429) {
+        return { status: 'error', message: payload?.message || 'Mini-game unavailable.' };
       }
     } catch (error) {
       return { status: 'error', error };

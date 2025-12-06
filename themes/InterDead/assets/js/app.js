@@ -27,6 +27,8 @@ import ProfilePageController from './presentation/controllers/ProfilePageControl
 import EfbdApiAdapter from './infrastructure/efbd/EfbdApiAdapter.js';
 import EfbdScaleBridgeService from './application/efbd/EfbdScaleBridgeService.js';
 import HomeAuthController from './presentation/controllers/HomeAuthController.js';
+import NotificationService from './application/notification/NotificationService.js';
+import ProfileCleanupAdapter from './infrastructure/auth/ProfileCleanupAdapter.js';
 
 const storage = new LocalStorageAdapter();
 const scrollController = new DocumentScrollController({ target: document.body });
@@ -69,6 +71,8 @@ const ageGateController = new AgeGateController({
   onModeChange: () => headerActionsController.refresh(),
 });
 ageGateController.init();
+
+const notificationService = new NotificationService({ modalService, documentRef: document });
 
 const modalTriggerController = new ModalTriggerController({
   triggers: Array.from(document.querySelectorAll('[data-modal-trigger]')),
@@ -125,6 +129,7 @@ const authAdapter = new DiscordOAuthAdapter({ apiConfig });
 const authSessionAdapter = new AuthSessionAdapter({ apiConfig });
 const authService = new DiscordAuthService({ authAdapter, eventBus, featureFlags });
 const authStateService = new AuthStateService({ sessionAdapter: authSessionAdapter, eventBus });
+const profileCleanupAdapter = new ProfileCleanupAdapter({ apiConfig });
 const authVisibilityService = new AuthVisibilityService({ authStateService, eventBus });
 const authButtonController = new AuthButtonController({
   buttons: [
@@ -136,6 +141,7 @@ const authButtonController = new AuthButtonController({
   featureFlags,
   authStateService,
   eventBus,
+  notificationService,
   copy: authCopy,
 });
 authButtonController.init();
@@ -161,6 +167,7 @@ const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFla
 window.InterdeadPorts = window.InterdeadPorts || {};
 window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
   efbdBridge.emitTrigger({ axis, value, context });
+window.InterdeadNotifications = notificationService;
 
 const countdownController = new CountdownController({
   primaryElement: document.querySelector('[data-countdown="primary"]'),
@@ -191,11 +198,15 @@ const profilePageController = profilePageRoot
         displayName: Array.from(document.querySelectorAll('[data-profile-display-name]')),
         username: Array.from(document.querySelectorAll('[data-profile-username]')),
         profileId: Array.from(document.querySelectorAll('[data-profile-id]')),
+        deleteButton: Array.from(document.querySelectorAll('[data-profile-delete]')),
         avatar: document.querySelector('[data-profile-avatar]'),
         efbdCard: document.querySelector('[data-profile-efbd-card]'),
         efbdStatus: document.querySelector('[data-profile-efbd-status]'),
         efbdUpdated: document.querySelector('[data-profile-efbd-updated]'),
         efbdAxes: document.querySelector('[data-profile-efbd-axes]'),
+        cleanupAdapter: profileCleanupAdapter,
+        notificationService,
+        authStateService,
       },
     })
   : null;

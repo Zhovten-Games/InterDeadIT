@@ -356,3 +356,6 @@ other = """
 other = "Юридические"
 ["blog.readMore"]
 other = "Читать дальше"
+
+[profile.delete]
+other = "Delete profile"

@@ -357,3 +357,6 @@ other = """
 other = "リーガル"
 ["blog.readMore"]
 other = "続きを読む"
+
+[profile.delete]
+other = "Delete profile"

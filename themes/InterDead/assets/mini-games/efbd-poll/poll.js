@@ -202,6 +202,7 @@ export function initEfbdPoll({
     } else {
       const errorMessage = response?.message || response?.error || mergedStrings.error;
       setStatus(errorMessage, 'error');
+      window.InterdeadNotifications?.showError?.(errorMessage);
     }
 
     submit.disabled = false;

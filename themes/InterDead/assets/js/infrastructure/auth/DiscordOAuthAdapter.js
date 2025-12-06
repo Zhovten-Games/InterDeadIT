@@ -30,13 +30,29 @@ export default class DiscordOAuthAdapter {
       console.warn('[InterDead][Auth] Unable to determine redirect URL; using start path only');
     }
 
-    console.info('[InterDead][Auth] Prepared Discord OAuth navigation', {
-      baseUrl,
-      startPath,
-      redirect,
-      url: url.toString(),
-    });
-    return { status: 'ok', url: url.toString(), target: '_self' };
+    try {
+      const response = await fetch(url.toString(), {
+        method: 'GET',
+        credentials: 'include',
+        redirect: 'manual',
+      });
+      if (response.status === 302) {
+        const location = response.headers.get('Location');
+        return { status: 'ok', url: location || url.toString(), target: '_self' };
+      }
+      const payload = await response.json().catch(() => ({}));
+      if (response.status === 429) {
+        return { status: 'error', reason: 'guard', message: payload?.message };
+      }
+      console.error('[InterDead][Auth] Unexpected response from start endpoint', {
+        status: response.status,
+        payload,
+      });
+      return { status: 'error', reason: 'unexpected' };
+    } catch (error) {
+      console.error('[InterDead][Auth] Failed to reach start endpoint', error);
+      return { status: 'error', reason: 'network', error };
+    }
   }
 
   getRedirectUrl() {

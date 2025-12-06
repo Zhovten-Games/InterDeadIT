@@ -49,7 +49,12 @@ export default class MiniGameLauncher {
       scalePort: config.scalePort || this.scalePort,
     };
 
-    this.stateByRoot.set(root, { initialized: false, config: configWithScalePort, mount, fallback });
+    this.stateByRoot.set(root, {
+      initialized: false,
+      config: configWithScalePort,
+      mount,
+      fallback,
+    });
     this.bindAuth(root);
   }
 

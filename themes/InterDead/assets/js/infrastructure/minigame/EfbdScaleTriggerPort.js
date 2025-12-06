@@ -19,18 +19,24 @@ export default class EfbdScaleTriggerPort extends IEfbdScaleWritePort {
     }
 
     if (typeof this.emitScaleTrigger !== 'function') {
-      this.logger?.warn?.('[InterDead][MiniGame][ScaleTriggerPort] emitScaleTrigger is not available', {
-        axis,
-        hasEmitter: Boolean(this.emitScaleTrigger),
-      });
+      this.logger?.warn?.(
+        '[InterDead][MiniGame][ScaleTriggerPort] emitScaleTrigger is not available',
+        {
+          axis,
+          hasEmitter: Boolean(this.emitScaleTrigger),
+        },
+      );
       return { status: 'unsupported', message: 'Scale trigger is unavailable.' };
     }
 
     const result = this.emitScaleTrigger(axis, value, context);
     if (!result) {
-      this.logger?.error?.('[InterDead][MiniGame][ScaleTriggerPort] emitScaleTrigger returned no result', {
-        axis,
-      });
+      this.logger?.error?.(
+        '[InterDead][MiniGame][ScaleTriggerPort] emitScaleTrigger returned no result',
+        {
+          axis,
+        },
+      );
       return { status: 'error', message: 'Scale trigger returned no result.' };
     }
 

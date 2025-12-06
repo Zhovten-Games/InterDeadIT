@@ -6,8 +6,11 @@ const AXIS_CODES = ['EBF-SOCIAL', 'EBF-MIND', 'EBF-DECLINE', 'EBF-EXPOSURE', 'EB
 export default class ProfilePageController {
   constructor({ authVisibilityService, eventBus, efbdService, elements = {} }) {
     this.authVisibilityService = authVisibilityService;
+    this.authStateService = elements.authStateService;
     this.eventBus = eventBus;
     this.efbdService = efbdService;
+    this.cleanupAdapter = elements.cleanupAdapter;
+    this.notificationService = elements.notificationService;
     this.elements = elements;
     this.authenticatedBlocks = this.collectList(elements.authenticatedBlock);
     if (elements.efbdCard) {
@@ -17,6 +20,7 @@ export default class ProfilePageController {
     this.displayNameFields = this.collectList(elements.displayName);
     this.usernameFields = this.collectList(elements.username);
     this.profileIdFields = this.collectList(elements.profileId);
+    this.deleteButtons = this.collectList(elements.deleteButton);
     this.axisRows = this.collectAxisRows(elements.efbdAxes);
     this.copy = {
       empty: elements.efbdCard?.dataset?.efbdEmptyText || '',
@@ -36,6 +40,11 @@ export default class ProfilePageController {
     });
     this.unsubscribeEfbd = this.eventBus?.on?.(EFBD_EVENTS.SUMMARY_LOADED, (payload) => {
       this.renderEfbd(payload);
+    });
+
+    this.deleteButtons?.forEach((button) => {
+      if (!button) return;
+      button.addEventListener('click', (event) => this.handleCleanup(event));
     });
 
     const initialVisibility = this.authVisibilityService?.getSnapshot?.();
@@ -241,6 +250,43 @@ export default class ProfilePageController {
       return;
     }
     target.textContent = text;
+  }
+
+  async handleCleanup(event) {
+    event?.preventDefault?.();
+    if (!this.cleanupAdapter) {
+      return;
+    }
+    this.toggleDeleteButtons(true);
+    const timezone =
+      typeof Intl !== 'undefined' && Intl.DateTimeFormat
+        ? Intl.DateTimeFormat().resolvedOptions().timeZone
+        : 'UTC';
+    const response = await this.cleanupAdapter.cleanupProfile(timezone);
+    this.toggleDeleteButtons(false);
+
+    if (response?.status === 'ok') {
+      this.notificationService?.show?.({
+        title: 'Profile deleted',
+        message:
+          'Your profile and game history were cleared. You can re-authenticate after the cooldown.',
+      });
+      await this.authStateService?.refresh?.();
+      this.renderProfile({ status: 'unauthenticated' });
+      this.renderEfbd(null, { reason: 'unauthenticated' });
+      return;
+    }
+
+    const message = response?.payload?.message || 'Unable to delete your profile right now.';
+    this.notificationService?.showError?.(message);
+  }
+
+  toggleDeleteButtons(disabled) {
+    this.deleteButtons?.forEach((button) => {
+      if (button) {
+        button.disabled = Boolean(disabled);
+      }
+    });
   }
 
   toggleVisibility(target, show) {

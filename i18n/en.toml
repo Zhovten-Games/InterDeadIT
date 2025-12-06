@@ -357,3 +357,6 @@ other = """
 other = "Legal"
 ["blog.readMore"]
 other = "Read more"
+
+[profile.delete]
+other = "Delete profile"
