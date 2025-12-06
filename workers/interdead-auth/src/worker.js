@@ -135,6 +135,45 @@ class ProfileGuardRepository {
     return this.deserializeGuardRow(result?.results?.[0]);
   }
 
+  async recordLogin({ profileId, discordId, displayName, avatarUrl, timezone = 'UTC' }) {
+    if (!profileId) return null;
+    const current = (await this.fetchProfileRow(profileId)) || {};
+    const existing = this.deserializeGuardRow(current) || {};
+    const now = this.clock();
+    const isoTimestamp =
+      typeof now?.toISOString === 'function' ? now.toISOString() : new Date().toISOString();
+    const loginCount = Number(existing.loginCount ?? 0) + 1;
+    const mergedData = this.mergeProfileData(current?.data, {
+      profileId,
+      discordId,
+      displayName,
+      avatarUrl,
+      completedGames: existing.completedGames,
+      loginAudit: {
+        lastLoginAt: isoTimestamp,
+        lastLoginTimezone: timezone,
+        loginCount,
+      },
+    });
+
+    await this.persistProfile({
+      profileId,
+      data: mergedData,
+      lastCleanupAt: current.last_cleanup_at ?? null,
+      timezone: current.last_cleanup_timezone ?? null,
+      deleteCount: current.delete_count ?? 0,
+    });
+
+    return {
+      profileId,
+      lastLoginAt: isoTimestamp,
+      lastLoginTimezone: timezone,
+      loginCount,
+      completedGames: existing.completedGames,
+      discordId,
+    };
+  }
+
   async upsertProfile({ profileId, discordId, displayName, avatarUrl }) {
     if (!profileId) return;
     const current = await this.fetchProfileRow(profileId);
@@ -160,11 +199,15 @@ class ProfileGuardRepository {
     const isoTimestamp =
       typeof now?.toISOString === 'function' ? now.toISOString() : new Date().toISOString();
     const current = (await this.fetchProfileRow(profileId)) || {};
+    const existing = this.deserializeGuardRow(current) || {};
     const nextDeleteCount = Number(current.delete_count ?? 0) + 1;
+    const preservedCompletedGames =
+      Array.isArray(completedGames) && completedGames.length
+        ? completedGames
+        : existing.completedGames ?? [];
     const mergedData = this.mergeProfileData(current?.data, {
       profileId,
-      completedGames:
-        completedGames ?? this.deserializeGuardRow(current)?.completedGames ?? [],
+      completedGames: preservedCompletedGames,
       discordId,
       displayName,
       avatarUrl,
@@ -176,13 +219,17 @@ class ProfileGuardRepository {
       timezone: timezone || current.last_cleanup_timezone || 'UTC',
       deleteCount: nextDeleteCount,
     });
+    console.info('Preserved completed games during cleanup', {
+      profileId,
+      completedGamesCount: preservedCompletedGames.length,
+    });
     const persisted = await this.fetchProfileRow(profileId);
     return this.deserializeGuardRow(persisted) || {
       profileId,
       lastCleanupAt: isoTimestamp,
       timezone: timezone || current.last_cleanup_timezone || 'UTC',
       deleteCount: nextDeleteCount,
-      completedGames: completedGames ?? [],
+      completedGames: preservedCompletedGames,
       discordId,
     };
   }
@@ -236,6 +283,7 @@ class ProfileGuardRepository {
     if (!row) return null;
     const data = this.parseProfileData(row.data);
     const completedGames = Array.isArray(data.completedGames) ? data.completedGames : [];
+    const loginAudit = data.loginAudit || {};
     return {
       profileId: row.profile_id || data?.metadata?.profileId || null,
       discordId: data?.discordLink?.discordId || null,
@@ -243,6 +291,9 @@ class ProfileGuardRepository {
       timezone: row.last_cleanup_timezone || null,
       deleteCount: row.delete_count ?? 0,
       completedGames,
+      lastLoginAt: loginAudit.lastLoginAt || null,
+      lastLoginTimezone: loginAudit.lastLoginTimezone || null,
+      loginCount: loginAudit.loginCount ?? 0,
     };
   }
 
@@ -281,12 +332,32 @@ class ProfileGuardRepository {
         ? existing.completedGames
         : [];
 
+    const loginAudit = this.mergeLoginAudit(existing.loginAudit, updates.loginAudit);
+
     return JSON.stringify({
       ...existing,
       metadata,
       ...(discordLink ? { discordLink } : {}),
       completedGames,
+      ...(loginAudit ? { loginAudit } : {}),
     });
+  }
+
+  mergeLoginAudit(existing = {}, updates = {}) {
+    if (!existing && !updates) {
+      return null;
+    }
+    const hasUpdates = updates && Object.keys(updates).length > 0;
+    const hasExisting = existing && Object.keys(existing).length > 0;
+    if (!hasUpdates && !hasExisting) {
+      return null;
+    }
+
+    return {
+      lastLoginAt: updates.lastLoginAt ?? existing.lastLoginAt ?? null,
+      lastLoginTimezone: updates.lastLoginTimezone ?? existing.lastLoginTimezone ?? null,
+      loginCount: updates.loginCount ?? existing.loginCount ?? 0,
+    };
   }
 
   parseProfileData(rawData) {
@@ -391,6 +462,10 @@ class DiscordAuthController {
 
   getSiteBaseUrl() {
     return resolveSiteBaseUrl(this.env);
+  }
+
+  getServerTimezone() {
+    return this.env.INTERDEAD_TIMEZONE || 'UTC';
   }
 
   buildIdentity(cookies) {
@@ -582,6 +657,18 @@ class DiscordAuthController {
     }
 
     if (this.guardRepository) {
+      const loginAudit = await this.guardRepository.recordLogin({
+        profileId: profile.profileId,
+        discordId: discordLink?.discordId,
+        displayName: profile.displayName,
+        avatarUrl: profile.avatarUrl || discordLink?.avatarUrl,
+        timezone: this.getServerTimezone(),
+      });
+      console.info('Recorded Discord login audit', {
+        profileId: profile.profileId,
+        lastLoginAt: loginAudit?.lastLoginAt,
+        loginCount: loginAudit?.loginCount,
+      });
       await this.guardRepository.upsertProfile({
         profileId: profile.profileId,
         discordId: discordLink?.discordId,
@@ -683,8 +770,7 @@ class DiscordAuthController {
       }
     }
 
-    const body = await request.json().catch(() => ({}));
-    const timezone = request.headers.get('X-Timezone') || body?.timezone;
+    const timezone = this.getServerTimezone();
     const cachedGuard = guard;
     try {
       await identity.repository.delete(session.profileId);
@@ -716,7 +802,11 @@ class DiscordAuthController {
           { status: 500, headers: { 'Content-Type': 'application/json' } },
         );
       }
-      await this.guardRepository.clearCompleted(session.profileId);
+      console.info('Skipped completed games reset during cleanup', {
+        profileId: session.profileId,
+        completedGamesCount: cachedGuard?.completedGames?.length ?? 0,
+        timezone,
+      });
     }
     await sessionStore.delete(sessionStore.sessionKey);
     const response = new Response(JSON.stringify({ status: 'ok' }), {
