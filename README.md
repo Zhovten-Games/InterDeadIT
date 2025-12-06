@@ -22,6 +22,7 @@ No local installation is required for players. For contributors, clone the repos
 - Prettier is included as a formatting tool to keep Markdown, templates, and scripts consistent with the core packages. Run `npm run format` or `npm run format:check` from this directory after installing dependencies.
 - Architecture reminder: stay aligned with the hexagonal pattern used across the metaverse — keep adapters thin, reuse the shared event bus, and avoid leaking DOM specifics into domain logic.
 - Cloudflare Workers auto-deploy only when files inside the workflow directory change; if you need to redeploy without workflow edits, run `npx wrangler deploy` from that workflow directory.
+- D1 persistence relies on a unified `profiles` table: `profile_id TEXT PRIMARY KEY`, `data TEXT NOT NULL` (JSON identity payload plus guard metadata like `completedGames`), `last_cleanup_at TEXT`, `last_cleanup_timezone TEXT`, and `delete_count INTEGER DEFAULT 0`.
 
 ## Window API (modal lifecycle)
 

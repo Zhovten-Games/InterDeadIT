@@ -119,19 +119,17 @@ class ProfileGuardRepository {
 
   async findByProfileId(profileId) {
     if (!profileId) return null;
-    const result = await this.tableAdapter.execute(
-      `SELECT profile_id, discord_id, last_cleanup_at, last_cleanup_timezone, delete_count, completed_games
-       FROM user_profiles WHERE profile_id = ? LIMIT 1`,
-      [profileId],
-    );
-    return this.deserializeGuardRow(result?.results?.[0]);
+    const row = await this.fetchProfileRow(profileId);
+    return this.deserializeGuardRow(row);
   }
 
   async findByDiscordId(discordId) {
     if (!discordId) return null;
     const result = await this.tableAdapter.execute(
-      `SELECT profile_id, discord_id, last_cleanup_at, last_cleanup_timezone, delete_count, completed_games
-       FROM user_profiles WHERE discord_id = ? LIMIT 1`,
+      `SELECT profile_id, data, last_cleanup_at, last_cleanup_timezone, delete_count
+       FROM profiles
+       WHERE json_extract(data, '$.discordLink.discordId') = ?
+       LIMIT 1`,
       [discordId],
     );
     return this.deserializeGuardRow(result?.results?.[0]);
@@ -139,12 +137,21 @@ class ProfileGuardRepository {
 
   async upsertProfile({ profileId, discordId, displayName, avatarUrl }) {
     if (!profileId) return;
-    await this.tableAdapter.execute(
-      `INSERT INTO user_profiles (profile_id, discord_id, display_name, avatar_url)
-       VALUES (?, ?, ?, ?)
-       ON CONFLICT(profile_id) DO UPDATE SET discord_id = excluded.discord_id, display_name = excluded.display_name, avatar_url = excluded.avatar_url`,
-      [profileId, discordId ?? null, displayName ?? null, avatarUrl ?? null],
-    );
+    const current = await this.fetchProfileRow(profileId);
+    const payload = this.mergeProfileData(current?.data, {
+      profileId,
+      discordId,
+      displayName,
+      avatarUrl,
+      completedGames: this.deserializeGuardRow(current)?.completedGames ?? [],
+    });
+    await this.persistProfile({
+      profileId,
+      data: payload,
+      lastCleanupAt: current?.last_cleanup_at ?? null,
+      timezone: current?.last_cleanup_timezone ?? null,
+      deleteCount: current?.delete_count ?? 0,
+    });
   }
 
   async recordCleanup({ profileId, timezone }) {
@@ -152,14 +159,19 @@ class ProfileGuardRepository {
     const now = this.clock();
     const isoTimestamp =
       typeof now?.toISOString === 'function' ? now.toISOString() : new Date().toISOString();
-    const current = (await this.findByProfileId(profileId)) || {};
-    const nextDeleteCount = Number(current.deleteCount ?? 0) + 1;
-    await this.tableAdapter.execute(
-      `INSERT INTO user_profiles (profile_id, last_cleanup_at, last_cleanup_timezone, delete_count)
-       VALUES (?, ?, ?, ?)
-       ON CONFLICT(profile_id) DO UPDATE SET last_cleanup_at = excluded.last_cleanup_at, last_cleanup_timezone = excluded.last_cleanup_timezone, delete_count = excluded.delete_count`,
-      [profileId, isoTimestamp, timezone || current.timezone || 'UTC', nextDeleteCount],
-    );
+    const current = (await this.fetchProfileRow(profileId)) || {};
+    const nextDeleteCount = Number(current.delete_count ?? 0) + 1;
+    const mergedData = this.mergeProfileData(current?.data, {
+      profileId,
+      completedGames: this.deserializeGuardRow(current)?.completedGames ?? [],
+    });
+    await this.persistProfile({
+      profileId,
+      data: mergedData,
+      lastCleanupAt: isoTimestamp,
+      timezone: timezone || current.last_cleanup_timezone || 'UTC',
+      deleteCount: nextDeleteCount,
+    });
     return {
       timestamp: isoTimestamp,
       timezone: timezone || current.timezone || 'UTC',
@@ -170,50 +182,128 @@ class ProfileGuardRepository {
   async resetCleanupWindow(profileId) {
     if (!profileId) return;
     await this.tableAdapter.execute(
-      `UPDATE user_profiles SET delete_count = 0, last_cleanup_at = NULL, last_cleanup_timezone = NULL WHERE profile_id = ?`,
+      `UPDATE profiles SET delete_count = 0, last_cleanup_at = NULL, last_cleanup_timezone = NULL WHERE profile_id = ?`,
       [profileId],
     );
   }
 
   async markCompleted(profileId, gameId) {
     if (!profileId || !gameId) return;
-    const current = (await this.findByProfileId(profileId)) || {};
-    const completed = new Set(current.completedGames || []);
+    const current = (await this.fetchProfileRow(profileId)) || {};
+    const existing = this.deserializeGuardRow(current) || {};
+    const completed = new Set(existing.completedGames || []);
     completed.add(gameId);
-    await this.tableAdapter.execute(
-      `INSERT INTO user_profiles (profile_id, completed_games)
-       VALUES (?, ?)
-       ON CONFLICT(profile_id) DO UPDATE SET completed_games = excluded.completed_games`,
-      [profileId, JSON.stringify(Array.from(completed))],
-    );
+    const mergedData = this.mergeProfileData(current?.data, {
+      profileId,
+      completedGames: Array.from(completed),
+      discordId: existing.discordId,
+    });
+    await this.persistProfile({
+      profileId,
+      data: mergedData,
+      lastCleanupAt: current.last_cleanup_at ?? null,
+      timezone: current.last_cleanup_timezone ?? null,
+      deleteCount: current.delete_count ?? 0,
+    });
   }
 
   async clearCompleted(profileId) {
     if (!profileId) return;
-    await this.tableAdapter.execute(
-      `UPDATE user_profiles SET completed_games = NULL WHERE profile_id = ?`,
-      [profileId],
-    );
+    const current = (await this.fetchProfileRow(profileId)) || {};
+    const mergedData = this.mergeProfileData(current?.data, {
+      profileId,
+      discordId: this.deserializeGuardRow(current)?.discordId,
+      completedGames: [],
+    });
+    await this.persistProfile({
+      profileId,
+      data: mergedData,
+      lastCleanupAt: current.last_cleanup_at ?? null,
+      timezone: current.last_cleanup_timezone ?? null,
+      deleteCount: current.delete_count ?? 0,
+    });
   }
 
   deserializeGuardRow(row) {
     if (!row) return null;
-    let completedGames = [];
-    if (row.completed_games) {
-      try {
-        completedGames = JSON.parse(row.completed_games);
-      } catch (error) {
-        completedGames = [];
-      }
-    }
+    const data = this.parseProfileData(row.data);
+    const completedGames = Array.isArray(data.completedGames) ? data.completedGames : [];
     return {
-      profileId: row.profile_id || null,
-      discordId: row.discord_id || null,
+      profileId: row.profile_id || data?.metadata?.profileId || null,
+      discordId: data?.discordLink?.discordId || null,
       lastCleanupAt: row.last_cleanup_at || null,
       timezone: row.last_cleanup_timezone || null,
       deleteCount: row.delete_count ?? 0,
       completedGames,
     };
+  }
+
+  async fetchProfileRow(profileId) {
+    const result = await this.tableAdapter.execute(
+      `SELECT profile_id, data, last_cleanup_at, last_cleanup_timezone, delete_count
+       FROM profiles WHERE profile_id = ? LIMIT 1`,
+      [profileId],
+    );
+    return result?.results?.[0] || null;
+  }
+
+  mergeProfileData(rawData, updates = {}) {
+    const existing = this.parseProfileData(rawData);
+    const metadata = {
+      ...(existing.metadata || {}),
+      profileId: updates.profileId || existing.metadata?.profileId,
+      displayName:
+        updates.displayName || existing.metadata?.displayName || 'Visitor',
+      avatarUrl: updates.avatarUrl || existing.metadata?.avatarUrl,
+      location: existing.metadata?.location,
+    };
+    const discordLink = updates.discordId
+      ? {
+          ...(existing.discordLink || {}),
+          discordId: updates.discordId,
+          username:
+            updates.displayName || existing.discordLink?.username || metadata.displayName,
+          avatarUrl: updates.avatarUrl || existing.discordLink?.avatarUrl,
+        }
+      : existing.discordLink;
+
+    const completedGames = Array.isArray(updates.completedGames)
+      ? updates.completedGames
+      : Array.isArray(existing.completedGames)
+        ? existing.completedGames
+        : [];
+
+    return JSON.stringify({
+      ...existing,
+      metadata,
+      ...(discordLink ? { discordLink } : {}),
+      completedGames,
+    });
+  }
+
+  parseProfileData(rawData) {
+    if (!rawData) return {};
+    try {
+      const parsed = typeof rawData === 'string' ? JSON.parse(rawData) : rawData;
+      return parsed && typeof parsed === 'object' ? parsed : {};
+    } catch (error) {
+      return {};
+    }
+  }
+
+  async persistProfile({
+    profileId,
+    data,
+    lastCleanupAt = null,
+    timezone = null,
+    deleteCount = 0,
+  }) {
+    await this.tableAdapter.execute(
+      `INSERT INTO profiles (profile_id, data, last_cleanup_at, last_cleanup_timezone, delete_count)
+       VALUES (?, ?, ?, ?, ?)
+       ON CONFLICT(profile_id) DO UPDATE SET data = excluded.data, last_cleanup_at = excluded.last_cleanup_at, last_cleanup_timezone = excluded.last_cleanup_timezone, delete_count = excluded.delete_count`,
+      [profileId, data || JSON.stringify({ metadata: { profileId } }), lastCleanupAt, timezone, deleteCount],
+    );
   }
 
   isCleanupBlocked(guard) {
