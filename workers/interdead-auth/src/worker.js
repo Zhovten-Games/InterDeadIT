@@ -685,21 +685,21 @@ class DiscordAuthController {
 
     const body = await request.json().catch(() => ({}));
     const timezone = request.headers.get('X-Timezone') || body?.timezone;
+    const cachedGuard = guard;
     try {
       await identity.repository.delete(session.profileId);
     } catch (error) {
       console.error('Failed to remove profile from repository', error);
     }
     if (this.guardRepository) {
-      const currentGuard = await this.guardRepository.findByProfileId(session.profileId);
-      const expectedDeleteCount = (currentGuard?.deleteCount ?? 0) + 1;
+      const expectedDeleteCount = (cachedGuard?.deleteCount ?? 0) + 1;
       const cleanupRecord = await this.guardRepository.recordCleanup({
         profileId: session.profileId,
         timezone,
-        discordId: currentGuard?.discordId,
+        discordId: cachedGuard?.discordId,
         displayName: session.displayName,
         avatarUrl: session.avatarUrl,
-        completedGames: currentGuard?.completedGames,
+        completedGames: cachedGuard?.completedGames,
       });
       const persistedGuard = await this.guardRepository.findByProfileId(session.profileId);
       const hasTimestamp = Boolean(persistedGuard?.lastCleanupAt || cleanupRecord?.lastCleanupAt);
