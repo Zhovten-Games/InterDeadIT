@@ -300,12 +300,14 @@ class DiscordAuthController {
     if (!this.isConfigured()) {
       return null;
     }
-    return new DiscordOAuthAdapter({
-      clientId: this.env.IDENTITY_DISCORD_CLIENT_ID,
-      clientSecret: this.env.IDENTITY_DISCORD_CLIENT_SECRET,
-      redirectUri: this.env.IDENTITY_DISCORD_REDIRECT_URI,
-      logger: console,
-    });
+    return new DiscordOAuthAdapter(
+      {
+        clientId: this.env.IDENTITY_DISCORD_CLIENT_ID,
+        clientSecret: this.env.IDENTITY_DISCORD_CLIENT_SECRET,
+        redirectUri: this.env.IDENTITY_DISCORD_REDIRECT_URI,
+      },
+      console,
+    );
   }
 
   async buildStartRedirect(requestUrl, cookies) {
