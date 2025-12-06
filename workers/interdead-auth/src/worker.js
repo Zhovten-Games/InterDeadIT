@@ -135,20 +135,28 @@ class ProfileGuardRepository {
     return this.deserializeGuardRow(result?.results?.[0]);
   }
 
-  async recordLogin({ profileId, discordId, displayName, avatarUrl, timezone = 'UTC' }) {
+  async recordLogin({
+    profileId,
+    discordId,
+    displayName,
+    avatarUrl,
+    timezone = 'UTC',
+    previousGuard = null,
+  }) {
     if (!profileId) return null;
     const current = (await this.fetchProfileRow(profileId)) || {};
     const existing = this.deserializeGuardRow(current) || {};
+    const baseline = previousGuard || existing || {};
     const now = this.clock();
     const isoTimestamp =
       typeof now?.toISOString === 'function' ? now.toISOString() : new Date().toISOString();
-    const loginCount = Number(existing.loginCount ?? 0) + 1;
+    const loginCount = Number(baseline.loginCount ?? existing.loginCount ?? 0) + 1;
     const mergedData = this.mergeProfileData(current?.data, {
       profileId,
       discordId,
       displayName,
       avatarUrl,
-      completedGames: existing.completedGames,
+      completedGames: baseline.completedGames ?? existing.completedGames,
       loginAudit: {
         lastLoginAt: isoTimestamp,
         lastLoginTimezone: timezone,
@@ -159,9 +167,9 @@ class ProfileGuardRepository {
     await this.persistProfile({
       profileId,
       data: mergedData,
-      lastCleanupAt: current.last_cleanup_at ?? null,
-      timezone: current.last_cleanup_timezone ?? null,
-      deleteCount: current.delete_count ?? 0,
+      lastCleanupAt: baseline.lastCleanupAt ?? current.last_cleanup_at ?? null,
+      timezone: baseline.timezone ?? current.last_cleanup_timezone ?? null,
+      deleteCount: baseline.deleteCount ?? current.delete_count ?? 0,
     });
 
     return {
@@ -169,27 +177,28 @@ class ProfileGuardRepository {
       lastLoginAt: isoTimestamp,
       lastLoginTimezone: timezone,
       loginCount,
-      completedGames: existing.completedGames,
+      completedGames: baseline.completedGames ?? existing.completedGames,
       discordId,
     };
   }
 
-  async upsertProfile({ profileId, discordId, displayName, avatarUrl }) {
+  async upsertProfile({ profileId, discordId, displayName, avatarUrl, previousGuard = null }) {
     if (!profileId) return;
     const current = await this.fetchProfileRow(profileId);
+    const baseline = previousGuard || this.deserializeGuardRow(current) || {};
     const payload = this.mergeProfileData(current?.data, {
       profileId,
       discordId,
       displayName,
       avatarUrl,
-      completedGames: this.deserializeGuardRow(current)?.completedGames ?? [],
+      completedGames: baseline.completedGames ?? [],
     });
     await this.persistProfile({
       profileId,
       data: payload,
-      lastCleanupAt: current?.last_cleanup_at ?? null,
-      timezone: current?.last_cleanup_timezone ?? null,
-      deleteCount: current?.delete_count ?? 0,
+      lastCleanupAt: baseline.lastCleanupAt ?? current?.last_cleanup_at ?? null,
+      timezone: baseline.timezone ?? current?.last_cleanup_timezone ?? null,
+      deleteCount: baseline.deleteCount ?? current?.delete_count ?? 0,
     });
   }
 
@@ -594,6 +603,9 @@ class DiscordAuthController {
         canonicalProfileId: canonicalGuard.profileId,
       });
     }
+    const guardBaseline = this.guardRepository
+      ? canonicalGuard || (await this.guardRepository.findByProfileId(resolvedProfileId))
+      : null;
     const metadata = new ProfileMetadata({
       profileId: resolvedProfileId,
       displayName: state?.displayName || discordLink?.username || 'Discord traveler',
@@ -663,6 +675,7 @@ class DiscordAuthController {
         displayName: profile.displayName,
         avatarUrl: profile.avatarUrl || discordLink?.avatarUrl,
         timezone: this.getServerTimezone(),
+        previousGuard: guardBaseline,
       });
       console.info('Recorded Discord login audit', {
         profileId: profile.profileId,
@@ -674,6 +687,7 @@ class DiscordAuthController {
         discordId: discordLink?.discordId,
         displayName: profile.displayName,
         avatarUrl: profile.avatarUrl || discordLink?.avatarUrl,
+        previousGuard: guardBaseline,
       });
     }
 
