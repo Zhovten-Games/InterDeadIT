@@ -304,6 +304,7 @@ class DiscordAuthController {
       clientId: this.env.IDENTITY_DISCORD_CLIENT_ID,
       clientSecret: this.env.IDENTITY_DISCORD_CLIENT_SECRET,
       redirectUri: this.env.IDENTITY_DISCORD_REDIRECT_URI,
+      logger: console,
     });
   }
 
