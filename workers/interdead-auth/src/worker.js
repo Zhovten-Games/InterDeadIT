@@ -176,10 +176,14 @@ class ProfileGuardRepository {
       timezone: timezone || current.last_cleanup_timezone || 'UTC',
       deleteCount: nextDeleteCount,
     });
-    return {
-      timestamp: isoTimestamp,
-      timezone: timezone || current.timezone || 'UTC',
+    const persisted = await this.fetchProfileRow(profileId);
+    return this.deserializeGuardRow(persisted) || {
+      profileId,
+      lastCleanupAt: isoTimestamp,
+      timezone: timezone || current.last_cleanup_timezone || 'UTC',
       deleteCount: nextDeleteCount,
+      completedGames: completedGames ?? [],
+      discordId,
     };
   }
 
@@ -655,25 +659,63 @@ class DiscordAuthController {
     if (!session?.profileId) {
       return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401 });
     }
+
     const guard = this.guardRepository
       ? await this.guardRepository.findByProfileId(session.profileId)
       : null;
-    const timezone =
-      request.headers.get('X-Timezone') || (await request.json().catch(() => ({})))?.timezone;
+
+    if (this.guardRepository && guard) {
+      if (this.guardRepository.isCleanupBlocked(guard)) {
+        console.info('Cleanup blocked by guard window', {
+          profileId: session.profileId,
+          deleteCount: guard.deleteCount,
+          lastCleanupAt: guard.lastCleanupAt,
+        });
+        return this.buildGuardResponse(
+          'Account is temporarily locked after repeated cleanups. Please wait 24 hours.',
+        );
+      }
+      if (guard.deleteCount > 2 && !this.guardRepository.isCleanupBlocked(guard)) {
+        await this.guardRepository.resetCleanupWindow(guard.profileId);
+        console.info('Reset cleanup window after cooldown before profile deletion', {
+          profileId: session.profileId,
+        });
+      }
+    }
+
+    const body = await request.json().catch(() => ({}));
+    const timezone = request.headers.get('X-Timezone') || body?.timezone;
     try {
       await identity.repository.delete(session.profileId);
     } catch (error) {
       console.error('Failed to remove profile from repository', error);
     }
     if (this.guardRepository) {
-      await this.guardRepository.recordCleanup({
+      const currentGuard = await this.guardRepository.findByProfileId(session.profileId);
+      const expectedDeleteCount = (currentGuard?.deleteCount ?? 0) + 1;
+      const cleanupRecord = await this.guardRepository.recordCleanup({
         profileId: session.profileId,
         timezone,
-        discordId: guard?.discordId,
+        discordId: currentGuard?.discordId,
         displayName: session.displayName,
         avatarUrl: session.avatarUrl,
-        completedGames: guard?.completedGames,
+        completedGames: currentGuard?.completedGames,
       });
+      const persistedGuard = await this.guardRepository.findByProfileId(session.profileId);
+      const hasTimestamp = Boolean(persistedGuard?.lastCleanupAt || cleanupRecord?.lastCleanupAt);
+      const hasExpectedCount = (persistedGuard?.deleteCount ?? 0) >= expectedDeleteCount;
+      if (!hasTimestamp || !hasExpectedCount) {
+        console.error('Guard cleanup state failed to persist', {
+          profileId: session.profileId,
+          expectedDeleteCount,
+          persistedDeleteCount: persistedGuard?.deleteCount,
+          persistedLastCleanupAt: persistedGuard?.lastCleanupAt,
+        });
+        return new Response(
+          JSON.stringify({ error: 'cleanup_persistence_failed' }),
+          { status: 500, headers: { 'Content-Type': 'application/json' } },
+        );
+      }
       await this.guardRepository.clearCompleted(session.profileId);
     }
     await sessionStore.delete(sessionStore.sessionKey);
