@@ -357,6 +357,30 @@ class DiscordAuthController {
     });
   }
 
+  async cleanupTransientProfile(identity, transientProfileId, canonicalProfileId) {
+    if (
+      !identity?.repository ||
+      !transientProfileId ||
+      transientProfileId === canonicalProfileId
+    ) {
+      return;
+    }
+
+    try {
+      await identity.repository.delete(transientProfileId);
+      console.info('Removed transient profile after canonical Discord login', {
+        transientProfileId,
+        canonicalProfileId,
+      });
+    } catch (error) {
+      console.warn('Failed to remove transient profile after canonical Discord login', {
+        transientProfileId,
+        canonicalProfileId,
+        error,
+      });
+    }
+  }
+
   getSiteBaseUrl() {
     return resolveSiteBaseUrl(this.env);
   }
@@ -473,12 +497,20 @@ class DiscordAuthController {
       return new Response('Failed to complete Discord login', { status: 502 });
     }
 
-    let profileId = state?.profileId;
-    if (!profileId && discordLink?.discordId && this.guardRepository) {
-      const existing = await this.guardRepository.findByDiscordId(discordLink.discordId);
-      profileId = existing?.profileId;
+    let canonicalGuard = null;
+    if (this.guardRepository && discordLink?.discordId) {
+      canonicalGuard = await this.guardRepository.findByDiscordId(discordLink.discordId);
     }
-    const resolvedProfileId = profileId || crypto.randomUUID();
+
+    const stateProfileId = state?.profileId;
+    const resolvedProfileId =
+      canonicalGuard?.profileId || stateProfileId || crypto.randomUUID();
+    if (canonicalGuard?.profileId && canonicalGuard.profileId !== stateProfileId) {
+      console.info('Replacing state profile with canonical Discord profile', {
+        stateProfileId,
+        canonicalProfileId: canonicalGuard.profileId,
+      });
+    }
     const metadata = new ProfileMetadata({
       profileId: resolvedProfileId,
       displayName: state?.displayName || discordLink?.username || 'Discord traveler',
@@ -486,7 +518,8 @@ class DiscordAuthController {
     });
 
     if (this.guardRepository && discordLink) {
-      const guard = await this.guardRepository.findByDiscordId(discordLink.discordId);
+      const guard =
+        canonicalGuard || (await this.guardRepository.findByDiscordId(discordLink.discordId));
       if (this.guardRepository.isCleanupBlocked(guard)) {
         return this.buildGuardResponse(
           'Account is temporarily locked after repeated cleanups. Please wait 24 hours.',
@@ -497,10 +530,22 @@ class DiscordAuthController {
       }
     }
 
+    if (
+      canonicalGuard?.profileId &&
+      stateProfileId &&
+      canonicalGuard.profileId !== stateProfileId
+    ) {
+      await this.cleanupTransientProfile(
+        identity,
+        stateProfileId,
+        canonicalGuard.profileId,
+      );
+    }
+
     let identityAggregate;
     try {
       identityAggregate = await identity.linkService.completeDiscordLogin(
-        profileId,
+        resolvedProfileId,
         code,
         metadata,
         { discordLink },
