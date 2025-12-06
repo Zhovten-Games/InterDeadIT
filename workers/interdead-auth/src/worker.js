@@ -154,7 +154,7 @@ class ProfileGuardRepository {
     });
   }
 
-  async recordCleanup({ profileId, timezone }) {
+  async recordCleanup({ profileId, timezone, discordId, displayName, avatarUrl, completedGames }) {
     if (!profileId) return null;
     const now = this.clock();
     const isoTimestamp =
@@ -163,7 +163,11 @@ class ProfileGuardRepository {
     const nextDeleteCount = Number(current.delete_count ?? 0) + 1;
     const mergedData = this.mergeProfileData(current?.data, {
       profileId,
-      completedGames: this.deserializeGuardRow(current)?.completedGames ?? [],
+      completedGames:
+        completedGames ?? this.deserializeGuardRow(current)?.completedGames ?? [],
+      discordId,
+      displayName,
+      avatarUrl,
     });
     await this.persistProfile({
       profileId,
@@ -651,6 +655,9 @@ class DiscordAuthController {
     if (!session?.profileId) {
       return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401 });
     }
+    const guard = this.guardRepository
+      ? await this.guardRepository.findByProfileId(session.profileId)
+      : null;
     const timezone =
       request.headers.get('X-Timezone') || (await request.json().catch(() => ({})))?.timezone;
     try {
@@ -659,7 +666,14 @@ class DiscordAuthController {
       console.error('Failed to remove profile from repository', error);
     }
     if (this.guardRepository) {
-      await this.guardRepository.recordCleanup({ profileId: session.profileId, timezone });
+      await this.guardRepository.recordCleanup({
+        profileId: session.profileId,
+        timezone,
+        discordId: guard?.discordId,
+        displayName: session.displayName,
+        avatarUrl: session.avatarUrl,
+        completedGames: guard?.completedGames,
+      });
       await this.guardRepository.clearCompleted(session.profileId);
     }
     await sessionStore.delete(sessionStore.sessionKey);
