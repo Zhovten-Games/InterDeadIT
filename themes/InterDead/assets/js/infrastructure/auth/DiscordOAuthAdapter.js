@@ -36,10 +36,17 @@ export default class DiscordOAuthAdapter {
         credentials: 'include',
         redirect: 'manual',
       });
+
+      if (response.type === 'opaqueredirect' || response.status === 0) {
+        console.info('[InterDead][Auth] Received opaque redirect from start endpoint');
+        return { status: 'ok', url: url.toString(), target: '_self' };
+      }
+
       if (response.status === 302) {
         const location = response.headers.get('Location');
         return { status: 'ok', url: location || url.toString(), target: '_self' };
       }
+
       const payload = await response.json().catch(() => ({}));
       if (response.status === 429) {
         return { status: 'error', reason: 'guard', message: payload?.message };
