@@ -1,163 +1,169 @@
 <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const layouts = Array.from(document.querySelectorAll('.gm-article__layout'));
+  document.addEventListener('DOMContentLoaded', () => {
+    const layouts = Array.from(document.querySelectorAll('.gm-article__layout'));
 
-      layouts.forEach((layout) => {
-        const toc = layout.querySelector('.gm-article__toc');
-        const body = layout.querySelector('.gm-content');
-        const toggle = toc?.querySelector('.gm-article__toc-toggle');
-        const currentLabel = toc?.querySelector('.gm-article__toc-current');
-        const currentText = currentLabel?.querySelector('.gm-article__toc-currentText') || currentLabel;
-        const navLabel = toc?.dataset.navLabel || 'Article sections';
+    layouts.forEach((layout) => {
+      const toc = layout.querySelector('.gm-article__toc');
+      const body = layout.querySelector('.gm-content');
+      const toggle = toc?.querySelector('.gm-article__toc-toggle');
+      const currentLabel = toc?.querySelector('.gm-article__toc-current');
+      const currentText =
+        currentLabel?.querySelector('.gm-article__toc-currentText') || currentLabel;
+      const navLabel = toc?.dataset.navLabel || 'Article sections';
 
-        const disableToc = () => {
-          toc?.remove();
-          layout.classList.remove('gm-article__layout--with-toc');
-        };
+      const disableToc = () => {
+        toc?.remove();
+        layout.classList.remove('gm-article__layout--with-toc');
+      };
 
-        if (!toc || !body) {
-          disableToc();
-          return;
-        }
+      if (!toc || !body) {
+        disableToc();
+        return;
+      }
 
-        const firstChild = body.firstElementChild;
-        const headingLead = firstChild && ['H1', 'H2', 'H3', 'H4'].includes(firstChild.tagName);
-        if (headingLead) {
-          body.classList.add('gm-article__body--heading-first');
-        }
+      const firstChild = body.firstElementChild;
+      const headingLead = firstChild && ['H1', 'H2', 'H3', 'H4'].includes(firstChild.tagName);
+      if (headingLead) {
+        body.classList.add('gm-article__body--heading-first');
+      }
 
-        let tocList = toc.querySelector('nav ul, nav ol');
+      let tocList = toc.querySelector('nav ul, nav ol');
 
-        const hydrateFromHeadings = () => {
-          const headings = Array.from(body.querySelectorAll('h2, h3, h4')).filter((heading) => heading.id);
-
-          if (!headings.length) {
-            disableToc();
-            return false;
-          }
-
-          const nav = toc.querySelector('nav') ?? toc.appendChild(document.createElement('nav'));
-          nav.id = nav.id || 'TableOfContents';
-          nav.setAttribute('aria-label', navLabel);
-
-          const list = document.createElement('ul');
-
-          headings.forEach((heading) => {
-            const item = document.createElement('li');
-            const link = document.createElement('a');
-
-            link.href = `#${heading.id}`;
-            link.textContent = heading.textContent?.trim() ?? heading.id;
-
-            item.appendChild(link);
-            list.appendChild(item);
-          });
-
-          nav.innerHTML = '';
-          nav.appendChild(list);
-          tocList = list;
-          return true;
-        };
-
-        const hasInitialItems = tocList?.querySelectorAll('li').length;
-        if (!hasInitialItems && !hydrateFromHeadings()) {
-          return;
-        }
-
-        const tocLinks = Array.from(toc.querySelectorAll('a[href*="#"]'));
-        const headingMap = tocLinks
-          .map((link) => {
-            const id = decodeURIComponent(link.hash || link.getAttribute('href') || '').replace('#', '');
-            const target = document.getElementById(id);
-            return target ? { id, link, target } : null;
-          })
-          .filter(Boolean);
-
-        if (!headingMap.length) {
-          return;
-        }
-
-        const updateMarqueeState = () => {
-          if (!currentLabel || !currentText) return;
-
-          currentText.classList.remove('gm-article__toc-currentText--marquee');
-          currentText.style.removeProperty('--gm-toc-marquee-distance');
-
-          const requiresMarquee = currentText.scrollWidth - 2 > currentLabel.clientWidth;
-
-          if (requiresMarquee && mobileQuery.matches) {
-            const distance = currentText.scrollWidth + 32;
-            currentText.style.setProperty('--gm-toc-marquee-distance', `${distance}px`);
-            currentText.classList.add('gm-article__toc-currentText--marquee');
-          }
-        };
-
-        const setActiveLink = (id) => {
-          headingMap.forEach(({ id: targetId, link }) => {
-            const isActive = targetId === id;
-            link.classList.toggle('gm-article__toc-link--active', isActive);
-            link.setAttribute('aria-current', isActive ? 'true' : 'false');
-          });
-
-          const activeItem = headingMap.find(({ id: targetId }) => targetId === id) ?? headingMap[0];
-          const activeText = activeItem?.link?.textContent?.trim() || '';
-
-          if (currentText && activeText) {
-            currentText.textContent = activeText;
-            currentText.setAttribute('data-text', activeText);
-          }
-          if (toggle && activeText) {
-            toggle.setAttribute('data-active-label', activeText);
-          }
-
-          updateMarqueeState();
-        };
-
-        const mobileQuery = window.matchMedia('(max-width: 979px)');
-        const updateCollapseState = () => {
-          if (!toggle) return;
-          const shouldCollapse = mobileQuery.matches;
-          const isExpanded = toggle.dataset.expanded === 'true';
-          toc.classList.toggle('gm-article__toc--collapsed', shouldCollapse && !isExpanded);
-          toggle.setAttribute('aria-expanded', (!shouldCollapse || isExpanded).toString());
-        };
-
-        if (toggle) {
-          toggle.dataset.expanded = mobileQuery.matches ? 'false' : 'true';
-
-          toggle.addEventListener('click', () => {
-            const isExpanded = toggle.dataset.expanded === 'true';
-            const nextState = !isExpanded;
-            toggle.dataset.expanded = nextState ? 'true' : 'false';
-            toc.classList.toggle('gm-article__toc--collapsed', !nextState);
-            toggle.setAttribute('aria-expanded', nextState.toString());
-          });
-
-          mobileQuery.addEventListener('change', () => {
-            toggle.dataset.expanded = mobileQuery.matches ? 'false' : 'true';
-            updateCollapseState();
-            updateMarqueeState();
-          });
-
-          updateCollapseState();
-        }
-
-        setActiveLink(headingMap[0].id);
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            const visible = entries
-              .filter((entry) => entry.isIntersecting)
-              .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-            if (visible[0]?.target.id) {
-              setActiveLink(visible[0].target.id);
-            }
-          },
-          { rootMargin: '0px 0px -60% 0px', threshold: 0.2 }
+      const hydrateFromHeadings = () => {
+        const headings = Array.from(body.querySelectorAll('h2, h3, h4')).filter(
+          (heading) => heading.id,
         );
 
-        headingMap.forEach(({ target }) => observer.observe(target));
-      });
+        if (!headings.length) {
+          disableToc();
+          return false;
+        }
+
+        const nav = toc.querySelector('nav') ?? toc.appendChild(document.createElement('nav'));
+        nav.id = nav.id || 'TableOfContents';
+        nav.setAttribute('aria-label', navLabel);
+
+        const list = document.createElement('ul');
+
+        headings.forEach((heading) => {
+          const item = document.createElement('li');
+          const link = document.createElement('a');
+
+          link.href = `#${heading.id}`;
+          link.textContent = heading.textContent?.trim() ?? heading.id;
+
+          item.appendChild(link);
+          list.appendChild(item);
+        });
+
+        nav.innerHTML = '';
+        nav.appendChild(list);
+        tocList = list;
+        return true;
+      };
+
+      const hasInitialItems = tocList?.querySelectorAll('li').length;
+      if (!hasInitialItems && !hydrateFromHeadings()) {
+        return;
+      }
+
+      const tocLinks = Array.from(toc.querySelectorAll('a[href*="#"]'));
+      const headingMap = tocLinks
+        .map((link) => {
+          const id = decodeURIComponent(link.hash || link.getAttribute('href') || '').replace(
+            '#',
+            '',
+          );
+          const target = document.getElementById(id);
+          return target ? { id, link, target } : null;
+        })
+        .filter(Boolean);
+
+      if (!headingMap.length) {
+        return;
+      }
+
+      const updateMarqueeState = () => {
+        if (!currentLabel || !currentText) return;
+
+        currentText.classList.remove('gm-article__toc-currentText--marquee');
+        currentText.style.removeProperty('--gm-toc-marquee-distance');
+
+        const requiresMarquee = currentText.scrollWidth - 2 > currentLabel.clientWidth;
+
+        if (requiresMarquee && mobileQuery.matches) {
+          const distance = currentText.scrollWidth + 32;
+          currentText.style.setProperty('--gm-toc-marquee-distance', `${distance}px`);
+          currentText.classList.add('gm-article__toc-currentText--marquee');
+        }
+      };
+
+      const setActiveLink = (id) => {
+        headingMap.forEach(({ id: targetId, link }) => {
+          const isActive = targetId === id;
+          link.classList.toggle('gm-article__toc-link--active', isActive);
+          link.setAttribute('aria-current', isActive ? 'true' : 'false');
+        });
+
+        const activeItem = headingMap.find(({ id: targetId }) => targetId === id) ?? headingMap[0];
+        const activeText = activeItem?.link?.textContent?.trim() || '';
+
+        if (currentText && activeText) {
+          currentText.textContent = activeText;
+          currentText.setAttribute('data-text', activeText);
+        }
+        if (toggle && activeText) {
+          toggle.setAttribute('data-active-label', activeText);
+        }
+
+        updateMarqueeState();
+      };
+
+      const mobileQuery = window.matchMedia('(max-width: 979px)');
+      const updateCollapseState = () => {
+        if (!toggle) return;
+        const shouldCollapse = mobileQuery.matches;
+        const isExpanded = toggle.dataset.expanded === 'true';
+        toc.classList.toggle('gm-article__toc--collapsed', shouldCollapse && !isExpanded);
+        toggle.setAttribute('aria-expanded', (!shouldCollapse || isExpanded).toString());
+      };
+
+      if (toggle) {
+        toggle.dataset.expanded = mobileQuery.matches ? 'false' : 'true';
+
+        toggle.addEventListener('click', () => {
+          const isExpanded = toggle.dataset.expanded === 'true';
+          const nextState = !isExpanded;
+          toggle.dataset.expanded = nextState ? 'true' : 'false';
+          toc.classList.toggle('gm-article__toc--collapsed', !nextState);
+          toggle.setAttribute('aria-expanded', nextState.toString());
+        });
+
+        mobileQuery.addEventListener('change', () => {
+          toggle.dataset.expanded = mobileQuery.matches ? 'false' : 'true';
+          updateCollapseState();
+          updateMarqueeState();
+        });
+
+        updateCollapseState();
+      }
+
+      setActiveLink(headingMap[0].id);
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+
+          if (visible[0]?.target.id) {
+            setActiveLink(visible[0].target.id);
+          }
+        },
+        { rootMargin: '0px 0px -60% 0px', threshold: 0.2 },
+      );
+
+      headingMap.forEach(({ target }) => observer.observe(target));
     });
+  });
 </script>

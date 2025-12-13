@@ -1,5 +1,5 @@
 ---
-title: '— The Dead Room (2015).'
+title: 'The Dead Room (2015).'
 slug: 'the-dead-room'
 weight: 2
 translationKey: 'story-the-dead-room'
