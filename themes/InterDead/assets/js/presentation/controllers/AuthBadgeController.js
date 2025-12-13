@@ -38,7 +38,6 @@ export default class AuthBadgeController {
   renderBadges(session) {
     this.badgeElements.forEach((root) => {
       if (!root) return;
-      const nameElement = root.querySelector('[data-auth-badge-name]');
       const usernameElement = root.querySelector('[data-auth-badge-username]');
       const avatarElement = root.querySelector('[data-auth-badge-avatar]');
       const avatarImage = root.querySelector('[data-auth-badge-avatar-img]');
@@ -54,7 +53,6 @@ export default class AuthBadgeController {
       }
 
       if (!hasSession) {
-        if (nameElement) nameElement.textContent = '';
         if (usernameElement) usernameElement.textContent = '';
         if (avatarElement) avatarElement.classList.add('auth-badge__avatar--empty');
         if (avatarImage) {
@@ -65,12 +63,10 @@ export default class AuthBadgeController {
       }
 
       const displayName = session.displayName || session.username || 'Traveler';
-      if (nameElement) {
-        nameElement.textContent = displayName;
-      }
       if (usernameElement) {
-        usernameElement.textContent = session.username ? `@${session.username}` : '';
-        usernameElement.hidden = !session.username;
+        const username = session.username ? `@${session.username}` : displayName;
+        usernameElement.textContent = username;
+        usernameElement.hidden = !username;
       }
       if (avatarElement) {
         const hasAvatar = Boolean(session.avatarUrl);
