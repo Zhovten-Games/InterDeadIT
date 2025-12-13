@@ -924,8 +924,20 @@ img, iframe {
   letter-spacing: 0.1em;
 }
 
+.gm-collection--stories .gm-collection__itemTitle {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.gm-collection--stories .gm-collection__itemTitle::before {
+  content: '−';
+  color: var(--color-muted);
+  letter-spacing: 0.12em;
+}
+
 /* ===== Slider ===== */
-.gm-slider { 
+.gm-slider {
   position: relative;
   width: 100%;
   margin: 0;

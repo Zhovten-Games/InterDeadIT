@@ -1,5 +1,5 @@
-{{ define "main" }}
-<section class="gm-section gm-collection">
+{{ define "main" }} {{ $isStories := and (eq .Kind "section") (eq .Section "stories") }}
+<section class="gm-section gm-collection{{ if $isStories }} gm-collection--stories{{ end }}">
   <div class="gm-container">
     <header class="gm-collection__header">
       <h1 class="gm-section__title">{{ .Title }}</h1>
