@@ -14,17 +14,39 @@
   <div class="gm-modal__dialog gm-ageGate__dialog">
     {{- $termsPage := .Site.GetPage "/pages/terms-of-use" -}}
     {{- $privacyPage := .Site.GetPage "/pages/privacy-policy" -}}
+    {{- $fandomLinks := dict "en" "https://interdead.fandom.com/wiki/InterDead_Wiki" "ru" "https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8" "uk" "https://interdead.fandom.com/uk/wiki/InterDead_Wiki" "ja" "https://interdead.fandom.com/ja/wiki/InterDead_Wiki" -}}
+    {{- $fandomURL := default (index $fandomLinks "en") (index $fandomLinks .Site.Language.Lang) -}}
     {{- $termsTitle := cond $termsPage $termsPage.Title (i18n "agegate.links.terms") -}}
     {{- $privacyTitle := cond $privacyPage $privacyPage.Title (i18n "agegate.links.privacy") -}}
-    {{- $context := dict "TermsURL" (cond $termsPage $termsPage.RelPermalink "") "PrivacyURL" (cond $privacyPage $privacyPage.RelPermalink "") "LinkedInURL" "https://www.linkedin.com/company/zhovten-games/" "TermsTitle" $termsTitle "PrivacyTitle" $privacyTitle -}}
+    {{- $context := dict "TermsURL" (cond $termsPage $termsPage.RelPermalink "") "PrivacyURL" (cond $privacyPage $privacyPage.RelPermalink "") "LinkedInURL" "https://www.linkedin.com/company/zhovten-games/" "TermsTitle" $termsTitle "PrivacyTitle" $privacyTitle "AboutURL" (relLangURL "/about/") "FandomURL" $fandomURL -}}
     <span class="gm-visually-hidden" id="gm-gtitle">{{ i18n "agegate.accessibleTitle" }}</span>
     <div class="gm-ageGate__content">
       <div class="gm-ageGate__section gm-ageGate__section--primary">
         {{ (i18n "agegate.sectionPrimary" $context) | markdownify }}
       </div>
+      {{- $latestPost := index (first 1 (sort (where .Site.RegularPages "Section" "blog") "Date" "desc")) 0 -}}
+      {{- if $latestPost }}
       <div class="gm-ageGate__section gm-ageGate__section--secondary">
-        {{ (i18n "agegate.sectionSecondary" $context) | markdownify }}
+        <div class="gm-ageGate__sectionIntro gm-content">
+          {{ (i18n "agegate.sectionSecondary" $context) | markdownify }}
+        </div>
+        <div class="gm-ageGate__divider" aria-hidden="true"></div>
+        <div class="gm-ageGate__latest gm-content" aria-label="{{ i18n "agegate.informer.title" }}">
+          <p>{{ $latestPost.Title }}</p>
+          {{ with $latestPost.Date }}<p>{{ .Format "02 Jan 2006" }}</p>{{ end }}
+          {{ with $latestPost.Params.description }}
+            <p>{{ . }}</p>
+          {{ else }}
+            {{ with $latestPost.Summary }}
+              <p>{{ plainify . }}</p>
+            {{ end }}
+          {{ end }}
+          <p>
+            <a href="{{ $latestPost.RelPermalink }}" target="_blank" rel="noopener">{{ i18n "agegate.informer.cta" }}</a>
+          </p>
+        </div>
       </div>
+      {{- end }}
     </div>
     <div class="gm-ageGate__row">
       <button

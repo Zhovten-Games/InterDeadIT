@@ -334,7 +334,15 @@ other = "Privacy Policy"
 other = """
 ## Welcome
 
-Welcome. You’ve reached the entry point into the meta-universe of Zhovten Games—a portal into the project’s atmosphere. After this window closes we stay “in character”: the site speaks in-world to deepen immersion. If you ever need to step outside the fiction, the legal documents and contacts are below.
+InterDead is a psychologically oriented horror project by Zhovten Games in a B-horror aesthetic: a story about a messenger for the dead, around which a meta-universe is growing. This site is the entry point into it.
+
+Everything you see beyond this screen is written “in character” — from the perspective of the messenger’s creator, a socially awkward researcher who sincerely tries to follow “marketing rules” while selling his tool and reliably produces carefully calibrated cringe.
+
+We describe in detail how the idea of the world and the game was born in the [first chapter of the cycle “Echo of an Unfading Memory”](/about/) — our extended “about” and meta-development diary.
+
+You can read more about the structure of the universe, terminology, and techno-lore in the [InterDead Wiki on Fandom](https://interdead.fandom.com/wiki/InterDead_Wiki).
+
+If you need to step outside the fiction, the legal documents and contact information are available below.
 
 - [{{ .TermsTitle }}]({{ .TermsURL }})
 - [{{ .PrivacyTitle }}]({{ .PrivacyURL }})
@@ -345,14 +353,47 @@ By clicking “Enter,” you confirm that you are 18+ and accept the terms.
 
 ['agegate.sectionSecondary']
 other = """
-## Field note
+## Latest signal
 
-<em>Writing by the cold light of a monitor whose fan saws the night with the patience of a watchmaker, I record this—if only to keep my reason from drifting—that my inspiration came not from parlour mediums or theatrical illusions, but from the work of Dr. Mary Florescu, who once turned communication with the dead into a subject of academic inquiry. Perhaps also from director William Castle, whose invention of Illusion-O allowed crowds in cinemas to see ghosts—surely the greatest mass experiment in contact with the beyond, deftly disguised as entertainment. I have always admired how elegantly some can merge science and spectacle, hiding one within the other.</em>
-
-<em>And yet even that experiment pales beside another—one I have at last managed to awaken, when formulas gave way to intuition and the screen began to answer...</em>
-
-<em>—record ends.</em>
+Stay tuned — the latest blog entry will open in a new tab.
 """
+
+['agegate.informer.eyebrow']
+other = "Blog informer"
+
+['agegate.informer.title']
+other = "Latest blog entry"
+
+['agegate.informer.subtitle']
+other = "Fresh from the InterDead log."
+
+['agegate.informer.cta']
+other = "Open the post"
+
+['promo.fandom.eyebrow']
+other = "Community wiki"
+
+['promo.fandom.title']
+other = "Explore InterDead on Fandom"
+
+['promo.fandom.text']
+other = "Read the structure, terminology, and techno-lore curated for the universe."
+
+['promo.fandom.cta']
+other = "Open Fandom"
+
+['promo.github.eyebrow']
+other = "Development"
+
+['promo.github.title']
+other = "Follow us on GitHub"
+
+['promo.github.text']
+other = "Track repositories, releases, and contributions from Zhovten Games."
+
+['promo.github.cta']
+other = "Visit GitHub"
+
 ["footer.links.legal"]
 other = "Legal"
 ["blog.readMore"]
