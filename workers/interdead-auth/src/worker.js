@@ -213,7 +213,7 @@ class ProfileGuardRepository {
     const preservedCompletedGames =
       Array.isArray(completedGames) && completedGames.length
         ? completedGames
-        : (existing.completedGames ?? []);
+        : existing.completedGames ?? [];
     const mergedData = this.mergeProfileData(current?.data, {
       profileId,
       completedGames: preservedCompletedGames,
@@ -233,16 +233,14 @@ class ProfileGuardRepository {
       completedGamesCount: preservedCompletedGames.length,
     });
     const persisted = await this.fetchProfileRow(profileId);
-    return (
-      this.deserializeGuardRow(persisted) || {
-        profileId,
-        lastCleanupAt: isoTimestamp,
-        timezone: timezone || current.last_cleanup_timezone || 'UTC',
-        deleteCount: nextDeleteCount,
-        completedGames: preservedCompletedGames,
-        discordId,
-      }
-    );
+    return this.deserializeGuardRow(persisted) || {
+      profileId,
+      lastCleanupAt: isoTimestamp,
+      timezone: timezone || current.last_cleanup_timezone || 'UTC',
+      deleteCount: nextDeleteCount,
+      completedGames: preservedCompletedGames,
+      discordId,
+    };
   }
 
   async resetCleanupWindow(profileId) {
@@ -322,7 +320,8 @@ class ProfileGuardRepository {
     const metadata = {
       ...(existing.metadata || {}),
       profileId: updates.profileId || existing.metadata?.profileId,
-      displayName: updates.displayName || existing.metadata?.displayName || 'Visitor',
+      displayName:
+        updates.displayName || existing.metadata?.displayName || 'Visitor',
       avatarUrl: updates.avatarUrl || existing.metadata?.avatarUrl,
       location: existing.metadata?.location,
     };
@@ -330,7 +329,8 @@ class ProfileGuardRepository {
       ? {
           ...(existing.discordLink || {}),
           discordId: updates.discordId,
-          username: updates.displayName || existing.discordLink?.username || metadata.displayName,
+          username:
+            updates.displayName || existing.discordLink?.username || metadata.displayName,
           avatarUrl: updates.avatarUrl || existing.discordLink?.avatarUrl,
         }
       : existing.discordLink;
@@ -390,13 +390,7 @@ class ProfileGuardRepository {
       `INSERT INTO profiles (profile_id, data, last_cleanup_at, last_cleanup_timezone, delete_count)
        VALUES (?, ?, ?, ?, ?)
        ON CONFLICT(profile_id) DO UPDATE SET data = excluded.data, last_cleanup_at = excluded.last_cleanup_at, last_cleanup_timezone = excluded.last_cleanup_timezone, delete_count = excluded.delete_count`,
-      [
-        profileId,
-        data || JSON.stringify({ metadata: { profileId } }),
-        lastCleanupAt,
-        timezone,
-        deleteCount,
-      ],
+      [profileId, data || JSON.stringify({ metadata: { profileId } }), lastCleanupAt, timezone, deleteCount],
     );
   }
 
@@ -452,7 +446,11 @@ class DiscordAuthController {
   }
 
   async cleanupTransientProfile(identity, transientProfileId, canonicalProfileId) {
-    if (!identity?.repository || !transientProfileId || transientProfileId === canonicalProfileId) {
+    if (
+      !identity?.repository ||
+      !transientProfileId ||
+      transientProfileId === canonicalProfileId
+    ) {
       return;
     }
 
@@ -597,7 +595,8 @@ class DiscordAuthController {
     }
 
     const stateProfileId = state?.profileId;
-    const resolvedProfileId = canonicalGuard?.profileId || stateProfileId || crypto.randomUUID();
+    const resolvedProfileId =
+      canonicalGuard?.profileId || stateProfileId || crypto.randomUUID();
     if (canonicalGuard?.profileId && canonicalGuard.profileId !== stateProfileId) {
       console.info('Replacing state profile with canonical Discord profile', {
         stateProfileId,
@@ -631,7 +630,11 @@ class DiscordAuthController {
       stateProfileId &&
       canonicalGuard.profileId !== stateProfileId
     ) {
-      await this.cleanupTransientProfile(identity, stateProfileId, canonicalGuard.profileId);
+      await this.cleanupTransientProfile(
+        identity,
+        stateProfileId,
+        canonicalGuard.profileId,
+      );
     }
 
     let identityAggregate;
@@ -808,10 +811,10 @@ class DiscordAuthController {
           persistedDeleteCount: persistedGuard?.deleteCount,
           persistedLastCleanupAt: persistedGuard?.lastCleanupAt,
         });
-        return new Response(JSON.stringify({ error: 'cleanup_persistence_failed' }), {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' },
-        });
+        return new Response(
+          JSON.stringify({ error: 'cleanup_persistence_failed' }),
+          { status: 500, headers: { 'Content-Type': 'application/json' } },
+        );
       }
       console.info('Skipped completed games reset during cleanup', {
         profileId: session.profileId,

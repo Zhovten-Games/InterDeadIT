@@ -7,56 +7,14 @@
       <p class="gm-text--fine">{{ .Format "02 Jan 2006" }}</p>
       {{ end }}
     </header>
-    <div class="gm-article__layout">
-      {{ $toc := .TableOfContents }}
-      {{ if $toc }}
-      <aside class="gm-article__toc" aria-label="On this page">
-        <p class="gm-article__toc-title">On this page</p>
-        {{ $toc | replace "<nav id=\"TableOfContents\">" "<nav id=\"TableOfContents\" aria-label=\"Article sections\">" | safeHTML }}
-      </aside>
+    {{ $toc := .TableOfContents }}
+    {{ $hasToc := and $toc (gt (len (findRE "<li" $toc)) 0) }}
+    <div class="gm-article__layout{{ if $hasToc }} gm-article__layout--with-toc{{ end }}">
+      {{ if $hasToc }}
+        {{ partial "components/article-toc.html" (dict "toc" $toc) }}
       {{ end }}
       <div class="gm-card gm-article__body gm-content">{{ .Content }}</div>
     </div>
   </div>
 </article>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const toc = document.querySelector('.gm-article__toc');
-    if (!toc) return;
-
-    const tocLinks = Array.from(toc.querySelectorAll('a[href^="#"]'));
-    const headingMap = tocLinks
-      .map((link) => {
-        const id = decodeURIComponent(link.getAttribute('href')).replace('#', '');
-        const target = document.getElementById(id);
-        return target ? { id, link, target } : null;
-      })
-      .filter(Boolean);
-
-    if (!headingMap.length) return;
-
-    const setActiveLink = (id) => {
-      headingMap.forEach(({ id: targetId, link }) => {
-        const isActive = targetId === id;
-        link.classList.toggle('gm-article__toc-link--active', isActive);
-        link.setAttribute('aria-current', isActive ? 'true' : 'false');
-      });
-    };
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-
-        if (visible[0]?.target.id) {
-          setActiveLink(visible[0].target.id);
-        }
-      },
-      { rootMargin: '0px 0px -60% 0px', threshold: 0.25 }
-    );
-
-    headingMap.forEach(({ target }) => observer.observe(target));
-  });
-</script>
 {{ end }}

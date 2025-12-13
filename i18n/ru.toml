@@ -400,3 +400,15 @@ other = "Читать дальше"
 
 [profile.delete]
 other = "Delete profile"
+
+['article.toc.title']
+other = "На странице"
+
+['article.toc.toggle']
+other = "Разделы"
+
+['article.toc.toggleAria']
+other = "Показать или скрыть оглавление"
+
+['article.toc.navLabel']
+other = "Оглавление статьи"

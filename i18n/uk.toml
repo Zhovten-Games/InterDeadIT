@@ -401,3 +401,15 @@ other = "Читати далі"
 
 [profile.delete]
 other = "Delete profile"
+
+['article.toc.title']
+other = "На цій сторінці"
+
+['article.toc.toggle']
+other = "Розділи"
+
+['article.toc.toggleAria']
+other = "Показати чи сховати зміст"
+
+['article.toc.navLabel']
+other = "Розділи статті"

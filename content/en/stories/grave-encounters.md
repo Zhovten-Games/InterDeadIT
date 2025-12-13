@@ -1,5 +1,5 @@
 ---
-title: '— Grave Encounters (2011).'
+title: 'Grave Encounters (2011).'
 slug: 'grave-encounters'
 weight: 3
 translationKey: 'story-grave-encounters'

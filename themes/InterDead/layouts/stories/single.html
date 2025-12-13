@@ -2,13 +2,20 @@
 <article class="gm-section gm-article">
   <div class="gm-container">
     <header class="gm-article__header">
-      <h1 class="gm-section__title">{{ .Title }}</h1>
+      <h1 class="gm-section__title gm-section__title--prefixed">{{ .Title }}</h1>
       {{ with .Date }}
       <p class="gm-text--fine">{{ .Format "02 Jan 2006" }}</p>
       {{ end }}
     </header>
-    <div class="gm-card gm-article__body gm-content">
-      {{ .Content }} {{ partial "story/meta.html" . }}
+    {{ $toc := .TableOfContents }}
+    {{ $hasToc := and $toc (gt (len (findRE "<li" $toc)) 0) }}
+    <div class="gm-article__layout{{ if $hasToc }} gm-article__layout--with-toc{{ end }}">
+      {{ if $hasToc }}
+        {{ partial "components/article-toc.html" (dict "toc" $toc) }}
+      {{ end }}
+      <div class="gm-card gm-article__body gm-content">
+        {{ .Content }} {{ partial "story/meta.html" . }}
+      </div>
     </div>
   </div>
 </article>

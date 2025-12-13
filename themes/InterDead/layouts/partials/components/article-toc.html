@@ -1,0 +1,27 @@
+{{ $toc := .toc | default .TableOfContents }}
+{{ $hasItems := and $toc (gt (len (findRE "<li" $toc)) 0) }}
+{{ if $hasItems }}
+  {{ $tocTitle := i18n "article.toc.title" }}
+  {{ $tocToggle := i18n "article.toc.toggle" }}
+  {{ $tocToggleAria := i18n "article.toc.toggleAria" }}
+  {{ $tocNavLabel := i18n "article.toc.navLabel" }}
+  <aside class="gm-article__toc" aria-labelledby="gm-article-toc-title" data-nav-label="{{ $tocNavLabel | htmlEscape }}">
+    <div class="gm-article__toc-head">
+      <p class="gm-article__toc-title" id="gm-article-toc-title" data-i18n="article.toc.title">{{ $tocTitle }}</p>
+      <p class="gm-article__toc-current" aria-live="polite">
+        <span class="gm-article__toc-currentText"></span>
+      </p>
+      <button
+        class="gm-article__toc-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="TableOfContents"
+        aria-label="{{ $tocToggleAria }}"
+      >
+        <span class="gm-article__toc-toggle-label" data-i18n="article.toc.toggle">{{ $tocToggle }}</span>
+        <span class="gm-article__toc-toggle-icon" aria-hidden="true">▾</span>
+      </button>
+    </div>
+    {{ $toc | replace "<nav id=\"TableOfContents\">" (printf "<nav id=\"TableOfContents\" aria-label=\"%s\">" ($tocNavLabel | htmlEscape)) | safeHTML }}
+  </aside>
+{{ end }}

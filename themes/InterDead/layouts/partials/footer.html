@@ -1,10 +1,7 @@
 <footer class="gm-footer" id="offer">
   <div class="gm-container">
-    {{- $fandomLinks := dict "en" "https://interdead.fandom.com/wiki/InterDead_Wiki" "ru"
-    "https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8" "uk"
-    "https://interdead.fandom.com/uk/wiki/InterDead_Wiki" "ja"
-    "https://interdead.fandom.com/ja/wiki/InterDead_Wiki" -}} {{- $fandomURL := default (index
-    $fandomLinks "en") (index $fandomLinks .Site.Language.Lang) -}}
+    {{- $fandomLinks := dict "en" "https://interdead.fandom.com/wiki/InterDead_Wiki" "ru" "https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8" "uk" "https://interdead.fandom.com/uk/wiki/InterDead_Wiki" "ja" "https://interdead.fandom.com/ja/wiki/InterDead_Wiki" -}}
+    {{- $fandomURL := default (index $fandomLinks "en") (index $fandomLinks .Site.Language.Lang) -}}
     <div class="gm-footer__inner">
       <div class="gm-footer__note" data-show="adult">
         <p class="gm-text--fine">{{ i18n "footer.adult" }}</p>
@@ -30,7 +27,11 @@
         </div>
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.media" }}</span>
-          <a class="gm-footer__link" href="{{ $fandomURL }}" target="_blank" rel="noopener"
+          <a
+            class="gm-footer__link"
+            href="{{ $fandomURL }}"
+            target="_blank"
+            rel="noopener"
             >Fandom</a
           >
           <a

@@ -1,10 +1,8 @@
-{{- $ctx := .Context -}} {{- $modifier := .Modifier -}} {{- $fandomLinks := dict "en"
-"https://interdead.fandom.com/wiki/InterDead_Wiki" "ru"
-"https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8" "uk"
-"https://interdead.fandom.com/uk/wiki/InterDead_Wiki" "ja"
-"https://interdead.fandom.com/ja/wiki/InterDead_Wiki" -}} {{- $fandomURL := default (index
-$fandomLinks "en") (index $fandomLinks $ctx.Site.Language.Lang) -}} {{- $githubURL :=
-"https://github.com/Zhovten-Games" -}}
+{{- $ctx := .Context -}}
+{{- $modifier := .Modifier -}}
+{{- $fandomLinks := dict "en" "https://interdead.fandom.com/wiki/InterDead_Wiki" "ru" "https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8" "uk" "https://interdead.fandom.com/uk/wiki/InterDead_Wiki" "ja" "https://interdead.fandom.com/ja/wiki/InterDead_Wiki" -}}
+{{- $fandomURL := default (index $fandomLinks "en") (index $fandomLinks $ctx.Site.Language.Lang) -}}
+{{- $githubURL := "https://github.com/Zhovten-Games" -}}
 <div class="gm-promos{{ if $modifier }} {{ $modifier }}{{ end }}">
   <article class="gm-promo gm-promos__item gm-promo--fandom">
     <div class="gm-promo__badge" aria-hidden="true">◎</div>
@@ -12,13 +10,7 @@ $fandomLinks "en") (index $fandomLinks $ctx.Site.Language.Lang) -}} {{- $githubU
       <p class="gm-promo__eyebrow">{{ i18n "promo.fandom.eyebrow" }}</p>
       <h3 class="gm-promo__title">{{ i18n "promo.fandom.title" }}</h3>
       <p class="gm-promo__text">{{ i18n "promo.fandom.text" }}</p>
-      <a
-        class="gm-btn gm-btn--ghost gm-promo__cta"
-        href="{{ $fandomURL }}"
-        target="_blank"
-        rel="noopener"
-        >{{ i18n "promo.fandom.cta" }}</a
-      >
+      <a class="gm-btn gm-btn--ghost gm-promo__cta" href="{{ $fandomURL }}" target="_blank" rel="noopener">{{ i18n "promo.fandom.cta" }}</a>
     </div>
   </article>
   <article class="gm-promo gm-promos__item gm-promo--github">
@@ -27,13 +19,7 @@ $fandomLinks "en") (index $fandomLinks $ctx.Site.Language.Lang) -}} {{- $githubU
       <p class="gm-promo__eyebrow">{{ i18n "promo.github.eyebrow" }}</p>
       <h3 class="gm-promo__title">{{ i18n "promo.github.title" }}</h3>
       <p class="gm-promo__text">{{ i18n "promo.github.text" }}</p>
-      <a
-        class="gm-btn gm-btn--ghost gm-promo__cta"
-        href="{{ $githubURL }}"
-        target="_blank"
-        rel="noopener"
-        >{{ i18n "promo.github.cta" }}</a
-      >
+      <a class="gm-btn gm-btn--ghost gm-promo__cta" href="{{ $githubURL }}" target="_blank" rel="noopener">{{ i18n "promo.github.cta" }}</a>
     </div>
   </article>
 </div>

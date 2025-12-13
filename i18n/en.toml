@@ -401,3 +401,15 @@ other = "Read more"
 
 [profile.delete]
 other = "Delete profile"
+
+['article.toc.title']
+other = "On this page"
+
+['article.toc.toggle']
+other = "Sections"
+
+['article.toc.toggleAria']
+other = "Toggle table of contents"
+
+['article.toc.navLabel']
+other = "Article sections"

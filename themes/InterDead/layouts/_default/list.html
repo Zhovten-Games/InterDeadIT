@@ -2,7 +2,7 @@
 <section class="gm-section gm-collection">
   <div class="gm-container">
     <header class="gm-collection__header">
-      <h1 class="gm-section__title">{{ .Title }}</h1>
+      <h1 class="gm-section__title{{ if eq .Section "stories" }} gm-section__title--prefixed{{ end }}">{{ .Title }}</h1>
       {{ with .Description }}
       <p class="gm-collection__description">{{ . }}</p>
       {{ end }}

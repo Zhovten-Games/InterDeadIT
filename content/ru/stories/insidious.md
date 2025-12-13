@@ -1,5 +1,5 @@
 ---
-title: '— Insidious.'
+title: 'Insidious.'
 slug: 'insidious'
 weight: 4
 translationKey: 'story-insidious'

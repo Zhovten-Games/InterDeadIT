@@ -401,3 +401,15 @@ other = "続きを読む"
 
 [profile.delete]
 other = "Delete profile"
+
+['article.toc.title']
+other = "このページの内容"
+
+['article.toc.toggle']
+other = "セクション"
+
+['article.toc.toggleAria']
+other = "目次を開閉"
+
+['article.toc.navLabel']
+other = "記事のセクション"

@@ -7,7 +7,14 @@
       <p class="gm-text--fine">{{ .Format "02 Jan 2006" }}</p>
       {{ end }}
     </header>
-    <div class="gm-card gm-article__body gm-content">{{ .Content }}</div>
+    {{ $toc := .TableOfContents }}
+    {{ $hasToc := and $toc (gt (len (findRE "<li" $toc)) 0) }}
+    <div class="gm-article__layout{{ if $hasToc }} gm-article__layout--with-toc{{ end }}">
+      {{ if $hasToc }}
+        {{ partial "components/article-toc.html" (dict "toc" $toc) }}
+      {{ end }}
+      <div class="gm-card gm-article__body gm-content">{{ .Content }}</div>
+    </div>
   </div>
 </section>
 {{ end }}

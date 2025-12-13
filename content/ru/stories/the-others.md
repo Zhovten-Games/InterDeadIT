@@ -1,5 +1,5 @@
 ---
-title: '— The Others (2001).'
+title: 'The Others (2001).'
 slug: 'the-others'
 weight: 1
 translationKey: 'story-the-others'
