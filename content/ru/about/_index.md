@@ -68,7 +68,7 @@ https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8 — пе
 
 ### [ПсиФреймворк](https://github.com/Zhovten-Games/PsyFramework)
 
-После серии обсуждений с нейросетью я разработал фреймворк, позволяющий рассматривать страхи через академическую оптику причин и триггеров. Подробное описание методологии можно найти в отдельном посте в LinkedIn.
+После серии обсуждений с нейросетью я разработал фреймворк, позволяющий рассматривать страхи через академическую оптику причин и триггеров. Подробное описание методологии можно найти в отдельном [посте в LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
 
 Процедура выглядит следующим образом:
 

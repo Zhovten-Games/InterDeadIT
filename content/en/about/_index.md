@@ -49,8 +49,8 @@ There was no trigger shot into the air: I simply sat down and began. I sketched 
 
 The application has two wikis:
 
-https://interdead.fandom.com/wiki/InterDead_Wiki — the first one on Fandom;  
-the repository — the second, inside the application’s [code repository](https://github.com/Zhovten-Games/InterDeadIT), where its actual operation is described.
+- https://interdead.fandom.com/wiki/InterDead_Wiki — the first one on Fandom;  
+- the repository — the second, inside the application’s [code repository](https://github.com/Zhovten-Games/InterDeadIT), where its actual operation is described.
 
 It turned out exactly as we were making it. I showed the draft to my wife, who works in game development, and received precise feedback: “Wrap it at least in a psychologically oriented game with a visual-novel interface, otherwise it’s a monument to self-analysis.” There was nothing to argue with — and, admittedly, I liked the idea.
 
@@ -68,7 +68,7 @@ Please fix this moment in memory, because an interesting result lies ahead.
 
 ### PsiFramework
 
-After a series of discussions with a neural network, I developed [PsiFramework](https://github.com/Zhovten-Games/PsyFramework) — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate post on LinkedIn.
+After a series of discussions with a neural network, I developed [PsiFramework](https://github.com/Zhovten-Games/PsyFramework) — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate [post on LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
 
 The procedure is as follows:
 

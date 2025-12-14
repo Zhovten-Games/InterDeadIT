@@ -76,7 +76,7 @@ https://interdead.fandom.com/ja/wiki/InterDead_Wiki ―― 一つ目は Fandom �
 
 ### [PsiFramework（プシ・フレームワーク）](https://github.com/Zhovten-Games/PsyFramework)
 
-ニューラルネットとの一連の議論ののち、私は恐怖を「原因」と「トリガー」の観点から学術的に検討するためのフレームワークを設計しました。手法の詳細な説明は、LinkedIn に掲載した別の投稿で参照できます。
+ニューラルネットとの一連の議論ののち、私は恐怖を「原因」と「トリガー」の観点から学術的に検討するためのフレームワークを設計しました。手法の詳細な説明は、[LinkedIn に掲載した別の投稿で参照できます。](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM)
 
 プロシージャは、次のような順序を取ります。
 
