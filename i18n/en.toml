@@ -169,6 +169,15 @@ other = "Exposure"
 ['profile.efbd.axes.abandon']
 other = "Abandon"
 
+['minigames.poll.option.social']
+other = "He rose too high — and there is no one left to answer him."
+
+['minigames.poll.option.mind']
+other = "If the structure breaks, everything holding him together will collapse with it."
+
+['minigames.poll.option.exposure']
+other = "He is visible to everyone. His weakness no longer belongs only to him."
+
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
@@ -176,7 +185,7 @@ other = "EFBD triggers from mini-games sync here after sign-in; if the scale ser
 other = "EFBD resonance check"
 
 ['minigames.poll.prompt']
-other = "Choose the EFBD axis that best matches your latest signal."
+other = "This figure chose to rise above the world.\nWhat in this image feels most unsettling to you?"
 
 ['minigames.poll.submit']
 other = "Submit response"
@@ -189,6 +198,12 @@ other = "We could not record your vote. Please retry after reconnecting."
 
 ['minigames.poll.required']
 other = "Select one option to continue."
+
+['minigames.poll.continue']
+other = "Continue"
+
+['minigames.poll.mapAlt']
+other = "The Tower map"
 
 ['hero.demo.timer']
 other = "Open beta closes in:"

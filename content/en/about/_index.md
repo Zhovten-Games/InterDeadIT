@@ -49,7 +49,7 @@ There was no trigger shot into the air: I simply sat down and began. I sketched 
 
 The application has two wikis:
 
-- https://interdead.fandom.com/wiki/InterDead_Wiki — the first one on Fandom;  
+- https://interdead.fandom.com/wiki/InterDead_Wiki — the first one on Fandom;
 - the repository — the second, inside the application’s [code repository](https://github.com/Zhovten-Games/InterDeadIT), where its actual operation is described.
 
 It turned out exactly as we were making it. I showed the draft to my wife, who works in game development, and received precise feedback: “Wrap it at least in a psychologically oriented game with a visual-novel interface, otherwise it’s a monument to self-analysis.” There was nothing to argue with — and, admittedly, I liked the idea.

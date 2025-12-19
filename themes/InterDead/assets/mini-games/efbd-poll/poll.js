@@ -17,6 +17,8 @@ const defaultStrings = {
   success: '',
   error: 'Something went wrong. Please try again.',
   required: '',
+  continue: 'Continue',
+  mapAlt: 'The Tower map',
 };
 
 export function initEfbdPoll({
@@ -28,6 +30,7 @@ export function initEfbdPoll({
   scalePort,
   stringKeys = {},
   logger = console,
+  mapUrl,
 } = {}) {
   const logContext = {
     id: root?.id || '(unknown)',
@@ -67,8 +70,8 @@ export function initEfbdPoll({
     });
     return false;
   }
-  const form =
-    root.ownerDocument?.createElement?.('form') || mount.ownerDocument?.createElement?.('form');
+  const documentRef = root.ownerDocument || mount.ownerDocument;
+  const form = documentRef?.createElement?.('form');
   if (!form) {
     logger?.error?.('[InterDead][MiniGame][Poll] Failed to create form element', logContext);
     return false;
@@ -76,7 +79,7 @@ export function initEfbdPoll({
 
   form.className = 'gm-poll';
 
-  const title = form.ownerDocument.createElement('h3');
+  const title = documentRef.createElement('h3');
   title.className = 'gm-poll__title';
   title.textContent = mergedStrings.title;
   if (stringKeys.title) {
@@ -84,7 +87,7 @@ export function initEfbdPoll({
   }
   form.appendChild(title);
 
-  const prompt = form.ownerDocument.createElement('p');
+  const prompt = documentRef.createElement('p');
   prompt.className = 'gm-poll__prompt';
   prompt.textContent = mergedStrings.prompt;
   if (stringKeys.prompt) {
@@ -92,23 +95,23 @@ export function initEfbdPoll({
   }
   form.appendChild(prompt);
 
-  const optionsList = form.ownerDocument.createElement('div');
+  const optionsList = documentRef.createElement('div');
   optionsList.className = 'gm-poll__options';
 
   normalizedOptions.forEach((option, index) => {
     const optionId = `${root.id || 'efbd-poll'}-${index}`;
-    const optionWrapper = form.ownerDocument.createElement('label');
+    const optionWrapper = documentRef.createElement('label');
     optionWrapper.className = 'gm-poll__option';
     optionWrapper.htmlFor = optionId;
 
-    const input = form.ownerDocument.createElement('input');
+    const input = documentRef.createElement('input');
     input.type = 'radio';
     input.name = 'efbd-poll-option';
     input.value = option.axis;
     input.id = optionId;
     input.className = 'gm-poll__radio';
 
-    const labelText = form.ownerDocument.createElement('span');
+    const labelText = documentRef.createElement('span');
     labelText.className = 'gm-poll__label';
     labelText.textContent = option.label;
     if (option.i18nKey) {
@@ -122,7 +125,7 @@ export function initEfbdPoll({
 
   form.appendChild(optionsList);
 
-  const status = form.ownerDocument.createElement('p');
+  const status = documentRef.createElement('p');
   status.className = 'gm-poll__status';
   status.setAttribute('role', 'status');
   status.setAttribute('aria-live', 'polite');
@@ -137,7 +140,7 @@ export function initEfbdPoll({
     status.dataset.i18nRequired = stringKeys.required;
   }
 
-  const submit = form.ownerDocument.createElement('button');
+  const submit = documentRef.createElement('button');
   submit.type = 'submit';
   submit.className = 'gm-poll__submit';
   submit.textContent = mergedStrings.submit || defaultStrings.submit;
@@ -208,8 +211,52 @@ export function initEfbdPoll({
     submit.disabled = false;
   });
 
+  const mapScreen = documentRef.createElement('div');
+  mapScreen.className = 'gm-poll__map-screen';
+
+  const mapFrame = documentRef.createElement('div');
+  mapFrame.className = 'gm-poll__map-frame';
+
+  const resolvedMapUrl = mapUrl || strings.mapUrl;
+
+  if (resolvedMapUrl) {
+    const mapImage = documentRef.createElement('img');
+    mapImage.className = 'gm-poll__map-image';
+    mapImage.src = resolvedMapUrl;
+    mapImage.alt = mergedStrings.mapAlt;
+    mapImage.loading = 'lazy';
+    if (stringKeys.mapAlt) {
+      mapImage.dataset.i18n = stringKeys.mapAlt;
+    }
+    mapFrame.appendChild(mapImage);
+  }
+
+  const continueButton = documentRef.createElement('button');
+  continueButton.type = 'button';
+  continueButton.className = 'gm-poll__continue';
+  continueButton.textContent = mergedStrings.continue;
+  continueButton.disabled = true;
+  if (stringKeys.continue) {
+    continueButton.dataset.i18n = stringKeys.continue;
+  }
+
+  setTimeout(() => {
+    continueButton.disabled = false;
+    mapScreen.dataset.ready = 'true';
+  }, 1000);
+
+  const showPoll = () => {
+    mount.innerHTML = '';
+    mount.appendChild(form);
+  };
+
+  continueButton.addEventListener('click', showPoll);
+
+  mapScreen.appendChild(mapFrame);
+  mapScreen.appendChild(continueButton);
+
   mount.innerHTML = '';
-  mount.appendChild(form);
+  mount.appendChild(mapScreen);
 
   return true;
 }

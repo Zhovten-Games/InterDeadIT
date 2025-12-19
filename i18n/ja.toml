@@ -169,6 +169,15 @@ other = "暴露"
 ['profile.efbd.axes.abandon']
 other = "放棄"
 
+['minigames.poll.option.social']
+other = "彼はあまりにも高く昇り、応える者はもういません。"
+
+['minigames.poll.option.mind']
+other = "構造が崩れれば、彼を支えていたすべてが共に崩れ落ちます。"
+
+['minigames.poll.option.exposure']
+other = "彼は誰からも見える場所にいる。彼の弱さはもう彼だけのものではありません。"
+
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
@@ -176,7 +185,7 @@ other = "EFBD triggers from mini-games sync here after sign-in; if the scale ser
 other = "EFBD 共鳴チェック"
 
 ['minigames.poll.prompt']
-other = "直近のシグナルに最も合うEFBD軸を選んでください。"
+other = "この人物は世界の上に昇ることを選びました。\nこの光景で最も不穏に感じるのはどこですか？"
 
 ['minigames.poll.submit']
 other = "回答を送信"
@@ -189,6 +198,12 @@ other = "投票を記録できませんでした。再接続してからお試�
 
 ['minigames.poll.required']
 other = "続行するには一つ選択してください。"
+
+['minigames.poll.continue']
+other = "続ける"
+
+['minigames.poll.mapAlt']
+other = "塔の地図"
 
 ['hero.demo.timer']
 other = "オープンベータ終了まで:"

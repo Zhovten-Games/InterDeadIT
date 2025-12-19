@@ -53,7 +53,7 @@ date: 2025-12-12
 
 このアプリケーションには、二つの「ウィキ」があります。
 
-- https://interdead.fandom.com/ja/wiki/InterDead_Wiki ―― 一つ目は Fandom 上のもの。  
+- https://interdead.fandom.com/ja/wiki/InterDead_Wiki ―― 一つ目は Fandom 上のもの。
 - もう一つは、アプリケーションのリポジトリ（https://github.com/Zhovten-Games/InterDeadIT）内部にあり、その実際の挙動・実装が記述されています。
 
 出来上がったものは、まさに私たちが作ろうとしていたものになりました。私は草案を、ゲーム開発に従事している妻に見せました。返ってきたフィードバックは精確でした。

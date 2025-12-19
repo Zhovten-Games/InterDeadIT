@@ -169,6 +169,15 @@ other = "Экспозиция"
 ['profile.efbd.axes.abandon']
 other = "Оставление"
 
+['minigames.poll.option.social']
+other = "Он взлетел слишком высоко — и отвечать ему уже некому."
+
+['minigames.poll.option.mind']
+other = "Если конструкция рухнет, вместе с ней рассыплется всё, что держало его целым."
+
+['minigames.poll.option.exposure']
+other = "Он на виду у всех. Его слабость больше не принадлежит только ему."
+
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
@@ -176,7 +185,7 @@ other = "EFBD triggers from mini-games sync here after sign-in; if the scale ser
 other = "Проверка резонанса EFBD"
 
 ['minigames.poll.prompt']
-other = "Выберите ось EFBD, которая точнее всего описывает ваш последний сигнал."
+other = "Он решил подняться над миром.\nЧто в этом образе тревожит вас больше всего?"
 
 ['minigames.poll.submit']
 other = "Отправить ответ"
@@ -189,6 +198,12 @@ other = "Не удалось записать голос. Попробуйте �
 
 ['minigames.poll.required']
 other = "Выберите один вариант, чтобы продолжить."
+
+['minigames.poll.continue']
+other = "Продолжить"
+
+['minigames.poll.mapAlt']
+other = "Карта Башни"
 
 ['hero.demo.timer']
 other = "Открытая бета закончится через:"
