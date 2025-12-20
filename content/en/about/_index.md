@@ -23,8 +23,6 @@ But as a system, as a world, and as an experience you are about to interact with
 
 It replaces the familiar about.
 
----
-
 ## Genesis of Gameplay
 
 To provide a fuller understanding of the project’s concept, let us begin with a brief excursion through references — and, of course, with language.

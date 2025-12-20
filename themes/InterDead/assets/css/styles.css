@@ -1354,7 +1354,7 @@ img, iframe {
 .gm-content img {
   display: block;
   width: min(100%, 720px);
-  margin: clamp(14px, 3vw, 24px) auto;
+  margin: 0 auto;
   border-radius: var(--shape-radius-tight);
   box-shadow: var(--shape-shadow-soft);
 }
