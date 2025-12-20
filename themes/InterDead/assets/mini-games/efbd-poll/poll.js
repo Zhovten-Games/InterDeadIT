@@ -10,6 +10,17 @@ const normalizeOptions = (options = []) =>
     }))
     .filter((option) => isAxisCode(option.axis));
 
+const sanitizeMapUrl = (rawUrl) => {
+  if (typeof rawUrl !== 'string') {
+    return '';
+  }
+
+  return rawUrl
+    .trim()
+    .replace(/^['"]+/, '')
+    .replace(/['"]+$/, '');
+};
+
 const defaultStrings = {
   title: '',
   prompt: '',
@@ -217,7 +228,7 @@ export function initEfbdPoll({
   const mapFrame = documentRef.createElement('div');
   mapFrame.className = 'gm-poll__map-frame';
 
-  const resolvedMapUrl = mapUrl || root?.dataset?.mapUrl || strings.mapUrl;
+  const resolvedMapUrl = sanitizeMapUrl(mapUrl || root?.dataset?.mapUrl || strings.mapUrl);
 
   if (resolvedMapUrl) {
     const mapImage = documentRef.createElement('img');
