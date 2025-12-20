@@ -414,6 +414,15 @@ other = "Legal"
 ["blog.readMore"]
 other = "Read more"
 
+["blog.categories"]
+other = "Categories"
+
+["categories.miniGames"]
+other = "Mini-games"
+
+["categories.metaUniverse"]
+other = "Meta-universe"
+
 [profile.delete]
 other = "Delete profile"
 

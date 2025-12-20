@@ -2,9 +2,19 @@
 <article class="gm-section gm-article">
   <div class="gm-container">
     <header class="gm-article__header">
-      <h1 class="gm-section__title">{{ .Title }}</h1>
-      {{ with .Date }}
-      <p class="gm-text--fine">{{ .Format "02 Jan 2006" }}</p>
+      <div class="gm-article__heading">
+        <h1 class="gm-section__title">{{ .Title }}</h1>
+        <div class="gm-article__meta">
+          {{ partial "components/category-list.html" (dict "categories" .Params.categories "class" "gm-article__categories" "label" (i18n "blog.categories")) }}
+          {{ with .Date }}
+          <p class="gm-text--fine gm-article__date">{{ .Format "02 Jan 2006" }}</p>
+          {{ end }}
+        </div>
+      </div>
+      {{ with .Params.image }}
+      <figure class="gm-article__media">
+        <img src="{{ . | absURL }}" alt="{{ $.Params.imageAlt | default $.Title }}" loading="lazy" />
+      </figure>
       {{ end }}
     </header>
     {{ $toc := .TableOfContents }}

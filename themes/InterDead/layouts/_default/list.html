@@ -1,27 +1,40 @@
-{{ define "main" }} {{ $isStories := and (eq .Kind "section") (eq .Section "stories") }}
-<section class="gm-section gm-collection{{ if $isStories }} gm-collection--stories{{ end }}">
-  <div class="gm-container">
-    <header class="gm-collection__header">
-      <h1 class="gm-section__title">{{ .Title }}</h1>
-      {{ with .Description }}
-      <p class="gm-collection__description">{{ . }}</p>
-      {{ end }}
-    </header>
-    {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
-    <div class="gm-collection__grid">
-      {{ range $paginator.Pages }}
-      <article class="gm-card gm-collection__item">
-        <h2 class="gm-collection__itemTitle"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-        {{ with .Date }}
-        <p class="gm-text--fine">{{ .Format "02 Jan 2006" }}</p>
-        {{ end }} {{ with .Summary }}
-        <p>{{ . }}</p>
+{{ define "main" }}
+  {{ $isStories := and (eq .Kind "section") (eq .Section "stories") }}
+  <section class="gm-section gm-collection{{ if $isStories }} gm-collection--stories{{ end }}">
+    <div class="gm-container">
+      <header class="gm-collection__header">
+        <h1 class="gm-section__title">{{ .Title }}</h1>
+        {{ with .Description }}
+        <p class="gm-collection__description">{{ . }}</p>
         {{ end }}
-        <a class="gm-link" href="{{ .RelPermalink }}">{{ i18n "blog.readMore" }}</a>
-      </article>
-      {{ end }}
+      </header>
+      {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
+      <div class="gm-collection__grid">
+        {{ range $paginator.Pages }}
+        {{ $page := . }}
+        <article class="gm-card gm-collection__item{{ if $page.Params.image }} gm-card--withMedia{{ end }}">
+          {{ with $page.Params.image }}
+          <figure class="gm-card__media">
+            <img src="{{ . | absURL }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
+          </figure>
+          {{ end }}
+          <div class="gm-card__content">
+            {{ partial "components/category-list.html" (dict "categories" $page.Params.categories "class" "gm-card__categories" "label" (i18n "blog.categories")) }}
+            <h2 class="gm-collection__itemTitle"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
+            <div class="gm-card__meta">
+              {{ with $page.Date }}
+              <p class="gm-text--fine gm-card__date">{{ .Format "02 Jan 2006" }}</p>
+              {{ end }}
+            </div>
+            {{ with $page.Summary }}
+            <p class="gm-card__summary">{{ . }}</p>
+            {{ end }}
+            <a class="gm-link" href="{{ $page.RelPermalink }}">{{ i18n "blog.readMore" }}</a>
+          </div>
+        </article>
+        {{ end }}
+      </div>
+      {{ template "_internal/pagination.html" $paginator }}
     </div>
-    {{ template "_internal/pagination.html" $paginator }}
-  </div>
-</section>
+  </section>
 {{ end }}

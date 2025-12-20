@@ -8,7 +8,8 @@ staticDir = ["static", "assets"]
 
 theme = "InterDead"
 
-disableKinds = ["taxonomy", "term"]
+[taxonomies]
+  category = "categories"
 
 [permalinks]
   blog = "/blog/:slug/"

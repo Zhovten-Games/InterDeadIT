@@ -413,6 +413,15 @@ other = "Юридические"
 ["blog.readMore"]
 other = "Читать дальше"
 
+["blog.categories"]
+other = "Категории"
+
+["categories.miniGames"]
+other = "Мини-игры"
+
+["categories.metaUniverse"]
+other = "Мета-вселенная"
+
 [profile.delete]
 other = "Delete profile"
 

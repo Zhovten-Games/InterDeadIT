@@ -4,6 +4,10 @@ description: 'InterDead のシステムに対するプレイヤーの相互作�
 date: 2024-12-20
 slug: 'first-signal'
 translationKey: 'first-signal'
+image: 'assets/images/blog/first-signal.jpg'
+imageAlt: 'InterDead におけるタロット校正のビジュアル'
+categories:
+  - 'mini-games'
 ---
 
 *ここに提示されているのは、最初のテストです。その目的は、相互作用の初期パラメータを記録し、将来的には、私たちが開発しているプロジェクト内において、あなたの不快感をやや高い水準で提供することにあります。改めて補足しますが、本テストは現在開発中のゲームの一部であり、プレイヤーとそのシステムとの相互作用を事前にキャリブレーションするためのものです。*

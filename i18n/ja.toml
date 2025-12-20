@@ -414,6 +414,15 @@ other = "リーガル"
 ["blog.readMore"]
 other = "続きを読む"
 
+["blog.categories"]
+other = "カテゴリ"
+
+["categories.miniGames"]
+other = "ミニゲーム"
+
+["categories.metaUniverse"]
+other = "メタバース"
+
 [profile.delete]
 other = "Delete profile"
 

@@ -4,6 +4,10 @@ description: 'A procedure for the initial calibration of player interaction with
 date: 2024-12-20
 slug: 'first-signal'
 translationKey: 'first-signal'
+image: 'assets/images/blog/first-signal.jpg'
+imageAlt: 'InterDead tarot calibration illustration'
+categories:
+  - 'mini-games'
 ---
 
 *Before you is the first test. Its purpose is to record the initial parameters of interaction and, subsequently, to provide a somewhat higher level of your discomfort within the project we are developing. We additionally reiterate that this test is part of a game currently in development and serves for preliminary calibration of the player’s interaction with its systems.*

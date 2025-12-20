@@ -414,6 +414,15 @@ other = "Правові"
 ["blog.readMore"]
 other = "Читати далі"
 
+["blog.categories"]
+other = "Категорії"
+
+["categories.miniGames"]
+other = "Міні-ігри"
+
+["categories.metaUniverse"]
+other = "Мета-всесвіт"
+
 [profile.delete]
 other = "Delete profile"
 
