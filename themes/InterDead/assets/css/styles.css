@@ -1349,6 +1349,14 @@ img, iframe {
   line-height: 1.65;
 }
 
+.gm-content img {
+  display: block;
+  width: min(100%, 720px);
+  margin: clamp(14px, 3vw, 24px) auto;
+  border-radius: var(--shape-radius-tight);
+  box-shadow: var(--shape-shadow-soft);
+}
+
 .gm-article__body {
   width: 100%;
   max-width: var(--gm-content-max-width);
@@ -1414,6 +1422,7 @@ img, iframe {
 
   .gm-card__media {
     max-width: 320px;
+    margin: 0 auto;
   }
 
   .gm-article__header {

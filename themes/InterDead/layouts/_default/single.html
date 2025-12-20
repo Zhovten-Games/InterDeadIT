@@ -11,9 +11,9 @@
           {{ end }}
         </div>
       </div>
-      {{ with .Params.image }}
+      {{ if and (ne .Section "blog") .Params.image }}
       <figure class="gm-article__media">
-        <img src="{{ . | absURL }}" alt="{{ $.Params.imageAlt | default $.Title }}" loading="lazy" />
+        <img src="{{ .Params.image | absURL }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
       </figure>
       {{ end }}
     </header>

@@ -10,7 +10,7 @@ categories:
   - 'mini-games'
 ---
 
-*Before you is the first test. Its purpose is to record the initial parameters of interaction and, subsequently, to provide a somewhat higher level of your discomfort within the project we are developing. We additionally reiterate that this test is part of a game currently in development and serves for preliminary calibration of the player’s interaction with its systems.*
+_Before you is the first test. Its purpose is to record the initial parameters of interaction and, subsequently, to provide a somewhat higher level of your discomfort within the project we are developing. We additionally reiterate that this test is part of a game currently in development and serves for preliminary calibration of the player’s interaction with its systems._
 
 **Please note: participation in the mini-games requires authorization on the platform. At present, authorization via Discord is used. If, for any reason, this method is unacceptable to you, you may contact us — a local authorization option will be added for such cases.**
 

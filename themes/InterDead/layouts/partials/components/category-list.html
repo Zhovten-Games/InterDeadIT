@@ -1,15 +1,13 @@
-{{- $categories := .categories | default .Params.categories -}}
-{{- if $categories }}
-  {{- $labels := dict "mini-games" (i18n "categories.miniGames") "meta-universe" (i18n "categories.metaUniverse") -}}
-  <div class="gm-categories{{ with .class }} {{ . }}{{ end }}">
-    {{- with .label }}
-    <span class="gm-categories__label">{{ . }}</span>
+{{- $categories := .categories | default .Params.categories -}} {{- if $categories }} {{- $labels :=
+dict "mini-games" (i18n "categories.miniGames") "meta-universe" (i18n "categories.metaUniverse") -}}
+<div class="gm-categories{{ with .class }} {{ . }}{{ end }}">
+  {{- with .label }}
+  <span class="gm-categories__label">{{ . }}</span>
+  {{- end }}
+  <div class="gm-categories__list">
+    {{- range $categories }} {{- $label := index $labels . | default . -}}
+    <span class="gm-categories__item">{{ $label }}</span>
     {{- end }}
-    <div class="gm-categories__list">
-      {{- range $categories }}
-      {{- $label := index $labels . | default . -}}
-      <span class="gm-categories__item">{{ $label }}</span>
-      {{- end }}
-    </div>
   </div>
+</div>
 {{- end }}
