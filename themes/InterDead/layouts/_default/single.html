@@ -11,23 +11,9 @@
           {{ end }}
         </div>
       </div>
-      {{ $imagePath := .Params.image }}
-      {{ $cleanPath := cond (and $imagePath (hasPrefix $imagePath "/")) (strings.TrimPrefix "/" $imagePath) $imagePath }}
-      {{ $convertedPath := cond $cleanPath (printf "converted-assets/%s" $cleanPath) "" }}
-      {{ $imageResource := cond (and $cleanPath (not (hasPrefix $cleanPath "http"))) (or (resources.GetMatch $convertedPath) (resources.GetMatch $cleanPath) (.Resources.GetMatch $convertedPath) (.Resources.GetMatch $cleanPath)) nil }}
-      {{ $resolvedImage := "" }}
-      {{ if $imageResource }}
-        {{ $resolvedImage = ($imageResource | fingerprint).RelPermalink }}
-      {{ else if $imagePath }}
-        {{ if hasPrefix $imagePath "http" }}
-          {{ $resolvedImage = $imagePath }}
-        {{ else }}
-          {{ $resolvedImage = $imagePath | absURL }}
-        {{ end }}
-      {{ end }}
-      {{ if and (ne .Section "blog") $resolvedImage }}
+      {{ if and (ne .Section "blog") .Params.image }}
       <figure class="gm-article__media">
-        <img src="{{ $resolvedImage }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
+        <img src="{{ .Params.image | absURL }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
       </figure>
       {{ end }}
     </header>

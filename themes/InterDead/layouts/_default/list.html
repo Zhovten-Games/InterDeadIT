@@ -12,24 +12,10 @@
       <div class="gm-collection__grid">
         {{ range $paginator.Pages }}
         {{ $page := . }}
-        {{ $imagePath := $page.Params.image }}
-        {{ $cleanPath := cond (and $imagePath (hasPrefix $imagePath "/")) (strings.TrimPrefix "/" $imagePath) $imagePath }}
-        {{ $convertedPath := cond $cleanPath (printf "converted-assets/%s" $cleanPath) "" }}
-        {{ $imageResource := cond (and $cleanPath (not (hasPrefix $cleanPath "http"))) (or (resources.GetMatch $convertedPath) (resources.GetMatch $cleanPath) ($page.Resources.GetMatch $convertedPath) ($page.Resources.GetMatch $cleanPath)) nil }}
-        {{ $resolvedImage := "" }}
-        {{ if $imageResource }}
-          {{ $resolvedImage = ($imageResource | fingerprint).RelPermalink }}
-        {{ else if $imagePath }}
-          {{ if hasPrefix $imagePath "http" }}
-            {{ $resolvedImage = $imagePath }}
-          {{ else }}
-            {{ $resolvedImage = $imagePath | absURL }}
-          {{ end }}
-        {{ end }}
-        <article class="gm-card gm-collection__item{{ if $resolvedImage }} gm-card--withMedia{{ end }}">
-          {{ with $resolvedImage }}
+        <article class="gm-card gm-collection__item{{ if $page.Params.image }} gm-card--withMedia{{ end }}">
+          {{ with $page.Params.image }}
           <figure class="gm-card__media">
-            <img src="{{ . }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
+            <img src="{{ . | absURL }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
           </figure>
           {{ end }}
           <div class="gm-card__content">
