@@ -14,11 +14,13 @@
   <div class="gm-modal__dialog gm-ageGate__dialog">
     {{- $termsPage := .Site.GetPage "/pages/terms-of-use" -}}
     {{- $privacyPage := .Site.GetPage "/pages/privacy-policy" -}}
+    {{- $termsPageExists := ne $termsPage nil -}}
+    {{- $privacyPageExists := ne $privacyPage nil -}}
     {{- $fandomLinks := dict "en" "https://interdead.fandom.com/wiki/InterDead_Wiki" "ru" "https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8" "uk" "https://interdead.fandom.com/uk/wiki/InterDead_Wiki" "ja" "https://interdead.fandom.com/ja/wiki/InterDead_Wiki" -}}
     {{- $fandomURL := default (index $fandomLinks "en") (index $fandomLinks .Site.Language.Lang) -}}
-    {{- $termsTitle := cond $termsPage $termsPage.Title (i18n "agegate.links.terms") -}}
-    {{- $privacyTitle := cond $privacyPage $privacyPage.Title (i18n "agegate.links.privacy") -}}
-    {{- $context := dict "TermsURL" (cond $termsPage $termsPage.RelPermalink "") "PrivacyURL" (cond $privacyPage $privacyPage.RelPermalink "") "LinkedInURL" "https://www.linkedin.com/company/zhovten-games/" "TermsTitle" $termsTitle "PrivacyTitle" $privacyTitle "AboutURL" (relLangURL "/about/") "FandomURL" $fandomURL -}}
+    {{- $termsTitle := cond $termsPageExists $termsPage.Title (i18n "agegate.links.terms") -}}
+    {{- $privacyTitle := cond $privacyPageExists $privacyPage.Title (i18n "agegate.links.privacy") -}}
+    {{- $context := dict "TermsURL" (cond $termsPageExists $termsPage.RelPermalink "") "PrivacyURL" (cond $privacyPageExists $privacyPage.RelPermalink "") "LinkedInURL" "https://www.linkedin.com/company/zhovten-games/" "TermsTitle" $termsTitle "PrivacyTitle" $privacyTitle "AboutURL" (relLangURL "/about/") "FandomURL" $fandomURL -}}
     <span class="gm-visually-hidden" id="gm-gtitle">{{ i18n "agegate.accessibleTitle" }}</span>
     <div class="gm-ageGate__content">
       <div class="gm-ageGate__section gm-ageGate__section--primary">

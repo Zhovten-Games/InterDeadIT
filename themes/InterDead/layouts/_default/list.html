@@ -1,5 +1,6 @@
 {{ define "main" }}
   {{ $isStories := and (eq .Kind "section") (eq .Section "stories") }}
+  {{ $logo := resources.Get "images/logo.png" | fingerprint }}
   <section class="gm-section gm-collection{{ if $isStories }} gm-collection--stories{{ end }}">
     <div class="gm-container">
       <header class="gm-collection__header">
@@ -8,19 +9,35 @@
         <p class="gm-collection__description">{{ . }}</p>
         {{ end }}
       </header>
-      {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
-      <div class="gm-collection__grid">
-        {{ range $paginator.Pages }}
-        {{ $page := . }}
-        <article class="gm-card gm-collection__item{{ if $page.Params.image }} gm-card--withMedia{{ end }}">
-          {{ with $page.Params.image }}
-          <figure class="gm-card__media">
-            <img src="{{ . | absURL }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
-          </figure>
+        {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
+        <div class="gm-collection__grid">
+          {{ range $paginator.Pages }}
+          {{ $page := . }}
+          {{ $imageParam := $page.Params.image }}
+          {{ $imageIsRemote := and $imageParam (hasPrefix $imageParam "http") }}
+          {{ $imageResource := "" }}
+          {{ if and $imageParam (not $imageIsRemote) }}
+            {{ with resources.GetMatch (printf "images/blog/**%s" (path.Base $imageParam)) }}
+              {{ $copied := resources.Copy (printf "assets/images/blog/%s" (path.Base .Name)) . }}
+              {{ $imageResource = $copied | fingerprint }}
+            {{ end }}
           {{ end }}
-          <div class="gm-card__content">
-            {{ partial "components/category-list.html" (dict "categories" $page.Params.categories "class" "gm-card__categories" "label" (i18n "blog.categories")) }}
-            <h2 class="gm-collection__itemTitle"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
+          {{ $hasMedia := or $imageParam $logo }}
+          <article class="gm-card gm-collection__item{{ if $hasMedia }} gm-card--withMedia{{ end }}">
+            {{ if $hasMedia }}
+            <figure class="gm-card__media">
+              {{- if $imageIsRemote -}}
+              <img src="{{ $imageParam }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
+              {{- else if $imageResource -}}
+              <img src="{{ $imageResource.RelPermalink }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
+              {{- else if $logo -}}
+              <img src="{{ $logo.RelPermalink }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
+              {{- end -}}
+            </figure>
+            {{ end }}
+            <div class="gm-card__content">
+              {{ partial "components/category-list.html" (dict "categories" $page.Params.categories "class" "gm-card__categories" "label" (i18n "blog.categories")) }}
+              <h2 class="gm-collection__itemTitle"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
             <div class="gm-card__meta">
               {{ with $page.Date }}
               <p class="gm-text--fine gm-card__date">{{ .Format "02 Jan 2006" }}</p>

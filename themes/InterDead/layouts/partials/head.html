@@ -1,6 +1,6 @@
 {{- $title := .Title | default .Site.Title -}}
 {{- $description := .Params.description | default .Site.Language.Params.description -}}
-{{- $image := .Params.image | default .Site.Params.defaultImage -}}
+{{- $imageParam := .Params.image | default .Site.Params.defaultImage -}}
 {{- $canonical := .Permalink -}}
 {{- $lang := .Language.Lang -}}
 {{- $ogType := .Site.Params.ogType | default "website" -}}
@@ -10,14 +10,19 @@
 {{- $favicon32 := resources.Get "favicons/favicon-32x32.png" | fingerprint -}}
 {{- $favicon16 := resources.Get "favicons/favicon-16x16.png" | fingerprint -}}
 {{- $siteManifest := resources.Get "favicons/site.webmanifest" | fingerprint -}}
-{{- $imageIsRemote := and $image (hasPrefix $image "http") -}}
-{{- $ogImage := "" -}}
-{{- if $image -}}
-  {{- if $imageIsRemote -}}
-    {{- $ogImage = $image -}}
-  {{- else -}}
-    {{- $ogImage = $image | absURL -}}
+{{- $imageIsRemote := and $imageParam (hasPrefix $imageParam "http") -}}
+{{- $imageResource := "" -}}
+{{- if and $imageParam (not $imageIsRemote) -}}
+  {{- with resources.GetMatch (printf "images/blog/**%s" (path.Base $imageParam)) -}}
+    {{- $copied := resources.Copy (printf "assets/images/blog/%s" (path.Base .Name)) . -}}
+    {{- $imageResource = $copied | fingerprint -}}
   {{- end -}}
+{{- end -}}
+{{- $ogImage := "" -}}
+{{- if $imageIsRemote -}}
+  {{- $ogImage = $imageParam -}}
+{{- else if $imageResource -}}
+  {{- $ogImage = $imageResource.Permalink -}}
 {{- else if $logo -}}
   {{- $ogImage = $logo.Permalink -}}
 {{- end -}}
