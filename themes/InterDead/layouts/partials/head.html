@@ -10,20 +10,23 @@
 {{- $favicon32 := resources.Get "favicons/favicon-32x32.png" | fingerprint -}}
 {{- $favicon16 := resources.Get "favicons/favicon-16x16.png" | fingerprint -}}
 {{- $siteManifest := resources.Get "favicons/site.webmanifest" | fingerprint -}}
-{{- $convertedAssetsDir := "converted-assets" -}}
-{{- $resolvedImage := partial "helpers/resolve-image.html" (dict "page" . "path" $image "convertedDir" $convertedAssetsDir) -}}
-{{- $ogImage := $resolvedImage.url -}}
-{{- if and (not $ogImage) $logo -}}
-  {{- $ogImage = $logo.RelPermalink -}}
-{{- end -}}
-{{- $ogImageAbsolute := "" -}}
-{{- if $ogImage -}}
-  {{- if hasPrefix $ogImage "http" -}}
-    {{- $ogImageAbsolute = $ogImage -}}
+{{- $imagePath := $image -}}
+{{- $cleanPath := cond (and $imagePath (hasPrefix $imagePath "/")) (strings.TrimPrefix "/" $imagePath) $imagePath -}}
+{{- $convertedPath := cond $cleanPath (printf "converted-assets/%s" $cleanPath) "" -}}
+{{- $imageResource := cond (and $cleanPath (not (hasPrefix $cleanPath "http"))) (or (resources.GetMatch $convertedPath) (resources.GetMatch $cleanPath) (.Resources.GetMatch $convertedPath) (.Resources.GetMatch $cleanPath)) nil -}}
+{{- $ogImage := "" -}}
+{{- if $imageResource -}}
+  {{- $ogImage = ($imageResource | fingerprint).RelPermalink -}}
+{{- else if $imagePath -}}
+  {{- if hasPrefix $imagePath "http" -}}
+    {{- $ogImage = $imagePath -}}
   {{- else -}}
-    {{- $ogImageAbsolute = $ogImage | absURL -}}
+    {{- $ogImage = $imagePath | absURL -}}
   {{- end -}}
+{{- else if $logo -}}
+  {{- $ogImage = $logo.Permalink -}}
 {{- end -}}
+{{- $ogImageAbsolute := cond (and $ogImage (not (hasPrefix $ogImage "http"))) ($ogImage | absURL) $ogImage -}}
 <!DOCTYPE html>
 <html lang="{{ $lang }}">
   <head>

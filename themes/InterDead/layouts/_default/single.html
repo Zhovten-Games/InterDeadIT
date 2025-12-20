@@ -11,11 +11,23 @@
           {{ end }}
         </div>
       </div>
-      {{ $resolvedImage := partial "helpers/resolve-image.html" (dict "page" . "path" .Params.image) }}
-      {{ $imageUrl := $resolvedImage.url }}
-      {{ if and (ne .Section "blog") $imageUrl }}
+      {{ $imagePath := .Params.image }}
+      {{ $cleanPath := cond (and $imagePath (hasPrefix $imagePath "/")) (strings.TrimPrefix "/" $imagePath) $imagePath }}
+      {{ $convertedPath := cond $cleanPath (printf "converted-assets/%s" $cleanPath) "" }}
+      {{ $imageResource := cond (and $cleanPath (not (hasPrefix $cleanPath "http"))) (or (resources.GetMatch $convertedPath) (resources.GetMatch $cleanPath) (.Resources.GetMatch $convertedPath) (.Resources.GetMatch $cleanPath)) nil }}
+      {{ $resolvedImage := "" }}
+      {{ if $imageResource }}
+        {{ $resolvedImage = ($imageResource | fingerprint).RelPermalink }}
+      {{ else if $imagePath }}
+        {{ if hasPrefix $imagePath "http" }}
+          {{ $resolvedImage = $imagePath }}
+        {{ else }}
+          {{ $resolvedImage = $imagePath | absURL }}
+        {{ end }}
+      {{ end }}
+      {{ if and (ne .Section "blog") $resolvedImage }}
       <figure class="gm-article__media">
-        <img src="{{ $imageUrl }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
+        <img src="{{ $resolvedImage }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
       </figure>
       {{ end }}
     </header>

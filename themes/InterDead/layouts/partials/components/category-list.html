@@ -1,15 +1,17 @@
-{{- $categories := .categories | default .Params.categories -}} {{- if $categories }} {{- $labels :=
-dict "mini-games" (i18n "categories.miniGames") "meta-universe" (i18n "categories.metaUniverse") -}}
-<div class="gm-categories{{ with .class }} {{ . }}{{ end }}">
-  {{- with .label }}
-  <span class="gm-categories__label">{{ . }}</span>
-  {{- end }}
-  <div class="gm-categories__list">
-    {{- range $categories }} {{- $label := index $labels . | default . -}} {{- $categoryPage :=
-    site.GetPage (printf "categories/%s" .) -}} {{- $href := cond (ne $categoryPage nil)
-    $categoryPage.RelPermalink (relURL (printf "/categories/%s/" .)) -}}
-    <a class="gm-categories__item" href="{{ $href }}">{{ $label }}</a>
+{{- $categories := .categories | default .Params.categories -}}
+{{- if $categories }}
+  {{- $labels := dict "mini-games" (i18n "categories.miniGames") "meta-universe" (i18n "categories.metaUniverse") -}}
+  <div class="gm-categories{{ with .class }} {{ . }}{{ end }}">
+    {{- with .label }}
+    <span class="gm-categories__label">{{ . }}</span>
     {{- end }}
+    <div class="gm-categories__list">
+      {{- range $categories }}
+      {{- $label := index $labels . | default . -}}
+      {{- $categoryPage := site.GetPage (printf "categories/%s" .) -}}
+      {{- $href := cond (ne $categoryPage nil) $categoryPage.RelPermalink (relURL (printf "/categories/%s/" .)) -}}
+      <a class="gm-categories__item" href="{{ $href }}">{{ $label }}</a>
+      {{- end }}
+    </div>
   </div>
-</div>
 {{- end }}
