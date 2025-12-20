@@ -112,13 +112,16 @@ export function initEfbdPoll({
   mapSection.appendChild(mapFrame);
   form.appendChild(mapSection);
 
-  const title = documentRef.createElement('h3');
-  title.className = 'gm-poll__title';
-  title.textContent = mergedStrings.title;
-  if (stringKeys.title) {
-    title.dataset.i18n = stringKeys.title;
+  const hasTitle = Boolean(mergedStrings.title?.trim() || stringKeys.title?.trim());
+  if (hasTitle) {
+    const title = documentRef.createElement('h3');
+    title.className = 'gm-poll__title';
+    title.textContent = mergedStrings.title;
+    if (stringKeys.title) {
+      title.dataset.i18n = stringKeys.title;
+    }
+    form.appendChild(title);
   }
-  form.appendChild(title);
 
   const prompt = documentRef.createElement('p');
   prompt.className = 'gm-poll__prompt';
