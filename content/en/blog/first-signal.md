@@ -4,7 +4,7 @@ description: 'A procedure for the initial calibration of player interaction with
 date: 2024-12-20
 slug: 'first-signal'
 translationKey: 'first-signal'
-image: 'assets/images/blog/first-signal.jpg'
+image: 'assets/images/blog/The-Tower.webp'
 imageAlt: 'InterDead tarot calibration illustration'
 categories:
   - 'mini-games'

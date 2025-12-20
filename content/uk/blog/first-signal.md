@@ -4,7 +4,7 @@ description: 'Процедура початкового калібрування
 date: 2024-12-20
 slug: 'first-signal'
 translationKey: 'first-signal'
-image: 'assets/images/blog/first-signal.jpg'
+image: 'assets/images/blog/The-Tower.webp'
 imageAlt: 'Ілюстрація для калібрування Таро в InterDead'
 categories:
   - 'mini-games'
