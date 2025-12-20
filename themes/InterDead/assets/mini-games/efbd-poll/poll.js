@@ -28,7 +28,6 @@ const defaultStrings = {
   success: '',
   error: 'Something went wrong. Please try again.',
   required: '',
-  continue: 'Continue',
   mapAlt: 'The Tower map',
 };
 
@@ -89,6 +88,29 @@ export function initEfbdPoll({
   }
 
   form.className = 'gm-poll';
+
+  const mapSection = documentRef.createElement('div');
+  mapSection.className = 'gm-poll__map';
+
+  const mapFrame = documentRef.createElement('div');
+  mapFrame.className = 'gm-poll__map-frame';
+
+  const resolvedMapUrl = sanitizeMapUrl(mapUrl || root?.dataset?.mapUrl || strings.mapUrl);
+
+  if (resolvedMapUrl) {
+    const mapImage = documentRef.createElement('img');
+    mapImage.className = 'gm-poll__map-image';
+    mapImage.src = resolvedMapUrl;
+    mapImage.alt = mergedStrings.mapAlt;
+    mapImage.loading = 'lazy';
+    if (stringKeys.mapAlt) {
+      mapImage.dataset.i18n = stringKeys.mapAlt;
+    }
+    mapFrame.appendChild(mapImage);
+  }
+
+  mapSection.appendChild(mapFrame);
+  form.appendChild(mapSection);
 
   const title = documentRef.createElement('h3');
   title.className = 'gm-poll__title';
@@ -222,52 +244,8 @@ export function initEfbdPoll({
     submit.disabled = false;
   });
 
-  const mapScreen = documentRef.createElement('div');
-  mapScreen.className = 'gm-poll__map-screen';
-
-  const mapFrame = documentRef.createElement('div');
-  mapFrame.className = 'gm-poll__map-frame';
-
-  const resolvedMapUrl = sanitizeMapUrl(mapUrl || root?.dataset?.mapUrl || strings.mapUrl);
-
-  if (resolvedMapUrl) {
-    const mapImage = documentRef.createElement('img');
-    mapImage.className = 'gm-poll__map-image';
-    mapImage.src = resolvedMapUrl;
-    mapImage.alt = mergedStrings.mapAlt;
-    mapImage.loading = 'lazy';
-    if (stringKeys.mapAlt) {
-      mapImage.dataset.i18n = stringKeys.mapAlt;
-    }
-    mapFrame.appendChild(mapImage);
-  }
-
-  const continueButton = documentRef.createElement('button');
-  continueButton.type = 'button';
-  continueButton.className = 'gm-poll__continue';
-  continueButton.textContent = mergedStrings.continue;
-  continueButton.disabled = true;
-  if (stringKeys.continue) {
-    continueButton.dataset.i18n = stringKeys.continue;
-  }
-
-  setTimeout(() => {
-    continueButton.disabled = false;
-    mapScreen.dataset.ready = 'true';
-  }, 1000);
-
-  const showPoll = () => {
-    mount.innerHTML = '';
-    mount.appendChild(form);
-  };
-
-  continueButton.addEventListener('click', showPoll);
-
-  mapScreen.appendChild(mapFrame);
-  mapScreen.appendChild(continueButton);
-
   mount.innerHTML = '';
-  mount.appendChild(mapScreen);
+  mount.appendChild(form);
 
   return true;
 }
