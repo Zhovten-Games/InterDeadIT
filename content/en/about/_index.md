@@ -1,7 +1,28 @@
 ---
-title: 'About'
-description: 'A concise overview of InterDead and the team behind it.'
-date: 2025-12-12
+title: 'Echo of an Unfading Memory'
+description: 'About'
+date: 2025-12-20
+---
+
+## Introduction
+
+Usually, this is where a thousand words are written about who we are.
+Who stands behind the project, where we come from, what inspires us, and why we can be trusted. We understand — this can indeed be interesting.
+
+But instead, we offer a thousand words about something else.
+
+About what InterDead is.
+
+- Not as a brand.
+- Not as a team.
+- Not as a story of how it was made.
+
+But as a system, as a world, and as an experience you are about to interact with.
+
+**Echo of an Unfading Memory** is not a reference document and not a presentation. It is a working collection that captures the internal logic of the project: its principles, structure, and ways of thinking. The full version will become available after the game’s release. For now, we deliberately open only the first chapter.
+
+It replaces the familiar about.
+
 ---
 
 ## Genesis of Gameplay
