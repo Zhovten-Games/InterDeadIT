@@ -1,6 +1,6 @@
 {{- $id := printf "efbd-poll-%d" now.UnixNano -}} {{- $styleAsset := resources.Get
 "mini-games/efbd-poll/styles.css" | fingerprint -}} {{- $mapAsset := resources.Get
-"mini-games/efbd-poll/The-Tower.png" | fingerprint -}} {{- $scriptOptions := dict "targetPath"
+"mini-games/efbd-poll/The-Tower.webp" | fingerprint -}} {{- $scriptOptions := dict "targetPath"
 "js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}} {{- $scriptAsset :=
 resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}} {{-
 $runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not
