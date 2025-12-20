@@ -151,6 +151,7 @@ export default class MiniGameLauncher {
       options = [],
       locale = 'en',
       scalePort,
+      mapUrl,
     } = config;
     const stylePromise = this.assetLoader?.loadStyle?.(assets.styleUrl, assets.styleIntegrity);
     if (assets?.styleUrl) {
@@ -203,6 +204,7 @@ export default class MiniGameLauncher {
         stringKeys,
         locale,
         scalePort,
+        mapUrl,
       });
     } catch (error) {
       this.logger?.error?.('[InterDead][MiniGame] Mini-game initializer threw', {

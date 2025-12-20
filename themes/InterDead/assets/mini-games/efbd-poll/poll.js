@@ -217,7 +217,7 @@ export function initEfbdPoll({
   const mapFrame = documentRef.createElement('div');
   mapFrame.className = 'gm-poll__map-frame';
 
-  const resolvedMapUrl = mapUrl || strings.mapUrl;
+  const resolvedMapUrl = mapUrl || root?.dataset?.mapUrl || strings.mapUrl;
 
   if (resolvedMapUrl) {
     const mapImage = documentRef.createElement('img');

@@ -26,7 +26,12 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
 ></script>
 {{- $.Page.Scratch.Set "miniGameRuntimeInjected" true -}} {{- end -}}
 
-<div class="gm-minigame gm-minigame--poll" id="{{ $id }}" data-minigame-root>
+<div
+  class="gm-minigame gm-minigame--poll"
+  id="{{ $id }}"
+  data-minigame-root
+  data-map-url="{{ $mapAsset.RelPermalink }}"
+>
   <div class="gm-minigame__fallback" data-minigame-fallback data-i18n="profile.unauthenticated">
     {{ i18n "profile.unauthenticated" }}
   </div>
@@ -44,6 +49,7 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
     options: {{ $options | jsonify }},
     strings: {{ $strings | jsonify }},
     stringKeys: {{ $stringKeys | jsonify }},
+    mapUrl: {{ $mapAsset.RelPermalink | jsonify }},
     locale: {{ .Site.Language.Lang | jsonify }}
   });
 </script>
