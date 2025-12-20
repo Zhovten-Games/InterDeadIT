@@ -953,6 +953,7 @@ img, iframe {
   background: linear-gradient(120deg, rgba(var(--color-accent-rgb), 0.12), rgba(var(--color-accent-rgb), 0.04));
   color: var(--color-text);
   letter-spacing: 0.02em;
+  text-decoration: none;
 }
 
 .gm-collection--stories .gm-collection__itemTitle {
@@ -1294,6 +1295,7 @@ img, iframe {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
+  margin: 0;
   border-radius: var(--shape-radius);
   overflow: hidden;
   background: radial-gradient(circle at 30% 30%, rgba(var(--color-accent-rgb), 0.18), rgba(var(--color-accent-rgb), 0.08));
@@ -1377,7 +1379,7 @@ img, iframe {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  flex: 1 1 320px;
+  flex: 1 1 auto;
 }
 
 .gm-article__meta {
