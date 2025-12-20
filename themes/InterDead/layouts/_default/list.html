@@ -9,14 +9,14 @@
     </header>
     {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
     <div class="gm-collection__grid">
-      {{ range $paginator.Pages }} {{ $page := . }}
-      <article
-        class="gm-card gm-collection__item{{ if $page.Params.image }} gm-card--withMedia{{ end }}"
-      >
-        {{ with $page.Params.image }}
+      {{ range $paginator.Pages }} {{ $page := . }} {{ $resolvedImage := partial
+      "helpers/resolve-image.html" (dict "page" $page "path" $page.Params.image) }} {{ $imageUrl :=
+      $resolvedImage.url }}
+      <article class="gm-card gm-collection__item{{ if $imageUrl }} gm-card--withMedia{{ end }}">
+        {{ with $imageUrl }}
         <figure class="gm-card__media">
           <img
-            src="{{ . | absURL }}"
+            src="{{ . }}"
             alt="{{ $page.Params.imageAlt | default $page.Title }}"
             loading="lazy"
           />

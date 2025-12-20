@@ -11,9 +11,11 @@
           {{ end }}
         </div>
       </div>
-      {{ if and (ne .Section "blog") .Params.image }}
+      {{ $resolvedImage := partial "helpers/resolve-image.html" (dict "page" . "path" .Params.image) }}
+      {{ $imageUrl := $resolvedImage.url }}
+      {{ if and (ne .Section "blog") $imageUrl }}
       <figure class="gm-article__media">
-        <img src="{{ .Params.image | absURL }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
+        <img src="{{ $imageUrl }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
       </figure>
       {{ end }}
     </header>
