@@ -237,7 +237,10 @@ export function initEfbdPoll({
     });
 
     if (response?.status === 'ok' || response?.status === 'disabled') {
-      setStatus(mergedStrings.success, 'success');
+      const successMessage =
+        mergedStrings.success || defaultStrings.success || 'Your response has been recorded.';
+      setStatus(successMessage, 'success');
+      window.InterdeadNotifications?.showSuccess?.(successMessage);
     } else {
       const errorMessage = response?.message || response?.error || mergedStrings.error;
       setStatus(errorMessage, 'error');

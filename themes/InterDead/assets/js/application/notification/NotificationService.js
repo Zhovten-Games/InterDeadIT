@@ -85,4 +85,8 @@ export default class NotificationService {
   showError(message) {
     return this.show({ title: 'Action blocked', message });
   }
+
+  showSuccess(message) {
+    return this.show({ title: 'Success', message: message || 'Action completed successfully.' });
+  }
 }
