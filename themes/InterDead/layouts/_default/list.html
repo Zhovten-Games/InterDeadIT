@@ -1,6 +1,5 @@
 {{ define "main" }}
   {{ $isStories := and (eq .Kind "section") (eq .Section "stories") }}
-  {{ $logo := resources.Get "images/logo.png" | fingerprint }}
   <section class="gm-section gm-collection{{ if $isStories }} gm-collection--stories{{ end }}">
     <div class="gm-container">
       <header class="gm-collection__header">
@@ -22,7 +21,7 @@
               {{ $imageResource = $copied | fingerprint }}
             {{ end }}
           {{ end }}
-          {{ $hasMedia := or $imageParam $logo }}
+          {{ $hasMedia := or $imageIsRemote $imageResource (and $imageParam (not $imageIsRemote)) }}
           <article class="gm-card gm-collection__item{{ if $hasMedia }} gm-card--withMedia{{ end }}">
             {{ if $hasMedia }}
             <figure class="gm-card__media">
@@ -30,8 +29,8 @@
               <img src="{{ $imageParam }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
               {{- else if $imageResource -}}
               <img src="{{ $imageResource.RelPermalink }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
-              {{- else if $logo -}}
-              <img src="{{ $logo.RelPermalink }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
+              {{- else if $imageParam -}}
+              <img src="{{ $imageParam | absURL }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
               {{- end -}}
             </figure>
             {{ end }}
@@ -43,7 +42,7 @@
               <p class="gm-text--fine gm-card__date">{{ .Format "02 Jan 2006" }}</p>
               {{ end }}
             </div>
-            {{ with $page.Summary }}
+            {{ with partial "components/summary.html" (dict "page" $page "length" 220) }}
             <p class="gm-card__summary">{{ . }}</p>
             {{ end }}
             <a class="gm-link" href="{{ $page.RelPermalink }}">{{ i18n "blog.readMore" }}</a>
