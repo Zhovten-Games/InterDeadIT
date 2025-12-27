@@ -118,18 +118,22 @@ We have launched a website — the starting point inside our meta-universe, wher
 ### How this works
 
 1. You log in with your Discord account.
-2. You play the mini-games embedded in [our blog](http://localhost:1313/ru/blog/).
+2. You play the mini-games embedded in [our blog](/en/blog/).
 3. After the game’s release, you link the same account, and the system uses the already collected profile as a starting point for tailoring the experience.
 
-### Disclaimers
+---
 
-#### Is it possible to reproduce the matching path and “peek” at how the scales work?
+This marks the end of the first chapter of Echo of an Unfading Memory. Below you will find answers to the most frequently asked questions.
+
+## Questions & Answers
+
+### Is it possible to reproduce the matching path and “peek” at how the scales work?
 
 The project does not aim to turn the game into a piece of cybernetic weaponry, driving players to heart attacks for the sake of spectacular screenshots. Nevertheless, in principle the matching path is reproducible: given basic skills in working with data, our tool (described earlier) and the same GPT model, it can be reconstructed with acceptable effort.
 
 Despite this, we consciously separate levels of transparency. The game’s source code and the detailed structure of the plot remain closed; at the same time, the general principles of how the system works, the framework’s structure and the scales used can be considered conditionally open. These are not so much “trade secrets” as an attempt to reduce the likelihood of accidental traumatisation of the most sensitive players.
 
-#### Release date — Halloween 2026?
+### Release date — Halloween 2026?
 
 Originally, the release was indeed tied to this milestone. However, an event then occurred that significantly affected our budget and schedule; the details will be set out in a separate publication.
 
@@ -139,7 +143,7 @@ Our current situation is objectively less stable: we have had to abandon a numbe
 
 At the same time, the project is not frozen. However our everyday schedules may unfold, InterDead receives small but real changes every day — and we do not intend to cancel it.
 
-#### Is this game about the war between Russia and Ukraine?
+### Is this game about the war between Russia and Ukraine?
 
 No, the plot has not been and will not be tailored to specific real-world wars. It is more accurate to describe the situation as follows: the real war served as a trigger for conceptualising a fictional conflict within a fictional world. The actual hostilities influenced the set of themes, the tonality and local motifs, but in the game itself this influence is limited and manifests itself indirectly, rather than in the format of a direct reconstruction of events.
 
