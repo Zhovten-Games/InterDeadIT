@@ -85,9 +85,9 @@ I discussed the Big Five with GPT — the personality trait model used by HR spe
 
 Please fix this moment in memory, because an interesting result lies ahead.
 
-### PsiFramework
+### PsyFramework
 
-After a series of discussions with a neural network, I developed [PsiFramework](https://github.com/Zhovten-Games/PsyFramework) — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate [post on LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
+After a series of discussions with a neural network, I developed [PsyFramework](https://github.com/Zhovten-Games/PsyFramework) — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate [post on LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
 
 The procedure is as follows:
 

@@ -95,7 +95,7 @@ InterDead とは何かについて。
 
 ここでのやり取りを、どうか一度記憶に留めておいてください。この先に、興味深い帰結が現れます。
 
-### [PsiFramework（プシ・フレームワーク）](https://github.com/Zhovten-Games/PsyFramework)
+### [PsyFramework（プシ・フレームワーク）](https://github.com/Zhovten-Games/PsyFramework)
 
 ニューラルネットとの一連の議論ののち、私は恐怖を「原因」と「トリガー」の観点から学術的に検討するためのフレームワークを設計しました。手法の詳細な説明は、[LinkedIn に掲載した別の投稿で参照できます。](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM)
 

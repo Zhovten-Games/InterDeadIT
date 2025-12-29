@@ -85,7 +85,7 @@ date: 2025-12-20
 
 Зафіксуйте в пам’яті цей момент, бо попереду цікавий підсумок.
 
-### [ПсіФреймворк](https://github.com/Zhovten-Games/PsyFramework)
+### [PsyFramework](https://github.com/Zhovten-Games/PsyFramework)
 
 Після серії обговорень із нейромережею я розробив фреймворк, що дає змогу розглядати страхи через академічну оптику причин і тригерів. Детальний опис методології можна знайти в окремому [дописі в LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
 
