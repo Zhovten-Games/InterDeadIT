@@ -64,16 +64,19 @@ At this point it becomes clearer why InterDead is structured exactly the way it 
 
 ## Conscious game design
 
-There was no trigger shot into the air: I simply sat down and began. I sketched a prototype and the lore of the tool around which all the dramaturgy is built — an application created by a scientist who had spent years trying to establish contact with the dead. At some point he succeeded, although not in the form of an intimate conversation with a specific deceased person. If one reads the man’s biography carefully, familiar names surface — in our universe they are marked as real people; these are direct references to Clive Barker’s _Books of Blood_, _Pulse_ and other texts where the boundary between there and here behaves like a poorly sewn zipper.
+There was no trigger shot into the air: I simply sat down and began. I sketched a prototype and the conceptual framework of the tool around which the entire dramaturgy is built—an application created by a scientist who spent years attempting to establish contact with the dead. At some point, he succeeded, though not in the form of an intimate conversation with a specific deceased individual. The broader context of this figure, along with the internal logic of the application and its fictional lineage, is outlined in the project’s wiki, where these elements are presented as parts of a coherent system of references and influences, including direct echoes of Clive Barker’s Books of Blood, Pulse, and related works in which the boundary between “there” and “here” behaves like a poorly sewn zipper.
 
-The application has two wikis:
+At present, the project maintains a single public wiki on Fandom:
 
-- https://interdead.fandom.com/wiki/InterDead_Wiki — the first one on Fandom;
-- the repository — the second, inside the application’s [code repository](https://github.com/Zhovten-Games/InterDeadIT), where its actual operation is described.
+- [https://interdead.fandom.com/wiki/InterDead_Wiki](https://interdead.fandom.com/wiki/InterDead_Wiki)
 
-It turned out exactly as we were making it. I showed the draft to my wife, who works in game development, and received precise feedback: “Wrap it at least in a psychologically oriented game with a visual-novel interface, otherwise it’s a monument to self-analysis.” There was nothing to argue with — and, admittedly, I liked the idea.
+It documents the internal logic of the application, its terminology, and its conceptual structure.
 
-“Form follows function,” Louis Sullivan reminded us. It is hard to come up with anything more natural: to build a game around an application that itself becomes a character (or at least corrects the protagonist’s actions) is not a piano lost in the bushes, but logic. The script flowed easily, the gameplay did not torment me with the humiliating question “what for?”. Instead, a different question arose.
+The application prototype—the point from which the project originally began—will be made available in January, both as part of this site and as a standalone version. We considered for a long time whether it should be published at all, and ultimately decided that it should. In its current form, this prototype is not merely an early artifact, but a functional component that continues to be used within the game as it is being developed now.
+
+It turned out exactly as we were making it. I showed the draft to my wife, who works in game development, and received precise feedback: “Wrap it at least in a psychologically oriented game with a visual-novel interface; otherwise, it’s a monument to self-analysis.” There was nothing to argue with—and, admittedly, I liked the idea.
+
+“Form follows function,” Louis Sullivan reminded us. It is hard to come up with anything more natural. To build a game around an application that itself becomes a character—or, at the very least, actively corrects the protagonist’s actions—is not a piano lost in the bushes, but logic. The script flowed easily, and the gameplay did not torment me with the humiliating question “what for?”. Instead, a different question arose.
 
 ### How to scare players?
 
@@ -85,9 +88,9 @@ I discussed the Big Five with GPT — the personality trait model used by HR spe
 
 Please fix this moment in memory, because an interesting result lies ahead.
 
-### PsyFramework
+### [PsyFramework](https://github.com/Zhovten-Games/PsyFramework)
 
-After a series of discussions with a neural network, I developed [PsyFramework](https://github.com/Zhovten-Games/PsyFramework) — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate [post on LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
+After a series of discussions with a neural network, I developed PsyFramework — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate [post on LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
 
 The procedure is as follows:
 
