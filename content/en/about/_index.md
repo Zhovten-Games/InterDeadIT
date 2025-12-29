@@ -1,7 +1,7 @@
 ---
 title: 'Echo of an Unfading Memory'
 description: 'About'
-date: 2025-12-20
+date: 2025-12-29
 ---
 
 ## Introduction
@@ -133,15 +133,17 @@ The project does not aim to turn the game into a piece of cybernetic weaponry, d
 
 Despite this, we consciously separate levels of transparency. The game’s source code and the detailed structure of the plot remain closed; at the same time, the general principles of how the system works, the framework’s structure and the scales used can be considered conditionally open. These are not so much “trade secrets” as an attempt to reduce the likelihood of accidental traumatisation of the most sensitive players.
 
-### Release date — Halloween 2026?
+### Release Date — Halloween 2026?
 
-Originally, the release was indeed tied to this milestone. However, an event then occurred that significantly affected our budget and schedule; the details will be set out in a separate publication.
+Originally, the release was aligned with this milestone. An event subsequently occurred that had a significant impact on both budget and schedule; its details are addressed in a separate publication.
 
-Here it is important to record the path travelled together with the company Grandma. My wife worked there for more than four years, and we are sincerely grateful both for the experience and for the people this period brought into our lives. Some of the games the team worked on will no longer see the light of day in their intended form, or will not be released at all, and these circumstances have directly affected the timing of our psychologically oriented horror project: there is a high probability that it will appear later than originally planned.
+Specifically, [this refers to a post](https://www.linkedin.com/posts/sam-starling_%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D1%96%D1%8F-big-fish-games-%D1%80%D0%BE%D0%B7%D1%80%D0%B8%D0%B2%D0%B0%D1%94-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%B8-activity-7404896443599110144-Tn_1?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM) documenting the closure of the Grandma studio. My wife worked with the studio for more than four years, and we remain sincerely grateful—for the experience and for the people this time brought into our lives. With the studio’s closure, a number of projects developed there will no longer be released in their intended form, or will not be released at all. These circumstances have directly affected the timeline of our psychologically oriented horror project, making a later release more likely than originally planned.
 
-Our current situation is objectively less stable: we have had to abandon a number of “accelerators” that were planned to be financed from personal funds. Nonetheless, it would be premature to regard this as an official postponement of the release. It is more accurate to say that we are moving into a mode in which we rely primarily on our own resources rather than on the infrastructural “spinach” of third-party solutions.
+Our current situation is objectively less stable. Several planned “accelerators,” intended to be financed from personal funds, have had to be abandoned. In the present conditions, the project can no longer be approached in the same way as before. As a result, we now regard InterDead as a non-commercial project—not by initial intent, but as a consequence of the current state of affairs.
 
-At the same time, the project is not frozen. However our everyday schedules may unfold, InterDead receives small but real changes every day — and we do not intend to cancel it.
+This shift is not solely restrictive. Where one mode of operation closes, another opens. Freed from certain expectations and infrastructural constraints, the project gains room to explore directions that would previously have been inaccessible.
+
+InterDead is not frozen. Regardless of how our everyday schedules unfold, it continues to receive small but concrete changes each day. We do not intend to cancel it.
 
 ### Is this game about the war between Russia and Ukraine?
 
