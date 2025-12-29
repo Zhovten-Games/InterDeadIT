@@ -21,7 +21,7 @@ But as a system, as a world, and as an experience you are about to interact with
 
 **Echo of an Unfading Memory** is not a reference document and not a presentation. It is a working collection that captures the internal logic of the project: its principles, structure, and ways of thinking. The full version will become available after the game’s release. For now, we deliberately open only the first chapter.
 
-It replaces the familiar about.
+It replaces the familiar "About us".
 
 ## Genesis of Gameplay
 
