@@ -7,4 +7,8 @@ summary: 'That elderly sibyl survived the séance room only by minutes, leaving 
 imdb: 'https://www.imdb.com/title/tt0230600/'
 ---
 
-That elderly sibyl—chalk whispering across the séance ledger like frost etching a window—outlived the room that rejected her, yes; but only in the arithmetic by which one postpones an eclipse by minutes. She sat at the rim of that dim island of furniture, eyes filmed with the mathematics of absence, and when the door finally unlatched and the daylight made its small, embarrassed apology, she gathered her implements as a nurse gathers the names of the newly deceased. If the house did not swallow her then, chronology did: a later winter, an unremarkable bed, and the same slow breath that once propelled automatic writing dwindling to a pencil-thin hush. I count her as lost, and the ledger—yellowed to transparency—agrees.
+The elderly medium participated in the séance as an external consultant, already operating at the limits of physical endurance. The room rejected contact almost immediately, yet inflicted no immediate harm.
+
+She left the house independently, retaining clarity and professional detachment. However, the intervention proved delayed: in the following weeks her condition deteriorated—within explanations typically attributed to age and physiological decline, and therefore raising no formal objections.
+
+Death occurred later and outside the immediate context of the phenomenon, yet the sequence permits its consideration as a consequence, albeit a statistically admissible one.

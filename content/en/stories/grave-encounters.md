@@ -7,4 +7,8 @@ summary: 'Houston Gray’s televised bravado collapsed when the asylum answered 
 imdb: 'https://www.imdb.com/title/tt1703199/'
 ---
 
-Houston Gray—television’s obliging necromancer, all cadence and cologne—was not a medium so much as a movable caption, a flourish for the cutaway shot. Yet the asylum requires no credentials to recognize edible fear. Before he could unloose his careful confession (that he saw nothing, that he merely calibrated the audience), the corridor announced him to the resident geometry, and the geometry replied with an embrace that tightened to a thesis. He was unmade with the efficiency reserved for liars and novitiates: throat closed, horizon tilted, camera aghast. Even counterfeit keys will turn a door, provided the door is hungry.
+Houston Gray was a medium of an exclusively televisual kind: his practice consisted of rehearsed gestures, calibrated tones, and the expectations of an audience. He did not engage with the phenomenon itself, only affirmed its presence within the frame.
+
+The psychiatric hospital required no such validation. The space reacted not to his statements but to his presence, as a system responding to an invalid element. Disorientation, asphyxiation, and perceptual collapse followed swiftly and without symbolism.
+
+Gray died not because he lied, but because he was functionally empty. His skills had no relevance beyond observation. Where fear is enacted rather than performed, this proved sufficient.
