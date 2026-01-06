@@ -1,10 +1,12 @@
 ---
 title: 'Echo of an Unfading Memory'
-description: 'About'
-date: 2025-12-29
+description: 'About us'
+date: 2026-01-06
 ---
 
 ## Introduction
+
+*InterDead is a psychologically oriented horror project by Zhovten Games, developed within the framework of speculative fiction (SpecFi). It is a story about a “messenger for the dead”, around whom a meta-universe is gradually unfolding.*
 
 Usually, this is where a thousand words are written about who we are.
 Who stands behind the project, where we come from, what inspires us, and why we can be trusted. We understand — this can indeed be interesting.
