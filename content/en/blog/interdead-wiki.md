@@ -10,12 +10,12 @@ categories:
   - 'meta-universe'
 ---
 
-InterDead now has its own wiki on Fandom.
+InterDead now maintains its own archive on Fandom.
 
-At this stage, it already documents the core logic of the world and the principles behind the application’s operation — the structural elements on which the project is built. This is not a reference section created “for form’s sake,” but a working space where the internal architecture of InterDead is formalized.
+At present, the archive records the fundamental principles governing the environment and the operational rules of the application — the structural foundations without which the channel cannot function reliably. This archive was not created as a nominal reference or a public showcase; it serves as a working repository in which the internal logic of InterDead is systematically formalized.
 
-All further changes and refinements will be consistently recorded and documented there. The wiki serves as a point of accumulation and alignment: any adjustments to logic, systems, or terminology are reflected within it, as this structure forms the foundation upon which the narrative of the game we are developing is built.
+All subsequent clarifications, divergences, and corrections will be documented and consolidated there. The archive functions as a point of alignment: any adjustment to terminology, mechanisms, or assumptions is reflected within it, as the continued development of the system and the events associated with it depend on the foundations already recorded.
 
-The wiki does not replace the game itself and does not reveal it in full. It establishes the framework — the level without which coherent development of the world and its internal cause-and-effect relationships would be impossible.
+The archive does not replace InterDead itself. It neither reproduces the experience in full nor claims to be exhaustive. Its purpose is to establish a framework — a level of formalization necessary to preserve the coherence of the environment and the consistency of its causal relations.
 
 https://interdead.fandom.com/wiki/InterDead_Wiki
