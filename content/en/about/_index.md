@@ -1,12 +1,12 @@
 ---
 title: 'Echo of an Unfading Memory'
 description: 'About us'
-date: 2026-01-06
+date: 2026-01-08
 ---
 
 ## Introduction
 
-*InterDead is a psychologically oriented horror project by Zhovten Games, developed within the framework of speculative fiction (SpecFi). It is a story about a “messenger for the dead”, around whom a meta-universe is gradually unfolding.*
+*InterDead is a non-commercial, psychologically oriented horror project within the framework of speculative fiction (SpecFi), centered around the development of a game and a meta-universe gradually unfolding around the concept of a “messenger for the dead”. The game is being developed by Zhovten Games. Alongside the game, the universe is also explored through planned tabletop role-playing sessions and contributions across multiple authors and formats.*
 
 Usually, this is where a thousand words are written about who we are.
 Who stands behind the project, where we come from, what inspires us, and why we can be trusted. We understand — this can indeed be interesting.
@@ -24,6 +24,29 @@ But as a system, as a world, and as an experience you are about to interact with
 **Echo of an Unfading Memory** is not a reference document and not a presentation. It is a working collection that captures the internal logic of the project: its principles, structure, and ways of thinking. The full version will become available after the game’s release. For now, we deliberately open only the first chapter.
 
 It replaces the familiar "About us".
+
+### Important
+
+InterDead materials include themes that may be emotionally difficult or undesirable:
+
+- death;
+- loss of a loved one;
+- dark humor;
+- war and military themes;
+- madness / psychological disorganization;
+- suicide;
+- artificial intelligence;
+- coercion and loss of autonomy (actions taken against a person’s will);
+- horror;
+- speculative fiction (SpecFi);
+- graphic scenes of killing;
+- religious motifs.
+
+If this kind of content is unpleasant for you or may be triggering, we recommend not continuing to engage with the project.
+
+This content is intended for adults (18+ or the age of majority in your jurisdiction).
+
+---
 
 ## Genesis of Gameplay
 

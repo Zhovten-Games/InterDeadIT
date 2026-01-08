@@ -351,19 +351,21 @@ other = """
 
 InterDead is a psychologically oriented horror project by Zhovten Games within speculative fiction (SpecFi): a story about a messenger for the dead, around which a meta-universe is growing. This site is the entry point into it.
 
+The universe also develops through multiple authors and planned tabletop role-playing sessions.
+
 Everything you see beyond this screen is written “in character” — from the perspective of the messenger’s creator, a socially awkward researcher who sincerely tries to follow “marketing rules” while selling his tool and reliably produces cringe.
 
-We describe in detail how the idea of the world and the game was born in the [first chapter of the cycle “Echo of an Unfading Memory”](/about/) — our extended “about”.
+We describe in detail how the idea of the world and the game currently in development was born in the [first chapter of the cycle “Echo of an Unfading Memory”](/about/) — our extended “About”.
 
 You can read more about the structure of the universe, terminology, and techno-lore in the [InterDead Wiki on Fandom](https://interdead.fandom.com/wiki/InterDead_Wiki).
 
-If you need to step outside the fiction, the legal documents and contact information are available below.
+If you need to step outside the fiction, the legal documents and contact information are available below. Please note that this is a non-commercial project.
 
 - [{{ .TermsTitle }}]({{ .TermsURL }})
 - [{{ .PrivacyTitle }}]({{ .PrivacyURL }})
 - [Contact via LinkedIn]({{ .LinkedInURL }})
 
-By clicking “Enter,” you confirm that you are 18+ and accept the terms.
+By clicking “Enter,” you confirm that you are 18+ (or the age of majority in your jurisdiction) and that you accept the terms.
 """
 
 ['agegate.sectionSecondary']
