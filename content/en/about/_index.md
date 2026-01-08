@@ -46,8 +46,6 @@ If this kind of content is unpleasant for you or may be triggering, we recommend
 
 This content is intended for adults (18+ or the age of majority in your jurisdiction).
 
----
-
 ## Genesis of Gameplay
 
 To provide a fuller understanding of the project’s concept, let us begin with a brief excursion through references — and, of course, with language.
