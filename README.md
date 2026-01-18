@@ -67,9 +67,9 @@
 Canonical project-wide engineering ideals and development standards are maintained in the InterDead Reference Library (public): https://github.com/Zhovten-Games/InterDeadReferenceLibrary/tree/main/standards/development
 . This repository follows that canon; local notes here must not override or fork the shared standards.
 
-## Docs index
+## Docs
 
-Start here: [docs/index.md](docs/index.md)
+Start here: [docs/README.md](docs/README.md)
 
 Key references:
 
