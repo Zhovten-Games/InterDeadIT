@@ -1,7 +1,7 @@
 ---
 title: 'Echo of an Unfading Memory'
 description: 'About us'
-date: 2026-01-08
+date: 2026-01-18
 ---
 
 ## Introduction
@@ -52,14 +52,19 @@ To provide a fuller understanding of the project’s concept, let us begin with 
 
 ### One of the key markers of social identity
 
-A year ago I was first amused and then seriously intrigued by a study:  
-[https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/](https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/)
+A year ago I was first amused and then seriously intrigued by a study:
+
+- [https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/](https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/)
 
 **Brief conclusion:** after approximately a decade of mass use, “face” emoji function as a broad, cross-age, conventionalised sign system.
 
 **Personal context.** Not everyone can or wants to operate in post-irony — especially at the level of pictograms — so I did not expect anything sensational here; and yet “the me of 2024” reacted to this work painfully acutely. At that moment, as for many others, the war between the Russian Federation (my homeland) and Ukraine (my wife’s homeland and the place of birth of our child) caught us off guard and left ragged seams that each person mends in their own way. As someone who is used to constructing things in my free time, I had an emergency hatch of imagination go off at a critical moment: I began to create a universal language — a sort of _lingua generalis_ not tied to any culture. Not because I saw language as the cause of war or as a panacea, but simply because, like a seamstress with a dubious sense of appropriateness, I was darning where it was tearing.
 
 Let me clarify: I used the term _lingua generalis_ in a broad, working sense — as a label for an attempt to construct a universal language. When the first attempts were behind me, I reached the corresponding articles on Wikipedia and discovered how differently people formulate the task itself: on Wikipedia it looks like a set of “translations” of one and the same article, but in reality the links lead to noticeably different source texts — which unexpectedly highlighted both the breadth of the field and the fact that under the same heading many people understand the task differently. The English _philosophical language_ describes an entire class of artificial languages constructed “from scratch” on first principles; the Russian, Belarusian and Chinese versions of “universal language” are devoted almost entirely to Leibniz and his dream of a calculator-language; the German _Philosophie der idealen Sprache_ in fact speaks about the methodological programme of twentieth-century analytic philosophy, where the “ideal” language is already a logical apparatus for analysing natural speech, rather than a conlang. It turned out that my own endeavour, for all its amateur nature, in its intonation and ambition ended up closer to the Leibnizian line — an attempt to gather all meanings into a single “computational” language — than to modern conlangs or purely technical logical notations. Similar aspirations passed through Leibniz’s mind in the 1666 treatise _On the Art of Combinations_. The date, you will agree, is resonant: for a horror project it is almost a marketing slogan.
+
+A working conspectus of Leibniz’s 1666 programme (glossary + brief explanation):
+
+- [https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/0976d1b600fa3b2b0fc3461ff524d38c65c71fc1/research/leibniz_1666_conspect/Leibniz%20(1666)%20-%20a%20glossary%20of%20source%20terms%20and%20a%20brief%20explanation.md](https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/0976d1b600fa3b2b0fc3461ff524d38c65c71fc1/research/leibniz_1666_conspect/Leibniz%20(1666)%20-%20a%20glossary%20of%20source%20terms%20and%20a%20brief%20explanation.md)
 
 The brief log of attempts looked prosaic: at first I tried to lean on mathematics; then it emerged that even sign language and Morse code are not universal (which is not surprising at all: both are merely encoding systems for specific languages, not neutral substrates of meaning).
 
@@ -111,9 +116,9 @@ I discussed the Big Five with GPT — the personality trait model used by HR spe
 
 Please fix this moment in memory, because an interesting result lies ahead.
 
-### [PsyFramework](https://github.com/Zhovten-Games/PsyFramework)
+### PsyFramework
 
-After a series of discussions with a neural network, I developed PsyFramework — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate [post on LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
+After a series of discussions with a neural network, I developed [PsyFramework](https://github.com/Zhovten-Games/PsyFramework) — a framework that makes it possible to examine fears through an academic lens of causes and triggers. A detailed description of the methodology can be found in a separate [post on LinkedIn](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM).
 
 The procedure is as follows:
 

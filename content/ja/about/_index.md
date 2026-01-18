@@ -1,7 +1,7 @@
 ---
 title: '消えない記憶のエコ'
 description: '私たちについて'
-date: 2026-01-08
+date: 2026-01-18
 ---
 
 ## はじめに
@@ -54,16 +54,21 @@ InterDead には、感情的に負担が大きい、あるいは好まれない�
 
 ### 社会的アイデンティティの主要なマーカーの一つとして
 
-一年前、最初は半ばおかしく、しかしやがて真剣に興味を引かれた研究がありました。  
-[https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/](https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/)
+一年前、当初は軽い違和感を覚えましたが、やがて真剣に関心を引かれた研究がありました。
 
-**要約すると：** 約10年にわたる大規模な使用を経て、「顔文字」系エモジは、世代をまたぐ広範な「慣習化された記号システム」として機能している、というものです。
+- [https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/](https://rke.abertay.ac.uk/en/publications/no-evidence-for-generational-differences-in-the-conventionalisati/)
+
+**要約すると：** 約10年にわたる大規模な使用を経て、「顔を表す」タイプの絵文字（エモジ）は、世代を超えて共有される広範な慣習化記号システムとして機能している、という結論です。
 
 **個人的な文脈。** とりわけピクトグラムレベルにおいて、ポストアイロニーの言語運用ができる／したいと思う人は決して多くありません。ですから、ここに「大発見」があるとは予想していませんでした。それでもなお、「2024年の自分」はこの研究に、痛みをともなうほど鋭く反応しました。その頃、私たちは――多くの人と同様に――ロシア連邦（私の母国）とウクライナ（妻の母国であり、私たちの子どもの出生地）との戦争に不意を突かれ、それぞれが各自のやり方で繕わざるをえない「裂け目」を受け取っていました。自由時間には何かを「構築」することに慣れている私は、臨界点で非常用の想像力ハッチが開き、「どの文化にも属さない」ある種の _lingua generalis_――普遍言語――を作り始めました。  
 それが戦争の原因だとも、万能薬だとも考えたわけではありません。ただ、場違いなセンスを持つ仕立て屋のように、「破けているところ」をひたすら繕っていたのです。
 
 ここで一点補足しておくと、私は _lingua generalis_ という語を、厳密な歴史用語というより「普遍言語を作ろうとする試み」を指す作業用ラベルとして用いていました。最初の試行錯誤を一通り終えたあと、関連するWikipediaの項目にたどり着き、「同じ見出し」のもとで、実はどれだけ異なるタスク設定がなされているかを知りました。表面上は「同一記事の各言語版」のように見えても、実際にはリンク先の原文がかなり違っているのです。これは、この領域の広さと、「普遍言語」という一つの言葉の下で、人びとがどれほど違うものを思い描いているかを、思いがけない形で浮かび上がらせました。  
 英語版 _philosophical language_ は、第一原理から「ゼロベースで構築される」人工言語全般のクラスを記述しています。他方、ロシア語・ベラルーシ語・中国語の「普遍言語」項目は、ほぼ全面的にライプニッツと彼の「計算機としての言語」への夢に捧げられています。ドイツ語の _Philosophie der idealen Sprache_ は、実際には20世紀分析哲学の方法論的プログラム――「理想言語」がもはやコンランではなく、自然言語を分析するための論理装置として構想される――を語っています。
+
+ライプニッツの1666年計画に関する作業用コンスペクト（用語集＋簡潔な説明）
+
+- [https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/78745cd8a29775a8d94598186b5e8a733c0e97e5/research/leibniz_1666_conspect/%D0%9B%D0%B5%D0%B9%D0%B1%D0%BD%D0%B8%D1%86%20(1666)%20-%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C%20%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D1%8B%D1%85%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%BE%D0%B2%20%D0%B8%20%D0%BA%D1%80%D0%B0%D1%82%D0%BA%D0%BE%D0%B5%20%D0%BF%D0%BE%D1%8F%D1%81%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5.md](https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/78745cd8a29775a8d94598186b5e8a733c0e97e5/research/leibniz_1666_conspect/%D0%9B%D0%B5%D0%B9%D0%B1%D0%BD%D0%B8%D1%86%20(1666)%20-%20%D1%81%D0%BB%D0%BE%D0%B2%D0%B0%D1%80%D1%8C%20%D0%B8%D1%81%D1%85%D0%BE%D0%B4%D0%BD%D1%8B%D1%85%20%D1%82%D0%B5%D1%80%D0%BC%D0%B8%D0%BD%D0%BE%D0%B2%20%D0%B8%20%D0%BA%D1%80%D0%B0%D1%82%D0%BA%D0%BE%D0%B5%20%D0%BF%D0%BE%D1%8F%D1%81%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5.md)
 
 こうして、自分の試みがどれほど素人じみたものであったにせよ、その「調子」と「欲張り方」においては、むしろライプニッツ的な系譜――すべての意味を一つの「計算可能な言語」に収束させようとする欲望――に近かったことが分かりました。類似の熱は、1666年の著作『組合せ術について』の中で、まさにライプニッツの頭をよぎっていたものでもあります。この年号自体、ホラー作品にとってはほとんどキャッチコピーのように響くのではないでしょうか。
 
@@ -117,9 +122,9 @@ InterDead には、感情的に負担が大きい、あるいは好まれない�
 
 ここでのやり取りを、どうか一度記憶に留めておいてください。この先に、興味深い帰結が現れます。
 
-### [PsyFramework（プシ・フレームワーク）](https://github.com/Zhovten-Games/PsyFramework)
+### PsyFramework（プシ・フレームワーク）
 
-ニューラルネットとの一連の議論ののち、私は恐怖を「原因」と「トリガー」の観点から学術的に検討するためのフレームワークを設計しました。手法の詳細な説明は、[LinkedIn に掲載した別の投稿で参照できます。](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM)
+ニューラルネットワークとの一連の議論を経て、私は [PsyFramework](https://github.com/Zhovten-Games/PsyFramework) を開発しました。これは、恐怖を「原因」と「トリガー」という学術的観点から分析することを可能にするフレームワークです。手法の詳細については、[LinkedIn 上の別投稿](https://www.linkedin.com/posts/zhovten-games_psyframework-horrorgames-gamedev-activity-7390063601119551489-HlSj?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM)に記載しています。
 
 プロシージャは、次のような順序を取ります。
 
