@@ -29,12 +29,9 @@ const defaultStrings = {
   error: 'Something went wrong. Please try again.',
   required: '',
   mapAlt: 'The Tower map',
-  completed: '',
-  profilePrompt: '',
-  profileLink: '',
 };
 
-export async function initEfbdPoll({
+export function initEfbdPoll({
   root,
   mount,
   options = [],
@@ -134,46 +131,6 @@ export async function initEfbdPoll({
   }
   form.appendChild(prompt);
 
-  const completion = documentRef.createElement('div');
-  completion.className = 'gm-poll__completion';
-  completion.hidden = true;
-
-  const completionLead = documentRef.createElement('p');
-  completionLead.className = 'gm-poll__completion-lead';
-  completionLead.textContent = mergedStrings.completed;
-  if (stringKeys.completed) {
-    completionLead.dataset.i18n = stringKeys.completed;
-  }
-
-  const completionPrompt = documentRef.createElement('p');
-  completionPrompt.className = 'gm-poll__completion-prompt';
-
-  const completionPromptText = documentRef.createElement('span');
-  completionPromptText.className = 'gm-poll__completion-text';
-  completionPromptText.textContent = mergedStrings.profilePrompt;
-  if (stringKeys.profilePrompt) {
-    completionPromptText.dataset.i18n = stringKeys.profilePrompt;
-  }
-
-  const profileLink = documentRef.createElement('a');
-  profileLink.className = 'gm-poll__completion-link';
-  profileLink.textContent = mergedStrings.profileLink;
-  if (stringKeys.profileLink) {
-    profileLink.dataset.i18n = stringKeys.profileLink;
-  }
-  const resolvedProfileUrl = sanitizeMapUrl(
-    strings.profileUrl || documentRef.body?.dataset?.profileUrl || '',
-  );
-  if (resolvedProfileUrl) {
-    profileLink.href = resolvedProfileUrl;
-  }
-
-  completionPrompt.appendChild(completionPromptText);
-  completionPrompt.appendChild(profileLink);
-  completion.appendChild(completionLead);
-  completion.appendChild(completionPrompt);
-  form.appendChild(completion);
-
   const optionsList = documentRef.createElement('div');
   optionsList.className = 'gm-poll__options';
 
@@ -244,37 +201,6 @@ export async function initEfbdPoll({
     status.textContent = resolvedMessage;
   };
 
-  const setCompletionState = (isCompleted) => {
-    completion.hidden = !isCompleted;
-    optionsList.hidden = isCompleted;
-    submit.hidden = isCompleted;
-    if (isCompleted) {
-      optionsList.querySelectorAll('input').forEach((input) => {
-        input.disabled = true;
-      });
-      submit.disabled = true;
-    }
-  };
-
-  const resolveCompletion = async () => {
-    if (typeof scalePort?.fetchSummary !== 'function') {
-      return false;
-    }
-
-    const response = await scalePort.fetchSummary();
-    if (response?.status !== 'ok') {
-      return false;
-    }
-
-    const axes = response?.payload?.axes;
-    if (!Array.isArray(axes)) {
-      return false;
-    }
-
-    const optionAxes = new Set(normalizedOptions.map((option) => option.axis));
-    return axes.some((axis) => optionAxes.has(axis?.code) && Number(axis?.value) > 0);
-  };
-
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const selected = form.querySelector('input[name="efbd-poll-option"]:checked');
@@ -315,7 +241,6 @@ export async function initEfbdPoll({
         mergedStrings.success || defaultStrings.success || 'Your response has been recorded.';
       setStatus(successMessage, 'success');
       window.InterdeadNotifications?.showSuccess?.(successMessage);
-      setCompletionState(true);
     } else {
       const errorMessage = response?.message || response?.error || mergedStrings.error;
       setStatus(errorMessage, 'error');
@@ -327,19 +252,6 @@ export async function initEfbdPoll({
 
   mount.innerHTML = '';
   mount.appendChild(form);
-
-  resolveCompletion()
-    .then((hasCompleted) => {
-      if (hasCompleted) {
-        setCompletionState(true);
-      }
-    })
-    .catch((error) => {
-      logger?.warn?.('[InterDead][MiniGame][Poll] Failed to resolve completion state', {
-        ...logContext,
-        error,
-      });
-    });
 
   return true;
 }

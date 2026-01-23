@@ -942,8 +942,6 @@ img, iframe {
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  cursor: default;
-  pointer-events: none;
 }
 
 .gm-categories {
@@ -1577,8 +1575,6 @@ img, iframe {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-muted);
-  cursor: default;
-  pointer-events: none;
 }
 
 .gm-article__toc-toggle {
@@ -2117,8 +2113,6 @@ img, iframe {
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  cursor: default;
-  pointer-events: none;
 }
 
 .gm-modal__hint {

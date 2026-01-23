@@ -12,14 +12,11 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
 "minigames.poll.option.exposure") -}} {{- $strings := dict "title" (i18n "minigames.poll.title")
 "prompt" (i18n "minigames.poll.prompt") "submit" (i18n "minigames.poll.submit") "success" (i18n
 "minigames.poll.success") "error" (i18n "minigames.poll.error") "required" (i18n
-"minigames.poll.required") "mapAlt" (i18n "minigames.poll.mapAlt") "completed" (i18n
-"minigames.poll.completed") "profilePrompt" (i18n "minigames.poll.profilePrompt") "profileLink"
-(i18n "minigames.poll.profileLink") "profileUrl" ("/profile/" | relLangURL) "mapUrl"
-$mapAsset.RelPermalink -}} {{- $stringKeys := dict "title" "minigames.poll.title" "prompt"
-"minigames.poll.prompt" "submit" "minigames.poll.submit" "success" "minigames.poll.success" "error"
-"minigames.poll.error" "required" "minigames.poll.required" "mapAlt" "minigames.poll.mapAlt"
-"completed" "minigames.poll.completed" "profilePrompt" "minigames.poll.profilePrompt" "profileLink"
-"minigames.poll.profileLink" -}} {{- if not ($.Page.Scratch.Get "miniGameRuntimeInjected") -}}
+"minigames.poll.required") "mapAlt" (i18n "minigames.poll.mapAlt") "mapUrl" $mapAsset.RelPermalink
+-}} {{- $stringKeys := dict "title" "minigames.poll.title" "prompt" "minigames.poll.prompt" "submit"
+"minigames.poll.submit" "success" "minigames.poll.success" "error" "minigames.poll.error" "required"
+"minigames.poll.required" "mapAlt" "minigames.poll.mapAlt" -}} {{- if not ($.Page.Scratch.Get
+"miniGameRuntimeInjected") -}}
 <script
   type="module"
   src="{{ $runtimeAsset.RelPermalink }}"

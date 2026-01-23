@@ -5,7 +5,6 @@ import EfbdScaleTriggerPort from '../../infrastructure/minigame/EfbdScaleTrigger
 const loader = new MiniGameAssetLoader({ documentRef: document });
 const scalePort = new EfbdScaleTriggerPort({
   emitScaleTrigger: window?.InterdeadPorts?.emitScaleTrigger,
-  fetchSummary: window?.InterdeadPorts?.fetchEfbdSummary,
 });
 
 const resolvePorts = () => {
@@ -39,7 +38,6 @@ window.addEventListener('interdead:ports-ready', () => {
   const ports = resolvePorts();
   launcher.authVisibilityPort = ports.authVisibilityPort;
   ports.scalePort?.setEmitter?.(window?.InterdeadPorts?.emitScaleTrigger);
-  ports.scalePort?.setSummaryFetcher?.(window?.InterdeadPorts?.fetchEfbdSummary);
   launcher.setScalePort(ports.scalePort);
   launcher.refreshAuthBindings();
 });

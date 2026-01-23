@@ -174,7 +174,6 @@ const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFla
 window.InterdeadPorts = window.InterdeadPorts || {};
 window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
   efbdBridge.emitTrigger({ axis, value, context });
-window.InterdeadPorts.fetchEfbdSummary = () => efbdBridge.fetchSummary();
 window.InterdeadNotifications = notificationService;
 
 const countdownController = new CountdownController({

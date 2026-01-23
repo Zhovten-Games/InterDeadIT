@@ -202,15 +202,6 @@ other = "We could not record your vote. Please retry after reconnecting."
 ['minigames.poll.required']
 other = "Select one option to continue."
 
-['minigames.poll.completed']
-other = "You completed this test."
-
-['minigames.poll.profilePrompt']
-other = "Check your rating in your "
-
-['minigames.poll.profileLink']
-other = "personal profile."
-
 ['minigames.poll.continue']
 other = "Continue"
 

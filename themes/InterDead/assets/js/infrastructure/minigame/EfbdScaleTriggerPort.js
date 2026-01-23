@@ -1,10 +1,9 @@
 import IEfbdScaleWritePort from '../../ports/IEfbdScaleWritePort.js';
 
 export default class EfbdScaleTriggerPort extends IEfbdScaleWritePort {
-  constructor({ emitScaleTrigger, fetchSummary, logger = console } = {}) {
+  constructor({ emitScaleTrigger, logger = console } = {}) {
     super();
     this.emitScaleTrigger = emitScaleTrigger || (window?.InterdeadPorts?.emitScaleTrigger ?? null);
-    this.summaryFetcher = fetchSummary || (window?.InterdeadPorts?.fetchEfbdSummary ?? null);
     this.logger = logger || console;
   }
 
@@ -12,23 +11,6 @@ export default class EfbdScaleTriggerPort extends IEfbdScaleWritePort {
     if (typeof emitScaleTrigger === 'function') {
       this.emitScaleTrigger = emitScaleTrigger;
     }
-  }
-
-  setSummaryFetcher(fetchSummary) {
-    if (typeof fetchSummary === 'function') {
-      this.summaryFetcher = fetchSummary;
-    }
-  }
-
-  async fetchSummary() {
-    if (typeof this.summaryFetcher !== 'function') {
-      this.logger?.warn?.('[InterDead][MiniGame][ScaleTriggerPort] fetchSummary is not available', {
-        hasFetcher: Boolean(this.summaryFetcher),
-      });
-      return { status: 'unsupported', message: 'Scale summary is unavailable.' };
-    }
-
-    return this.summaryFetcher();
   }
 
   async recordAnswer({ axis, value = 1, context = {} } = {}) {

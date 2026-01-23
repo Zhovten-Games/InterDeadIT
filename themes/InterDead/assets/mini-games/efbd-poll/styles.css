@@ -25,33 +25,6 @@
   gap: 10px;
 }
 
-.gm-poll__completion {
-  display: grid;
-  gap: 8px;
-  padding: 12px 14px;
-  border-radius: var(--shape-radius-tight);
-  border: 1px solid rgba(var(--color-accent-rgb), 0.25);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.gm-poll__completion-lead,
-.gm-poll__completion-prompt {
-  margin: 0;
-  line-height: 1.5;
-}
-
-.gm-poll__completion-link {
-  color: rgb(var(--color-accent-rgb));
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.gm-poll__completion-link:focus-visible,
-.gm-poll__completion-link:hover {
-  color: rgba(var(--color-accent-rgb), 0.85);
-}
-
 .gm-poll__option {
   display: grid;
   grid-template-columns: auto 1fr;

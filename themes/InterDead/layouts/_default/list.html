@@ -40,13 +40,9 @@
             />
             {{- end -}}
           </figure>
-          {{ if $page.Params.categories }}
-            {{ partial "components/category-list.html" (dict
-              "categories" $page.Params.categories
-              "class" "gm-card__categories gm-card__categories--media"
-              "label" (i18n "blog.categories")
-            ) }}
-          {{ end }}
+          {{ if $page.Params.categories }} {{ partial "components/category-list.html" (dict
+          "categories" $page.Params.categories "class" "gm-card__categories
+          gm-card__categories--media" "label" (i18n "blog.categories")) }} {{ end }}
         </div>
         {{ end }}
         <div class="gm-card__content">
