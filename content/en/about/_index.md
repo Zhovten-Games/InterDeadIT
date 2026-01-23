@@ -6,7 +6,7 @@ date: 2026-01-18
 
 ## Introduction
 
-*InterDead is a non-commercial, psychologically oriented horror project within the framework of speculative fiction (SpecFi), centered around the development of a game and a meta-universe gradually unfolding around the concept of a “messenger for the dead”. The game is being developed by Zhovten Games. Alongside the game, the universe is also explored through planned tabletop role-playing sessions and contributions across multiple authors and formats.*
+_InterDead is a non-commercial, psychologically oriented horror project within the framework of speculative fiction (SpecFi), centered around the development of a game and a meta-universe gradually unfolding around the concept of a “messenger for the dead”. The game is being developed by Zhovten Games. Alongside the game, the universe is also explored through planned tabletop role-playing sessions and contributions across multiple authors and formats._
 
 Usually, this is where a thousand words are written about who we are.
 Who stands behind the project, where we come from, what inspires us, and why we can be trusted. We understand — this can indeed be interesting.
@@ -64,7 +64,7 @@ Let me clarify: I used the term _lingua generalis_ in a broad, working sense —
 
 A working conspectus of Leibniz’s 1666 programme (glossary + brief explanation):
 
-- [https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/0976d1b600fa3b2b0fc3461ff524d38c65c71fc1/research/leibniz_1666_conspect/Leibniz%20(1666)%20-%20a%20glossary%20of%20source%20terms%20and%20a%20brief%20explanation.md](https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/0976d1b600fa3b2b0fc3461ff524d38c65c71fc1/research/leibniz_1666_conspect/Leibniz%20(1666)%20-%20a%20glossary%20of%20source%20terms%20and%20a%20brief%20explanation.md)
+- [https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/0976d1b600fa3b2b0fc3461ff524d38c65c71fc1/research/leibniz_1666_conspect/Leibniz%20(1666)%20-%20a%20glossary%20of%20source%20terms%20and%20a%20brief%20explanation.md](<https://github.com/Zhovten-Games/InterDeadReferenceLibrary/blob/0976d1b600fa3b2b0fc3461ff524d38c65c71fc1/research/leibniz_1666_conspect/Leibniz%20(1666)%20-%20a%20glossary%20of%20source%20terms%20and%20a%20brief%20explanation.md>)
 
 The brief log of attempts looked prosaic: at first I tried to lean on mathematics; then it emerged that even sign language and Morse code are not universal (which is not surprising at all: both are merely encoding systems for specific languages, not neutral substrates of meaning).
 

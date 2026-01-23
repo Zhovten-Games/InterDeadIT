@@ -2,3 +2,5 @@
 title: 'InterDead — 死者のためのメッセンジャー'
 description: 'InterDead――かつて“死者のためのメッセンジャー”と囁かれた暗号化された橋。クローズドベータに参加して、彼方からの信号を追いかけてください。'
 ---
+
+{{< ticker category="/categories/mini-games/" noteKey="ticker.note" />}}

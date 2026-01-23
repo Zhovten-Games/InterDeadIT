@@ -64,6 +64,7 @@
 - Prefer `data-*` hooks and BEM class naming for UI controllers.
 
 ## Engineering standards
+
 Canonical project-wide engineering ideals and development standards are maintained in the InterDead Reference Library (public): https://github.com/Zhovten-Games/InterDeadReferenceLibrary/tree/main/standards/development
 . This repository follows that canon; local notes here must not override or fork the shared standards.
 

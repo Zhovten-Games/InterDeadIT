@@ -48,6 +48,7 @@
                 >
                   <h3>
                     <a href="{{ $story.RelPermalink }}">{{ $story.Title | htmlEscape }}</a>
+                    {{ partial "components/medium-typology-trigger.html" $page }}
                   </h3>
                   <div class="gm-slider__text">{{ $story.Content | safeHTML }}</div>
                 </article>

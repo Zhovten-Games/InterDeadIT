@@ -1,0 +1,10 @@
+{{- $mediums := .Params.mediums -}} {{- if $mediums -}}
+<div class="gm-categories gm-storyMediums">
+  <span class="gm-categories__label">{{ i18n "story.mediums.label" }}</span>
+  <div class="gm-categories__list">
+    {{- range $mediums -}}
+    <span class="gm-categories__item">{{ . }}</span>
+    {{- end -}}
+  </div>
+</div>
+{{- end -}}

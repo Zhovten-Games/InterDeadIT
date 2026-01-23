@@ -41,7 +41,7 @@ other = "レビュー"
 other = "FAQ"
 
 ['menu.blog']
-other = "ブログ"
+other = "ミニゲーム"
 
 ['menu.modal.title']
 other = "ナビゲーション"
@@ -81,6 +81,9 @@ other = "ここでは今も死者が応答します"
 
 ['hero.lead']
 other = "私たちはあの世からのささやきを届けるメッセンジャーを試作しています。降霊術ではなく、安全なチャットです。クローズドベータにいち早く参加するチャンスをお見逃しなく。"
+
+['hero.afterText']
+other = "ときには、問いを別の形で立てるだけで十分なことがある。"
 
 ['gm.ctastart']
 other = "登録する"
@@ -199,6 +202,15 @@ other = "投票を記録できませんでした。再接続してからお試�
 ['minigames.poll.required']
 other = "続行するには一つ選択してください。"
 
+['minigames.poll.completed']
+other = "このテストは完了しました。"
+
+['minigames.poll.profilePrompt']
+other = "あなたの評価は"
+
+['minigames.poll.profileLink']
+other = "個人プロフィールで確認してください。"
+
 ['minigames.poll.continue']
 other = "続ける"
 
@@ -219,6 +231,18 @@ other = "共に倒れた霊媒たちを数えましょう。"
 
 ['stories.stampAnnouncement']
 other = "共に倒れた霊媒たちを数えましょう。累計：+{{ .Count }}。"
+
+['story.mediums.label']
+other = "タイプ"
+
+['mediums.typology.title']
+other = "メディウムの類型"
+
+['mediums.typology.openLabel']
+other = "メディウムの類型を開く"
+
+['mediums.typology.closeLabel']
+other = "類型ダイアログを閉じる"
 
 ['inevitable.title']
 other = "物語 起こるべくして起きた結果"
@@ -259,67 +283,8 @@ other = "ありません。ずっと無料です。"
 other = "私たちは寄付で活動しています――重さが和らいだなら支援してください。詳細は後日。"
 
 ['ticker.note']
-other = "たぶん私たちのメールを読んでくれたはずです。"
+other = "死者との会話への迅速な適応。"
 
-['ticker.item1']
-other = "Weyland‑Yutani"
-
-['ticker.item2']
-other = "Umbrella Corp."
-
-['ticker.item3']
-other = "Union Aerospace (UAC)"
-
-['ticker.item4']
-other = "Black Mesa"
-
-['ticker.item5']
-other = "Aperture Science"
-
-['ticker.item6']
-other = "Tyrell Corp."
-
-['ticker.item7']
-other = "Cyberdyne Systems"
-
-['ticker.item8']
-other = "Abstergo"
-
-['ticker.item9']
-other = "Shinra Electric"
-
-['ticker.item10']
-other = "Oscorp"
-
-['ticker.item11']
-other = "Weyland‑Yutani"
-
-['ticker.item12']
-other = "Umbrella Corp."
-
-['ticker.item13']
-other = "Union Aerospace (UAC)"
-
-['ticker.item14']
-other = "Black Mesa"
-
-['ticker.item15']
-other = "Aperture Science"
-
-['ticker.item16']
-other = "Tyrell Corp."
-
-['ticker.item17']
-other = "Cyberdyne Systems"
-
-['ticker.item18']
-other = "Abstergo"
-
-['ticker.item19']
-other = "Shinra Electric"
-
-['ticker.item20']
-other = "Oscorp"
 
 ['footer.adult']
 other = "InterDead© — 死者のためのメッセンジャー。"

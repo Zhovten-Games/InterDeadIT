@@ -1,56 +1,71 @@
-{{ define "main" }}
-  {{ $isStories := and (eq .Kind "section") (eq .Section "stories") }}
-  <section class="gm-section gm-collection{{ if $isStories }} gm-collection--stories{{ end }}">
-    <div class="gm-container">
-      <header class="gm-collection__header">
-        <h1 class="gm-section__title">{{ .Title }}</h1>
-        {{ with .Description }}
-        <p class="gm-collection__description">{{ . }}</p>
+{{ define "main" }} {{ $isStories := and (eq .Kind "section") (eq .Section "stories") }}
+<section class="gm-section gm-collection{{ if $isStories }} gm-collection--stories{{ end }}">
+  <div class="gm-container">
+    <header class="gm-collection__header">
+      <h1 class="gm-section__title">{{ .Title }}</h1>
+      {{ with .Description }}
+      <p class="gm-collection__description">{{ . }}</p>
+      {{ end }}
+    </header>
+    {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
+    <div class="gm-collection__grid">
+      {{ range $paginator.Pages }} {{ $page := . }} {{ $imageParam := $page.Params.image }} {{
+      $imageIsRemote := and $imageParam (hasPrefix $imageParam "http") }} {{ $imageResource := "" }}
+      {{ if and $imageParam (not $imageIsRemote) }} {{ with resources.GetMatch (printf
+      "images/blog/**%s" (path.Base $imageParam)) }} {{ $copied := resources.Copy (printf
+      "assets/images/blog/%s" (path.Base .Name)) . }} {{ $imageResource = $copied | fingerprint }}
+      {{ end }} {{ end }} {{ $hasMedia := or $imageIsRemote $imageResource (and $imageParam (not
+      $imageIsRemote)) }}
+      <article class="gm-card gm-collection__item{{ if $hasMedia }} gm-card--withMedia{{ end }}">
+        {{ if $hasMedia }}
+        <div class="gm-card__mediaBlock">
+          <figure class="gm-card__media">
+            {{- if $imageIsRemote -}}
+            <img
+              src="{{ $imageParam }}"
+              alt="{{ $page.Params.imageAlt | default $page.Title }}"
+              loading="lazy"
+            />
+            {{- else if $imageResource -}}
+            <img
+              src="{{ $imageResource.RelPermalink }}"
+              alt="{{ $page.Params.imageAlt | default $page.Title }}"
+              loading="lazy"
+            />
+            {{- else if $imageParam -}}
+            <img
+              src="{{ $imageParam | absURL }}"
+              alt="{{ $page.Params.imageAlt | default $page.Title }}"
+              loading="lazy"
+            />
+            {{- end -}}
+          </figure>
+          {{ if $page.Params.categories }} {{ partial "components/category-list.html" (dict
+          "categories" $page.Params.categories "class" "gm-card__categories
+          gm-card__categories--media" "label" (i18n "blog.categories")) }} {{ end }}
+        </div>
         {{ end }}
-      </header>
-        {{ $paginator := .Paginate (.Pages.ByDate.Reverse) }}
-        <div class="gm-collection__grid">
-          {{ range $paginator.Pages }}
-          {{ $page := . }}
-          {{ $imageParam := $page.Params.image }}
-          {{ $imageIsRemote := and $imageParam (hasPrefix $imageParam "http") }}
-          {{ $imageResource := "" }}
-          {{ if and $imageParam (not $imageIsRemote) }}
-            {{ with resources.GetMatch (printf "images/blog/**%s" (path.Base $imageParam)) }}
-              {{ $copied := resources.Copy (printf "assets/images/blog/%s" (path.Base .Name)) . }}
-              {{ $imageResource = $copied | fingerprint }}
+        <div class="gm-card__content">
+          {{ if and (not $hasMedia) $page.Params.categories }} {{ partial
+          "components/category-list.html" (dict "categories" $page.Params.categories "class"
+          "gm-card__categories" "label" (i18n "blog.categories")) }} {{ end }}
+          <h2 class="gm-collection__itemTitle">
+            <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+          </h2>
+          <div class="gm-card__meta">
+            {{ with $page.Date }}
+            <p class="gm-text--fine gm-card__date">{{ .Format "02 Jan 2006" }}</p>
             {{ end }}
-          {{ end }}
-          {{ $hasMedia := or $imageIsRemote $imageResource (and $imageParam (not $imageIsRemote)) }}
-          <article class="gm-card gm-collection__item{{ if $hasMedia }} gm-card--withMedia{{ end }}">
-            {{ if $hasMedia }}
-            <figure class="gm-card__media">
-              {{- if $imageIsRemote -}}
-              <img src="{{ $imageParam }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
-              {{- else if $imageResource -}}
-              <img src="{{ $imageResource.RelPermalink }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
-              {{- else if $imageParam -}}
-              <img src="{{ $imageParam | absURL }}" alt="{{ $page.Params.imageAlt | default $page.Title }}" loading="lazy" />
-              {{- end -}}
-            </figure>
-            {{ end }}
-            <div class="gm-card__content">
-              {{ partial "components/category-list.html" (dict "categories" $page.Params.categories "class" "gm-card__categories" "label" (i18n "blog.categories")) }}
-              <h2 class="gm-collection__itemTitle"><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
-            <div class="gm-card__meta">
-              {{ with $page.Date }}
-              <p class="gm-text--fine gm-card__date">{{ .Format "02 Jan 2006" }}</p>
-              {{ end }}
-            </div>
-            {{ with partial "components/summary.html" (dict "page" $page "length" 220) }}
-            <p class="gm-card__summary">{{ . }}</p>
-            {{ end }}
-            <a class="gm-link" href="{{ $page.RelPermalink }}">{{ i18n "blog.readMore" }}</a>
           </div>
-        </article>
-        {{ end }}
-      </div>
-      {{ template "_internal/pagination.html" $paginator }}
+          {{ with partial "components/summary.html" (dict "page" $page "length" 220) }}
+          <p class="gm-card__summary">{{ . }}</p>
+          {{ end }}
+          <a class="gm-link" href="{{ $page.RelPermalink }}">{{ i18n "blog.readMore" }}</a>
+        </div>
+      </article>
+      {{ end }}
     </div>
-  </section>
+    {{ template "_internal/pagination.html" $paginator }}
+  </div>
+</section>
 {{ end }}

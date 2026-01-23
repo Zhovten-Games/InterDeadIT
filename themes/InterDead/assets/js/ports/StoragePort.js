@@ -6,4 +6,8 @@ export default class StoragePort {
   set(_key, _value) {
     throw new Error('StoragePort#set must be implemented by subclasses.');
   }
+
+  remove(_key) {
+    throw new Error('StoragePort#remove must be implemented by subclasses.');
+  }
 }

@@ -1,0 +1,46 @@
+{{- $noteKey := .Get "noteKey" -}} {{- $note := .Get "note" -}} {{- $noteText := "" -}} {{- if
+$noteKey -}} {{- $noteText = i18n $noteKey -}} {{- else if $note -}} {{- $noteText = $note -}} {{-
+end -}} {{- $limitParam := .Get "limit" -}} {{- $limit := 0 -}} {{- if $limitParam -}} {{- $limit =
+int $limitParam -}} {{- end -}} {{- $categoryParam := .Get "category" -}} {{- $items := slice -}}
+{{- if $categoryParam -}} {{- $categorySlug := strings.TrimSuffix "/" $categoryParam -}} {{- if
+strings.Contains $categorySlug "/" -}} {{- $categorySlug = path.Base $categorySlug -}} {{- end -}}
+{{- $items = where (where .Page.Site.RegularPages "Section" "blog") "Params.categories" "intersect"
+(slice $categorySlug) -}} {{- $items = sort $items "Date" "desc" -}} {{- else -}} {{- .Scratch.Set
+"tickerItems" (slice) -}} {{- .Inner -}} {{- $items = .Scratch.Get "tickerItems" | default (slice)
+-}} {{- end -}} {{- $uniqueItems := slice -}} {{- $seen := newScratch -}} {{- range $items -}} {{-
+$key := "" -}} {{- if .Params -}} {{- $key = .RelPermalink -}} {{- else -}} {{- $key = .url |
+default .title -}} {{- end -}} {{- if and $key (not ($seen.Get $key)) -}} {{- $seen.Set $key true
+-}} {{- $uniqueItems = $uniqueItems | append . -}} {{- end -}} {{- end -}} {{- if gt $limit 0 -}}
+{{- $uniqueItems = first $limit $uniqueItems -}} {{- end -}}
+
+<section class="gm-section gm-sponsors gm-section--full" id="mini-games">
+  <div class="gm-container gm-container--fluid">
+    <div class="gm-sponsors__inner">
+      <div class="gm-ticker" data-ticker>
+        {{- if $noteText -}}
+        <div class="gm-ticker__note">{{ $noteText }}</div>
+        {{- end -}}
+        <div class="gm-ticker__viewport" data-ticker-viewport>
+          <div class="gm-ticker__track" data-ticker-track>
+            {{- range $uniqueItems -}} {{- if .Params -}} {{- $page := . -}} {{- $imageParam :=
+            $page.Params.image -}} {{- $imageIsRemote := and $imageParam (hasPrefix $imageParam
+            "http") -}} {{- $imageResource := "" -}} {{- $imageUrl := "" -}} {{- if and $imageParam
+            (not $imageIsRemote) -}} {{- with resources.GetMatch (printf "images/blog/**%s"
+            (path.Base $imageParam)) -}} {{- $imageResource = . | fingerprint -}} {{- end -}} {{-
+            end -}} {{- if $imageIsRemote -}} {{- $imageUrl = $imageParam -}} {{- else if
+            $imageResource -}} {{- $imageUrl = $imageResource.RelPermalink -}} {{- else if
+            $imageParam -}} {{- $imageUrl = $imageParam | absURL -}} {{- end -}} {{- partial
+            "components/ticker-chip.html" (dict "Title" $page.Title "Url" $page.RelPermalink
+            "ImageUrl" $imageUrl "ImageAlt" ($page.Params.imageAlt | default $page.Title) ) -}} {{-
+            else -}} {{- $item := . -}} {{- $imageParam := $item.image -}} {{- $imageUrl := "" -}}
+            {{- if $imageParam -}} {{- if hasPrefix $imageParam "http" -}} {{- $imageUrl =
+            $imageParam -}} {{- else -}} {{- $imageUrl = $imageParam | absURL -}} {{- end -}} {{-
+            end -}} {{- partial "components/ticker-chip.html" (dict "Title" $item.title "Url"
+            ($item.url | default "#") "ImageUrl" $imageUrl "ImageAlt" ($item.imageAlt | default
+            $item.title) ) -}} {{- end -}} {{- end -}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

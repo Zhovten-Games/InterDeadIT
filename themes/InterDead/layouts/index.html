@@ -1,4 +1,5 @@
 {{ define "main" }}
+  {{- $discordIcon := resources.Get "images/icons/discord.svg" -}}
   <section class="gm-hero">
     <div class="gm-container">
       <div class="gm-hero__layout">
@@ -17,7 +18,7 @@
         >
             <button class="auth-button auth-button--discord gm-hero__ctaItem" type="button" data-auth-button="hero" data-cta="start">
               <span class="auth-button__icon" aria-hidden="true">
-                <span class="auth-button__glyph">◎</span>
+                {{- if $discordIcon }}{{ $discordIcon.Content | safeHTML }}{{- end }}
               </span>
               <span class="auth-button__label">{{ i18n "auth.discord.cta" }}</span>
               <span class="auth-button__status" data-auth-status>{{ i18n "auth.discord.status.idle" }}</span>
@@ -80,6 +81,11 @@
       </div>
     </div>
   </section>
+  <section class="gm-section gm-heroNote">
+    <div class="gm-container">
+      <p class="gm-heroNote__text">{{ i18n "hero.afterText" }}</p>
+    </div>
+  </section>
   {{ partial "widgets/stories.html" . }}
   {{ partial "widgets/reviews.html" . }}
   {{ partial "widgets/faq.html" . }}
@@ -95,21 +101,5 @@
       </div>
     </div>
   </section>
-  <section class="gm-section gm-sponsors gm-section--full" id="sponsors">
-    <div class="gm-container gm-container--fluid">
-      <div class="gm-sponsors__inner">
-        <div class="gm-ticker">
-          <div class="gm-ticker__note">{{ i18n "ticker.note" }}</div>
-          <div class="gm-ticker__viewport">
-            <div class="gm-ticker__track">
-              {{- range $i := seq 1 20 -}}
-              {{- $key := printf "ticker.item%d" $i -}}
-              <span class="gm-logoChip"><span class="gm-logoChip__mark"></span>{{ i18n $key }}</span>
-              {{- end -}}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  {{ .Content }}
 {{ end }}

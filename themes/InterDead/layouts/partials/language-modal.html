@@ -1,6 +1,7 @@
 <div
   class="gm-modal gm-langModal"
   data-modal="language"
+  data-modal-scroll="lock"
   id="gm-langModal"
   role="dialog"
   aria-modal="true"
@@ -19,36 +20,38 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <p class="gm-modal__hint">{{ i18n "lang.modal.hint" }}</p>
-    <ul class="gm-modal__options" role="list">
-      {{- $current := .Site.Language.Lang -}}
-      {{- $page := . -}}
-      {{- range .Site.Languages }}
-      {{- $lang := . -}}
-      {{- $isCurrent := eq $lang.Lang $current -}}
-      {{- $href := (printf "/%s/" $lang.Lang | relURL) -}}
-      {{- if $isCurrent -}}
-        {{- $href = $page.RelPermalink -}}
-      {{- else -}}
-        {{- range $translation := $page.Translations -}}
-          {{- if eq $translation.Lang $lang.Lang -}}
-            {{- $href = $translation.RelPermalink -}}
+    <div class="gm-modal__body gm-ageGate__content">
+      <p class="gm-modal__hint">{{ i18n "lang.modal.hint" }}</p>
+      <ul class="gm-modal__options" role="list">
+        {{- $current := .Site.Language.Lang -}}
+        {{- $page := . -}}
+        {{- range .Site.Languages }}
+        {{- $lang := . -}}
+        {{- $isCurrent := eq $lang.Lang $current -}}
+        {{- $href := (printf "/%s/" $lang.Lang | relURL) -}}
+        {{- if $isCurrent -}}
+          {{- $href = $page.RelPermalink -}}
+        {{- else -}}
+          {{- range $translation := $page.Translations -}}
+            {{- if eq $translation.Lang $lang.Lang -}}
+              {{- $href = $translation.RelPermalink -}}
+            {{- end -}}
           {{- end -}}
         {{- end -}}
-      {{- end -}}
-      <li>
-        <a
-          class="gm-modal__option{{ if $isCurrent }} gm-modal__option--current{{ end }}"
-          href="{{ $href }}"
-          {{ if $isCurrent }}aria-current="true"{{ end }}
-        >
-          <span class="gm-modal__optionLabel">{{ $lang.LanguageName }}</span>
-          {{- if $isCurrent -}}
-          <span class="gm-modal__badge">{{ i18n "lang.modal.current" }}</span>
-          {{- end -}}
-        </a>
-      </li>
-      {{- end -}}
-    </ul>
+        <li>
+          <a
+            class="gm-modal__option{{ if $isCurrent }} gm-modal__option--current{{ end }}"
+            href="{{ $href }}"
+            {{ if $isCurrent }}aria-current="true"{{ end }}
+          >
+            <span class="gm-modal__optionLabel">{{ $lang.LanguageName }}</span>
+            {{- if $isCurrent -}}
+            <span class="gm-modal__badge">{{ i18n "lang.modal.current" }}</span>
+            {{- end -}}
+          </a>
+        </li>
+        {{- end -}}
+      </ul>
+    </div>
   </div>
 </div>

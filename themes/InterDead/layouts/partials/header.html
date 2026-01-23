@@ -1,3 +1,4 @@
+{{- $discordIcon := resources.Get "images/icons/discord.svg" -}}
 <header class="gm-header">
   <div class="gm-container gm-header__bar">
     <div class="gm-header__logo" data-header-logo>
@@ -30,7 +31,7 @@
         <div class="gm-header__cta" data-show="adult">
           <button class="auth-button auth-button--discord auth-button--compact" type="button" data-auth-button="header">
             <span class="auth-button__icon" aria-hidden="true">
-              <span class="auth-button__glyph">◎</span>
+              {{- if $discordIcon }}{{ $discordIcon.Content | safeHTML }}{{- end }}
             </span>
             <span class="auth-button__label">{{ i18n "auth.discord.cta" }}</span>
           </button>

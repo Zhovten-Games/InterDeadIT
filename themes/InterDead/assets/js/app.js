@@ -11,6 +11,7 @@ import FaqController from './presentation/controllers/FaqController.js';
 import ModalTriggerController from './presentation/controllers/ModalTriggerController.js';
 import ModalCloseController from './presentation/controllers/ModalCloseController.js';
 import MenuModalController from './presentation/controllers/MenuModalController.js';
+import TickerController from './presentation/controllers/TickerController.js';
 import ModalView from './infrastructure/ui/ModalView.js';
 import ModalDomMapper from './infrastructure/ui/ModalDomMapper.js';
 import DocumentScrollController from './infrastructure/ui/DocumentScrollController.js';
@@ -96,8 +97,14 @@ const menuModalController = new MenuModalController({
   options: Array.from(document.querySelectorAll('[data-menu-option]')),
   isHome,
   scrollOffset: headerElement?.offsetHeight || 0,
+  storage,
 });
 menuModalController.init();
+
+const tickerController = new TickerController({
+  tickers: Array.from(document.querySelectorAll('[data-ticker]')),
+});
+tickerController.init();
 
 const runtimeConfig = window.__INTERDEAD_CONFIG__ ?? {};
 const featureFlags = new FeatureFlagService(runtimeConfig.featureFlags);
@@ -167,6 +174,7 @@ const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFla
 window.InterdeadPorts = window.InterdeadPorts || {};
 window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
   efbdBridge.emitTrigger({ axis, value, context });
+window.InterdeadPorts.fetchEfbdSummary = () => efbdBridge.fetchSummary();
 window.InterdeadNotifications = notificationService;
 
 const countdownController = new CountdownController({
@@ -251,5 +259,6 @@ window.addEventListener('beforeunload', () => {
   profilePageController?.dispose?.();
   homeAuthController?.dispose?.();
   menuModalController?.dispose?.();
+  tickerController?.dispose?.();
   authVisibilityService.dispose?.();
 });

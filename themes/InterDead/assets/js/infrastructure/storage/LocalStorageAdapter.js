@@ -28,4 +28,15 @@ export default class LocalStorageAdapter extends StoragePort {
       console.warn('LocalStorageAdapter#set failed', error);
     }
   }
+
+  remove(key) {
+    if (!key) {
+      return;
+    }
+    try {
+      this.storage.removeItem(key);
+    } catch (error) {
+      console.warn('LocalStorageAdapter#remove failed', error);
+    }
+  }
 }

@@ -1,10 +1,3 @@
-{{- $page := .page -}}
-{{- $length := default 220 .length -}}
-{{- $raw := $page.Summary -}}
-{{- if not $raw }}
-  {{- $raw = $page.Plain -}}
-{{- end -}}
-{{- with $raw }}
-  {{- $plain := . | plainify -}}
-  {{- $plain | truncate $length -}}
-{{- end -}}
+{{- $page := .page -}} {{- $length := default 220 .length -}} {{- $raw := $page.Summary -}} {{- if
+not $raw }} {{- $raw = $page.Plain -}} {{- end -}} {{- with $raw }} {{- $plain := . | plainify -}}
+{{- $plain | truncate $length -}} {{- end -}}

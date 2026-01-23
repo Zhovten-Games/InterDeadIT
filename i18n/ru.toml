@@ -41,7 +41,7 @@ other = "Отзывы"
 other = "FAQ"
 
 ['menu.blog']
-other = "Блог"
+other = "Мини-игры"
 
 ['menu.modal.title']
 other = "Навигация"
@@ -81,6 +81,9 @@ other = "Мёртвые отвечают здесь до сих пор"
 
 ['hero.lead']
 other = "Мы создаём прототип мессенджера, который передаёт шёпот с той стороны. Никаких сеансов — только защищённый чат. Не упустите шанс одним из первых принять участие в закрытом бета-тестировании!"
+
+['hero.afterText']
+other = "Иногда достаточно другого способа задать вопрос."
 
 ['gm.ctastart']
 other = "Подписаться"
@@ -199,6 +202,15 @@ other = "Не удалось записать голос. Попробуйте �
 ['minigames.poll.required']
 other = "Выберите один вариант, чтобы продолжить."
 
+['minigames.poll.completed']
+other = "Вы завершили этот тест."
+
+['minigames.poll.profilePrompt']
+other = "Ознакомьтесь со своим рейтингом в "
+
+['minigames.poll.profileLink']
+other = "личном профиле."
+
 ['minigames.poll.continue']
 other = "Продолжить"
 
@@ -219,6 +231,18 @@ other = "Считайте мёртвых медиумов вместе с нам
 
 ['stories.stampAnnouncement']
 other = "Считайте мёртвых медиумов вместе с нами. Счётчик: +{{ .Count }}."
+
+['story.mediums.label']
+other = "Тип"
+
+['mediums.typology.title']
+other = "Типизация медиумов"
+
+['mediums.typology.openLabel']
+other = "Открыть типизацию медиумов"
+
+['mediums.typology.closeLabel']
+other = "Закрыть окно типизации"
 
 ['inevitable.title']
 other = "Истории, которым было суждено случиться"
@@ -258,67 +282,8 @@ other = "Никаких. Всё остаётся бесплатным."
 other = "Мы живём на пожертвования — поддержите миссию, если стало легче. Подробности позже."
 
 ['ticker.note']
-other = "Они, скорее всего, прочитали наш email."
+other = "Быстрая адаптация к разговору с мёртвыми."
 
-['ticker.item1']
-other = "Weyland‑Yutani"
-
-['ticker.item2']
-other = "Umbrella Corp."
-
-['ticker.item3']
-other = "Union Aerospace (UAC)"
-
-['ticker.item4']
-other = "Black Mesa"
-
-['ticker.item5']
-other = "Aperture Science"
-
-['ticker.item6']
-other = "Tyrell Corp."
-
-['ticker.item7']
-other = "Cyberdyne Systems"
-
-['ticker.item8']
-other = "Abstergo"
-
-['ticker.item9']
-other = "Shinra Electric"
-
-['ticker.item10']
-other = "Oscorp"
-
-['ticker.item11']
-other = "Weyland‑Yutani"
-
-['ticker.item12']
-other = "Umbrella Corp."
-
-['ticker.item13']
-other = "Union Aerospace (UAC)"
-
-['ticker.item14']
-other = "Black Mesa"
-
-['ticker.item15']
-other = "Aperture Science"
-
-['ticker.item16']
-other = "Tyrell Corp."
-
-['ticker.item17']
-other = "Cyberdyne Systems"
-
-['ticker.item18']
-other = "Abstergo"
-
-['ticker.item19']
-other = "Shinra Electric"
-
-['ticker.item20']
-other = "Oscorp"
 
 ['footer.adult']
 other = "InterDead© — Мессенджер для мёртвых."

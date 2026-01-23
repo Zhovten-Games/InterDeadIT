@@ -1,0 +1,4 @@
+{{- $items := .Parent.Scratch.Get "tickerItems" | default (slice) -}} {{- $item := dict "title"
+(.Get "text" | default "") "url" (.Get "url" | default "#") "image" (.Get "image" | default "")
+"imageAlt" (.Get "imageAlt" | default "") -}} {{- .Parent.Scratch.Set "tickerItems" ($items | append
+$item) -}}

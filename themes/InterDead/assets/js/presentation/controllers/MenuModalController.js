@@ -5,12 +5,14 @@ export default class MenuModalController {
     options = [],
     isHome = false,
     scrollOffset = 0,
+    storage = null,
   } = {}) {
     this.modalService = modalService;
     this.modalId = modalId;
     this.options = options;
     this.isHome = isHome;
     this.scrollOffset = scrollOffset;
+    this.storage = storage;
     this.cleanups = [];
   }
 
@@ -24,16 +26,26 @@ export default class MenuModalController {
       const link = option?.querySelector?.('[data-menu-option-link]');
       const targetId = option?.dataset?.menuTarget || '';
       const url = option?.dataset?.menuUrl || '';
+      const resetStorageKey = option?.dataset?.menuResetStorage || '';
+      const openModalId = option?.dataset?.menuOpenModal || '';
       const bodyDisabled =
         body?.hasAttribute('disabled') || body?.dataset?.menuBodyDisabled === 'true';
       const shouldScroll = this.isHome && !!targetId;
+      const shouldResetStorage = this.isHome && !!resetStorageKey;
 
       if (body && !bodyDisabled) {
         const handleBodyClick = (event) => {
-          if (shouldScroll) {
+          if (shouldScroll || shouldResetStorage) {
             event.preventDefault();
           }
-          this.handleBodyAction({ targetId, url, shouldScroll });
+          this.handleBodyAction({
+            targetId,
+            url,
+            shouldScroll,
+            resetStorageKey,
+            openModalId,
+            shouldResetStorage,
+          });
         };
         body.addEventListener('click', handleBodyClick);
         this.cleanups.push(() => body.removeEventListener('click', handleBodyClick));
@@ -49,7 +61,24 @@ export default class MenuModalController {
     });
   }
 
-  handleBodyAction({ targetId, url, shouldScroll } = {}) {
+  handleBodyAction({
+    targetId,
+    url,
+    shouldScroll,
+    resetStorageKey,
+    openModalId,
+    shouldResetStorage,
+  } = {}) {
+    if (shouldResetStorage && resetStorageKey) {
+      this.storage?.remove?.(resetStorageKey);
+      if (openModalId) {
+        this.modalService?.open?.(openModalId);
+      } else {
+        this.modalService?.close?.(this.modalId);
+      }
+      return;
+    }
+
     if (shouldScroll && targetId) {
       const scrolled = this.scrollToTarget(targetId);
       if (scrolled) {

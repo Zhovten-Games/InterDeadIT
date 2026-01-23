@@ -1,0 +1,50 @@
+{{- $lang := .Site.Language.Lang -}}
+{{- $typology := index site.Data "medium-typology" $lang -}}
+{{- if $typology -}}
+<div
+  aria-labelledby="gm-mediumsModalTitle"
+  aria-modal="true"
+  aria-hidden="true"
+  class="gm-modal gm-mediumsModal"
+  data-modal="medium-typology"
+  data-modal-scroll="lock"
+  id="gm-mediumsModal"
+  role="dialog"
+>
+  <div class="gm-modal__dialog gm-mediumsModal__dialog">
+    <div class="gm-modal__header">
+      <h2 class="gm-modal__title" id="gm-mediumsModalTitle">{{ i18n "mediums.typology.title" }}</h2>
+      <button
+        class="gm-modal__close"
+        type="button"
+        data-modal-close
+        aria-label="{{ i18n "mediums.typology.closeLabel" }}"
+      >×</button>
+    </div>
+    <div class="gm-modal__body gm-mediumsModal__body">
+      <div class="gm-mediumsTableWrapper" role="region" aria-label="{{ i18n "mediums.typology.title" }}">
+        <table class="gm-mediumsTable">
+          <thead>
+            <tr>
+              <th scope="col">{{ $typology.columns.axis }}</th>
+              <th scope="col">{{ $typology.columns.category }}</th>
+              <th scope="col">{{ $typology.columns.name }}</th>
+              <th scope="col">{{ $typology.columns.description }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{- range $typology.rows -}}
+            <tr>
+              <td>{{ .axis }}</td>
+              <td>{{ .category }}</td>
+              <td>{{ .name }}</td>
+              <td>{{ .description }}</td>
+            </tr>
+            {{- end -}}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{{- end -}}

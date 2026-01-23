@@ -20,6 +20,10 @@ export default class AgeModeService {
       return null;
     }
     if (this.mode?.getValue?.() === mode) {
+      const stored = this.storage?.get?.(this.storageKey);
+      if (stored !== mode) {
+        this.storage?.set?.(this.storageKey, mode);
+      }
       return this.mode;
     }
     this.mode = new AgeMode(mode);

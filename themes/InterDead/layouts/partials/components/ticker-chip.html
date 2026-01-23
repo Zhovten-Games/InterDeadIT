@@ -1,0 +1,8 @@
+{{- $title := .Title | default "" -}} {{- $url := .Url | default "#" -}} {{- $imageUrl := .ImageUrl
+| default "" -}} {{- $imageAlt := .ImageAlt | default $title -}}
+<a class="gm-logoChip" href="{{ $url }}">
+  {{- if $imageUrl -}}
+  <img class="gm-logoChip__image" src="{{ $imageUrl }}" alt="{{ $imageAlt }}" loading="lazy" />
+  {{- end -}}
+  <span class="gm-logoChip__label">{{ $title }}</span>
+</a>

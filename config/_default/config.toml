@@ -60,7 +60,8 @@ theme = "InterDead"
     [[params.navigation.items]]
       id = "blog"
       i18nKey = "menu.blog"
-      url = "/blog/"
+      url = "/categories/mini-games/"
+      targetId = "mini-games"
 
   [params.homeWidgets]
     [params.homeWidgets.stories]

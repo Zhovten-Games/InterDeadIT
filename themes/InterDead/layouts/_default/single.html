@@ -4,13 +4,10 @@
     <header class="gm-article__header">
       <div class="gm-article__heading">
         <h1 class="gm-section__title">{{ .Title }}</h1>
-        <div class="gm-article__meta">
-          {{ partial "components/category-list.html" (dict "categories" .Params.categories "class" "gm-article__categories" "label" (i18n "blog.categories")) }}
-          {{ with .Date }}
-          <p class="gm-text--fine gm-article__date">{{ .Format "02 Jan 2006" }}</p>
-          {{ end }}
-        </div>
       </div>
+      {{ if and (eq .Section "blog") .Date }}
+      <p class="gm-text--fine gm-article__date">{{ .Date.Format "02 Jan 2006" }}</p>
+      {{ end }}
       {{ if and (ne .Section "blog") .Params.image }}
       <figure class="gm-article__media">
         <img src="{{ .Params.image | absURL }}" alt="{{ .Params.imageAlt | default .Title }}" loading="lazy" />
@@ -23,7 +20,17 @@
       {{ if $hasToc }}
         {{ partial "components/article-toc.html" (dict "toc" $toc) }}
       {{ end }}
-      <div class="gm-card gm-article__body gm-content">{{ .Content }}</div>
+      <div class="gm-card gm-article__body gm-content">
+        {{ if or .Params.categories (and .Date (ne .Section "blog")) }}
+        <div class="gm-article__meta">
+          {{ partial "components/category-list.html" (dict "categories" .Params.categories "class" "gm-article__categories" "label" (i18n "blog.categories")) }}
+          {{ if and .Date (ne .Section "blog") }}
+          <p class="gm-text--fine gm-article__date">{{ .Date.Format "02 Jan 2006" }}</p>
+          {{ end }}
+        </div>
+        {{ end }}
+        {{ .Content }}
+      </div>
     </div>
   </div>
 </article>
