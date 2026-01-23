@@ -71,6 +71,13 @@ const renderMessageContent = (element, message) => {
   element.textContent = String(message);
 };
 
+const isReplayBlocked = (response) => {
+  const code = response?.code || response?.error || '';
+  return code === 'replay_blocked';
+};
+
+const isCompletedReplay = (response) => isReplayBlocked(response) && response?.reason === 'completed';
+
 export function initEfbdPoll({
   root,
   mount,
@@ -295,7 +302,7 @@ export function initEfbdPoll({
         mergedStrings.success || defaultStrings.success || 'Your response has been recorded.';
       setStatus(successMessage, 'success');
       window.InterdeadNotifications?.showSuccess?.(buildProfileMessage(successMessage));
-    } else if (response?.code === 'replay_blocked' && response?.reason === 'completed') {
+    } else if (isCompletedReplay(response)) {
       const completedMessage = mergedStrings.completed || response?.message || fallbackErrorText;
       setStatus(buildProfileMessage(completedMessage), 'error');
       window.InterdeadNotifications?.showError?.(buildProfileMessage(completedMessage));
