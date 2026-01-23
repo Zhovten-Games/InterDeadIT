@@ -32,12 +32,20 @@
       <ul class="gm-modal__options gm-menuModal__options" role="list">
         {{- range $navigation }}
           {{- $id := .id | default "" -}}
-          {{- $labelKey := .i18nKey | default .label | default "" -}}
-          {{- $label := cond (ne $labelKey "") (i18n $labelKey) "" -}}
           {{- $href := .url | default "" | relLangURL -}}
           {{- $targetId := .targetId | default "" -}}
           {{- $targetAttr := .target | default "" -}}
-          {{- $bodyHref := cond (and $.IsHome (ne $targetId "")) (printf "#%s" $targetId) $href -}}
+          {{- $labelKey := .i18nKey | default .label | default "" -}}
+          {{- $resolvedLabelKey := $labelKey -}}
+          {{- $resolvedHref := $href -}}
+          {{- $resolvedTargetId := $targetId -}}
+          {{- if and (eq $id "blog") (not $.IsHome) -}}
+            {{- $resolvedLabelKey = "menu.blog.link" -}}
+            {{- $resolvedHref = "/blog/" | relLangURL -}}
+            {{- $resolvedTargetId = "" -}}
+          {{- end -}}
+          {{- $label := cond (ne $resolvedLabelKey "") (i18n $resolvedLabelKey) "" -}}
+          {{- $bodyHref := cond (and $.IsHome (ne $resolvedTargetId "")) (printf "#%s" $resolvedTargetId) $resolvedHref -}}
           {{- $disableBody := and (not $.IsHome) (and (ne $id "") (eq $id $currentNavId)) -}}
           {{- $isCurrent := $disableBody -}}
           {{- $reopenWelcome := and $.IsHome (eq $id "about") -}}
@@ -45,8 +53,8 @@
           <div
             class="gm-modal__option gm-menuModal__option{{ if $isCurrent }} gm-modal__option--current gm-menuModal__option--current{{ end }}"
             data-menu-option
-            data-menu-url="{{ $href }}"
-            {{- if $targetId }} data-menu-target="{{ $targetId }}"{{ end }}
+            data-menu-url="{{ $resolvedHref }}"
+            {{- if $resolvedTargetId }} data-menu-target="{{ $resolvedTargetId }}"{{ end }}
             {{- if $reopenWelcome }} data-menu-reset-storage="gm_age_mode" data-menu-open-modal="ageGate"{{ end }}
             {{- if $disableBody }} aria-disabled="true"{{ end }}
             {{- if $isCurrent }} data-menu-active="true" data-menu-active-label="{{ i18n "lang.modal.current" }}"{{ end }}
@@ -65,7 +73,7 @@
             {{- if $.IsHome }}
               <a
                 class="gm-modal__optionIcon"
-                href="{{ $href }}"
+                href="{{ $resolvedHref }}"
                 data-menu-option-link
                 {{- if $targetAttr }} target="{{ $targetAttr }}"{{ end }}
                 aria-label="{{ printf "%s: %s" (i18n "menu.option.open") $label }}"

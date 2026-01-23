@@ -43,6 +43,9 @@ other = "FAQ"
 ['menu.blog']
 other = "Міні-ігри"
 
+['menu.blog.link']
+other = "Блог"
+
 ['menu.modal.title']
 other = "Навігація"
 

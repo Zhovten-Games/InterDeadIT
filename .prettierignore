@@ -1,0 +1,3 @@
+# Do not format Hugo templates
+themes/**/layouts/**/*.html
+layouts/**/*.html

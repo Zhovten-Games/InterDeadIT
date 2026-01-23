@@ -303,7 +303,7 @@ img, iframe {
 
 .gm-header__logo--visible {
   opacity: 1;
-  pointer-events: none;
+  pointer-events: auto;
 }
 
 .gm-header__logoImage {

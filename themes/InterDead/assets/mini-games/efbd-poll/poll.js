@@ -33,6 +33,44 @@ const defaultStrings = {
   mapAlt: 'The Tower map',
 };
 
+const renderMessageContent = (element, message) => {
+  if (!element) {
+    return;
+  }
+
+  element.textContent = '';
+
+  if (!message) {
+    return;
+  }
+
+  if (typeof message === 'string') {
+    element.textContent = message;
+    return;
+  }
+
+  if (typeof message === 'object') {
+    const text = typeof message.text === 'string' ? message.text : '';
+    if (text) {
+      element.appendChild(element.ownerDocument.createTextNode(text));
+    }
+
+    const link = message.link;
+    if (link?.href && link?.label) {
+      if (text) {
+        element.appendChild(element.ownerDocument.createTextNode(' '));
+      }
+      const anchor = element.ownerDocument.createElement('a');
+      anchor.href = link.href;
+      anchor.textContent = link.label;
+      element.appendChild(anchor);
+    }
+    return;
+  }
+
+  element.textContent = String(message);
+};
+
 export function initEfbdPoll({
   root,
   mount,
@@ -209,12 +247,12 @@ export function initEfbdPoll({
     const resolvedMessage = message || (variant === 'error' ? fallbackErrorText : '');
     if (!resolvedMessage) {
       status.hidden = true;
-      status.textContent = '';
+      renderMessageContent(status, '');
       return;
     }
     status.hidden = false;
     status.dataset.variant = variant;
-    status.textContent = resolvedMessage;
+    renderMessageContent(status, resolvedMessage);
   };
 
   form.addEventListener('submit', async (event) => {
@@ -259,7 +297,7 @@ export function initEfbdPoll({
       window.InterdeadNotifications?.showSuccess?.(buildProfileMessage(successMessage));
     } else if (response?.code === 'replay_blocked' && response?.reason === 'completed') {
       const completedMessage = mergedStrings.completed || response?.message || fallbackErrorText;
-      setStatus(completedMessage, 'error');
+      setStatus(buildProfileMessage(completedMessage), 'error');
       window.InterdeadNotifications?.showError?.(buildProfileMessage(completedMessage));
     } else {
       const errorMessage = response?.message || response?.error || mergedStrings.error;
