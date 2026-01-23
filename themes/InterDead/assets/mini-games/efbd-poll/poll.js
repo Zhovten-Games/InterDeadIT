@@ -76,7 +76,38 @@ const isReplayBlocked = (response) => {
   return code === 'replay_blocked';
 };
 
-const isCompletedReplay = (response) => isReplayBlocked(response) && response?.reason === 'completed';
+const isCompletedReplay = (response) =>
+  isReplayBlocked(response) && (!response?.reason || response?.reason === 'completed');
+
+class MessageBuilder {
+  constructor({ fallbackErrorText, buildProfileMessage }) {
+    this.fallbackErrorText = fallbackErrorText;
+    this.buildProfileMessage = buildProfileMessage;
+  }
+
+  getDefaultMessage() {
+    return this.fallbackErrorText;
+  }
+
+  build(message) {
+    return this.buildProfileMessage(message || this.getDefaultMessage());
+  }
+}
+
+class ReplayBlockedMessageBuilder extends MessageBuilder {
+  constructor({ mergedStrings, fallbackErrorText, buildProfileMessage }) {
+    super({ fallbackErrorText, buildProfileMessage });
+    this.mergedStrings = mergedStrings;
+  }
+
+  getDefaultMessage() {
+    return this.mergedStrings.completed || super.getDefaultMessage();
+  }
+
+  isCompletedReplay(response) {
+    return isCompletedReplay(response);
+  }
+}
 
 export function initEfbdPoll({
   root,
@@ -238,17 +269,34 @@ export function initEfbdPoll({
 
   const fallbackErrorText = mergedStrings.error || defaultStrings.error;
   const buildProfileMessage = (message) => {
-    if (!message || !profileLinkLabel || !profileUrl) {
+    if (message && typeof message === 'object') {
       return message;
     }
+
+    const text = typeof message === 'string' ? message : '';
+    const link =
+      profileLinkLabel && profileUrl
+        ? {
+            href: profileUrl,
+            label: profileLinkLabel,
+          }
+        : null;
+
+    if (!text && !link) {
+      return message;
+    }
+
     return {
-      text: message,
-      link: {
-        href: profileUrl,
-        label: profileLinkLabel,
-      },
+      text,
+      link,
     };
   };
+
+  const replayBlockedMessageBuilder = new ReplayBlockedMessageBuilder({
+    mergedStrings,
+    fallbackErrorText,
+    buildProfileMessage,
+  });
 
   const setStatus = (message, variant = 'info') => {
     const resolvedMessage = message || (variant === 'error' ? fallbackErrorText : '');
@@ -302,10 +350,10 @@ export function initEfbdPoll({
         mergedStrings.success || defaultStrings.success || 'Your response has been recorded.';
       setStatus(successMessage, 'success');
       window.InterdeadNotifications?.showSuccess?.(buildProfileMessage(successMessage));
-    } else if (isCompletedReplay(response)) {
-      const completedMessage = mergedStrings.completed || response?.message || fallbackErrorText;
-      setStatus(buildProfileMessage(completedMessage), 'error');
-      window.InterdeadNotifications?.showError?.(buildProfileMessage(completedMessage));
+    } else if (replayBlockedMessageBuilder.isCompletedReplay(response)) {
+      const completedMessage = replayBlockedMessageBuilder.build(response?.message);
+      setStatus(completedMessage, 'error');
+      window.InterdeadNotifications?.showError?.(completedMessage);
     } else {
       const errorMessage = response?.message || response?.error || mergedStrings.error;
       setStatus(errorMessage, 'error');
