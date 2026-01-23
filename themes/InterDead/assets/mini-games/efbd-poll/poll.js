@@ -27,7 +27,7 @@ const defaultStrings = {
   submit: 'Submit',
   success: '',
   completed: '',
-  profileLink: '',
+  profileLink: 'View your score in your profile.',
   error: 'Something went wrong. Please try again.',
   required: '',
   mapAlt: 'The Tower map',
@@ -118,6 +118,46 @@ class ReplayBlockedMessageBuilder extends MessageBuilder {
 
   isCompletedReplay(response) {
     return isCompletedReplay(response);
+  }
+}
+
+class ProfileLinkMessageBuilder {
+  constructor({ profileUrl, profileLinkLabel }) {
+    this.profileUrl = profileUrl;
+    this.profileLinkLabel = profileLinkLabel;
+  }
+
+  resolveLabel() {
+    if (typeof this.profileLinkLabel !== 'string') {
+      return '';
+    }
+
+    return this.profileLinkLabel.trim();
+  }
+
+  build(message) {
+    if (message && typeof message === 'object') {
+      return message;
+    }
+
+    const text = typeof message === 'string' ? message : '';
+    const label = this.resolveLabel();
+    const link =
+      label && this.profileUrl
+        ? {
+            href: this.profileUrl,
+            label,
+          }
+        : null;
+
+    if (!text && !link) {
+      return message;
+    }
+
+    return {
+      text,
+      link,
+    };
   }
 }
 
@@ -280,29 +320,11 @@ export function initEfbdPoll({
   form.appendChild(submit);
 
   const fallbackErrorText = mergedStrings.error || defaultStrings.error;
-  const buildProfileMessage = (message) => {
-    if (message && typeof message === 'object') {
-      return message;
-    }
-
-    const text = typeof message === 'string' ? message : '';
-    const link =
-      profileLinkLabel && profileUrl
-        ? {
-            href: profileUrl,
-            label: profileLinkLabel,
-          }
-        : null;
-
-    if (!text && !link) {
-      return message;
-    }
-
-    return {
-      text,
-      link,
-    };
-  };
+  const profileLinkMessageBuilder = new ProfileLinkMessageBuilder({
+    profileUrl,
+    profileLinkLabel,
+  });
+  const buildProfileMessage = (message) => profileLinkMessageBuilder.build(message);
 
   const replayBlockedMessageBuilder = new ReplayBlockedMessageBuilder({
     mergedStrings,

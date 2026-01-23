@@ -20,8 +20,11 @@ The shortcode sends:
 
 - `assets`: URLs + integrity hashes for CSS/JS.
 - `options`: EFBD axis options (axis code, label, `i18nKey`).
-- `strings`: localized strings for title, prompt, submit, success, error, and required messages.
+- `strings`: localized strings for title, prompt, submit, success, completed, profile link label, error, and required messages.
 - `locale`: current Hugo locale.
+
+The poll uses `strings.profileLink` to build the mini-profile link in completion notifications.
+Ensure that the page body includes `data-profile-url` (defaults to `/profile/` when missing).
 
 ## Payload shape for EFBD writes
 
