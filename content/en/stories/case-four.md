@@ -9,7 +9,7 @@ mediums:
   - 'Non-systemic Method'
 ---
 
-(possible ideological fixation)
+*(possible ideological fixation)*
 
 **Description:**  
 Some specialists go through contact correctly and without immediate consequences. This creates a sense of closure and safety, especially when the practice rests on a strong personal interpretation of what is happening.

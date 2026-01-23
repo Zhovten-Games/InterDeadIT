@@ -83,7 +83,7 @@ other = "Close dialog"
 other = "The dead still answer here"
 
 ['hero.lead']
-other = "We prototype a messenger that relays whisper-level echoes from the other side. No séances, only secure chat. Don't miss the chance to be among the first to join the closed beta."
+other = "We are creating a messenger for interacting with the unknown through an interface rather than direct contact. This is a prototype — and that is precisely why you can become part of it. An indispensable panacea for mediums of all kinds and, perhaps, the only way to soothe the pain of loss by believing that life after death does, in fact, exist."
 
 ['hero.afterText']
 other = "Sometimes it’s enough to ask the question differently."
@@ -316,15 +316,13 @@ other = """
 
 InterDead is a psychologically oriented horror project by Zhovten Games within speculative fiction (SpecFi): a story about a messenger for the dead, around which a meta-universe is growing. This site is the entry point into it.
 
-The universe also develops through multiple authors and planned tabletop role-playing sessions.
-
-Everything you see beyond this screen is written “in character” — from the perspective of the messenger’s creator, a socially awkward researcher who sincerely tries to follow “marketing rules” while selling his tool and reliably produces cringe.
-
 We describe in detail how the idea of the world and the game currently in development was born in the [first chapter of the cycle “Echo of an Unfading Memory”](/about/) — our extended “About”.
 
 You can read more about the structure of the universe, terminology, and techno-lore in the [InterDead Wiki on Fandom](https://interdead.fandom.com/wiki/InterDead_Wiki).
 
-If you need to step outside the fiction, the legal documents and contact information are available below. Please note that this is a non-commercial project.
+Everything you see beyond this screen is written “in character” — from the perspective of the messenger’s creator, a socially awkward researcher who sincerely tries to follow “marketing rules” while selling his tool and reliably produces cringe.
+
+If you need to step outside the fiction, the legal documents and contact information are available below.
 
 - [{{ .TermsTitle }}]({{ .TermsURL }})
 - [{{ .PrivacyTitle }}]({{ .PrivacyURL }})

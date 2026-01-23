@@ -1,12 +1,12 @@
 ---
 title: 'Echo of an Unfading Memory'
 description: 'About us'
-date: 2026-01-18
+date: 2026-01-23
 ---
 
 ## Introduction
 
-_InterDead is a non-commercial, psychologically oriented horror project within the framework of speculative fiction (SpecFi), centered around the development of a game and a meta-universe gradually unfolding around the concept of a “messenger for the dead”. The game is being developed by Zhovten Games. Alongside the game, the universe is also explored through planned tabletop role-playing sessions and contributions across multiple authors and formats._
+_InterDead is a psychologically oriented horror project within speculative fiction (SpecFi), centered on the development of a game and a meta-universe gradually forming around the concept of a “messenger for the dead.” The game is currently in development by Zhovten Games. Alongside the game, the universe is also planned to expand through tabletop role-playing sessions._
 
 Usually, this is where a thousand words are written about who we are.
 Who stands behind the project, where we come from, what inspires us, and why we can be trusted. We understand — this can indeed be interesting.
@@ -92,13 +92,16 @@ At this point it becomes clearer why InterDead is structured exactly the way it 
 
 ## Conscious game design
 
-There was no trigger shot into the air: I simply sat down and began. I sketched a prototype and the conceptual framework of the tool around which the entire dramaturgy is built—an application created by a scientist who spent years attempting to establish contact with the dead. At some point, he succeeded, though not in the form of an intimate conversation with a specific deceased individual. The broader context of this figure, along with the internal logic of the application and its fictional lineage, is outlined in the project’s wiki, where these elements are presented as parts of a coherent system of references and influences, including direct echoes of Clive Barker’s Books of Blood, Pulse, and related works in which the boundary between “there” and “here” behaves like a poorly sewn zipper.
+There was no shot fired into the air: I simply sat down and began. I sketched out a prototype and the conceptual framework of a tool around which the entire dramaturgy was built — an application created by a scientist who spent years attempting to establish contact with the dead. At a certain point, he succeeded, though not in the form of an intimate conversation with a specific deceased individual.
 
-At present, the project maintains a single public wiki on Fandom:
+The broader context of this figure, as well as the internal logic of the application and its fictional lineage, are documented in the project’s wiki, where these elements are presented as parts of a coherent conceptual model. In shaping this model, we drew on various cultural and literary references — including the works of Clive Barker (*Books of Blood*, *Pulse*, and others), in which the boundary between “there” and “here” behaves like a poorly stitched zipper. These works are important for understanding the project’s mood and imagery, but they are not sources of its narrative or structural logic.
+
+At present, the project maintains two public wikis:
 
 - [https://interdead.fandom.com/wiki/InterDead_Wiki](https://interdead.fandom.com/wiki/InterDead_Wiki)
+- [https://github.com/Zhovten-Games/InterDeadReferenceLibrary](https://github.com/Zhovten-Games/InterDeadReferenceLibrary)
 
-It documents the internal logic of the application, its terminology, and its conceptual structure.
+They document the internal logic of the application, the terminology in use, and the overall conceptual structure.
 
 The application prototype—the point from which the project originally began—will be made available in January, both as part of this site and as a standalone version. We considered for a long time whether it should be published at all, and ultimately decided that it should. In its current form, this prototype is not merely an early artifact, but a functional component that continues to be used within the game as it is being developed now.
 
@@ -170,7 +173,7 @@ Originally, the release was aligned with this milestone. An event subsequently o
 
 Specifically, [this refers to a post](https://www.linkedin.com/posts/sam-starling_%D0%BA%D0%BE%D0%BC%D0%BF%D0%B0%D0%BD%D1%96%D1%8F-big-fish-games-%D1%80%D0%BE%D0%B7%D1%80%D0%B8%D0%B2%D0%B0%D1%94-%D0%BA%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D0%B8-activity-7404896443599110144-Tn_1?utm_source=share&utm_medium=member_desktop&rcm=ACoAAFdDiTQBZ3sD2HwR_iilyxTEnTlROhLelmM) documenting the closure of the Grandma studio. My wife worked with the studio for more than four years, and we remain sincerely grateful—for the experience and for the people this time brought into our lives. With the studio’s closure, a number of projects developed there will no longer be released in their intended form, or will not be released at all. These circumstances have directly affected the timeline of our psychologically oriented horror project, making a later release more likely than originally planned.
 
-Our current situation is objectively less stable. Several planned “accelerators,” intended to be financed from personal funds, have had to be abandoned. In the present conditions, the project can no longer be approached in the same way as before. As a result, we now regard InterDead as a non-commercial project—not by initial intent, but as a consequence of the current state of affairs.
+At present, our situation is objectively less stable. We had to abandon some of the previously planned acceleration steps that were intended to be implemented using personal resources. Under current conditions, the project is developing more cautiously and incrementally, with a reassessment of pace and priorities compared to the original plans.
 
 This shift is not solely restrictive. Where one mode of operation closes, another opens. Freed from certain expectations and infrastructural constraints, the project gains room to explore directions that would previously have been inaccessible.
 
