@@ -26,6 +26,8 @@ const defaultStrings = {
   prompt: '',
   submit: 'Submit',
   success: '',
+  completed: '',
+  profileLink: '',
   error: 'Something went wrong. Please try again.',
   required: '',
   mapAlt: 'The Tower map',
@@ -81,6 +83,8 @@ export function initEfbdPoll({
     return false;
   }
   const documentRef = root.ownerDocument || mount.ownerDocument;
+  const profileUrl = documentRef?.body?.dataset?.profileUrl || '/profile/';
+  const profileLinkLabel = mergedStrings.profileLink;
   const form = documentRef?.createElement?.('form');
   if (!form) {
     logger?.error?.('[InterDead][MiniGame][Poll] Failed to create form element', logContext);
@@ -188,6 +192,18 @@ export function initEfbdPoll({
   form.appendChild(submit);
 
   const fallbackErrorText = mergedStrings.error || defaultStrings.error;
+  const buildProfileMessage = (message) => {
+    if (!message || !profileLinkLabel || !profileUrl) {
+      return message;
+    }
+    return {
+      text: message,
+      link: {
+        href: profileUrl,
+        label: profileLinkLabel,
+      },
+    };
+  };
 
   const setStatus = (message, variant = 'info') => {
     const resolvedMessage = message || (variant === 'error' ? fallbackErrorText : '');
@@ -240,7 +256,11 @@ export function initEfbdPoll({
       const successMessage =
         mergedStrings.success || defaultStrings.success || 'Your response has been recorded.';
       setStatus(successMessage, 'success');
-      window.InterdeadNotifications?.showSuccess?.(successMessage);
+      window.InterdeadNotifications?.showSuccess?.(buildProfileMessage(successMessage));
+    } else if (response?.code === 'replay_blocked' && response?.reason === 'completed') {
+      const completedMessage = mergedStrings.completed || response?.message || fallbackErrorText;
+      setStatus(completedMessage, 'error');
+      window.InterdeadNotifications?.showError?.(buildProfileMessage(completedMessage));
     } else {
       const errorMessage = response?.message || response?.error || mergedStrings.error;
       setStatus(errorMessage, 'error');

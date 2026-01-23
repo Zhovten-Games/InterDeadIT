@@ -47,7 +47,12 @@ export default class EfbdApiAdapter {
       }
 
       if (response.status === 409 || response.status === 429) {
-        return { status: 'error', message: payload?.message || 'Mini-game unavailable.' };
+        return {
+          status: 'error',
+          message: payload?.message || 'Mini-game unavailable.',
+          code: payload?.error,
+          reason: payload?.reason,
+        };
       }
     } catch (error) {
       return { status: 'error', error };

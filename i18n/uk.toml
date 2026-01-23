@@ -196,6 +196,12 @@ other = "Надіслати відповідь"
 ['minigames.poll.success']
 other = "Відповідь зафіксовано. Перевірте досьє EFBD після синхронізації."
 
+['minigames.poll.completed']
+other = "Міні-гру вже пройдено."
+
+['minigames.poll.profileLink']
+other = "Переглянути свої бали в особистому профілі."
+
 ['minigames.poll.error']
 other = "Не вдалося записати вибір. Спробуйте знову після перепідключення."
 

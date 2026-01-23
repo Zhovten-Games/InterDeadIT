@@ -11,10 +11,12 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
 "axis" "EBF-EXPOSURE" "label" (i18n "minigames.poll.option.exposure") "i18nKey"
 "minigames.poll.option.exposure") -}} {{- $strings := dict "title" (i18n "minigames.poll.title")
 "prompt" (i18n "minigames.poll.prompt") "submit" (i18n "minigames.poll.submit") "success" (i18n
-"minigames.poll.success") "error" (i18n "minigames.poll.error") "required" (i18n
+"minigames.poll.success") "completed" (i18n "minigames.poll.completed") "profileLink" (i18n
+"minigames.poll.profileLink") "error" (i18n "minigames.poll.error") "required" (i18n
 "minigames.poll.required") "mapAlt" (i18n "minigames.poll.mapAlt") "mapUrl" $mapAsset.RelPermalink
 -}} {{- $stringKeys := dict "title" "minigames.poll.title" "prompt" "minigames.poll.prompt" "submit"
-"minigames.poll.submit" "success" "minigames.poll.success" "error" "minigames.poll.error" "required"
+"minigames.poll.submit" "success" "minigames.poll.success" "completed" "minigames.poll.completed"
+"profileLink" "minigames.poll.profileLink" "error" "minigames.poll.error" "required"
 "minigames.poll.required" "mapAlt" "minigames.poll.mapAlt" -}} {{- if not ($.Page.Scratch.Get
 "miniGameRuntimeInjected") -}}
 <script

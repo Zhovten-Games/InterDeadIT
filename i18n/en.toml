@@ -196,6 +196,12 @@ other = "Submit response"
 ['minigames.poll.success']
 other = "Response recorded. Check your EFBD dossier after syncing."
 
+['minigames.poll.completed']
+other = "Mini-game already completed."
+
+['minigames.poll.profileLink']
+other = "View your score in your profile."
+
 ['minigames.poll.error']
 other = "We could not record your vote. Please retry after reconnecting."
 

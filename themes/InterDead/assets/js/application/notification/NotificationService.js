@@ -68,6 +68,44 @@ export default class NotificationService {
     return root;
   }
 
+  renderMessage(message) {
+    if (!this.messageElement) {
+      return;
+    }
+
+    this.messageElement.textContent = '';
+
+    if (!message) {
+      return;
+    }
+
+    if (typeof message === 'string') {
+      this.messageElement.textContent = message;
+      return;
+    }
+
+    if (typeof message === 'object') {
+      const text = typeof message.text === 'string' ? message.text : '';
+      if (text) {
+        this.messageElement.appendChild(this.document.createTextNode(text));
+      }
+
+      const link = message.link;
+      if (link?.href && link?.label) {
+        if (text) {
+          this.messageElement.appendChild(this.document.createTextNode(' '));
+        }
+        const anchor = this.document.createElement('a');
+        anchor.href = link.href;
+        anchor.textContent = link.label;
+        this.messageElement.appendChild(anchor);
+      }
+      return;
+    }
+
+    this.messageElement.textContent = String(message);
+  }
+
   show({ title = 'Notice', message = '' } = {}) {
     if (!this.instance) {
       return false;
@@ -75,9 +113,7 @@ export default class NotificationService {
     if (this.titleElement) {
       this.titleElement.textContent = title;
     }
-    if (this.messageElement) {
-      this.messageElement.textContent = message;
-    }
+    this.renderMessage(message);
     this.modalService.open(this.modalId);
     return true;
   }

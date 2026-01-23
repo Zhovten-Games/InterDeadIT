@@ -303,7 +303,7 @@ img, iframe {
 
 .gm-header__logo--visible {
   opacity: 1;
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .gm-header__logoImage {
@@ -942,6 +942,7 @@ img, iframe {
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  pointer-events: none;
 }
 
 .gm-categories {
@@ -1575,6 +1576,7 @@ img, iframe {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--color-muted);
+  pointer-events: none;
 }
 
 .gm-article__toc-toggle {
@@ -2113,11 +2115,34 @@ img, iframe {
   margin: 0;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  pointer-events: none;
 }
 
 .gm-modal__hint {
   margin: 0 0 20px;
   color: var(--color-muted);
+}
+
+.gm-modal__hint a {
+  color: var(--color-link);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+  text-underline-offset: 0.18em;
+  transition: color var(--transition-fast), text-decoration-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.gm-modal__hint a:hover {
+  color: var(--color-link-hover);
+  text-decoration-color: var(--color-link-hover);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.gm-modal__hint a:focus-visible {
+  outline: 2px solid var(--color-link-hover);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
 .gm-modal__options {

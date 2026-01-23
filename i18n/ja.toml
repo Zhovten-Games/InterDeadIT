@@ -196,6 +196,12 @@ other = "回答を送信"
 ['minigames.poll.success']
 other = "回答を記録しました。同期後にEFBDファイルを確認してください。"
 
+['minigames.poll.completed']
+other = "ミニゲームは既に完了しています。"
+
+['minigames.poll.profileLink']
+other = "プロフィールで自分のスコアを見る。"
+
 ['minigames.poll.error']
 other = "投票を記録できませんでした。再接続してからお試しください。"
 

@@ -878,14 +878,18 @@ class EfbdController {
       const gameId = trigger?.source || trigger?.context?.source || 'efbd-poll';
       if (guard?.completedGames?.includes?.(gameId)) {
         return this.buildJsonResponse(
-          { error: 'replay_blocked', message: 'Mini-game already completed.' },
+          { error: 'replay_blocked', reason: 'completed', message: 'Mini-game already completed.' },
           409,
           sessionStore,
         );
       }
       if (this.guardRepository.isCleanupBlocked(guard)) {
         return this.buildJsonResponse(
-          { error: 'replay_blocked', message: 'Account is locked during cleanup cooldown.' },
+          {
+            error: 'replay_blocked',
+            reason: 'cleanup_cooldown',
+            message: 'Account is locked during cleanup cooldown.',
+          },
           429,
           sessionStore,
         );
