@@ -105,8 +105,8 @@ class ReplayBlockedMessageBuilder extends MessageBuilder {
   }
 
   build(message) {
-    const resolvedMessage = this.mergedStrings.completed || message || this.getDefaultMessage();
-    return this.buildProfileMessage(resolvedMessage);
+    const chosenText = this.mergedStrings.completed || message || this.getDefaultMessage();
+    return this.buildProfileMessage(chosenText);
   }
 
   isCompletedReplay(response) {
