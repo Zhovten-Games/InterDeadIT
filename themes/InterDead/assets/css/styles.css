@@ -204,6 +204,14 @@ img, iframe {
   color: var(--color-muted);
 }
 
+.gm-note--centered {
+  text-align: center;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
 .gm-hero__timer {
   font-family: "Fira Code", "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
   font-weight: 600;
@@ -938,11 +946,6 @@ img, iframe {
 .gm-heroNote__text {
   margin: 0 auto;
   max-width: 56ch;
-  text-align: center;
-  color: var(--color-muted);
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   pointer-events: none;
 }
 
@@ -1444,6 +1447,9 @@ img, iframe {
   max-width: var(--gm-content-max-width);
   margin: 0 auto;
   line-height: 1.65;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
 }
 
 .gm-content img {
@@ -1920,10 +1926,7 @@ img, iframe {
 }
 
 .gm-ticker__note {
-  text-align: center;
-  font-size: 0.8rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  color: inherit;
 }
 
 .gm-ticker__viewport {
