@@ -109,6 +109,13 @@ class ReplayBlockedMessageBuilder extends MessageBuilder {
     return this.buildProfileMessage(chosenText);
   }
 
+  isCompletedMessage(message) {
+    if (!message) {
+      return false;
+    }
+    return message === this.mergedStrings.completed || message === 'Mini-game already completed.';
+  }
+
   isCompletedReplay(response) {
     return isCompletedReplay(response);
   }
@@ -356,6 +363,10 @@ export function initEfbdPoll({
       setStatus(successMessage, 'success');
       window.InterdeadNotifications?.showSuccess?.(buildProfileMessage(successMessage));
     } else if (replayBlockedMessageBuilder.isCompletedReplay(response)) {
+      const completedMessage = replayBlockedMessageBuilder.build(response?.message);
+      setStatus(completedMessage, 'error');
+      window.InterdeadNotifications?.showError?.(completedMessage);
+    } else if (replayBlockedMessageBuilder.isCompletedMessage(response?.message)) {
       const completedMessage = replayBlockedMessageBuilder.build(response?.message);
       setStatus(completedMessage, 'error');
       window.InterdeadNotifications?.showError?.(completedMessage);
