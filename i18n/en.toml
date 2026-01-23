@@ -393,28 +393,28 @@ other = "Mini-games"
 ["categories.metaUniverse"]
 other = "Meta-universe"
 
-[profile.delete]
+["profile.delete"]
 other = "Delete profile"
 
-[profile.delete.infoTitle]
+["profile.delete.infoTitle"]
 other = "Account deletion limits"
 
-[profile.delete.infoTrigger]
+["profile.delete.infoTrigger"]
 other = "Account deletion limits"
 
-[profile.delete.infoClose]
+["profile.delete.infoClose"]
 other = "Close account deletion limits"
 
-[profile.delete.infoLine1]
+["profile.delete.infoLine1"]
 other = "You may delete your account no more than once per day."
 
-[profile.delete.infoLine2]
+["profile.delete.infoLine2"]
 other = "Please note: data related to games you have completed is not automatically deleted."
 
-[profile.delete.infoLine3]
+["profile.delete.infoLine3"]
 other = "These limitations are introduced to prevent abuse of the service’s resources."
 
-[profile.delete.infoLine4]
+["profile.delete.infoLine4"]
 other = "To request full deletion of your personal data, please contact us via email and include your Discord username."
 
 ['article.toc.title']

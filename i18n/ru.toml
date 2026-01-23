@@ -392,28 +392,28 @@ other = "Мини-игры"
 ["categories.metaUniverse"]
 other = "Мета-вселенная"
 
-[profile.delete]
+["profile.delete"]
 other = "Delete profile"
 
-[profile.delete.infoTitle]
+["profile.delete.infoTitle"]
 other = "Ограничения удаления аккаунта"
 
-[profile.delete.infoTrigger]
+["profile.delete.infoTrigger"]
 other = "Ограничения удаления аккаунта"
 
-[profile.delete.infoClose]
+["profile.delete.infoClose"]
 other = "Закрыть окно ограничений удаления аккаунта"
 
-[profile.delete.infoLine1]
+["profile.delete.infoLine1"]
 other = "Вы можете удалить свой аккаунт не чаще одного раза в сутки."
 
-[profile.delete.infoLine2]
+["profile.delete.infoLine2"]
 other = "Обратите внимание: данные о пройденных вами играх при этом автоматически не удаляются."
 
-[profile.delete.infoLine3]
+["profile.delete.infoLine3"]
 other = "Указанные ограничения введены в целях предотвращения злоупотребления ресурсами сервиса."
 
-[profile.delete.infoLine4]
+["profile.delete.infoLine4"]
 other = "Для полного удаления персональных данных направьте запрос на адрес электронной почты, указав ваш логин в Discord."
 
 ['article.toc.title']

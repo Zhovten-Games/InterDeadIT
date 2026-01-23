@@ -393,28 +393,28 @@ other = "ミニゲーム"
 ["categories.metaUniverse"]
 other = "メタバース"
 
-[profile.delete]
+["profile.delete"]
 other = "Delete profile"
 
-[profile.delete.infoTitle]
+["profile.delete.infoTitle"]
 other = "アカウント削除の制限"
 
-[profile.delete.infoTrigger]
+["profile.delete.infoTrigger"]
 other = "アカウント削除の制限"
 
-[profile.delete.infoClose]
+["profile.delete.infoClose"]
 other = "アカウント削除の制限を閉じる"
 
-[profile.delete.infoLine1]
+["profile.delete.infoLine1"]
 other = "アカウントの削除は、1日に1回まで可能です。"
 
-[profile.delete.infoLine2]
+["profile.delete.infoLine2"]
 other = "なお、プレイ済みゲームに関するデータは自動的には削除されません。"
 
-[profile.delete.infoLine3]
+["profile.delete.infoLine3"]
 other = "これらの制限は、サービス資源の不正利用を防止する目的で設けられています。"
 
-[profile.delete.infoLine4]
+["profile.delete.infoLine4"]
 other = "個人データの完全な削除をご希望の場合は、Discordのユーザー名を明記のうえ、メールにてお問い合わせください。"
 
 ['article.toc.title']
