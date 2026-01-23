@@ -383,6 +383,9 @@ other = "Читать дальше"
 ["blog.categories"]
 other = "Категории"
 
+[blog.categoryLabel]
+other = "Категория"
+
 ["categories.miniGames"]
 other = "Мини-игры"
 
@@ -391,6 +394,27 @@ other = "Мета-вселенная"
 
 [profile.delete]
 other = "Delete profile"
+
+[profile.delete.infoTitle]
+other = "Ограничения удаления аккаунта"
+
+[profile.delete.infoTrigger]
+other = "Ограничения удаления аккаунта"
+
+[profile.delete.infoClose]
+other = "Закрыть окно ограничений удаления аккаунта"
+
+[profile.delete.infoLine1]
+other = "Вы можете удалить свой аккаунт не чаще одного раза в сутки."
+
+[profile.delete.infoLine2]
+other = "Обратите внимание: данные о пройденных вами играх при этом автоматически не удаляются."
+
+[profile.delete.infoLine3]
+other = "Указанные ограничения введены в целях предотвращения злоупотребления ресурсами сервиса."
+
+[profile.delete.infoLine4]
+other = "Для полного удаления персональных данных направьте запрос на адрес электронной почты, указав ваш логин в Discord."
 
 ['article.toc.title']
 other = "На странице"

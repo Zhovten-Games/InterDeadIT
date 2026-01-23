@@ -23,6 +23,11 @@
       <div class="gm-card gm-article__body gm-content">
         {{ if or .Params.categories (and .Date (ne .Section "blog")) }}
         <div class="gm-article__meta">
+          {{ if and (eq .Section "blog") .Params.categories }}
+          <span class="gm-categories__label gm-article__categoryLabel" data-i18n="blog.categoryLabel">
+            {{ i18n "blog.categoryLabel" }}
+          </span>
+          {{ end }}
           {{ partial "components/category-list.html" (dict "categories" .Params.categories "class" "gm-article__categories" "label" (i18n "blog.categories")) }}
           {{ if and .Date (ne .Section "blog") }}
           <p class="gm-text--fine gm-article__date">{{ .Date.Format "02 Jan 2006" }}</p>

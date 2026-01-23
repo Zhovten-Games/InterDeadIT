@@ -13,3 +13,13 @@ The Worker expects the following columns:
 - `delete_count`
 
 `persistProfile` inserts or updates these fields on each login or cleanup operation.
+
+## Table: `efbd_scale`
+
+EFBD triggers update the `efbd_scale` table for mini-game analytics.
+
+- `profile_id` (foreign key to `profiles`)
+- `axis_code` (one of the `EBF-*` axis codes)
+- `score` (cumulative score per axis)
+- `trigger_source` (latest trigger source identifier)
+- `updated_at` (ISO timestamp)

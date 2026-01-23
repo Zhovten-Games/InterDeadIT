@@ -1,0 +1,38 @@
+<div
+  aria-labelledby="gm-profileDeleteInfoTitle"
+  aria-modal="true"
+  aria-hidden="true"
+  class="gm-modal gm-profileDeleteInfoModal"
+  data-modal="profile-delete-info"
+  data-modal-scroll="lock"
+  id="gm-profileDeleteInfoModal"
+  role="dialog"
+>
+  <div class="gm-modal__dialog">
+    <div class="gm-modal__header">
+      <h2 class="gm-modal__title" id="gm-profileDeleteInfoTitle">
+        {{ i18n "profile.delete.infoTitle" }}
+      </h2>
+      <button
+        class="gm-modal__close"
+        type="button"
+        data-modal-close
+        aria-label="{{ i18n "profile.delete.infoClose" }}"
+      >×</button>
+    </div>
+    <div class="gm-modal__body">
+      <p class="gm-modal__hint" data-i18n="profile.delete.infoLine1">
+        {{ i18n "profile.delete.infoLine1" }}
+      </p>
+      <p class="gm-modal__hint" data-i18n="profile.delete.infoLine2">
+        {{ i18n "profile.delete.infoLine2" }}
+      </p>
+      <p class="gm-modal__hint" data-i18n="profile.delete.infoLine3">
+        {{ i18n "profile.delete.infoLine3" }}
+      </p>
+      <p class="gm-modal__hint" data-i18n="profile.delete.infoLine4">
+        {{ i18n "profile.delete.infoLine4" }}
+      </p>
+    </div>
+  </div>
+</div>

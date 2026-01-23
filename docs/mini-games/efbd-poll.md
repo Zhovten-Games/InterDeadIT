@@ -23,8 +23,17 @@ The shortcode sends:
 - `strings`: localized strings for title, prompt, submit, success, completed, profile link label, error, and required messages.
 - `locale`: current Hugo locale.
 
-The poll uses `strings.profileLink` to build the mini-profile link in completion notifications.
+The poll uses `strings.profileLink` to build the mini-profile link in completion notifications. The link is not rendered when `strings.profileLink` is empty, so always provide it when initializing the poll. A safe default is:
+
+```js
+profileLink: "Open mini-profile"
+```
+
+Add a short note in `poll.js` near `buildProfileMessage` to emphasize the dependency on `strings.profileLink` if you adjust the mini-game runtime.
+
 Ensure that the page body includes `data-profile-url` (defaults to `/profile/` when missing).
+
+The current `{ text, link }` structure supports additional contextual actions (journal, history, scale profile) without changing the renderer.
 
 ## Payload shape for EFBD writes
 
