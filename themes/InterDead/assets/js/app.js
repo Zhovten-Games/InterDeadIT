@@ -11,7 +11,7 @@ import FaqController from './presentation/controllers/FaqController.js';
 import ModalTriggerController from './presentation/controllers/ModalTriggerController.js';
 import ModalCloseController from './presentation/controllers/ModalCloseController.js';
 import MenuModalController from './presentation/controllers/MenuModalController.js';
-import TickerController from './presentation/controllers/TickerController.js';
+import MarqueeController from './presentation/controllers/MarqueeController.js';
 import ModalView from './infrastructure/ui/ModalView.js';
 import ModalDomMapper from './infrastructure/ui/ModalDomMapper.js';
 import DocumentScrollController from './infrastructure/ui/DocumentScrollController.js';
@@ -101,10 +101,10 @@ const menuModalController = new MenuModalController({
 });
 menuModalController.init();
 
-const tickerController = new TickerController({
-  tickers: Array.from(document.querySelectorAll('[data-ticker]')),
+const marqueeController = new MarqueeController({
+  roots: Array.from(document.querySelectorAll('[data-marquee]')),
 });
-tickerController.init();
+marqueeController.init();
 
 const runtimeConfig = window.__INTERDEAD_CONFIG__ ?? {};
 const featureFlags = new FeatureFlagService(runtimeConfig.featureFlags);
@@ -258,6 +258,6 @@ window.addEventListener('beforeunload', () => {
   profilePageController?.dispose?.();
   homeAuthController?.dispose?.();
   menuModalController?.dispose?.();
-  tickerController?.dispose?.();
+  marqueeController?.dispose?.();
   authVisibilityService.dispose?.();
 });

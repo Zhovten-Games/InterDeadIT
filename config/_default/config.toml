@@ -75,6 +75,10 @@ theme = "InterDead"
     identityCoreEnabled = true
     efbdScaleEnabled = true
 
+  [params.social]
+    discord = "https://discord.gg/vAWYg3jFEp"
+    telegram = "https://t.me/inter_dead"
+
   [params.api]
     baseUrl = "https://api.interdead.phantom-draft.com"
     defaultBaseUrl = "https://api.interdead.phantom-draft.com"

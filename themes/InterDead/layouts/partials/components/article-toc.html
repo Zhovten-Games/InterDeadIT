@@ -8,8 +8,14 @@
   <aside class="gm-article__toc" aria-labelledby="gm-article-toc-title" data-nav-label="{{ $tocNavLabel | htmlEscape }}">
     <div class="gm-article__toc-head">
       <p class="gm-article__toc-title" id="gm-article-toc-title" data-i18n="article.toc.title">{{ $tocTitle }}</p>
-      <p class="gm-article__toc-current" aria-live="polite">
-        <span class="gm-article__toc-currentText"></span>
+      <p
+        class="gm-article__toc-current"
+        aria-live="polite"
+        data-marquee="text"
+        data-marquee-media="(max-width: 979px)"
+        data-marquee-viewport
+      >
+        <span class="gm-article__toc-currentText" data-marquee-track></span>
       </p>
       <button
         class="gm-article__toc-toggle"

@@ -16,12 +16,12 @@ default .title -}} {{- end -}} {{- if and $key (not ($seen.Get $key)) -}} {{- $s
 <section class="gm-section gm-sponsors gm-section--full" id="mini-games">
   <div class="gm-container gm-container--fluid">
     <div class="gm-sponsors__inner">
-      <div class="gm-ticker" data-ticker>
+      <div class="gm-ticker" data-marquee="scroll">
         {{- if $noteText -}}
         <div class="gm-ticker__note gm-note--centered">{{ $noteText }}</div>
         {{- end -}}
-        <div class="gm-ticker__viewport" data-ticker-viewport>
-          <div class="gm-ticker__track" data-ticker-track>
+        <div class="gm-ticker__viewport" data-marquee-viewport>
+          <div class="gm-ticker__track" data-marquee-track>
             {{- range $uniqueItems -}} {{- if .Params -}} {{- $page := . -}} {{- $imageParam :=
             $page.Params.image -}} {{- $imageIsRemote := and $imageParam (hasPrefix $imageParam
             "http") -}} {{- $imageResource := "" -}} {{- $imageUrl := "" -}} {{- if and $imageParam

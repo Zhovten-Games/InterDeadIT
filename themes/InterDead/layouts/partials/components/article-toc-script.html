@@ -83,21 +83,6 @@
         return;
       }
 
-      const updateMarqueeState = () => {
-        if (!currentLabel || !currentText) return;
-
-        currentText.classList.remove('gm-article__toc-currentText--marquee');
-        currentText.style.removeProperty('--gm-toc-marquee-distance');
-
-        const requiresMarquee = currentText.scrollWidth - 2 > currentLabel.clientWidth;
-
-        if (requiresMarquee && mobileQuery.matches) {
-          const distance = currentText.scrollWidth + 32;
-          currentText.style.setProperty('--gm-toc-marquee-distance', `${distance}px`);
-          currentText.classList.add('gm-article__toc-currentText--marquee');
-        }
-      };
-
       const setActiveLink = (id) => {
         headingMap.forEach(({ id: targetId, link }) => {
           const isActive = targetId === id;
@@ -116,7 +101,6 @@
           toggle.setAttribute('data-active-label', activeText);
         }
 
-        updateMarqueeState();
       };
 
       const mobileQuery = window.matchMedia('(max-width: 979px)');
@@ -142,7 +126,6 @@
         mobileQuery.addEventListener('change', () => {
           toggle.dataset.expanded = mobileQuery.matches ? 'false' : 'true';
           updateCollapseState();
-          updateMarqueeState();
         });
 
         updateCollapseState();

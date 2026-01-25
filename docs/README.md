@@ -23,6 +23,7 @@ This documentation expands on the short README and is organized by responsibilit
 
 ## UI services
 
+- [Marquee controller](ui/marquee-controller.md)
 - [Modal service](ui/modal-service.md)
 - [Slider service](ui/slider-service.md)
 - [UI patterns](ui/patterns.md)
