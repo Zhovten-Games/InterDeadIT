@@ -97,11 +97,11 @@ _InterDead — психологически ориентированный хо�
 В настоящий момент проект поддерживает две публичные вики:
 
 - [https://interdead.fandom.com/ru/wiki/Interdead\_%D0%92%D0%B8%D0%BA%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
-dead_%D0%92%D0%B8%D0%BA%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
-D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
-D0%92%D0%B8%D0%BA%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
-%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
-D0%B8%D0%BA%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
+  dead*%D0%92%D0%B8%D0%BA%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead*%D0%92%D0%B8%D0%BA%D0%B8)
+  D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
+  D0%92%D0%B8%D0%BA%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
+  %D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
+  D0%B8%D0%BA%D0%B8](https://interdead.fandom.com/ru/wiki/Interdead_%D0%92%D0%B8%D0%BA%D0%B8)
 - [https://github.com/Zhovten-Games/InterDeadReferenceLibrary](https://github.com/Zhovten-Games/InterDeadReferenceLibrary)
 
 В них зафиксированы внутренняя логика приложения, используемая терминология и концептуальная структура.

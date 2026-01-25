@@ -26,7 +26,7 @@ The shortcode sends:
 The poll uses `strings.profileLink` to build the mini-profile link in completion notifications. The link is not rendered when `strings.profileLink` is empty, so always provide it when initializing the poll. A safe default is:
 
 ```js
-profileLink: "Open mini-profile"
+profileLink: 'Open mini-profile';
 ```
 
 Add a short note in `poll.js` near `buildProfileMessage` to emphasize the dependency on `strings.profileLink` if you adjust the mini-game runtime.

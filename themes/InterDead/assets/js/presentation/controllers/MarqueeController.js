@@ -79,11 +79,19 @@ class ScrollMarquee extends BaseMarquee {
     this.viewport.addEventListener('pointercancel', this.handlePointerUp);
     this.viewport.addEventListener('pointerleave', this.handlePointerUp);
 
-    this.cleanups.push(() => this.viewport.removeEventListener('pointerdown', this.handlePointerDown));
-    this.cleanups.push(() => this.viewport.removeEventListener('pointermove', this.handlePointerMove));
+    this.cleanups.push(() =>
+      this.viewport.removeEventListener('pointerdown', this.handlePointerDown),
+    );
+    this.cleanups.push(() =>
+      this.viewport.removeEventListener('pointermove', this.handlePointerMove),
+    );
     this.cleanups.push(() => this.viewport.removeEventListener('pointerup', this.handlePointerUp));
-    this.cleanups.push(() => this.viewport.removeEventListener('pointercancel', this.handlePointerUp));
-    this.cleanups.push(() => this.viewport.removeEventListener('pointerleave', this.handlePointerUp));
+    this.cleanups.push(() =>
+      this.viewport.removeEventListener('pointercancel', this.handlePointerUp),
+    );
+    this.cleanups.push(() =>
+      this.viewport.removeEventListener('pointerleave', this.handlePointerUp),
+    );
 
     this.updateMetrics();
 
@@ -196,7 +204,9 @@ class TextMarquee extends BaseMarquee {
 
     if (this.mediaQuery?.addEventListener) {
       this.mediaQuery.addEventListener('change', this.handleMediaChange);
-      this.cleanups.push(() => this.mediaQuery.removeEventListener('change', this.handleMediaChange));
+      this.cleanups.push(() =>
+        this.mediaQuery.removeEventListener('change', this.handleMediaChange),
+      );
     }
 
     if (this.windowRef?.MutationObserver) {
@@ -254,8 +264,7 @@ export default class MarqueeController {
     this.speed = speed;
     this.resumeDelayMs = resumeDelayMs;
     this.windowRef = windowRef;
-    this.prefersReducedMotion =
-      windowRef?.matchMedia?.('(prefers-reduced-motion: reduce)') || null;
+    this.prefersReducedMotion = windowRef?.matchMedia?.('(prefers-reduced-motion: reduce)') || null;
     this.scrollMarquees = [];
     this.textMarquees = [];
     this.animationFrame = null;

@@ -94,7 +94,7 @@ At this point it becomes clearer why InterDead is structured exactly the way it 
 
 There was no shot fired into the air: I simply sat down and began. I sketched out a prototype and the conceptual framework of a tool around which the entire dramaturgy was built — an application created by a scientist who spent years attempting to establish contact with the dead. At a certain point, he succeeded, though not in the form of an intimate conversation with a specific deceased individual.
 
-The broader context of this figure, as well as the internal logic of the application and its fictional lineage, are documented in the project’s wiki, where these elements are presented as parts of a coherent conceptual model. In shaping this model, we drew on various cultural and literary references — including the works of Clive Barker (*Books of Blood*, *Pulse*, and others), in which the boundary between “there” and “here” behaves like a poorly stitched zipper. These works are important for understanding the project’s mood and imagery, but they are not sources of its narrative or structural logic.
+The broader context of this figure, as well as the internal logic of the application and its fictional lineage, are documented in the project’s wiki, where these elements are presented as parts of a coherent conceptual model. In shaping this model, we drew on various cultural and literary references — including the works of Clive Barker (_Books of Blood_, _Pulse_, and others), in which the boundary between “there” and “here” behaves like a poorly stitched zipper. These works are important for understanding the project’s mood and imagery, but they are not sources of its narrative or structural logic.
 
 At present, the project maintains two public wikis:
 
