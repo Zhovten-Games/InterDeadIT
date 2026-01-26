@@ -11,6 +11,12 @@
     {{ partial "components/medium-typology-modal.html" . }}
     {{ partial "components/profile-delete-info-modal.html" . }}
     {{ partial "components/article-toc-script.html" . }}
+    <script
+      type="module"
+      src="https://zhovten-games.github.io/InterDeadProto/src/infrastructure/bootstrap/index.js"
+      data-interdead-embed="launcher"
+      data-interdead-src="https://zhovten-games.github.io/InterDeadProto/index.html"
+    ></script>
     {{- $scriptAsset := .Scratch.Get "interdeadScript" -}}
     {{- if $scriptAsset -}}
     <script
