@@ -1,0 +1,4 @@
+{{- $page := . -}}
+{{- $content := printf "%s\n\n%s\n\n%s\n\n%s" (i18n "profile.delete.infoLine1") (i18n "profile.delete.infoLine2") (i18n "profile.delete.infoLine3") (i18n "profile.delete.infoLine4") -}}
+{{- $markup := printf "{{< info-trigger titleKey=\"profile.delete.infoTitle\" labelKey=\"profile.delete.infoTrigger\" icon=\"?\" >}}\n%s\n{{< /info-trigger >}}" $content -}}
+{{- $page.RenderString $markup -}}

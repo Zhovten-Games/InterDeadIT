@@ -26,7 +26,16 @@ This documentation expands on the short README and is organized by responsibilit
 - [Marquee controller](ui/marquee-controller.md)
 - [Modal service](ui/modal-service.md)
 - [Slider service](ui/slider-service.md)
+- [Scroll effects controller](ui/scroll-effects-controller.md)
 - [UI patterns](ui/patterns.md)
+
+## Shortcodes
+
+- [Overview](shortcodes/overview.md)
+- [Info trigger](shortcodes/info-trigger.md)
+- [Posts informer](shortcodes/posts-informer.md)
+- [Running-line ticker](shortcodes/ticker.md)
+- [Tabs](shortcodes/tabs.md)
 
 ## Assets
 

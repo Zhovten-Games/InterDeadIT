@@ -2,7 +2,7 @@
 other = "М†"
 
 ['header.wordmark']
-other = "InterDead™"
+other = "InterDead"
 
 ['meta.title']
 other = "InterDead -- 死者のためのメッセンジャー"
@@ -41,10 +41,10 @@ other = "レビュー"
 other = "FAQ"
 
 ['menu.blog']
-other = "ミニゲーム"
+other = "アーティファクト"
 
 ['menu.blog.link']
-other = "ブログ"
+other = "NIRO IN NOIR"
 
 ['menu.modal.title']
 other = "ナビゲーション"
@@ -140,7 +140,7 @@ other = "ユーザー名"
 other = "プロフィールID"
 
 ['profile.efbd.title']
-other = "EFBDドシエ"
+other = "<a href=\"https://interdead.phantom-draft.com/ja/about/#psyframework%E3%83%97%E3%82%B7%E3%83%95%E3%83%AC%E3%83%BC%E3%83%A0%E3%83%AF%E3%83%BC%E3%82%AF\">EFBD</a> ドシエ"
 
 ['profile.efbd.lead']
 other = "このプロフィールで記録されたトリガーから作成されたEFBDスケールのスナップショットです。"
@@ -187,6 +187,9 @@ other = "彼は誰からも見える場所にいる。彼の弱さはもう彼�
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
+['minigames.poll.unauthenticated']
+other = "未ログインです。サイトのヘッダーにある認証ボタンからサインインすると、このアーティファクトが利用可能になります。"
+
 ['minigames.poll.title']
 other = "EFBD 共鳴チェック"
 
@@ -221,7 +224,7 @@ other = "塔の地図"
 other = "オープンベータ終了まで:"
 
 ['card.stamp.demo']
-other = "ベータ ver. 000.2"
+other = "ver. {{ .Version }}"
 
 ['story.imdb.label']
 other = "IMDb："
@@ -244,17 +247,23 @@ other = "メディウムの類型を開く"
 ['mediums.typology.closeLabel']
 other = "類型ダイアログを閉じる"
 
-['inevitable.title']
-other = "物語 起こるべくして起きた結果"
+['info.trigger.label']
+other = "追加情報を開く"
 
-['inevitable.item1']
-other = "「祖父がブーツに鍵を隠していたと知った。1分で見つかった」— マリーナ"
+['info.modal.title']
+other = "追加情報"
 
-['inevitable.item2']
-other = "「父が『そのローンは組むな』とメッセージを送ってきた。救われた」— 匿名"
+['info.modal.closeLabel']
+other = "情報ダイアログを閉じる"
 
-['inevitable.item3']
-other = "「息子がいなくなって3年。返信は彼ではなかったが、また息ができた」— T."
+['info.modal.loading']
+other = "情報を読み込み中…"
+
+['info.modal.error']
+other = "情報を読み込めませんでした。"
+
+['info.modal.empty']
+other = "利用可能な情報はありません。"
 
 ['faq.title']
 other = "質問と回答"
@@ -270,24 +279,12 @@ other = """
 結論（実務的だが）：頻繁に試みよ。呼びかけの位相を変え、時刻と言い回しを記録し、不一致や短い「寄生的」応答を記帳せよ。反復を重ねるほど符合の輪郭は収斂し、求めるその者との対話確率は幸運ではなく反復の法則によって高まる。規則性こそ、この時代遅れの小さな実験室に灯す主たる燭である。
 """
 
-['mission.title']
-other = "ミッション"
-
-['mission.lead.strong']
-other = "この使命に料金プランがあるとでも?"
-
-['mission.lead.rest']
-other = "ありません。ずっと無料です。"
-
-['mission.body']
-other = "私たちは寄付で活動しています――重さが和らいだなら支援してください。詳細は後日。"
-
 ['ticker.note']
-other = "死者との会話への迅速な適応。"
+other = "アーティファクト"
 
 
 ['footer.adult']
-other = "InterDead© — 死者のためのメッセンジャー。"
+other = "InterDead© (aka NOIR©) — 死者のためのメッセンジャー。"
 
 ['footer.note']
 other = "Zhovten Games は、いかなるサティライトの活動も管理していないことを皆さまにお伝えします。サティライト側は、自分たちのソフトウェアは99%の時間で動作し、これまでに当社アプリで呼び出された幽霊が生者を殺したと証明された事例は一度もないと述べています。どうぞ安心してテスターグループに参加してください。ここでは場違いに聞こえるかもしれませんが、「我らがスポンサーに栄光あれ！」"
@@ -350,6 +347,26 @@ other = "InterDeadログの最新エントリー。"
 ['agegate.informer.cta']
 other = "記事を開く"
 
+['latestPost.title']
+other = "最新のシグナル"
+
+['latestPost.subtitle']
+other = """
+最新の更新です――こちらが最新のブログ記事です。
+"""
+
+['latestPost.aria']
+other = "最新のブログ記事"
+
+['latestPost.cta']
+other = "記事を開く"
+
+['latestPost.btn']
+other = "続ける"
+
+['latestPost.close']
+other = "ウィンドウを閉じる"
+
 ['promo.fandom.eyebrow']
 other = "コミュニティ"
 
@@ -385,11 +402,14 @@ other = "カテゴリ"
 [blog.categoryLabel]
 other = "カテゴリ"
 
-["categories.miniGames"]
-other = "ミニゲーム"
+["blog.authorNotice"]
+other = "[Niro](https://interdead.fandom.com/ja/wiki/Niro) – メッセンジャー内のシステム内サポート・アシスタントであり、Incident NERO-01 後に、部分的な瞬間スナップショット（moment snapshot）の事故時記録を基にインスタンス化された。"
 
-["categories.metaUniverse"]
-other = "メタバース"
+["categories.artifacts"]
+other = "アーティファクト"
+
+["categories.spec"]
+other = "仕様"
 
 ["profile.delete"]
 other = "Delete profile"
@@ -426,3 +446,61 @@ other = "目次を開閉"
 
 ['article.toc.navLabel']
 other = "記事のセクション"
+
+['emojiProtocol.mode']
+other = "モード"
+
+['emojiProtocol.intent']
+other = "意図"
+
+['emojiProtocol.target']
+other = "対象"
+
+['emojiProtocol.range']
+other = "範囲"
+
+['emojiProtocol.policy']
+other = "ポリシー"
+
+['emojiProtocol.output']
+other = "出力"
+
+['emojiProtocol.ariaLabel']
+other = "絵文字プロトコルブロック"
+
+
+['minigames.poll2.option.mind']
+other = "Her voice continues, but something inside has already exceeded its limit. The words are no longer care — they are discharge."
+
+['minigames.poll2.option.social']
+other = "The ritual proceeds as if nothing is wrong. The structure absorbs the loss and keeps functioning."
+
+['minigames.poll2.option.abandon']
+other = "No one steps in. The night remains with her — and does not argue."
+
+['minigames.poll2.title']
+other = "EFBD resonance check — Pogost sequence"
+
+['minigames.poll2.prompt']
+other = "Select the vector that best describes your reaction after viewing the record."
+
+['minigames.poll2.submit']
+other = "Submit response"
+
+['minigames.poll2.success']
+other = "Response recorded. Check your EFBD dossier after syncing."
+
+['minigames.poll2.completed']
+other = "Mini-game already completed."
+
+['minigames.poll2.profileLink']
+other = "View your score in your profile."
+
+['minigames.poll2.error']
+other = "We could not record your vote. Please retry after reconnecting."
+
+['minigames.poll2.required']
+other = "Select one option to continue."
+
+['minigames.poll2.videoAlt']
+other = "Pogost sequence record"

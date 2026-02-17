@@ -9,7 +9,7 @@ staticDir = ["static", "assets"]
 theme = "InterDead"
 
 [taxonomies]
-  category = "categories"
+  blogcategory = "blog/categories"
 
 [permalinks]
   blog = "/blog/:slug/"
@@ -24,6 +24,8 @@ theme = "InterDead"
 
 [markup]
   [markup.goldmark]
+    [markup.goldmark.extensions]
+      table = true
     [markup.goldmark.renderer]
       unsafe = true
 
@@ -32,6 +34,7 @@ theme = "InterDead"
   defaultImage = "assets/images/logo.png"
   ogType = "website"
   twitterCard = "summary_large_image"
+  appVersion = "000.2"
 
   [params.navigation]
     [[params.navigation.items]]
@@ -60,8 +63,8 @@ theme = "InterDead"
     [[params.navigation.items]]
       id = "blog"
       i18nKey = "menu.blog"
-      url = "/categories/mini-games/"
-      targetId = "mini-games"
+      url = "/blog/"
+      targetId = "artifacts"
 
   [params.homeWidgets]
     [params.homeWidgets.stories]
@@ -69,7 +72,7 @@ theme = "InterDead"
       ids = []
 
     [params.homeWidgets.faq]
-      limit = 1
+      limit = 2
 
   [params.featureFlags]
     identityCoreEnabled = true
@@ -120,7 +123,7 @@ theme = "InterDead"
     [languages.en.params]
       description = "InterDead — the encrypted bridge once whispered as ‘Messenger for the dead.’ Join the closed beta to trace signals from beyond."
       legalTitle = "User Agreement"
-      blogTitle = "Blog"
+      blogTitle = "NIRO IN NOIR"
 
   [languages.ru]
     languageName = "Русский"
@@ -131,7 +134,7 @@ theme = "InterDead"
     [languages.ru.params]
       description = "InterDead — «Мессенджер для мертвых» с защищённым каналом шёпотов. Вступайте в закрытую бету и ловите сигналы из-за грани."
       legalTitle = "Пользовательское соглашение"
-      blogTitle = "Блог"
+      blogTitle = "NIRO IN NOIR"
 
   [languages.uk]
     languageName = "Українська"
@@ -142,7 +145,7 @@ theme = "InterDead"
     [languages.uk.params]
       description = "InterDead — «Месенджер для мертвих» із захищеним каналом шепотів. Долучайтеся до закритої бети та ловіть сигнали з-за межі."
       legalTitle = "Користувацька угода"
-      blogTitle = "Блог"
+      blogTitle = "NIRO IN NOIR"
 
   [languages.ja]
     languageName = "日本語"
@@ -153,4 +156,4 @@ theme = "InterDead"
     [languages.ja.params]
       description = "InterDead――かつて“死者のためのメッセンジャー”と囁かれた暗号化された橋。クローズドベータに参加して、彼方からの信号を追いかけてください。"
       legalTitle = "利用規約"
-      blogTitle = "ブログ"
+      blogTitle = "NIRO IN NOIR"

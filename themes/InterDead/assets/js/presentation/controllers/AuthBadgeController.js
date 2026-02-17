@@ -41,6 +41,7 @@ export default class AuthBadgeController {
       const usernameElement = root.querySelector('[data-auth-badge-username]');
       const avatarElement = root.querySelector('[data-auth-badge-avatar]');
       const avatarImage = root.querySelector('[data-auth-badge-avatar-img]');
+      const fallbackAvatar = avatarImage?.dataset?.authBadgeFallback || null;
       const linkTarget = root.matches?.('[data-auth-badge-link]')
         ? root
         : root.querySelector('[data-auth-badge-link]');
@@ -54,10 +55,10 @@ export default class AuthBadgeController {
 
       if (!hasSession) {
         if (usernameElement) usernameElement.textContent = '';
-        if (avatarElement) avatarElement.classList.add('auth-badge__avatar--empty');
+        if (avatarElement) avatarElement.classList.remove('auth-badge__avatar--empty');
         if (avatarImage) {
-          avatarImage.src = '';
-          avatarImage.alt = '';
+          avatarImage.src = fallbackAvatar || '';
+          avatarImage.alt = 'NIRO operator avatar';
         }
         return;
       }
@@ -70,14 +71,14 @@ export default class AuthBadgeController {
       }
       if (avatarElement) {
         const hasAvatar = Boolean(session.avatarUrl);
-        avatarElement.classList.toggle('auth-badge__avatar--empty', !hasAvatar);
+        avatarElement.classList.remove('auth-badge__avatar--empty');
         if (avatarImage) {
           if (hasAvatar) {
             avatarImage.src = session.avatarUrl;
             avatarImage.alt = `${displayName} avatar`;
           } else {
-            avatarImage.src = '';
-            avatarImage.alt = '';
+            avatarImage.src = fallbackAvatar || '';
+            avatarImage.alt = 'NIRO operator avatar';
           }
         }
       }

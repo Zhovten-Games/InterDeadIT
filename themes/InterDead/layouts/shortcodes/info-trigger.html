@@ -1,0 +1,47 @@
+{{- $icon := .Get "icon" | default "?" -}}
+{{- $label := .Get "label" -}}
+{{- if not $label -}}
+  {{- with .Get "labelKey" -}}
+    {{- $label = i18n . -}}
+  {{- else -}}
+    {{- $label = i18n "info.trigger.label" -}}
+  {{- end -}}
+{{- end -}}
+{{- $title := .Get "title" -}}
+{{- if not $title -}}
+  {{- with .Get "titleKey" -}}
+    {{- $title = i18n . -}}
+  {{- else -}}
+    {{- $title = i18n "info.modal.title" -}}
+  {{- end -}}
+{{- end -}}
+{{- $source := .Get "source" -}}
+{{- $selector := .Get "selector" -}}
+{{- $format := .Get "format" -}}
+{{- $modal := .Get "modal" -}}
+{{- $resume := .Get "resume" -}}
+{{- $inline := strings.TrimSpace .Inner -}}
+<span class="gm-infoTriggerWrapper" data-info-wrapper>
+  <button
+    class="gm-infoTrigger"
+    type="button"
+    data-info-trigger
+    data-info-title="{{ $title | htmlEscape }}"
+    {{- if $source }} data-info-source="{{ $source }}"{{- end }}
+    {{- if $selector }} data-info-selector="{{ $selector }}"{{- end }}
+    {{- if $format }} data-info-format="{{ $format }}"{{- end }}
+    {{- if $modal }} data-info-modal="{{ $modal }}"{{- end }}
+    {{- if $resume }} data-info-resume="{{ $resume }}"{{- end }}
+    aria-label="{{ $label | htmlEscape }}"
+    aria-haspopup="dialog"
+    aria-controls="gm-infoModal"
+    title="{{ $label | htmlEscape }}"
+  >
+    <span aria-hidden="true">{{ $icon }}</span>
+  </button>
+  {{- if $inline }}
+    <template data-info-content>
+      {{ $inline | markdownify }}
+    </template>
+  {{- end }}
+</span>

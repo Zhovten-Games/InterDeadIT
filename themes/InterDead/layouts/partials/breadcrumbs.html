@@ -2,6 +2,9 @@
   {{ $home := dict "title" (i18n "breadcrumbs.home") "url" ("/" | relLangURL) "current" false }}
   {{ $items := slice $home }}
   {{ $section := .CurrentSection }}
+  {{ if and (eq .Kind "term") (eq .Data.Plural "blog/categories") }}
+    {{ $section = site.GetPage "section" "blog" }}
+  {{ end }}
   {{ if and $section (ne $section.RelPermalink .RelPermalink) }}
     {{ $items = $items | append (dict "title" $section.Title "url" $section.RelPermalink "current" false) }}
   {{ end }}

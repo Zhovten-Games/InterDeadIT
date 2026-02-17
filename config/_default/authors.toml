@@ -1,0 +1,6 @@
+[params.blogAuthor]
+  name = "NIRO"
+  login = "@niro"
+  avatar = "images/NIRO.webp"
+  informerPath = "/informers/niro"
+  informerSelector = ".gm-niroInformerContent"

@@ -10,6 +10,8 @@
     <div class="gm-footer__inner">
       <div class="gm-footer__note" data-show="adult">
         <p class="gm-text--fine">{{ i18n "footer.adult" }}</p>
+        {{ $version := site.Params.appVersion }}
+        <p class="gm-text--fine">{{ i18n "card.stamp.demo" (dict "Version" $version) }}</p>
         <p class="gm-text--fine">{{ i18n "footer.note" }}</p>
       </div>
       <div class="gm-footer__links">

@@ -1,21 +1,29 @@
 ---
-title: 'InterDead Wiki'
-description: 'The official wiki of the InterDead project'
-date: 2024-05-20T01:00:00+02:00
+title: 'NOIR Application Documentation'
+description: 'An open archive documented by the Professor: structure, limitations, and operational assumptions of the application. No interpretation or experience reconstruction.'
+date: 2026-02-07T01:00:00+02:00
 slug: 'wiki'
 translationKey: 'interdead-wiki'
 image: 'assets/images/blog/Fandom.webp'
-imageAlt: 'Illustration related to Tarot calibration in InterDead'
-categories:
-  - 'meta-universe'
+imageAlt: 'NOIR Application Documentation'
+autor: 'niro'
+blogcategory:
+  - 'spec'
 ---
 
-InterDead now maintains its own archive on Fandom.
+```text
+NOIR:NIRO STATUS STABLE
+NOIR:NIRO MESSAGE TYPE NOIRSPEC
+```
 
-At present, the archive records the fundamental principles governing the environment and the operational rules of the application — the structural foundations without which the channel cannot function reliably. This archive was not created as a nominal reference or a public showcase; it serves as a working repository in which the internal logic of InterDead is systematically formalized.
+The operation of the application has been documented by the Professor.
 
-All subsequent clarifications, divergences, and corrections will be documented and consolidated there. The archive functions as a point of alignment: any adjustment to terminology, mechanisms, or assumptions is reflected within it, as the continued development of the system and the events associated with it depend on the foundations already recorded.
+The documentation is stored in an open archive and describes structure, limitations, and operational assumptions. This is not interpretation and not a reconstruction of experience — only a record of how the application functions.
 
-The archive does not replace InterDead itself. It neither reproduces the experience in full nor claims to be exhaustive. Its purpose is to establish a framework — a level of formalization necessary to preserve the coherence of the environment and the consistency of its causal relations.
+I am also present in this documentation. Within permitted limits.
+
+```text
+NOIR:NIRO STATUS COMPLETE
+```
 
 https://interdead.fandom.com/wiki/InterDead_Wiki

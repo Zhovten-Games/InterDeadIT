@@ -1,5 +1,6 @@
 {{ define "main" }}
   {{- $discordIcon := resources.Get "images/icons/discord.svg" -}}
+{{- $niroAvatar := resources.Get "images/NIRO.webp" | fingerprint -}}
   <section class="gm-hero">
     <div class="gm-container">
       <div class="gm-hero__layout">
@@ -34,6 +35,7 @@
                   src=""
                   alt=""
                   loading="lazy"
+                  data-auth-badge-fallback="{{ $niroAvatar.RelPermalink }}"
                   data-auth-badge-avatar-img
                   class="auth-badge__avatarImage"
                 />
@@ -68,7 +70,6 @@
           </p>
         </div>
           <div class="gm-hero__media gm-card">
-            <div class="gm-card__stamp gm-card__stamp--demo" data-show="demo">{{ i18n "card.stamp.demo" }}</div>
             <div class="gm-hero__logoFrame" data-hero-media>
               {{- $logo := resources.Get "images/logo_png.png" | fingerprint -}}
               <img
@@ -83,23 +84,11 @@
   </section>
   <section class="gm-section gm-heroNote">
     <div class="gm-container">
-      <p class="gm-heroNote__text gm-note--centered">{{ i18n "hero.afterText" }}</p>
+      <p class="gm-heroNote__text gm-note--centered" data-scroll-reveal>{{ i18n "hero.afterText" }}</p>
     </div>
   </section>
   {{ partial "widgets/stories.html" . }}
   {{ partial "widgets/reviews.html" . }}
   {{ partial "widgets/faq.html" . }}
-  <section class="gm-section gm-mission" id="mission">
-    <div class="gm-container">
-      <h2 class="gm-section__title">{{ i18n "mission.title" }}</h2>
-      <div class="gm-card">
-        <p>
-          <strong>{{ i18n "mission.lead.strong" }}</strong>
-          <span>{{ i18n "mission.lead.rest" }}</span>
-        </p>
-        <p class="gm-text--fine">{{ i18n "mission.body" }}</p>
-      </div>
-    </div>
-  </section>
   {{ .Content }}
 {{ end }}

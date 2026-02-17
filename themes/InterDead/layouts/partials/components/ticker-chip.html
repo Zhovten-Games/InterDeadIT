@@ -1,8 +1,16 @@
-{{- $title := .Title | default "" -}} {{- $url := .Url | default "#" -}} {{- $imageUrl := .ImageUrl
-| default "" -}} {{- $imageAlt := .ImageAlt | default $title -}}
+{{- $title := .Title | default "" -}}
+{{- $url := .Url | default "#" -}}
+{{- $imageUrl := .ImageUrl | default "" -}}
+{{- $imageAlt := .ImageAlt | default $title -}}
+{{- $description := .Description | default "" -}}
 <a class="gm-logoChip" href="{{ $url }}">
   {{- if $imageUrl -}}
-  <img class="gm-logoChip__image" src="{{ $imageUrl }}" alt="{{ $imageAlt }}" loading="lazy" />
+    <img class="gm-logoChip__image" src="{{ $imageUrl }}" alt="{{ $imageAlt }}" loading="lazy" />
   {{- end -}}
-  <span class="gm-logoChip__label">{{ $title }}</span>
+  <span class="gm-logoChip__body">
+    <span class="gm-logoChip__label">{{ $title }}</span>
+    {{- with $description -}}
+      <span class="gm-logoChip__description">{{ . }}</span>
+    {{- end -}}
+  </span>
 </a>

@@ -1,0 +1,7 @@
+{{- $page := . -}}
+{{- $typologyPage := $page.Site.GetPage "/blog/medium-typology" -}}
+{{- if $typologyPage -}}
+  {{- $source := $typologyPage.RelPermalink -}}
+  {{- $markup := printf "{{< info-trigger titleKey=\"mediums.typology.title\" labelKey=\"mediums.typology.openLabel\" source=\"%s\" selector=\".gm-mediumsTypologyContent\" icon=\"?\" />}}" $source -}}
+  {{- $page.RenderString $markup -}}
+{{- end -}}

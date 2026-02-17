@@ -1,0 +1,16 @@
+{{- $page := .page -}}
+{{- $section := .section | default "blog" -}}
+{{- $category := .category | default "artifacts" -}}
+{{- $limit := .limit | default 6 -}}
+
+{{- $categorySlug := strings.TrimSuffix "/" $category -}}
+{{- if strings.Contains $categorySlug "/" -}}
+  {{- $categorySlug = path.Base $categorySlug -}}
+{{- end -}}
+
+{{- $posts := where $page.Site.RegularPages "Section" $section -}}
+{{- if and (eq $section "blog") (ne $categorySlug "") -}}
+  {{- $posts = where $posts "Params.blogcategory" "intersect" (slice $categorySlug) -}}
+{{- end -}}
+
+{{- return first $limit ($posts.ByDate.Reverse) -}}

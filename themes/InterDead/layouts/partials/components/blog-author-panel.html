@@ -1,0 +1,44 @@
+{{- $page := . -}}
+{{- $defaultAuthor := dict "name" "NIRO" "login" "@niro" "avatar" "images/NIRO.webp" -}}
+{{- $authorKey := $page.Params.autor | default $page.Params.author -}}
+{{- $authors := $page.Site.Data.authors | default dict -}}
+{{- $author := $page.Site.Params.blogAuthor | default $defaultAuthor -}}
+{{- if $authorKey -}}
+  {{- $author = index $authors $authorKey | default $author -}}
+{{- end -}}
+{{- if eq $page.Section "blog" -}}
+  {{- $name := $author.name | default $defaultAuthor.name -}}
+  {{- $login := $author.login | default $defaultAuthor.login -}}
+  {{- $avatarPath := $author.avatar | default $defaultAuthor.avatar -}}
+  {{- $avatarResource := resources.GetMatch $avatarPath -}}
+  {{- $avatarUrl := "" -}}
+  {{- $avatarIntegrity := "" -}}
+  {{- if $avatarResource -}}
+    {{- $avatarAsset := $avatarResource | fingerprint -}}
+    {{- $avatarUrl = $avatarAsset.RelPermalink -}}
+    {{- $avatarIntegrity = $avatarAsset.Data.Integrity -}}
+  {{- else -}}
+    {{- $avatarUrl = $avatarPath | relURL -}}
+  {{- end -}}
+  <div class="gm-article__authorPanel">
+    <div class="gm-article__authorMeta">
+      <div class="gm-article__authorAvatar">
+        <img
+          src="{{ $avatarUrl }}"
+          {{- if $avatarIntegrity }} integrity="{{ $avatarIntegrity }}" crossorigin="anonymous"{{- end }}
+          alt="{{ $name }}"
+          loading="lazy"
+        />
+      </div>
+      <div class="gm-article__authorName">{{ $name }}</div>
+      <div class="gm-article__authorLogin">
+        <span class="gm-article__authorHandle">{{ $login }}</span>
+      </div>
+    </div>
+    <div class="gm-article__authorMessage" role="note">
+      <div class="gm-article__authorMessageInner">
+        {{- i18n "blog.authorNotice" | markdownify -}}
+      </div>
+    </div>
+  </div>
+{{- end -}}

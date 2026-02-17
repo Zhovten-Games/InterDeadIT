@@ -1,0 +1,10 @@
+{{- $page := . -}}
+{{- $section := $page.Section | default "" -}}
+{{- $param := "" -}}
+{{- $basePath := "" -}}
+{{- $label := i18n "blog.categories" -}}
+{{- if eq $section "blog" -}}
+  {{- $param = "blogcategory" -}}
+  {{- $basePath = "blog/categories" -}}
+{{- end -}}
+{{- return dict "param" $param "basePath" $basePath "label" $label -}}

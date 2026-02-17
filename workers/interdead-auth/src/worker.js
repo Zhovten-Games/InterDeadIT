@@ -875,7 +875,7 @@ class EfbdController {
     const profileId = this.resolveProfileId(trigger, session?.profileId);
     if (this.guardRepository && profileId) {
       const guard = await this.guardRepository.findByProfileId(profileId);
-      const gameId = trigger?.source || trigger?.context?.source || 'efbd-poll';
+      const gameId = trigger?.source || trigger?.context?.source || '1-efbd-poll';
       if (guard?.completedGames?.includes?.(gameId)) {
         return this.buildJsonResponse(
           { error: 'replay_blocked', reason: 'completed', message: 'Mini-game already completed.' },
@@ -913,7 +913,7 @@ class EfbdController {
         ],
       });
       if (this.guardRepository && profileId) {
-        const gameId = trigger?.source || trigger?.context?.source || 'efbd-poll';
+        const gameId = trigger?.source || trigger?.context?.source || '1-efbd-poll';
         await this.guardRepository.markCompleted(profileId, gameId);
       }
     } catch (error) {

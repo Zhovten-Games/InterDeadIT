@@ -1,0 +1,25 @@
+{{- $tabsId := printf "gm-tabs-%d" now.UnixNano -}}
+{{- $raw := .Inner | default "" -}}
+{{- $pattern := `(?s)\[\[tab\s+id="([^"]+)"\s+label="([^"]+)"\s*\]\](.*?)\[\[/tab\]\]` -}}
+{{- $matches := findRE $pattern $raw -}}
+{{- if gt (len $matches) 0 -}}
+  <div class="gm-tabs" id="{{ $tabsId }}" data-tabs>
+    {{- range $match := $matches -}}
+      {{- $id := replaceRE $pattern `${1}` $match -}}
+      {{- $label := replaceRE $pattern `${2}` $match -}}
+      {{- $content := replaceRE $pattern `${3}` $match -}}
+      <section
+        class="gm-tabs__panel"
+        data-tab-item
+        data-tab-id="{{ $id }}"
+        data-tab-label="{{ $label }}"
+      >
+        <h3 class="gm-tabs__fallbackTitle">{{ $label }}</h3>
+        {{ $.Page.RenderString (dict "display" "block") $content }}
+      </section>
+    {{- end -}}
+  </div>
+{{- else -}}
+  {{- /* Fallback for legacy syntax: render the body as-is. */ -}}
+  {{- .Page.RenderString (dict "display" "block") $raw -}}
+{{- end -}}

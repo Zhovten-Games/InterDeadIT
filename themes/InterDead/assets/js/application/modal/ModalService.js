@@ -123,6 +123,10 @@ export default class ModalService {
       this._removeFromResumeStack(instance.id);
     }
 
+    if (wasActive) {
+      this._openFollowUp(instance);
+    }
+
     return true;
   }
 
@@ -144,5 +148,23 @@ export default class ModalService {
       return;
     }
     this.resumeStack = this.resumeStack.filter((item) => item !== id);
+  }
+
+  _openFollowUp(instance) {
+    if (!instance || this.activeModal) {
+      return;
+    }
+    const followUpId = instance.followUpId;
+    if (!followUpId || followUpId === instance.id) {
+      return;
+    }
+    const followUp = this.modals.get(followUpId);
+    if (!followUp) {
+      return;
+    }
+    if (!followUp.shouldAutoOpen()) {
+      return;
+    }
+    this.open(followUpId);
   }
 }

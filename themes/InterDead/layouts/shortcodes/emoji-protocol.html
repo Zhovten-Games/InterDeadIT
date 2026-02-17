@@ -1,0 +1,16 @@
+{{- $items := slice
+  (dict "label" (i18n "emojiProtocol.mode") "value" (.Get "mode"))
+  (dict "label" (i18n "emojiProtocol.intent") "value" (.Get "intent"))
+  (dict "label" (i18n "emojiProtocol.target") "value" (.Get "target"))
+  (dict "label" (i18n "emojiProtocol.range") "value" (.Get "range"))
+  (dict "label" (i18n "emojiProtocol.policy") "value" (.Get "policy"))
+  (dict "label" (i18n "emojiProtocol.output") "value" (.Get "output"))
+-}}
+<div class="gm-emojiProtocol" role="list" aria-label="{{ i18n "emojiProtocol.ariaLabel" }}">
+  {{- range $items -}}
+    <span class="gm-emojiProtocol__line" role="listitem">
+      <span class="gm-emojiProtocol__label">{{ .label }}</span>
+      <span class="gm-emojiProtocol__value">{{ .value }}</span>
+    </span>
+  {{- end -}}
+</div>

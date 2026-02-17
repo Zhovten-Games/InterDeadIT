@@ -16,6 +16,17 @@ The modal system is built around `ModalService`, which orchestrates modal instan
 - `close(id, { remember })` unlocks scroll, updates the resume stack, and reopens the previous modal if needed.
 - The default view adapter toggles `gm-modal--open` and `aria-hidden` and can wire overlay clicks to `ModalService.close()`.
 
+## Data hooks
+
+These hooks keep template markup aligned with the modal API:
+
+- `data-modal`: modal id (required).
+- `data-modal-trigger`: id of the modal to open.
+- `data-modal-close`: optional explicit modal id to close.
+- `data-modal-resume`: set to `true` to resume the previous modal when the target closes.
+- `data-modal-remember`: set to `true` to persist modal-dismissed state in storage.
+- `data-modal-scroll`: scroll behavior (for example, `lock`).
+
 ## Usage guidance
 
 When adding a new modal:

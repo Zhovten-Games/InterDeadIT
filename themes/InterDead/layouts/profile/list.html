@@ -34,14 +34,7 @@
                   <button class="gm-button gm-button--danger gm-profile__delete" data-profile-delete data-i18n="profile.delete">
                     {{ i18n "profile.delete" }}
                   </button>
-                  <button
-                    class="gm-profile__infoButton"
-                    type="button"
-                    data-modal-trigger="profile-delete-info"
-                    aria-label="{{ i18n "profile.delete.infoTrigger" }}"
-                  >
-                    <span aria-hidden="true">?</span>
-                  </button>
+                  {{ partial "components/profile-delete-info-trigger.html" . }}
                 </div>
               </div>
             </dl>
@@ -57,7 +50,7 @@
         >
           <div class="gm-profile__cardHeader">
             <div>
-              <h2 class="gm-profile__subtitle" data-i18n="profile.efbd.title">{{ i18n "profile.efbd.title" }}</h2>
+              <h2 class="gm-profile__subtitle" data-i18n="profile.efbd.title">{{ i18n "profile.efbd.title" | safeHTML }}</h2>
               <p class="gm-profile__hint" data-i18n="profile.efbd.lead">{{ i18n "profile.efbd.lead" }}</p>
             </div>
             <div class="gm-profile__meta">

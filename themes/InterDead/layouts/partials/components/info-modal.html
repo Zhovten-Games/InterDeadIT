@@ -1,0 +1,36 @@
+{{- $title := i18n "info.modal.title" -}}
+<div
+  aria-labelledby="gm-infoModalTitle"
+  aria-modal="true"
+  aria-hidden="true"
+  class="gm-modal gm-infoModal"
+  data-modal="info-panel"
+  data-modal-scroll="lock"
+  data-modal-dialog-viewport-offset="60"
+  data-modal-dialog-width-mode="viewport"
+  data-info-modal
+  data-info-loading="{{ i18n "info.modal.loading" }}"
+  data-info-error="{{ i18n "info.modal.error" }}"
+  data-info-empty="{{ i18n "info.modal.empty" }}"
+  id="gm-infoModal"
+  role="dialog"
+>
+  <div class="gm-modal__dialog gm-infoModal__dialog">
+    <div class="gm-modal__header gm-modal__header--balanced">
+      <h2 class="gm-modal__title" id="gm-infoModalTitle" data-info-modal-title>{{ $title }}</h2>
+      <button
+        class="gm-modal__close"
+        type="button"
+        data-modal-close
+        aria-label="{{ i18n "info.modal.closeLabel" }}"
+      >×</button>
+    </div>
+    <div class="gm-modal__body gm-infoModal__body">
+      <p class="gm-infoModal__status" data-info-modal-status hidden></p>
+      <div
+        class="gm-infoModal__content gm-infoModal__content--tableContext gm-content"
+        data-info-modal-content
+      ></div>
+    </div>
+  </div>
+</div>

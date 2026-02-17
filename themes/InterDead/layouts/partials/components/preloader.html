@@ -1,0 +1,14 @@
+{{- $logo := resources.Get "images/logo_png.png" | fingerprint -}}
+<div class="gm-preloader" data-preloader aria-hidden="true">
+  <img
+    class="gm-preloader__logo"
+    src="{{ $logo.RelPermalink }}"
+    alt=""
+    draggable="false"
+    loading="eager"
+  />
+</div>
+
+<script>
+  document.body?.classList.add('gm-preloaderActive');
+</script>

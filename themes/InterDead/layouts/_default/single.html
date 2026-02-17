@@ -1,5 +1,5 @@
 {{ define "main" }}
-<article class="gm-section gm-article">
+<article class="gm-section gm-article{{ if eq .Section "blog" }} gm-article--blog{{ end }}">
   <div class="gm-container">
     <header class="gm-article__header">
       <div class="gm-article__heading">
@@ -21,20 +21,33 @@
         {{ partial "components/article-toc.html" (dict "toc" $toc) }}
       {{ end }}
       <div class="gm-card gm-article__body gm-content">
-        {{ if or .Params.categories (and .Date (ne .Section "blog")) }}
+    {{ $categoryConfig := partial "helpers/section-category-config.html" . }}
+    {{ $categoryParam := index $categoryConfig "param" }}
+    {{ $categoryBasePath := index $categoryConfig "basePath" }}
+    {{ $categoryLabel := index $categoryConfig "label" }}
+    {{ $categories := slice }}
+    {{ if $categoryParam }}
+      {{ $categories = index .Params $categoryParam | default (slice) }}
+    {{ end }}
+    {{ if or $categories (and .Date (ne .Section "blog")) (eq .Section "blog") }}
         <div class="gm-article__meta">
-          {{ if and (eq .Section "blog") .Params.categories }}
+          {{ if and (eq .Section "blog") $categories }}
           <span class="gm-categories__label gm-article__categoryLabel" data-i18n="blog.categoryLabel">
             {{ i18n "blog.categoryLabel" }}
           </span>
           {{ end }}
-          {{ partial "components/category-list.html" (dict "categories" .Params.categories "class" "gm-article__categories" "label" (i18n "blog.categories")) }}
+          {{ if $categories }}
+            {{ partial "components/category-list.html" (dict "page" . "site" .Site "categories" $categories "basePath" $categoryBasePath "class" "gm-article__categories" "label" $categoryLabel) }}
+          {{ end }}
           {{ if and .Date (ne .Section "blog") }}
           <p class="gm-text--fine gm-article__date">{{ .Date.Format "02 Jan 2006" }}</p>
           {{ end }}
         </div>
         {{ end }}
         {{ .Content }}
+        {{ if eq .Section "blog" }}
+          {{ partial "components/blog-author-panel.html" . }}
+        {{ end }}
       </div>
     </div>
   </div>

@@ -41,10 +41,10 @@ other = "Відгуки"
 other = "FAQ"
 
 ['menu.blog']
-other = "Міні-ігри"
+other = "Артефакти"
 
 ['menu.blog.link']
-other = "Блог"
+other = "NIRO IN NOIR"
 
 ['menu.modal.title']
 other = "Навігація"
@@ -86,7 +86,7 @@ other = "Тут досі відповідають мертві"
 other = "Ми створюємо месенджер для взаємодії з невідомим через інтерфейс, а не через прямий контакт. Це прототип — і саме тому ви можете стати його частиною. Незамінна панацея для медіумів усіх типів і, можливо, єдиний спосіб втамувати біль утрати, повіривши, що життя після смерті все-таки існує."
 
 ['hero.afterText']
-other = "Іноді достатньо інакше поставити запитання."
+other = "Іноді достатньо підняти повіки."
 
 ['gm.ctastart']
 other = "Підписатися"
@@ -140,7 +140,7 @@ other = "Ім'я користувача"
 other = "ID профілю"
 
 ['profile.efbd.title']
-other = "Досьє EFBD"
+other = "Досьє <a href=\"https://interdead.phantom-draft.com/uk/about/#psyframework\">EFBD</a>"
 
 ['profile.efbd.lead']
 other = "Знімок шкали EFBD відображає тригери, записані для цього профілю."
@@ -187,6 +187,9 @@ other = "Він на виду в усіх. Його слабкість уже н
 ['auth.efbd.hint']
 other = "EFBD triggers from mini-games sync here after sign-in; if the scale service is disabled they stay local without breaking gameplay."
 
+['minigames.poll.unauthenticated']
+other = "Ви не авторизовані. Увійдіть через кнопку авторизації в шапці сайту, щоб артефакт став доступним."
+
 ['minigames.poll.title']
 other = "Перевірка резонансу EFBD"
 
@@ -221,7 +224,7 @@ other = "Мапа Вежі"
 other = "Відкрита бета завершиться через:"
 
 ['card.stamp.demo']
-other = "BETA вер. 000.2"
+other = "вер. {{ .Version }}"
 
 ['story.imdb.label']
 other = "IMDb:"
@@ -244,17 +247,23 @@ other = "Відкрити типізацію медіумів"
 ['mediums.typology.closeLabel']
 other = "Закрити вікно типізації"
 
-['inevitable.title']
-other = "Історії, яким судилося статися"
+['info.trigger.label']
+other = "Відкрити додаткову інформацію"
 
-['inevitable.item1']
-other = "«Дізналася, що дід ховає ключі в чоботі. Знайшли за хвилину». — Марина"
+['info.modal.title']
+other = "Додаткова інформація"
 
-['inevitable.item2']
-other = "«Тато написав: “Не бери кредит”. Це врятувало». — Анонім"
+['info.modal.closeLabel']
+other = "Закрити вікно інформації"
 
-['inevitable.item3']
-other = "«Сина немає три роки. Відповів не він, але дихати стало легше». — Т."
+['info.modal.loading']
+other = "Завантаження інформації…"
+
+['info.modal.error']
+other = "Не вдалося завантажити інформацію."
+
+['info.modal.empty']
+other = "Немає доступної інформації."
 
 ['faq.title']
 other = "Питання та відповіді"
@@ -270,24 +279,12 @@ other = """
 Висновок (практичний): пробуйте частіше. Змінюйте фазу звернення, фіксуйте час і формулювання, ведіть журнал невідповідностей і коротких «паразитних» відповідей; накопичуючи ітерації, ви стягуєте контур збігу, і ймовірність розмови саме з тим, хто вам потрібен, зростає не з ласки випадку, а за законами повторення. Регулярність — головна свічка цієї несучасної лабораторії.
 """
 
-['mission.title']
-other = "Місія"
-
-['mission.lead.strong']
-other = "Які тарифи можуть бути у нашої місії?"
-
-['mission.lead.rest']
-other = "Жодних. Усе залишається безкоштовним."
-
-['mission.body']
-other = "Ми живемо на пожертви — підтримайте місію, якщо стало легше. Подробиці згодом."
-
 ['ticker.note']
-other = "Швидка адаптація до розмови з мертвими."
+other = "Артефакти"
 
 
 ['footer.adult']
-other = "InterDead© — Месенджер для мертвих."
+other = "InterDead© (aka NOIR©) — Месенджер для мертвих."
 
 ['footer.note']
 other = "Zhovten Games нагадує, що не контролює діяльність жодних Сатилітів. Сатиліти зазначають, що їхнє програмне забезпечення працює в 99% випадків і що ніколи не було доведеного випадку, коли привид, викликаний через наш застосунок, убив живу людину. Приєднуйтеся до групи тестувальників із упевненістю. Яким би недоречним це не здавалося тут: «Слава нашим спонсорам!»"
@@ -350,6 +347,26 @@ other = "Нова позначка в журналі InterDead."
 ['agegate.informer.cta']
 other = "Відкрити публікацію"
 
+['latestPost.title']
+other = "Останній сигнал"
+
+['latestPost.subtitle']
+other = """
+Слідкуйте за оновленнями — це свіжа публікація блогу.
+"""
+
+['latestPost.aria']
+other = "Останній пост у блозі"
+
+['latestPost.cta']
+other = "Відкрити публікацію"
+
+['latestPost.btn']
+other = "Продовжити"
+
+['latestPost.close']
+other = "Закрити вікно"
+
 ['promo.fandom.eyebrow']
 other = "Спільнота"
 
@@ -385,11 +402,14 @@ other = "Категорії"
 [blog.categoryLabel]
 other = "Категорія"
 
-["categories.miniGames"]
-other = "Міні-ігри"
+["blog.authorNotice"]
+other = "[Niro](https://interdead.fandom.com/uk/wiki/Niro) – внутрішньосистемний асистент підтримки в месенджері, інстанційований після Інцидент NERO-01 на основі аварійної фіксації часткового моментального зліпка (moment snapshot)."
 
-["categories.metaUniverse"]
-other = "Мета-всесвіт"
+["categories.artifacts"]
+other = "Артефакти"
+
+["categories.spec"]
+other = "Специфікації"
 
 ["profile.delete"]
 other = "Delete profile"
@@ -426,3 +446,61 @@ other = "Показати чи сховати зміст"
 
 ['article.toc.navLabel']
 other = "Розділи статті"
+
+['emojiProtocol.mode']
+other = "РЕЖИМ"
+
+['emojiProtocol.intent']
+other = "НАМІР"
+
+['emojiProtocol.target']
+other = "ЦІЛЬ"
+
+['emojiProtocol.range']
+other = "ДІАПАЗОН"
+
+['emojiProtocol.policy']
+other = "ПОЛІТИКА"
+
+['emojiProtocol.output']
+other = "ВИХІД"
+
+['emojiProtocol.ariaLabel']
+other = "Блок емодзі-протоколу"
+
+
+['minigames.poll2.option.mind']
+other = "Her voice continues, but something inside has already exceeded its limit. The words are no longer care — they are discharge."
+
+['minigames.poll2.option.social']
+other = "The ritual proceeds as if nothing is wrong. The structure absorbs the loss and keeps functioning."
+
+['minigames.poll2.option.abandon']
+other = "No one steps in. The night remains with her — and does not argue."
+
+['minigames.poll2.title']
+other = "EFBD resonance check — Pogost sequence"
+
+['minigames.poll2.prompt']
+other = "Select the vector that best describes your reaction after viewing the record."
+
+['minigames.poll2.submit']
+other = "Submit response"
+
+['minigames.poll2.success']
+other = "Response recorded. Check your EFBD dossier after syncing."
+
+['minigames.poll2.completed']
+other = "Mini-game already completed."
+
+['minigames.poll2.profileLink']
+other = "View your score in your profile."
+
+['minigames.poll2.error']
+other = "We could not record your vote. Please retry after reconnecting."
+
+['minigames.poll2.required']
+other = "Select one option to continue."
+
+['minigames.poll2.videoAlt']
+other = "Pogost sequence record"

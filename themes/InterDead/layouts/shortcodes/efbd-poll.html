@@ -1,6 +1,6 @@
-{{- $id := printf "efbd-poll-%d" now.UnixNano -}} {{- $styleAsset := resources.Get
+{{- $id := printf "efbd-poll-%d" now.UnixNano -}} {{- $gameId := .Get "gameId" | default "1-efbd-poll" -}} {{- $styleAsset := resources.Get
 "mini-games/efbd-poll/styles.css" | fingerprint -}} {{- $mapAsset := resources.Get
-"mini-games/efbd-poll/The-Tower.webp" | fingerprint -}} {{- $scriptOptions := dict "targetPath"
+"images/blog/ARTIFACT-THE_TOWER.webp" | fingerprint -}} {{- $scriptOptions := dict "targetPath"
 "js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}} {{- $scriptAsset :=
 resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}} {{-
 $runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not
@@ -9,7 +9,7 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
 (i18n "minigames.poll.option.social") "i18nKey" "minigames.poll.option.social") (dict "axis"
 "EBF-MIND" "label" (i18n "minigames.poll.option.mind") "i18nKey" "minigames.poll.option.mind") (dict
 "axis" "EBF-EXPOSURE" "label" (i18n "minigames.poll.option.exposure") "i18nKey"
-"minigames.poll.option.exposure") -}} {{- $strings := dict "title" (i18n "minigames.poll.title")
+"minigames.poll.option.exposure") -}} {{- $mediaType := .Get "mediaType" | default "image" -}} {{- $videoUrl := .Get "videoUrl" | default "" -}} {{- $media := dict "type" $mediaType "url" $videoUrl -}} {{- $strings := dict "title" (i18n "minigames.poll.title")
 "prompt" (i18n "minigames.poll.prompt") "submit" (i18n "minigames.poll.submit") "success" (i18n
 "minigames.poll.success") "completed" (i18n "minigames.poll.completed") "profileLink" (i18n
 "minigames.poll.profileLink") "error" (i18n "minigames.poll.error") "required" (i18n
@@ -33,8 +33,8 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
   data-minigame-root
   data-map-url="{{ $mapAsset.RelPermalink }}"
 >
-  <div class="gm-minigame__fallback" data-minigame-fallback data-i18n="profile.unauthenticated">
-    {{ i18n "profile.unauthenticated" }}
+  <div class="gm-minigame__fallback" data-minigame-fallback data-i18n="minigames.poll.unauthenticated">
+    {{ i18n "minigames.poll.unauthenticated" }}
   </div>
   <div class="gm-minigame__mount" data-minigame-mount hidden></div>
 </div>
@@ -51,6 +51,8 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
     strings: {{ $strings | jsonify }},
     stringKeys: {{ $stringKeys | jsonify }},
     mapUrl: {{ $mapAsset.RelPermalink | jsonify }},
-    locale: {{ .Site.Language.Lang | jsonify }}
+    media: {{ $media | jsonify }},
+    locale: {{ .Site.Language.Lang | jsonify }},
+    gameId: {{ $gameId | jsonify }}
   });
 </script>

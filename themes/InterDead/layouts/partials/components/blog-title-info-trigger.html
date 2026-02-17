@@ -1,0 +1,4 @@
+{{- $page := . -}}
+{{- $content := i18n "blog.authorNotice" -}}
+{{- $markup := printf "{{< info-trigger icon=\"?\" >}}\n%s\n{{< /info-trigger >}}" $content -}}
+{{- $page.RenderString $markup -}}

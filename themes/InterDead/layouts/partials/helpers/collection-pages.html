@@ -1,0 +1,14 @@
+{{- $page := . -}}
+{{- $pages := $page.Pages -}}
+
+{{- if and (eq $page.Kind "term") (eq $page.Data.Plural "blog/categories") -}}
+  {{- $term := $page.Data.Term -}}
+  {{- $pages = where
+        (where $page.Site.RegularPages "Section" "blog")
+        "Params.blogcategory"
+        "intersect"
+        (slice $term)
+  -}}
+{{- end -}}
+
+{{- return $pages -}}

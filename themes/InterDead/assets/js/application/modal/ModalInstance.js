@@ -13,12 +13,18 @@ export default class ModalInstance {
     return this.entity?.id ?? null;
   }
 
+  get followUpId() {
+    return this.entity?.getFollowUpId?.() ?? '';
+  }
+
   open() {
     if (!this.entity || !this.view) {
       return false;
     }
     const opened = this.view.open({
       onOverlay: this.entity.closeOnOverlay ? () => this.service.close(this.id) : null,
+      dialogViewportOffset: this.entity.getDialogViewportOffset(),
+      dialogWidthMode: this.entity.getDialogWidthMode(),
     });
     return opened;
   }

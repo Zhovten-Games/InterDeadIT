@@ -1,4 +1,5 @@
 {{ partial "head.html" . }}
+    {{ partial "components/preloader.html" . }}
     {{ partial "header.html" . }}
     <main class="gm-main">
       {{ partial "breadcrumbs.html" . }}
@@ -8,8 +9,8 @@
     {{ partial "language-modal.html" . }}
     {{ partial "menu-modal.html" . }}
     {{ partial "age-gate.html" . }}
-    {{ partial "components/medium-typology-modal.html" . }}
-    {{ partial "components/profile-delete-info-modal.html" . }}
+    {{ partial "latest-post-modal.html" . }}
+    {{ partial "components/info-modal.html" . }}
     {{ partial "components/article-toc-script.html" . }}
     <script
       type="module"
@@ -18,6 +19,7 @@
       data-interdead-src="https://zhovten-games.github.io/InterDeadProto/index.html"
       data-interdead-assets-base="https://zhovten-games.github.io/InterDeadProto/assets/"
     ></script>
+    <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
     {{- $scriptAsset := .Scratch.Get "interdeadScript" -}}
     {{- if $scriptAsset -}}
     <script

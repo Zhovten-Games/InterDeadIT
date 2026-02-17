@@ -171,6 +171,8 @@ export function initEfbdPoll({
   stringKeys = {},
   logger = console,
   mapUrl,
+  media = {},
+  gameId = '1-efbd-poll',
 } = {}) {
   const logContext = {
     id: root?.id || '(unknown)',
@@ -229,7 +231,21 @@ export function initEfbdPoll({
 
   const resolvedMapUrl = sanitizeMapUrl(mapUrl || root?.dataset?.mapUrl || strings.mapUrl);
 
-  if (resolvedMapUrl) {
+  const mediaType = typeof media.type === 'string' ? media.type : 'image';
+  const resolvedVideoUrl = typeof media.url === 'string' ? sanitizeMapUrl(media.url) : '';
+
+  if (mediaType === 'video' && resolvedVideoUrl) {
+    const videoFrame = documentRef.createElement('iframe');
+    videoFrame.className = 'gm-poll__map-video';
+    videoFrame.src = resolvedVideoUrl;
+    videoFrame.title = mergedStrings.mapAlt;
+    videoFrame.loading = 'lazy';
+    videoFrame.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    videoFrame.referrerPolicy = 'strict-origin-when-cross-origin';
+    videoFrame.allowFullscreen = true;
+    mapFrame.appendChild(videoFrame);
+  } else if (resolvedMapUrl) {
     const mapImage = documentRef.createElement('img');
     mapImage.className = 'gm-poll__map-image';
     mapImage.src = resolvedMapUrl;
@@ -267,7 +283,7 @@ export function initEfbdPoll({
   optionsList.className = 'gm-poll__options';
 
   normalizedOptions.forEach((option, index) => {
-    const optionId = `${root.id || 'efbd-poll'}-${index}`;
+    const optionId = `${root.id || '1-efbd-poll'}-${index}`;
     const optionWrapper = documentRef.createElement('label');
     optionWrapper.className = 'gm-poll__option';
     optionWrapper.htmlFor = optionId;
@@ -365,7 +381,7 @@ export function initEfbdPoll({
       axis,
       value: 1,
       context: {
-        source: 'efbd-poll',
+        source: gameId,
         answerKey: axis,
         locale,
         timestamp: new Date().toISOString(),

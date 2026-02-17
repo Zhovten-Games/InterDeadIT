@@ -1,0 +1,66 @@
+{{- $id := printf "efbd-poll-2-%d" now.UnixNano -}}
+{{- $gameId := .Get "gameId" | default "2-efbd-poll" -}}
+{{- $styleAsset := resources.Get "mini-games/efbd-poll/styles.css" | fingerprint -}}
+{{- $mapAsset := resources.Get "images/blog/ARTIFACT-THE_TOWER.webp" | fingerprint -}}
+{{- $scriptOptions := dict "targetPath" "js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}}
+{{- $scriptAsset := resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}}
+{{- $runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not hugo.IsServer) -}}
+{{- $runtimeAsset := resources.Get "js/application/minigame/runtime.js" | js.Build $runtimeOptions | fingerprint -}}
+{{- $options := slice
+  (dict "axis" "EBF-MIND" "label" (i18n "minigames.poll2.option.mind") "i18nKey" "minigames.poll2.option.mind")
+  (dict "axis" "EBF-SOCIAL" "label" (i18n "minigames.poll2.option.social") "i18nKey" "minigames.poll2.option.social")
+  (dict "axis" "EBF-ABANDON" "label" (i18n "minigames.poll2.option.abandon") "i18nKey" "minigames.poll2.option.abandon")
+-}}
+{{- $videoUrl := .Get "videoUrl" | default "https://www.youtube.com/embed/sw63yEVj4AM" -}}
+{{- $media := dict "type" "video" "url" $videoUrl -}}
+{{- $strings := dict
+  "title" (i18n "minigames.poll2.title")
+  "prompt" (i18n "minigames.poll2.prompt")
+  "submit" (i18n "minigames.poll2.submit")
+  "success" (i18n "minigames.poll2.success")
+  "completed" (i18n "minigames.poll2.completed")
+  "profileLink" (i18n "minigames.poll2.profileLink")
+  "error" (i18n "minigames.poll2.error")
+  "required" (i18n "minigames.poll2.required")
+  "mapAlt" (i18n "minigames.poll2.videoAlt")
+  "mapUrl" $mapAsset.RelPermalink
+-}}
+{{- $stringKeys := dict
+  "title" "minigames.poll2.title"
+  "prompt" "minigames.poll2.prompt"
+  "submit" "minigames.poll2.submit"
+  "success" "minigames.poll2.success"
+  "completed" "minigames.poll2.completed"
+  "profileLink" "minigames.poll2.profileLink"
+  "error" "minigames.poll2.error"
+  "required" "minigames.poll2.required"
+  "mapAlt" "minigames.poll2.videoAlt"
+-}}
+{{- if not ($.Page.Scratch.Get "miniGameRuntimeInjected") -}}
+<script type="module" src="{{ $runtimeAsset.RelPermalink }}" integrity="{{ $runtimeAsset.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- $.Page.Scratch.Set "miniGameRuntimeInjected" true -}}
+{{- end -}}
+<div class="gm-minigame gm-minigame--poll" id="{{ $id }}" data-minigame-root data-map-url="{{ $mapAsset.RelPermalink }}">
+  <div class="gm-minigame__fallback" data-minigame-fallback data-i18n="minigames.poll.unauthenticated">
+    {{ i18n "minigames.poll.unauthenticated" }}
+  </div>
+  <div class="gm-minigame__mount" data-minigame-mount hidden></div>
+</div>
+<script>
+  window.InterdeadMiniGamesQueue = window.InterdeadMiniGamesQueue || [];
+  window.InterdeadMiniGamesQueue.push({
+    rootId: {{ $id | jsonify }},
+    assets: {
+      styleUrl: {{ $styleAsset.RelPermalink | jsonify }},
+      styleIntegrity: {{ $styleAsset.Data.Integrity | jsonify }},
+      scriptUrl: {{ $scriptAsset.RelPermalink | jsonify }}
+    },
+    options: {{ $options | jsonify }},
+    strings: {{ $strings | jsonify }},
+    stringKeys: {{ $stringKeys | jsonify }},
+    mapUrl: {{ $mapAsset.RelPermalink | jsonify }},
+    media: {{ $media | jsonify }},
+    locale: {{ .Site.Language.Lang | jsonify }},
+    gameId: {{ $gameId | jsonify }}
+  });
+</script>

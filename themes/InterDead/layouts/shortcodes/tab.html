@@ -1,0 +1,3 @@
+{{- $tabs := .Parent.Scratch.Get "tabsItems" | default (slice) -}}
+{{- $item := dict "title" (.Get "title" | default "Tab") "content" .Inner -}}
+{{- .Parent.Scratch.Set "tabsItems" ($tabs | append $item) -}}

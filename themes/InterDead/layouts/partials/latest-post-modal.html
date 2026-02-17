@@ -1,0 +1,84 @@
+{{- $latestPost := index (first 1 (sort (where .Site.RegularPages "Section" "blog") "Date" "desc")) 0 -}}
+{{- if $latestPost -}}
+<div
+  class="gm-modal gm-latestPostModal"
+  data-modal="latest-post"
+  data-modal-auto="true"
+  data-modal-storage="gm_latest_post_viewed"
+  data-modal-storage-version="{{ $latestPost.Date.Unix }}"
+  data-modal-requires-storage="gm_age_mode"
+  data-modal-close-on-overlay="false"
+  data-modal-scroll="lock"
+  id="gm-latestPostModal"
+  role="dialog"
+  aria-modal="true"
+  aria-hidden="true"
+  aria-labelledby="gm-latestPostTitle"
+>
+  <div class="gm-modal__dialog gm-ageGate__dialog">
+    <div class="gm-modal__header">
+      <h2 class="gm-modal__title" id="gm-latestPostTitle">{{ i18n "latestPost.title" }}</h2>
+      <button
+        class="gm-modal__close"
+        type="button"
+        data-modal-close
+        data-modal-remember="true"
+        aria-label="{{ i18n "latestPost.close" }}"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="gm-modal__body gm-ageGate__content">
+      <div class="gm-ageGate__section gm-ageGate__section--secondary">
+        <div class="gm-ageGate__sectionIntro gm-content">
+          {{ (i18n "latestPost.subtitle") | markdownify }}
+        </div>
+        <div class="gm-ageGate__divider" aria-hidden="true"></div>
+        <div class="gm-ageGate__latest gm-content" aria-label="{{ i18n "latestPost.aria" }}">
+          {{- $imageParam := $latestPost.Params.image -}}
+          {{- $imageIsRemote := and $imageParam (hasPrefix $imageParam "http") -}}
+          {{- $imageResource := "" -}}
+          {{- if and $imageParam (not $imageIsRemote) -}}
+            {{- with resources.GetMatch (printf "images/blog/**%s" (path.Base $imageParam)) -}}
+              {{- $copied := resources.Copy (printf "assets/images/blog/%s" (path.Base .Name)) . -}}
+              {{- $imageResource = $copied | fingerprint -}}
+            {{- end -}}
+          {{- end -}}
+          {{- $imageAlt := $latestPost.Params.imageAlt | default $latestPost.Title -}}
+          <p>{{ $latestPost.Title }}</p>
+          {{- if $imageParam -}}
+            <figure class="gm-ageGate__latestImage">
+              {{- if $imageIsRemote -}}
+                <img src="{{ $imageParam }}" alt="{{ $imageAlt }}" loading="lazy" />
+              {{- else if $imageResource -}}
+                <img src="{{ $imageResource.RelPermalink }}" alt="{{ $imageAlt }}" loading="lazy" />
+              {{- else -}}
+                <img src="{{ $imageParam | absURL }}" alt="{{ $imageAlt }}" loading="lazy" />
+              {{- end -}}
+            </figure>
+          {{- end -}}
+          {{ with $latestPost.Date }}<p>{{ .Format "02 Jan 2006" }}</p>{{ end }}
+          {{ with $latestPost.Params.description }}
+            <p>{{ . }}</p>
+          {{ else }}
+            {{ with $latestPost.Summary }}
+              <p>{{ plainify . }}</p>
+            {{ end }}
+          {{ end }}
+          <p>
+            <a href="{{ $latestPost.RelPermalink }}" target="_blank" rel="noopener">{{ i18n "latestPost.cta" }}</a>
+          </p>
+        </div>
+      </div>
+      <div class="gm-ageGate__row">
+        <button
+          class="gm-btn gm-btn--primary"
+          type="button"
+          data-modal-close
+          data-modal-remember="true"
+        >{{ i18n "latestPost.btn" }}</button>
+      </div>
+    </div>
+  </div>
+</div>
+{{- end -}}

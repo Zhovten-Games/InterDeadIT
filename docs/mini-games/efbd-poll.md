@@ -5,6 +5,7 @@ The EFBD poll is the canonical mini-game implementation and the reference for ne
 ## Shortcode location
 
 - `themes/InterDead/layouts/shortcodes/efbd-poll.html`
+- `themes/InterDead/layouts/shortcodes/efbd-poll-2.html`
 
 The shortcode fingerprints its CSS and JS, injects the mini-game runtime, and queues configuration into `window.InterdeadMiniGamesQueue`.
 
@@ -44,7 +45,7 @@ The poll calls `scalePort.recordAnswer` with the following payload:
   "axis": "EBF-SOCIAL",
   "value": 1,
   "context": {
-    "source": "efbd-poll",
+    "source": "1-efbd-poll",
     "answerKey": "EBF-SOCIAL",
     "locale": "en",
     "timestamp": "2024-01-01T00:00:00.000Z"
@@ -53,3 +54,17 @@ The poll calls `scalePort.recordAnswer` with the following payload:
 ```
 
 The `recordAnswer` call resolves to a status object so the UI can show success or error feedback.
+
+## Multiple poll instances
+
+Use shortcode parameters to deploy independent polls with isolated replay guards:
+
+```md
+{{< efbd-poll gameId="1-efbd-poll" >}}
+{{< efbd-poll gameId="2-efbd-poll" mediaType="video" videoUrl="https://www.youtube.com/embed/sw63yEVj4AM" >}}
+```
+
+- `gameId` is forwarded to EFBD trigger `context.source` and used by the replay guard.
+- `mediaType="video"` + `videoUrl` switches poll header media from image to embedded video.
+
+`efbd-poll-2` is a dedicated second poll preset that keeps the same mechanics but uses a separate `gameId` (`2-efbd-poll`), the MIND/SOCIAL/ABANDON axes, and an embedded video header by default.

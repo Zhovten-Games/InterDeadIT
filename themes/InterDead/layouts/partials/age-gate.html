@@ -6,6 +6,7 @@
   data-modal="ageGate"
   data-modal-auto="true"
   data-modal-storage="gm_age_mode"
+  data-modal-follow-up="latest-post"
   data-modal-close-on-overlay="false"
   data-modal-scroll="lock"
   id="gm-ageGate"
@@ -26,29 +27,6 @@
       <div class="gm-ageGate__section gm-ageGate__section--primary">
         {{ (i18n "agegate.sectionPrimary" $context) | markdownify }}
       </div>
-      {{- $latestPost := index (first 1 (sort (where .Site.RegularPages "Section" "blog") "Date" "desc")) 0 -}}
-      {{- if $latestPost }}
-      <div class="gm-ageGate__section gm-ageGate__section--secondary">
-        <div class="gm-ageGate__sectionIntro gm-content">
-          {{ (i18n "agegate.sectionSecondary" $context) | markdownify }}
-        </div>
-        <div class="gm-ageGate__divider" aria-hidden="true"></div>
-        <div class="gm-ageGate__latest gm-content" aria-label="{{ i18n "agegate.informer.title" }}">
-          <p>{{ $latestPost.Title }}</p>
-          {{ with $latestPost.Date }}<p>{{ .Format "02 Jan 2006" }}</p>{{ end }}
-          {{ with $latestPost.Params.description }}
-            <p>{{ . }}</p>
-          {{ else }}
-            {{ with $latestPost.Summary }}
-              <p>{{ plainify . }}</p>
-            {{ end }}
-          {{ end }}
-          <p>
-            <a href="{{ $latestPost.RelPermalink }}" target="_blank" rel="noopener">{{ i18n "agegate.informer.cta" }}</a>
-          </p>
-        </div>
-      </div>
-      {{- end }}
     </div>
     <div class="gm-ageGate__row">
       <button

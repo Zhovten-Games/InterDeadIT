@@ -1,4 +1,5 @@
 {{- $discordIcon := resources.Get "images/icons/discord.svg" -}}
+{{- $niroAvatar := resources.Get "images/NIRO.webp" | fingerprint -}}
 <header class="gm-header">
   <div class="gm-container gm-header__bar">
     <div class="gm-header__logo" data-header-logo>
@@ -23,7 +24,7 @@
         aria-label="{{ i18n "header.menu.toggle" }}"
       >
         <span class="gm-header__wordmarkLabel gm-header__wordmarkLabel--full">{{ i18n "header.wordmark" }}</span>
-        <span class="gm-header__wordmarkLabel gm-header__wordmarkLabel--compact" aria-hidden="true">ID</span>
+        <span class="gm-header__wordmarkLabel gm-header__wordmarkLabel--compact" aria-hidden="true"></span>
       </button>
     </div>
     <nav class="gm-header__nav" aria-label="Primary actions">
@@ -44,13 +45,14 @@
             aria-label="{{ i18n "auth.badge.viewProfile" }}"
           >
             <span class="auth-badge__avatar" data-auth-badge-avatar>
-              <img
-                src=""
-                alt=""
-                loading="lazy"
-                data-auth-badge-avatar-img
-                class="auth-badge__avatarImage"
-              />
+                <img
+                  src=""
+                  alt=""
+                  loading="lazy"
+                  data-auth-badge-fallback="{{ $niroAvatar.RelPermalink }}"
+                  data-auth-badge-avatar-img
+                  class="auth-badge__avatarImage"
+                />
             </span>
             <span class="auth-badge__meta">
               <span class="auth-badge__label" data-i18n="auth.badge.loggedInAs">{{ i18n "auth.badge.loggedInAs" }}</span>

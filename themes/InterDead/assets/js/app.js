@@ -3,7 +3,6 @@ import ModalService from './application/modal/ModalService.js';
 import AgeModeService from './application/age/AgeModeService.js';
 import AgeGateController from './presentation/controllers/AgeGateController.js';
 import HeaderActionsController from './presentation/controllers/HeaderActionsController.js';
-import HeaderLogoController from './presentation/controllers/HeaderLogoController.js';
 import MetadataController from './presentation/controllers/MetadataController.js';
 import CountdownController from './presentation/controllers/CountdownController.js';
 import SliderController from './presentation/controllers/SliderController.js';
@@ -15,6 +14,8 @@ import MarqueeController from './presentation/controllers/MarqueeController.js';
 import ModalView from './infrastructure/ui/ModalView.js';
 import ModalDomMapper from './infrastructure/ui/ModalDomMapper.js';
 import DocumentScrollController from './infrastructure/ui/DocumentScrollController.js';
+import InfoContentAdapter from './infrastructure/info/InfoContentAdapter.js';
+import InfoPanelView from './infrastructure/ui/InfoPanelView.js';
 import FeatureFlagService from './application/config/FeatureFlagService.js';
 import EventBus from './application/events/EventBus.js';
 import DiscordAuthService from './application/auth/DiscordAuthService.js';
@@ -30,6 +31,13 @@ import EfbdScaleBridgeService from './application/efbd/EfbdScaleBridgeService.js
 import HomeAuthController from './presentation/controllers/HomeAuthController.js';
 import NotificationService from './application/notification/NotificationService.js';
 import ProfileCleanupAdapter from './infrastructure/auth/ProfileCleanupAdapter.js';
+import InfoPanelService from './application/info/InfoPanelService.js';
+import MarkdownRenderer from './application/info/MarkdownRenderer.js';
+import InfoTriggerController from './presentation/controllers/InfoTriggerController.js';
+import AppPreloaderController from './presentation/controllers/AppPreloaderController.js';
+import TwemojiController from './presentation/controllers/TwemojiController.js';
+import ScrollEffectsController from './presentation/controllers/ScrollEffectsController.js';
+import TabsController from './presentation/controllers/TabsController.js';
 
 const storage = new LocalStorageAdapter();
 const scrollController = new DocumentScrollController({ target: document.body });
@@ -57,12 +65,6 @@ const headerActionsController = new HeaderActionsController({
 });
 headerActionsController.boot();
 
-const headerLogoController = new HeaderLogoController({
-  logoElement: document.querySelector('[data-header-logo]'),
-  targetElement: document.querySelector('[data-hero-media]'),
-});
-headerLogoController.init();
-
 const ageService = new AgeModeService(storage);
 const ageGateController = new AgeGateController({
   body: document.body,
@@ -87,6 +89,32 @@ const modalCloseController = new ModalCloseController({
 });
 modalCloseController.init();
 
+const infoPanelView = new InfoPanelView({
+  modalId: 'info-panel',
+  titleElement: document.querySelector('[data-info-modal-title]'),
+  contentElement: document.querySelector('[data-info-modal-content]'),
+  statusElement: document.querySelector('[data-info-modal-status]'),
+  defaultTitle: document.querySelector('[data-info-modal-title]')?.textContent || '',
+  messages: {
+    loading: document.querySelector('[data-info-modal]')?.dataset?.infoLoading || '',
+    error: document.querySelector('[data-info-modal]')?.dataset?.infoError || '',
+    empty: document.querySelector('[data-info-modal]')?.dataset?.infoEmpty || '',
+  },
+});
+const markedRef = typeof window !== 'undefined' ? window.marked : null;
+const infoPanelService = new InfoPanelService({
+  adapter: new InfoContentAdapter(),
+  modalService,
+  view: infoPanelView,
+  markdownRenderer: new MarkdownRenderer({ marked: markedRef }),
+});
+const infoTriggerController = new InfoTriggerController({
+  triggers: Array.from(document.querySelectorAll('[data-info-trigger]')),
+  infoService: infoPanelService,
+  defaultModalId: 'info-panel',
+});
+infoTriggerController.init();
+
 modalService.autoShow();
 
 const isHome = document.body?.dataset?.isHome === 'true';
@@ -106,9 +134,78 @@ const marqueeController = new MarqueeController({
 });
 marqueeController.init();
 
+const tabsController = new TabsController({
+  roots: Array.from(document.querySelectorAll('[data-tabs]')),
+});
+tabsController.init();
+
+const twemojiController = new TwemojiController({
+  root: document.body,
+  observerTarget: document.body,
+  twemoji: window.twemoji,
+});
+twemojiController.init();
+
+const headerLogoElement = document.querySelector('[data-header-logo]');
+const heroMediaElement = document.querySelector('[data-hero-media]');
+const sliderElement = document.querySelector('.gm-slider');
+const sliderScoreboard = sliderElement?.querySelector('[data-scoreboard]') || null;
+const headerLogoVisibilityScene =
+  isHome && headerLogoElement && heroMediaElement
+    ? {
+        elements: [heroMediaElement],
+        threshold: 0.35,
+        onEnter: () => headerLogoElement.classList.remove('gm-header__logo--visible'),
+        onLeave: () => headerLogoElement.classList.add('gm-header__logo--visible'),
+      }
+    : null;
+
+if (!isHome && headerLogoElement) {
+  headerLogoElement.classList.add('gm-header__logo--visible');
+}
+
+const scrollEffectsController = new ScrollEffectsController({
+  intersectionScenes: [
+    {
+      elements: Array.from(document.querySelectorAll('[data-scroll-reveal]')),
+      hiddenClass: 'gm-scrollReveal',
+      visibleClass: 'gm-scrollReveal--visible',
+      threshold: 0.2,
+      rootMargin: '0px 0px -8% 0px',
+      revealOnce: true,
+    },
+    headerLogoVisibilityScene,
+  ].filter(Boolean),
+  pinScenes:
+    sliderElement && sliderScoreboard
+      ? [
+          {
+            element: sliderScoreboard,
+            container: sliderElement,
+            getTopOffset: () => {
+              const styles = window.getComputedStyle(sliderElement);
+              const stampOffset =
+                parseFloat(styles.getPropertyValue('--gm-stories-stamp-offset')) || 0;
+              const headerOffset = headerElement?.offsetHeight || 0;
+              return stampOffset + headerOffset;
+            },
+            getBaseX: () => (window.matchMedia('(max-width: 960px)').matches ? '-50%' : '0px'),
+          },
+        ]
+      : [],
+});
+scrollEffectsController.init();
+
 const runtimeConfig = window.__INTERDEAD_CONFIG__ ?? {};
 const featureFlags = new FeatureFlagService(runtimeConfig.featureFlags);
 const eventBus = new EventBus();
+const appPreloaderController = new AppPreloaderController({
+  body: document.body,
+  preloader: document.querySelector('[data-preloader]'),
+  authStateService: null,
+  eventBus,
+});
+
 const apiConfig = {
   baseUrl: runtimeConfig.api?.baseUrl || runtimeConfig.api?.defaultBaseUrl,
   defaultBaseUrl: runtimeConfig.api?.defaultBaseUrl,
@@ -136,6 +233,8 @@ const authAdapter = new DiscordOAuthAdapter({ apiConfig });
 const authSessionAdapter = new AuthSessionAdapter({ apiConfig });
 const authService = new DiscordAuthService({ authAdapter, eventBus, featureFlags });
 const authStateService = new AuthStateService({ sessionAdapter: authSessionAdapter, eventBus });
+appPreloaderController.authStateService = authStateService;
+appPreloaderController.init();
 const profileCleanupAdapter = new ProfileCleanupAdapter({ apiConfig });
 const authVisibilityService = new AuthVisibilityService({ authStateService, eventBus });
 const authButtonController = new AuthButtonController({
@@ -249,7 +348,7 @@ window.dispatchEvent(
 );
 
 window.addEventListener('beforeunload', () => {
-  headerLogoController.dispose?.();
+  scrollEffectsController.dispose?.();
   headerActionsController.dispose?.();
   countdownController.stop?.();
   sliderController.dispose?.();
@@ -259,5 +358,8 @@ window.addEventListener('beforeunload', () => {
   homeAuthController?.dispose?.();
   menuModalController?.dispose?.();
   marqueeController?.dispose?.();
+  tabsController?.dispose?.();
+  twemojiController?.dispose?.();
+  appPreloaderController?.dispose?.();
   authVisibilityService.dispose?.();
 });

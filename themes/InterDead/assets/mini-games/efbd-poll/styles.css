@@ -112,3 +112,10 @@
   width: 100%;
   height: auto;
 }
+
+.gm-poll__map-video {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+}

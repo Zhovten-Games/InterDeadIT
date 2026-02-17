@@ -48,7 +48,7 @@
                 >
                   <h3>
                     <a href="{{ $story.RelPermalink }}">{{ $story.Title | htmlEscape }}</a>
-                    {{ partial "components/medium-typology-trigger.html" $page }}
+                    {{ partial "components/info-trigger-medium-typology.html" $page }}
                   </h3>
                   <div class="gm-slider__text">{{ $story.Content | safeHTML }}</div>
                 </article>
@@ -58,46 +58,48 @@
           {{ $pathID := printf "gm-stamp-path-%s" $page.Language.Lang }}
           {{ $stampText := i18n "stories.stampText" }}
           {{ $stampAnnounce := i18n "stories.stampAnnouncement" (dict "Count" "__COUNT__") }}
-          <div
-            class="gm-slider__scoreboard"
-            data-scoreboard
-            data-stamp-text="{{ $stampText | plainify | htmlEscape }}"
-            data-stamp-announce="{{ $stampAnnounce | plainify | htmlEscape }}"
-            role="status"
-            aria-live="polite"
-            aria-label="{{ i18n "stories.stampAnnouncement" (dict "Count" 1) | plainify | htmlEscape }}"
-          >
-            <div class="gm-slider__scoreboardInner" data-scoreboard-inner>
-              <span class="gm-slider__stampCore" aria-hidden="true">
-                <span class="gm-slider__stampIcon">☠</span>
-                <span class="gm-slider__stampCount" data-scoreboard-count aria-hidden="true">+1</span>
-              </span>
-              <svg
-                class="gm-slider__stampRing"
-                viewBox="0 0 200 200"
-                role="presentation"
-                aria-hidden="true"
-                focusable="false"
-              >
-                <defs>
-                  <path id="{{ $pathID }}" d="M100,100 m0,-88 a88,88 0 1,1 0,176 a88,88 0 1,1 0,-176" />
-                </defs>
-                <text class="gm-slider__stampText">
-                  <textPath
-                    href="#{{ $pathID }}"
-                    startOffset="50%"
-                    text-anchor="middle"
-                    lengthAdjust="spacingAndGlyphs"
-                    textLength="550"
-                    data-scoreboard-text
-                  >
-                    {{ $stampText | plainify | htmlEscape }}
-                  </textPath>
-                </text>
-              </svg>
-              <span class="gm-visually-hidden" data-scoreboard-announcer>
-                {{ i18n "stories.stampAnnouncement" (dict "Count" 1) | plainify | htmlEscape }}
-              </span>
+          <div class="gm-slider__overlay">
+            <div
+              class="gm-slider__scoreboard"
+              data-scoreboard
+              data-stamp-text="{{ $stampText | plainify | htmlEscape }}"
+              data-stamp-announce="{{ $stampAnnounce | plainify | htmlEscape }}"
+              role="status"
+              aria-live="polite"
+              aria-label="{{ i18n "stories.stampAnnouncement" (dict "Count" 1) | plainify | htmlEscape }}"
+            >
+              <div class="gm-slider__scoreboardInner" data-scoreboard-inner>
+                <span class="gm-slider__stampCore" aria-hidden="true">
+                  <span class="gm-slider__stampIcon">☠</span>
+                  <span class="gm-slider__stampCount" data-scoreboard-count aria-hidden="true">+1</span>
+                </span>
+                <svg
+                  class="gm-slider__stampRing"
+                  viewBox="0 0 200 200"
+                  role="presentation"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <defs>
+                    <path id="{{ $pathID }}" d="M100,100 m0,-88 a88,88 0 1,1 0,176 a88,88 0 1,1 0,-176" />
+                  </defs>
+                  <text class="gm-slider__stampText">
+                    <textPath
+                      href="#{{ $pathID }}"
+                      startOffset="50%"
+                      text-anchor="middle"
+                      lengthAdjust="spacingAndGlyphs"
+                      textLength="550"
+                      data-scoreboard-text
+                    >
+                      {{ $stampText | plainify | htmlEscape }}
+                    </textPath>
+                  </text>
+                </svg>
+                <span class="gm-visually-hidden" data-scoreboard-announcer>
+                  {{ i18n "stories.stampAnnouncement" (dict "Count" 1) | plainify | htmlEscape }}
+                </span>
+              </div>
             </div>
           </div>
           <button class="gm-slider__nav gm-slider__nav--next" aria-label="Next">›</button>

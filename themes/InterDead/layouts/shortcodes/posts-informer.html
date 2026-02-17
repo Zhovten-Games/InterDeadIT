@@ -1,0 +1,84 @@
+{{- $noteKey := .Get "noteKey" -}}
+{{- $note := .Get "note" -}}
+{{- $noteText := "" -}}
+{{- if $noteKey -}}
+  {{- $noteText = i18n $noteKey -}}
+{{- else if $note -}}
+  {{- $noteText = $note -}}
+{{- end -}}
+
+{{- $section := .Get "section" | default "blog" -}}
+{{- $category := .Get "category" | default "artifacts" -}}
+{{- $limit := 6 -}}
+{{- with .Get "limit" -}}
+  {{- $limit = int . -}}
+{{- end -}}
+
+{{- $latestPosts := partial "helpers/posts-informer-feed.html" (dict
+  "page" .Page
+  "section" $section
+  "category" $category
+  "limit" $limit
+) -}}
+
+<section class="gm-section gm-postInformer" id="artifacts">
+  <div class="gm-container">
+    {{- if $noteText -}}
+      <p class="gm-postInformer__note gm-note--centered">{{ $noteText }}</p>
+    {{- end -}}
+    <div class="gm-postInformer__grid">
+      {{- range $latestPosts -}}
+        {{- $page := . -}}
+        {{- $imageParam := $page.Params.image -}}
+        {{- $imageIsRemote := and $imageParam (hasPrefix $imageParam "http") -}}
+        {{- $imageResource := "" -}}
+        {{- if and $imageParam (not $imageIsRemote) -}}
+          {{- with resources.GetMatch (printf "images/blog/**%s" (path.Base $imageParam)) -}}
+            {{- $copied := resources.Copy (printf "assets/images/blog/%s" (path.Base .Name)) . -}}
+            {{- $imageResource = $copied | fingerprint -}}
+          {{- end -}}
+        {{- end -}}
+        {{- $hasMedia := or $imageIsRemote $imageResource (and $imageParam (not $imageIsRemote)) -}}
+        <article class="gm-card gm-postInformer__item{{ if $hasMedia }} gm-card--withMedia{{ end }}">
+          {{- if $hasMedia -}}
+            <div class="gm-card__mediaBlock">
+              <figure class="gm-card__media">
+                {{- if $imageIsRemote -}}
+                  <img
+                    src="{{ $imageParam }}"
+                    alt="{{ $page.Params.imageAlt | default $page.Title }}"
+                    loading="lazy"
+                  />
+                {{- else if $imageResource -}}
+                  <img
+                    src="{{ $imageResource.RelPermalink }}"
+                    alt="{{ $page.Params.imageAlt | default $page.Title }}"
+                    loading="lazy"
+                  />
+                {{- else if $imageParam -}}
+                  <img
+                    src="{{ $imageParam | absURL }}"
+                    alt="{{ $page.Params.imageAlt | default $page.Title }}"
+                    loading="lazy"
+                  />
+                {{- end -}}
+              </figure>
+            </div>
+          {{- end -}}
+          <div class="gm-card__content">
+            <h2 class="gm-postInformer__title">
+              <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
+            </h2>
+            {{- with $page.Date -}}
+              <p class="gm-text--fine gm-card__date">{{ .Format "02 Jan 2006" }}</p>
+            {{- end -}}
+            {{- with partial "components/summary.html" (dict "page" $page "length" 180) -}}
+              <p class="gm-card__summary">{{ . }}</p>
+            {{- end -}}
+            <a class="gm-link" href="{{ $page.RelPermalink }}">{{ i18n "blog.readMore" }}</a>
+          </div>
+        </article>
+      {{- end -}}
+    </div>
+  </div>
+</section>

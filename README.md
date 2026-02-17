@@ -6,6 +6,10 @@
 ║   Public reference library: documents and notes that are safe       ║
 ║   to share outside the private workspace.                           ║
 ║                                                                     ║
+║ ○ <a href="https://github.com/Zhovten-Games/InterDeadProto">InterDeadProto (NOIR)</a>                                ║
+║   InterDeadProto is a narrative-driven interface prototype.         ║
+║   NOIR: Nectosphere-Oriented Interface Relay.                       ║
+║                                                                     ║
 ║ > InterDeadIT (website / entry point)                               ║
 ║   The website: the public entry point into the InterDead meta-verse.║
 ║   Hosts the “About” and related public-facing materials.            ║
@@ -77,3 +81,7 @@ Key references:
 - [Architecture overview](docs/architecture/overview.md)
 - [Ports and events](docs/architecture/ports-and-events.md)
 - [Deployment overview](docs/deployment/overview.md)
+
+## Emoji rendering
+
+The site uses [Twemoji](https://github.com/jdecked/twemoji) for consistent emoji rendering across platforms.

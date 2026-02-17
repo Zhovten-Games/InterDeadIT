@@ -25,3 +25,8 @@ When rendering translatable text in templates or JS-generated markup, add `data-
 - Keep DOM queries inside presentation controllers or view adapters.
 - Services should operate on plain data structures rather than DOM elements.
 - When a feature needs to talk across domains, add a port rather than importing a controller directly.
+
+## Shared visual protocol blocks
+
+For emoji protocol rows, use the shared `emoji-protocol` shortcode instead of raw text code fences.
+This keeps labels localized and preserves the InterDeadProto-compatible layout (`label → value`) without leaking styling into unrelated components.
