@@ -21,6 +21,37 @@ const sanitizeMapUrl = (rawUrl) => {
     .replace(/['"]+$/, '');
 };
 
+const extractVideoSourceId = (media = {}) => {
+  if (!media || typeof media !== 'object') {
+    return '';
+  }
+
+  const directSourceId =
+    typeof media.sourceId === 'string'
+      ? media.sourceId
+      : typeof media.sourceID === 'string'
+        ? media.sourceID
+        : typeof media['source-id'] === 'string'
+          ? media['source-id']
+          : '';
+
+  return sanitizeMapUrl(directSourceId);
+};
+
+const resolveVideoUrl = (media = {}) => {
+  const directUrl = typeof media.url === 'string' ? sanitizeMapUrl(media.url) : '';
+  if (directUrl) {
+    return directUrl;
+  }
+
+  const sourceId = extractVideoSourceId(media);
+  if (!sourceId) {
+    return '';
+  }
+
+  return `https://www.youtube.com/embed/${sourceId}`;
+};
+
 const defaultStrings = {
   title: '',
   prompt: '',
@@ -232,7 +263,7 @@ export function initEfbdPoll({
   const resolvedMapUrl = sanitizeMapUrl(mapUrl || root?.dataset?.mapUrl || strings.mapUrl);
 
   const mediaType = typeof media.type === 'string' ? media.type : 'image';
-  const resolvedVideoUrl = typeof media.url === 'string' ? sanitizeMapUrl(media.url) : '';
+  const resolvedVideoUrl = resolveVideoUrl(media);
 
   if (mediaType === 'video' && resolvedVideoUrl) {
     const videoFrame = documentRef.createElement('iframe');

@@ -1,7 +1,7 @@
 {{- $id := printf "efbd-poll-2-%d" now.UnixNano -}}
 {{- $gameId := .Get "gameId" | default "2-efbd-poll" -}}
 {{- $styleAsset := resources.Get "mini-games/efbd-poll/styles.css" | fingerprint -}}
-{{- $mapAsset := resources.Get "images/blog/ARTIFACT-THE_TOWER.webp" | fingerprint -}}
+{{- $mapAsset := resources.Get "images/blog/ARTIFACT-THE_LULLABY.webp" | fingerprint -}}
 {{- $scriptOptions := dict "targetPath" "js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}}
 {{- $scriptAsset := resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}}
 {{- $runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not hugo.IsServer) -}}
@@ -12,7 +12,8 @@
   (dict "axis" "EBF-ABANDON" "label" (i18n "minigames.poll2.option.abandon") "i18nKey" "minigames.poll2.option.abandon")
 -}}
 {{- $videoUrl := .Get "videoUrl" | default "https://www.youtube.com/embed/sw63yEVj4AM" -}}
-{{- $media := dict "type" "video" "url" $videoUrl -}}
+{{- $videoSourceId := .Get "videoSourceId" | default "" -}}
+{{- $media := dict "type" "video" "url" $videoUrl "sourceId" $videoSourceId -}}
 {{- $strings := dict
   "title" (i18n "minigames.poll2.title")
   "prompt" (i18n "minigames.poll2.prompt")
