@@ -6,7 +6,7 @@
 ║   Public reference library: documents and notes that are safe       ║
 ║   to share outside the private workspace.                           ║
 ║                                                                     ║
-║ ○ <a href="https://github.com/Zhovten-Games/InterDeadProto">InterDeadProto (NOIR)</a>                                ║
+║ ○ <a href="https://github.com/Zhovten-Games/InterDeadProto">InterDeadProto (NOIR)</a>                                             ║
 ║   InterDeadProto is a narrative-driven interface prototype.         ║
 ║   NOIR: Nectosphere-Oriented Interface Relay.                       ║
 ║                                                                     ║
