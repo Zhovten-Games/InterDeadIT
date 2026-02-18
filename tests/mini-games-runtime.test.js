@@ -142,7 +142,9 @@ describe('MiniGameLauncher', () => {
       assets: { styleUrl: '/style.css', scriptUrl: '/game.js' },
       options: [{ axis: 'EBF-SOCIAL', label: 'Social' }],
       strings: { prompt: 'prompt' },
+      media: { type: 'video', url: 'https://example.com/embed' },
       locale: 'ja',
+      gameId: '2-efbd-poll',
       scalePort: { recordAnswer: () => ({ status: 'ok' }) },
     });
 
@@ -154,6 +156,8 @@ describe('MiniGameLauncher', () => {
     assert.deepStrictEqual(loader.styleCalls, ['/style.css']);
     assert.strictEqual(loader.invocation?.locale, 'ja');
     assert.strictEqual(loader.invocation?.options?.[0]?.axis, 'EBF-SOCIAL');
+    assert.strictEqual(loader.invocation?.media?.type, 'video');
+    assert.strictEqual(loader.invocation?.gameId, '2-efbd-poll');
   });
 
   it('refreshes scale port bindings when updated later', async () => {

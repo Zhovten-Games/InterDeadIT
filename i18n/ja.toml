@@ -470,13 +470,13 @@ other = "絵文字プロトコルブロック"
 
 
 ['minigames.poll2.option.mind']
-other = "Her voice continues, but something inside has already exceeded its limit. The words are no longer care — they are discharge."
+other = "彼女の声は続いているが、内側の何かはすでに限界を超えている。言葉はもはや思いやりではない――それは放電だ。"
 
 ['minigames.poll2.option.social']
-other = "The ritual proceeds as if nothing is wrong. The structure absorbs the loss and keeps functioning."
+other = "儀式は何事もないかのように進行する。構造は喪失を吸収し、機能し続ける。"
 
 ['minigames.poll2.option.abandon']
-other = "No one steps in. The night remains with her — and does not argue."
+other = "誰も介入しない。夜は彼女とともに残り――そして反論しない。"
 
 ['minigames.poll2.title']
 other = "EFBD resonance check — Pogost sequence"
