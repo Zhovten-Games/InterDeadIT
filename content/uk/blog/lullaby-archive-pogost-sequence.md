@@ -287,6 +287,8 @@ Institutional Faith Degradation detected.
 
 Після перегляду буде запропоновано коротке опитування.<br>
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sw63yEVj4AM?si=BVcUw_5MonRCOETu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 {{< efbd-poll-2 >}}
 
 Це не терапія.<br>
