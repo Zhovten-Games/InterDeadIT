@@ -13,7 +13,11 @@
 -}}
 {{- $videoUrl := .Get "videoUrl" | default "https://www.youtube.com/embed/sw63yEVj4AM" -}}
 {{- $videoSourceId := .Get "videoSourceId" | default "" -}}
+{{- $embedFrame := .Inner | default "" | strings.TrimSpace -}}
 {{- $media := dict "type" "video" "url" $videoUrl "sourceId" $videoSourceId -}}
+{{- if $embedFrame -}}
+  {{- $media = dict "type" "iframe" "frameHtml" $embedFrame -}}
+{{- end -}}
 {{- $strings := dict
   "title" (i18n "minigames.poll2.title")
   "prompt" (i18n "minigames.poll2.prompt")

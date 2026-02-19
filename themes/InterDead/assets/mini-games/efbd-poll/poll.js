@@ -52,6 +52,89 @@ const resolveVideoUrl = (media = {}) => {
   return `https://www.youtube.com/embed/${sourceId}`;
 };
 
+const sanitizeFrameHtml = (rawFrameHtml) => {
+  if (typeof rawFrameHtml !== 'string') {
+    return '';
+  }
+
+  return rawFrameHtml.trim();
+};
+
+class PollMediaRenderer {
+  constructor({ documentRef, mapFrame, mergedStrings, stringKeys }) {
+    this.documentRef = documentRef;
+    this.mapFrame = mapFrame;
+    this.mergedStrings = mergedStrings;
+    this.stringKeys = stringKeys;
+  }
+
+  render() {
+    return false;
+  }
+}
+
+class IframeMediaRenderer extends PollMediaRenderer {
+  render(media = {}) {
+    const frameHtml = sanitizeFrameHtml(media.frameHtml);
+    if (!frameHtml) {
+      return false;
+    }
+
+    const fragmentContainer = this.documentRef.createElement('div');
+    fragmentContainer.innerHTML = frameHtml;
+    const iframe = fragmentContainer.querySelector('iframe');
+    if (!iframe) {
+      return false;
+    }
+
+    iframe.classList.add('gm-poll__map-video');
+    iframe.setAttribute('loading', iframe.getAttribute('loading') || 'lazy');
+    this.mapFrame.appendChild(iframe);
+    return true;
+  }
+}
+
+class VideoMediaRenderer extends PollMediaRenderer {
+  render(media = {}) {
+    const resolvedVideoUrl = resolveVideoUrl(media);
+    if (!resolvedVideoUrl) {
+      return false;
+    }
+
+    const videoFrame = this.documentRef.createElement('iframe');
+    videoFrame.className = 'gm-poll__map-video';
+    videoFrame.src = resolvedVideoUrl;
+    videoFrame.title = this.mergedStrings.mapAlt;
+    videoFrame.loading = 'lazy';
+    videoFrame.allow =
+      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    videoFrame.referrerPolicy = 'strict-origin-when-cross-origin';
+    videoFrame.allowFullscreen = true;
+    this.mapFrame.appendChild(videoFrame);
+    return true;
+  }
+}
+
+class ImageMediaRenderer extends PollMediaRenderer {
+  render({ mapUrl }) {
+    const resolvedMapUrl = sanitizeMapUrl(mapUrl);
+    if (!resolvedMapUrl) {
+      return false;
+    }
+
+    const mapImage = this.documentRef.createElement('img');
+    mapImage.className = 'gm-poll__map-image';
+    mapImage.src = resolvedMapUrl;
+    mapImage.alt = this.mergedStrings.mapAlt;
+    mapImage.loading = 'lazy';
+    if (this.stringKeys.mapAlt) {
+      mapImage.dataset.i18n = this.stringKeys.mapAlt;
+    }
+    this.mapFrame.appendChild(mapImage);
+    return true;
+  }
+}
+
 const defaultStrings = {
   title: '',
   prompt: '',
@@ -261,31 +344,23 @@ export function initEfbdPoll({
   mapFrame.className = 'gm-poll__map-frame';
 
   const resolvedMapUrl = sanitizeMapUrl(mapUrl || root?.dataset?.mapUrl || strings.mapUrl);
-
   const mediaType = typeof media.type === 'string' ? media.type : 'image';
-  const resolvedVideoUrl = resolveVideoUrl(media);
+  const rendererContext = { documentRef, mapFrame, mergedStrings, stringKeys };
+  const iframeRenderer = new IframeMediaRenderer(rendererContext);
+  const videoRenderer = new VideoMediaRenderer(rendererContext);
+  const imageRenderer = new ImageMediaRenderer(rendererContext);
 
-  if (mediaType === 'video' && resolvedVideoUrl) {
-    const videoFrame = documentRef.createElement('iframe');
-    videoFrame.className = 'gm-poll__map-video';
-    videoFrame.src = resolvedVideoUrl;
-    videoFrame.title = mergedStrings.mapAlt;
-    videoFrame.loading = 'lazy';
-    videoFrame.allow =
-      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    videoFrame.referrerPolicy = 'strict-origin-when-cross-origin';
-    videoFrame.allowFullscreen = true;
-    mapFrame.appendChild(videoFrame);
-  } else if (resolvedMapUrl) {
-    const mapImage = documentRef.createElement('img');
-    mapImage.className = 'gm-poll__map-image';
-    mapImage.src = resolvedMapUrl;
-    mapImage.alt = mergedStrings.mapAlt;
-    mapImage.loading = 'lazy';
-    if (stringKeys.mapAlt) {
-      mapImage.dataset.i18n = stringKeys.mapAlt;
-    }
-    mapFrame.appendChild(mapImage);
+  const mediaRenderStrategy = {
+    iframe: () => iframeRenderer.render(media),
+    video: () => videoRenderer.render(media),
+    image: () => imageRenderer.render({ mapUrl: resolvedMapUrl }),
+  };
+
+  const renderRequestedMedia = mediaRenderStrategy[mediaType] || mediaRenderStrategy.image;
+  const didRenderMedia = renderRequestedMedia();
+
+  if (!didRenderMedia && mediaType !== 'image') {
+    mediaRenderStrategy.image();
   }
 
   mapSection.appendChild(mapFrame);

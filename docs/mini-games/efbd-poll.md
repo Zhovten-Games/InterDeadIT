@@ -67,4 +67,26 @@ Use shortcode parameters to deploy independent polls with isolated replay guards
 - `gameId` is forwarded to EFBD trigger `context.source` and used by the replay guard.
 - `mediaType="video"` + `videoUrl` switches poll header media from image to embedded video.
 
+### Video source compatibility
+
+`efbd-poll` and `efbd-poll-2` support three media input modes for the header area:
+
+1. **`videoSourceId`**  
+   Builds `https://www.youtube.com/embed/{videoSourceId}`. This mode is YouTube-specific.
+2. **`videoUrl`**  
+   Uses the value as `iframe.src` directly. This works with providers that allow iframe embedding (for example YouTube or Vimeo embed URLs).
+3. **Inline iframe markup (`efbd-poll-2` only)**  
+   Pass a fully prepared iframe as shortcode inner content. The poll extracts the first iframe and mounts it in the media frame.
+
+Example:
+
+```md
+{{< efbd-poll-2 >}}
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sw63yEVj4AM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+{{< /efbd-poll-2 >}}
+```
+
+Important: current runtime uses an `iframe` renderer for video media. Direct video file links (`.mp4`, `.webm`) are not guaranteed to work unless they are exposed through an embeddable iframe endpoint.
+
 `efbd-poll-2` is a dedicated second poll preset that keeps the same mechanics but uses a separate `gameId` (`2-efbd-poll`), the MIND/SOCIAL/ABANDON axes, and an embedded video header by default.
