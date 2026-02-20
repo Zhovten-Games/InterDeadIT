@@ -190,12 +190,6 @@ other = "EFBD triggers from mini-games sync here after sign-in; if the scale ser
 ['minigames.poll.unauthenticated']
 other = "You are not authenticated. Sign in via the authorization button in the site header to unlock this artifact."
 
-['minigames.poll.title']
-other = "EFBD resonance check"
-
-['minigames.poll.prompt']
-other = "This figure chose to rise above the world.\nWhat in this image feels most unsettling to you?"
-
 ['minigames.poll.submit']
 other = "Submit response"
 
@@ -477,12 +471,6 @@ other = "The ritual proceeds as if nothing is wrong. The structure absorbs the l
 
 ['minigames.poll2.option.abandon']
 other = "No one steps in. The night remains with her — and does not argue."
-
-['minigames.poll2.title']
-other = "EFBD resonance check — Pogost sequence"
-
-['minigames.poll2.prompt']
-other = "Select the vector that best describes your reaction after viewing the record."
 
 ['minigames.poll2.submit']
 other = "Submit response"

@@ -22,7 +22,8 @@ The shortcode sends:
 
 - `assets`: URLs + integrity hashes for CSS/JS.
 - `options`: EFBD axis options (axis code, label, `i18nKey`).
-- `strings`: localized strings for title, prompt, submit, success, completed, profile link label, error, and required messages.
+- `strings`: localized strings for submit, success, completed, profile link label, error, and required messages.
+- `strings.title` and `strings.prompt` are optional; when omitted or empty they are not rendered.
 - `media.images`: ordered list of image URLs for the poll media frame.
 - `locale`: current Hugo locale.
 
@@ -77,4 +78,4 @@ Use shortcode parameters to deploy independent polls with isolated replay guards
 
 - `gameId` is forwarded to EFBD trigger `context.source` and used by the replay guard.
 
-`efbd-poll-2` is a dedicated second poll preset that keeps the same mechanics but uses a separate `gameId` (`2-efbd-poll`) and the MIND/SOCIAL/ABANDON axes.
+`efbd-poll` and `efbd-poll-2` presets intentionally leave `title` and `prompt` empty while preserving support for those fields in the shared poll renderer. `efbd-poll-2` keeps a separate `gameId` (`2-efbd-poll`) and the MIND/SOCIAL/ABANDON axes.

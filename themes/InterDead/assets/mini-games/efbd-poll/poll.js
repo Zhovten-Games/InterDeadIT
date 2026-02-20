@@ -386,13 +386,16 @@ export function initEfbdPoll({
     form.appendChild(title);
   }
 
-  const prompt = documentRef.createElement('p');
-  prompt.className = 'gm-poll__prompt';
-  prompt.textContent = mergedStrings.prompt;
-  if (stringKeys.prompt) {
-    prompt.dataset.i18n = stringKeys.prompt;
+  const hasPrompt = Boolean(mergedStrings.prompt?.trim() || stringKeys.prompt?.trim());
+  if (hasPrompt) {
+    const prompt = documentRef.createElement('p');
+    prompt.className = 'gm-poll__prompt';
+    prompt.textContent = mergedStrings.prompt;
+    if (stringKeys.prompt) {
+      prompt.dataset.i18n = stringKeys.prompt;
+    }
+    form.appendChild(prompt);
   }
-  form.appendChild(prompt);
 
   const optionsList = documentRef.createElement('div');
   optionsList.className = 'gm-poll__options';

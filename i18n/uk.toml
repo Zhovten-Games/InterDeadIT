@@ -190,12 +190,6 @@ other = "EFBD triggers from mini-games sync here after sign-in; if the scale ser
 ['minigames.poll.unauthenticated']
 other = "Ви не авторизовані. Увійдіть через кнопку авторизації в шапці сайту, щоб артефакт став доступним."
 
-['minigames.poll.title']
-other = "Перевірка резонансу EFBD"
-
-['minigames.poll.prompt']
-other = "Він вирішив піднятися над світом.\nЩо в цьому образі тривожить вас найбільше?"
-
 ['minigames.poll.submit']
 other = "Надіслати відповідь"
 
@@ -477,12 +471,6 @@ other = "Ритуал триває так, ніби нічого не стало
 
 ['minigames.poll2.option.abandon']
 other = "Ніхто не втручається. Ніч залишається з нею — і не сперечається."
-
-['minigames.poll2.title']
-other = "EFBD resonance check — Pogost sequence"
-
-['minigames.poll2.prompt']
-other = "Select the vector that best describes your reaction after viewing the record."
 
 ['minigames.poll2.submit']
 other = "Submit response"

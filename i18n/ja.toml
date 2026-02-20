@@ -190,12 +190,6 @@ other = "EFBD triggers from mini-games sync here after sign-in; if the scale ser
 ['minigames.poll.unauthenticated']
 other = "未ログインです。サイトのヘッダーにある認証ボタンからサインインすると、このアーティファクトが利用可能になります。"
 
-['minigames.poll.title']
-other = "EFBD 共鳴チェック"
-
-['minigames.poll.prompt']
-other = "この人物は世界の上に昇ることを選びました。\nこの光景で最も不穏に感じるのはどこですか？"
-
 ['minigames.poll.submit']
 other = "回答を送信"
 
@@ -477,12 +471,6 @@ other = "儀式は何事もないかのように進行する。構造は喪失�
 
 ['minigames.poll2.option.abandon']
 other = "誰も介入しない。夜は彼女とともに残り――そして反論しない。"
-
-['minigames.poll2.title']
-other = "EFBD resonance check — Pogost sequence"
-
-['minigames.poll2.prompt']
-other = "Select the vector that best describes your reaction after viewing the record."
 
 ['minigames.poll2.submit']
 other = "Submit response"
