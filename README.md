@@ -62,6 +62,10 @@
 - Hugo builds static assets for Cloudflare Pages.
 - The `interdead-auth` Worker handles OAuth + EFBD triggers and talks to D1.
 
+### Tests
+
+Before every deployment and before manual end-to-end website validation, run the `InterDeadIT/tests/local-auth-overlay` suite as a mandatory gate: [InterDeadIT/tests/local-auth-overlay](InterDeadIT/tests/local-auth-overlay).
+
 ## Conventions
 
 - Keep adapters thin and use ports for cross-boundary contracts.

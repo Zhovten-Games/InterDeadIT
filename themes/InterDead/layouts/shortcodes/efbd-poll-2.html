@@ -11,11 +11,20 @@
   (dict "axis" "EBF-SOCIAL" "label" (i18n "minigames.poll2.option.social") "i18nKey" "minigames.poll2.option.social")
   (dict "axis" "EBF-ABANDON" "label" (i18n "minigames.poll2.option.abandon") "i18nKey" "minigames.poll2.option.abandon")
 -}}
-{{- $imageResources := resources.Match "images/blog/ARTIFACT-THE_LULLABY/*.webp" -}}
 {{- $images := slice -}}
-{{- range sort $imageResources "Name" -}}
-  {{- $fingerprintedImage := . | fingerprint -}}
-  {{- $images = $images | append $fingerprintedImage.RelPermalink -}}
+{{- $artifactDir := "themes/InterDead/assets/images/blog/ARTIFACT-THE_LULLABY" -}}
+{{- $artifactFiles := readDir $artifactDir -}}
+{{- range sort $artifactFiles "Name" "asc" -}}
+  {{- if not .IsDir -}}
+    {{- $extension := lower (path.Ext .Name) -}}
+    {{- if in (slice ".webp" ".png" ".jpg" ".jpeg" ".gif" ".avif") $extension -}}
+      {{- $assetPath := printf "images/blog/ARTIFACT-THE_LULLABY/%s" .Name -}}
+      {{- with resources.Get $assetPath -}}
+        {{- $fingerprintedImage := . | fingerprint -}}
+        {{- $images = $images | append $fingerprintedImage.RelPermalink -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
 {{- if eq (len $images) 0 -}}
   {{- $images = slice $mapAsset.RelPermalink -}}
@@ -44,6 +53,21 @@
   "required" "minigames.poll2.required"
   "mapAlt" "minigames.poll2.mediaAlt"
 -}}
+{{- $queueConfig := dict
+  "rootId" $id
+  "assets" (dict
+    "styleUrl" $styleAsset.RelPermalink
+    "styleIntegrity" $styleAsset.Data.Integrity
+    "scriptUrl" $scriptAsset.RelPermalink
+  )
+  "options" $options
+  "strings" $strings
+  "stringKeys" $stringKeys
+  "mapUrl" $mapAsset.RelPermalink
+  "media" $media
+  "locale" .Site.Language.Lang
+  "gameId" $gameId
+-}}
 {{- if not ($.Page.Scratch.Get "miniGameRuntimeInjected") -}}
 <script type="module" src="{{ $runtimeAsset.RelPermalink }}" integrity="{{ $runtimeAsset.Data.Integrity }}" crossorigin="anonymous"></script>
 {{- $.Page.Scratch.Set "miniGameRuntimeInjected" true -}}
@@ -56,19 +80,5 @@
 </div>
 <script>
   window.InterdeadMiniGamesQueue = window.InterdeadMiniGamesQueue || [];
-  window.InterdeadMiniGamesQueue.push({
-    rootId: {{ $id | jsonify }},
-    assets: {
-      styleUrl: {{ $styleAsset.RelPermalink | jsonify }},
-      styleIntegrity: {{ $styleAsset.Data.Integrity | jsonify }},
-      scriptUrl: {{ $scriptAsset.RelPermalink | jsonify }}
-    },
-    options: {{ $options | jsonify }},
-    strings: {{ $strings | jsonify }},
-    stringKeys: {{ $stringKeys | jsonify }},
-    mapUrl: {{ $mapAsset.RelPermalink | jsonify }},
-    media: {{ $media | jsonify }},
-    locale: {{ .Site.Language.Lang | jsonify }},
-    gameId: {{ $gameId | jsonify }}
-  });
+  window.InterdeadMiniGamesQueue.push({{ $queueConfig | jsonify | safeJS }});
 </script>

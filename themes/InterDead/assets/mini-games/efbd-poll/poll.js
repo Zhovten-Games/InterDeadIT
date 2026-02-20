@@ -298,15 +298,28 @@ export function initEfbdPoll({
   };
 
   let resolvedOptions = options;
-  if (typeof options === 'string') {
+  if (typeof resolvedOptions === 'string') {
     try {
-      resolvedOptions = JSON.parse(options);
+      resolvedOptions = JSON.parse(resolvedOptions);
     } catch (error) {
       logger?.error?.('[InterDead][MiniGame][Poll] Failed to parse stringified options', {
         ...logContext,
         parseError: error?.message,
       });
       resolvedOptions = [];
+    }
+  }
+
+  let resolvedMedia = media;
+  if (typeof resolvedMedia === 'string') {
+    try {
+      resolvedMedia = JSON.parse(resolvedMedia);
+    } catch (error) {
+      logger?.error?.('[InterDead][MiniGame][Poll] Failed to parse stringified media', {
+        ...logContext,
+        parseError: error?.message,
+      });
+      resolvedMedia = {};
     }
   }
 
@@ -348,7 +361,7 @@ export function initEfbdPoll({
   mapFrame.className = 'gm-poll__map-frame';
 
   const mediaImages = normalizeMediaImages({
-    media,
+    media: resolvedMedia,
     mapUrl: mapUrl || root?.dataset?.mapUrl || strings.mapUrl,
   });
   const rendererContext = { documentRef, mapFrame, mergedStrings, stringKeys };
