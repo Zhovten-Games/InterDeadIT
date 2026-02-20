@@ -11,13 +11,16 @@
   (dict "axis" "EBF-SOCIAL" "label" (i18n "minigames.poll2.option.social") "i18nKey" "minigames.poll2.option.social")
   (dict "axis" "EBF-ABANDON" "label" (i18n "minigames.poll2.option.abandon") "i18nKey" "minigames.poll2.option.abandon")
 -}}
-{{- $videoUrl := .Get "videoUrl" | default "https://www.youtube.com/embed/sw63yEVj4AM" -}}
-{{- $videoSourceId := .Get "videoSourceId" | default "" -}}
-{{- $embedFrame := .Inner | default "" | strings.TrimSpace -}}
-{{- $media := dict "type" "video" "url" $videoUrl "sourceId" $videoSourceId -}}
-{{- if $embedFrame -}}
-  {{- $media = dict "type" "iframe" "frameHtml" $embedFrame -}}
+{{- $imageResources := resources.Match "images/blog/ARTIFACT-THE_LULLABY/*.webp" -}}
+{{- $images := slice -}}
+{{- range sort $imageResources "Name" -}}
+  {{- $fingerprintedImage := . | fingerprint -}}
+  {{- $images = $images | append $fingerprintedImage.RelPermalink -}}
 {{- end -}}
+{{- if eq (len $images) 0 -}}
+  {{- $images = slice $mapAsset.RelPermalink -}}
+{{- end -}}
+{{- $media := dict "images" $images -}}
 {{- $strings := dict
   "title" (i18n "minigames.poll2.title")
   "prompt" (i18n "minigames.poll2.prompt")
@@ -27,7 +30,7 @@
   "profileLink" (i18n "minigames.poll2.profileLink")
   "error" (i18n "minigames.poll2.error")
   "required" (i18n "minigames.poll2.required")
-  "mapAlt" (i18n "minigames.poll2.videoAlt")
+  "mapAlt" (i18n "minigames.poll2.mediaAlt")
   "mapUrl" $mapAsset.RelPermalink
 -}}
 {{- $stringKeys := dict
@@ -39,7 +42,7 @@
   "profileLink" "minigames.poll2.profileLink"
   "error" "minigames.poll2.error"
   "required" "minigames.poll2.required"
-  "mapAlt" "minigames.poll2.videoAlt"
+  "mapAlt" "minigames.poll2.mediaAlt"
 -}}
 {{- if not ($.Page.Scratch.Get "miniGameRuntimeInjected") -}}
 <script type="module" src="{{ $runtimeAsset.RelPermalink }}" integrity="{{ $runtimeAsset.Data.Integrity }}" crossorigin="anonymous"></script>

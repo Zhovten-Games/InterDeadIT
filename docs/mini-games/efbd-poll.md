@@ -13,7 +13,8 @@ The shortcode fingerprints its CSS and JS, injects the mini-game runtime, and qu
 
 - `themes/InterDead/assets/mini-games/efbd-poll/styles.css`
 - `themes/InterDead/assets/mini-games/efbd-poll/poll.js`
-- `themes/InterDead/assets/mini-games/efbd-poll/The-Tower.webp`
+- `themes/InterDead/assets/images/blog/ARTIFACT-THE_TOWER.webp`
+- `themes/InterDead/assets/images/blog/ARTIFACT-THE_LULLABY/*.webp`
 
 ## Configuration payload
 
@@ -22,6 +23,7 @@ The shortcode sends:
 - `assets`: URLs + integrity hashes for CSS/JS.
 - `options`: EFBD axis options (axis code, label, `i18nKey`).
 - `strings`: localized strings for title, prompt, submit, success, completed, profile link label, error, and required messages.
+- `media.images`: ordered list of image URLs for the poll media frame.
 - `locale`: current Hugo locale.
 
 The poll uses `strings.profileLink` to build the mini-profile link in completion notifications. The link is not rendered when `strings.profileLink` is empty, so always provide it when initializing the poll. A safe default is:
@@ -30,11 +32,20 @@ The poll uses `strings.profileLink` to build the mini-profile link in completion
 profileLink: 'Open mini-profile';
 ```
 
-Add a short note in `poll.js` near `buildProfileMessage` to emphasize the dependency on `strings.profileLink` if you adjust the mini-game runtime.
-
 Ensure that the page body includes `data-profile-url` (defaults to `/profile/` when missing).
 
-The current `{ text, link }` structure supports additional contextual actions (journal, history, scale profile) without changing the renderer.
+## Media behavior
+
+Video embedding is fully removed from EFBD poll media.
+
+The header media now supports image-only rendering:
+
+1. **One image**: rendered as a static image (`gm-poll__map-image`) exactly like the original first poll behavior.
+2. **More than one image**: rendered as a `gm-slider` carousel with navigation arrows and bottom dots.
+
+`poll.js` reuses the existing homepage slider stack (`SliderController` + `SliderService` + `SliderView`) to keep one navigation and swipe implementation across the site.
+
+`efbd-poll-2` now resolves all images from `themes/InterDead/assets/images/blog/ARTIFACT-THE_LULLABY/` and sends them as `media.images`.
 
 ## Payload shape for EFBD writes
 
@@ -61,32 +72,9 @@ Use shortcode parameters to deploy independent polls with isolated replay guards
 
 ```md
 {{< efbd-poll gameId="1-efbd-poll" >}}
-{{< efbd-poll gameId="2-efbd-poll" mediaType="video" videoUrl="https://www.youtube.com/embed/sw63yEVj4AM" >}}
+{{< efbd-poll-2 gameId="2-efbd-poll" >}}
 ```
 
 - `gameId` is forwarded to EFBD trigger `context.source` and used by the replay guard.
-- `mediaType="video"` + `videoUrl` switches poll header media from image to embedded video.
 
-### Video source compatibility
-
-`efbd-poll` and `efbd-poll-2` support three media input modes for the header area:
-
-1. **`videoSourceId`**  
-   Builds `https://www.youtube.com/embed/{videoSourceId}`. This mode is YouTube-specific.
-2. **`videoUrl`**  
-   Uses the value as `iframe.src` directly. This works with providers that allow iframe embedding (for example YouTube or Vimeo embed URLs).
-3. **Inline iframe markup (`efbd-poll-2` only)**  
-   Pass a fully prepared iframe as shortcode inner content. The poll extracts the first iframe and mounts it in the media frame.
-
-Example:
-
-```md
-{{< efbd-poll-2 >}}
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/sw63yEVj4AM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-{{< /efbd-poll-2 >}}
-```
-
-Important: current runtime uses an `iframe` renderer for video media. Direct video file links (`.mp4`, `.webm`) are not guaranteed to work unless they are exposed through an embeddable iframe endpoint.
-
-`efbd-poll-2` is a dedicated second poll preset that keeps the same mechanics but uses a separate `gameId` (`2-efbd-poll`), the MIND/SOCIAL/ABANDON axes, and an embedded video header by default.
+`efbd-poll-2` is a dedicated second poll preset that keeps the same mechanics but uses a separate `gameId` (`2-efbd-poll`) and the MIND/SOCIAL/ABANDON axes.

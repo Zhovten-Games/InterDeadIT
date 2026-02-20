@@ -1,4 +1,5 @@
 import { isAxisCode } from '@interdead/efbd-scale';
+import SliderController from '../../js/presentation/controllers/SliderController.js';
 
 const normalizeOptions = (options = []) =>
   (Array.isArray(options) ? options : [])
@@ -21,43 +22,26 @@ const sanitizeMapUrl = (rawUrl) => {
     .replace(/['"]+$/, '');
 };
 
-const extractVideoSourceId = (media = {}) => {
-  if (!media || typeof media !== 'object') {
-    return '';
+const normalizeMediaImages = ({ media = {}, mapUrl = '' } = {}) => {
+  const imageCandidates = [];
+
+  if (Array.isArray(media.images)) {
+    imageCandidates.push(...media.images);
   }
 
-  const directSourceId =
-    typeof media.sourceId === 'string'
-      ? media.sourceId
-      : typeof media.sourceID === 'string'
-        ? media.sourceID
-        : typeof media['source-id'] === 'string'
-          ? media['source-id']
-          : '';
-
-  return sanitizeMapUrl(directSourceId);
-};
-
-const resolveVideoUrl = (media = {}) => {
-  const directUrl = typeof media.url === 'string' ? sanitizeMapUrl(media.url) : '';
-  if (directUrl) {
-    return directUrl;
+  if (Array.isArray(media.mapUrls)) {
+    imageCandidates.push(...media.mapUrls);
   }
 
-  const sourceId = extractVideoSourceId(media);
-  if (!sourceId) {
-    return '';
+  const fallbackMapUrl = sanitizeMapUrl(mapUrl);
+  if (fallbackMapUrl) {
+    imageCandidates.push(fallbackMapUrl);
   }
 
-  return `https://www.youtube.com/embed/${sourceId}`;
-};
-
-const sanitizeFrameHtml = (rawFrameHtml) => {
-  if (typeof rawFrameHtml !== 'string') {
-    return '';
-  }
-
-  return rawFrameHtml.trim();
+  return imageCandidates
+    .map((value) => (typeof value === 'string' ? sanitizeMapUrl(value) : ''))
+    .filter(Boolean)
+    .filter((value, index, list) => list.indexOf(value) === index);
 };
 
 class PollMediaRenderer {
@@ -73,64 +57,84 @@ class PollMediaRenderer {
   }
 }
 
-class IframeMediaRenderer extends PollMediaRenderer {
-  render(media = {}) {
-    const frameHtml = sanitizeFrameHtml(media.frameHtml);
-    if (!frameHtml) {
-      return false;
-    }
-
-    const fragmentContainer = this.documentRef.createElement('div');
-    fragmentContainer.innerHTML = frameHtml;
-    const iframe = fragmentContainer.querySelector('iframe');
-    if (!iframe) {
-      return false;
-    }
-
-    iframe.classList.add('gm-poll__map-video');
-    iframe.setAttribute('loading', iframe.getAttribute('loading') || 'lazy');
-    this.mapFrame.appendChild(iframe);
-    return true;
-  }
-}
-
-class VideoMediaRenderer extends PollMediaRenderer {
-  render(media = {}) {
-    const resolvedVideoUrl = resolveVideoUrl(media);
-    if (!resolvedVideoUrl) {
-      return false;
-    }
-
-    const videoFrame = this.documentRef.createElement('iframe');
-    videoFrame.className = 'gm-poll__map-video';
-    videoFrame.src = resolvedVideoUrl;
-    videoFrame.title = this.mergedStrings.mapAlt;
-    videoFrame.loading = 'lazy';
-    videoFrame.allow =
-      'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-    videoFrame.referrerPolicy = 'strict-origin-when-cross-origin';
-    videoFrame.allowFullscreen = true;
-    this.mapFrame.appendChild(videoFrame);
-    return true;
-  }
-}
-
-class ImageMediaRenderer extends PollMediaRenderer {
-  render({ mapUrl }) {
-    const resolvedMapUrl = sanitizeMapUrl(mapUrl);
-    if (!resolvedMapUrl) {
+class SingleImageMediaRenderer extends PollMediaRenderer {
+  render(url) {
+    if (!url) {
       return false;
     }
 
     const mapImage = this.documentRef.createElement('img');
     mapImage.className = 'gm-poll__map-image';
-    mapImage.src = resolvedMapUrl;
+    mapImage.src = url;
     mapImage.alt = this.mergedStrings.mapAlt;
     mapImage.loading = 'lazy';
     if (this.stringKeys.mapAlt) {
       mapImage.dataset.i18n = this.stringKeys.mapAlt;
     }
     this.mapFrame.appendChild(mapImage);
+    return true;
+  }
+}
+
+class ImageSliderMediaRenderer extends PollMediaRenderer {
+  render(images = []) {
+    if (!Array.isArray(images) || images.length <= 1) {
+      return false;
+    }
+
+    const slider = this.documentRef.createElement('div');
+    slider.className = 'gm-slider gm-slider--poll';
+    slider.setAttribute('aria-label', this.mergedStrings.mapAlt || 'Poll media gallery');
+    slider.setAttribute('aria-roledescription', 'carousel');
+
+    const prevButton = this.documentRef.createElement('button');
+    prevButton.className = 'gm-slider__nav gm-slider__nav--prev';
+    prevButton.setAttribute('aria-label', 'Previous slide');
+    prevButton.textContent = '‹';
+
+    const nextButton = this.documentRef.createElement('button');
+    nextButton.className = 'gm-slider__nav gm-slider__nav--next';
+    nextButton.setAttribute('aria-label', 'Next slide');
+    nextButton.textContent = '›';
+
+    const viewport = this.documentRef.createElement('div');
+    viewport.className = 'gm-slider__viewport';
+
+    const track = this.documentRef.createElement('div');
+    track.className = 'gm-slider__track js-slider-track';
+
+    images.forEach((url) => {
+      const slide = this.documentRef.createElement('article');
+      slide.className = 'gm-slider__slide';
+
+      const image = this.documentRef.createElement('img');
+      image.className = 'gm-poll__map-image gm-poll__map-image--slider';
+      image.src = url;
+      image.alt = this.mergedStrings.mapAlt;
+      image.loading = 'lazy';
+      if (this.stringKeys.mapAlt) {
+        image.dataset.i18n = this.stringKeys.mapAlt;
+      }
+
+      slide.appendChild(image);
+      track.appendChild(slide);
+    });
+
+    viewport.appendChild(track);
+
+    const dots = this.documentRef.createElement('div');
+    dots.className = 'gm-slider__dots js-slider-dots';
+    dots.setAttribute('aria-hidden', 'true');
+
+    slider.appendChild(prevButton);
+    slider.appendChild(viewport);
+    slider.appendChild(nextButton);
+    slider.appendChild(dots);
+    this.mapFrame.appendChild(slider);
+
+    const sliderController = new SliderController({ sliderElement: slider });
+    sliderController.init();
+
     return true;
   }
 }
@@ -343,24 +347,16 @@ export function initEfbdPoll({
   const mapFrame = documentRef.createElement('div');
   mapFrame.className = 'gm-poll__map-frame';
 
-  const resolvedMapUrl = sanitizeMapUrl(mapUrl || root?.dataset?.mapUrl || strings.mapUrl);
-  const mediaType = typeof media.type === 'string' ? media.type : 'image';
+  const mediaImages = normalizeMediaImages({
+    media,
+    mapUrl: mapUrl || root?.dataset?.mapUrl || strings.mapUrl,
+  });
   const rendererContext = { documentRef, mapFrame, mergedStrings, stringKeys };
-  const iframeRenderer = new IframeMediaRenderer(rendererContext);
-  const videoRenderer = new VideoMediaRenderer(rendererContext);
-  const imageRenderer = new ImageMediaRenderer(rendererContext);
+  const singleImageRenderer = new SingleImageMediaRenderer(rendererContext);
+  const imageSliderRenderer = new ImageSliderMediaRenderer(rendererContext);
 
-  const mediaRenderStrategy = {
-    iframe: () => iframeRenderer.render(media),
-    video: () => videoRenderer.render(media),
-    image: () => imageRenderer.render({ mapUrl: resolvedMapUrl }),
-  };
-
-  const renderRequestedMedia = mediaRenderStrategy[mediaType] || mediaRenderStrategy.image;
-  const didRenderMedia = renderRequestedMedia();
-
-  if (!didRenderMedia && mediaType !== 'image') {
-    mediaRenderStrategy.image();
+  if (!imageSliderRenderer.render(mediaImages)) {
+    singleImageRenderer.render(mediaImages[0] || '');
   }
 
   mapSection.appendChild(mapFrame);

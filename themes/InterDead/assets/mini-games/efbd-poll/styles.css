@@ -35,7 +35,9 @@
   border-radius: var(--shape-radius-tight);
   background: rgba(255, 255, 255, 0.02);
   cursor: pointer;
-  transition: border-color var(--transition-fast), transform var(--transition-fast);
+  transition:
+    border-color var(--transition-fast),
+    transform var(--transition-fast);
 }
 
 .gm-poll__option:hover,
@@ -58,7 +60,11 @@
 .gm-poll__submit {
   appearance: none;
   border: 1px solid rgba(var(--color-accent-rgb), 0.6);
-  background: linear-gradient(90deg, rgba(var(--color-accent-rgb), 0.18), rgba(var(--color-accent-rgb), 0.32));
+  background: linear-gradient(
+    90deg,
+    rgba(var(--color-accent-rgb), 0.18),
+    rgba(var(--color-accent-rgb), 0.32)
+  );
   color: var(--color-text);
   padding: 10px 14px;
   border-radius: var(--shape-radius-tight);
@@ -66,7 +72,10 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   cursor: pointer;
-  transition: transform var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+  transition:
+    transform var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
 }
 
 .gm-poll__submit:hover,
@@ -113,9 +122,29 @@
   height: auto;
 }
 
-.gm-poll__map-video {
-  display: block;
-  width: 100%;
+.gm-slider--poll {
+  margin: 0;
+  border-radius: 0;
+  min-height: 0;
+}
+
+.gm-slider--poll::before,
+.gm-slider--poll::after,
+.gm-slider--poll .gm-slider__overlay,
+.gm-slider--poll .gm-slider__scoreboard {
+  display: none;
+}
+
+.gm-slider--poll .gm-slider__slide {
+  min-height: 0;
+  padding: 0;
+}
+
+.gm-slider--poll .gm-slider__dots {
+  margin-top: 10px;
+}
+
+.gm-poll__map-image--slider {
   aspect-ratio: 16 / 9;
-  border: 0;
+  object-fit: cover;
 }

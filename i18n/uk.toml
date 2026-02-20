@@ -502,5 +502,5 @@ other = "We could not record your vote. Please retry after reconnecting."
 ['minigames.poll2.required']
 other = "Select one option to continue."
 
-['minigames.poll2.videoAlt']
+['minigames.poll2.mediaAlt']
 other = "Pogost sequence record"

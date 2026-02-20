@@ -15,4 +15,4 @@ Use the resulting `RelPermalink` and `Data.Integrity` values when rendering `<li
 
 ## Shortcode assets
 
-Shortcodes can fingerprint their own assets. For example, the `efbd-poll` shortcode fingerprints its CSS, map image, and JS bundle before injecting them and queuing the mini-game configuration.
+Shortcodes can fingerprint their own assets. For example, the `efbd-poll` shortcode fingerprints its CSS, poll media images, and JS bundle before injecting them and queuing the mini-game configuration.
