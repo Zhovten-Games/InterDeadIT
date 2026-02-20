@@ -289,7 +289,7 @@ Institutional Faith Degradation detected.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sw63yEVj4AM?si=BVcUw_5MonRCOETu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-{{< efbd-poll-2 />}}
+{{< efbd-poll-2 >}}
 
 Это не терапия.<br>
 Это регистрация реакции.<br>

@@ -284,7 +284,7 @@ After viewing, a short poll will be offered.<br>
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/sw63yEVj4AM?si=BVcUw_5MonRCOETu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
-{{< efbd-poll-2 />}}
+{{< efbd-poll-2 >}}
 
 This is not therapy.<br>
 This is reaction registration.<br>
