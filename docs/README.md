@@ -13,6 +13,8 @@ This documentation expands on the short README and is organized by responsibilit
 - [Local setup](development/local-setup.md)
 - [Formatting](development/formatting.md)
 - [Content & localization](development/content-localization.md)
+- [JavaScript module map](development/javascript-modules.md)
+- [JavaScript test map](development/testing-js.md)
 
 ## Deployment
 
@@ -27,6 +29,7 @@ This documentation expands on the short README and is organized by responsibilit
 - [Modal service](ui/modal-service.md)
 - [Slider service](ui/slider-service.md)
 - [Scroll effects controller](ui/scroll-effects-controller.md)
+- [InterDeadProto embed camera requirements](ui/interdead-embed-camera.md)
 - [UI patterns](ui/patterns.md)
 
 ## Shortcodes

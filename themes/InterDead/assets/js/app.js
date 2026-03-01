@@ -271,6 +271,7 @@ authBadgeController.init();
 const efbdAdapter = new EfbdApiAdapter({ apiConfig });
 const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFlags, eventBus });
 window.InterdeadPorts = window.InterdeadPorts || {};
+window.InterdeadPorts.modalService = modalService;
 window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
   efbdBridge.emitTrigger({ axis, value, context });
 window.InterdeadNotifications = notificationService;

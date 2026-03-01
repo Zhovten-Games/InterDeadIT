@@ -492,3 +492,15 @@ other = "Select one option to continue."
 
 ['minigames.poll2.mediaAlt']
 other = "Pogost sequence record"
+
+['launcher.chat.open']
+other = "チャットを開く"
+
+['launcher.chat.choose']
+other = "チャットの開き方を選択してください"
+
+['launcher.chat.inline']
+other = "このサイト内で開く"
+
+['launcher.chat.external']
+other = "新しいタブで開く"

@@ -1,4 +1,5 @@
 {{ partial "head.html" . }}
+{{- $niroAvatarLauncher := resources.Get "images/NIRO.webp" | fingerprint -}}
     {{ partial "components/preloader.html" . }}
     {{ partial "header.html" . }}
     <main class="gm-main">
@@ -11,12 +12,21 @@
     {{ partial "age-gate.html" . }}
     {{ partial "latest-post-modal.html" . }}
     {{ partial "components/info-modal.html" . }}
+    {{ partial "interdead-launcher-modal.html" . }}
     {{ partial "components/article-toc-script.html" . }}
     <script
       type="application/json"
       data-interdead-embed="launcher"
       data-interdead-src="https://noir.phantom-draft.com/"
       data-interdead-external-src="https://noir.phantom-draft.com/"
+      data-interdead-iframe-allow="camera; microphone; geolocation; fullscreen; clipboard-read; clipboard-write"
+      data-interdead-entry-src="{{ .Site.Params.interdeadEntrySrc | default "" }}"
+      data-interdead-launcher-label="{{ i18n "launcher.chat.open" }}"
+      data-interdead-chooser-title="{{ i18n "launcher.chat.choose" }}"
+      data-interdead-inline-label="{{ i18n "launcher.chat.inline" }}"
+      data-interdead-external-label="{{ i18n "launcher.chat.external" }}"
+      data-interdead-close-label="{{ i18n "menu.modal.close" }}"
+      data-interdead-launcher-avatar="{{ $niroAvatarLauncher.RelPermalink }}"
     ></script>
     <script type="module" src='{{ "js/interdead-proto-loader.js" | relURL }}'></script>
     <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>

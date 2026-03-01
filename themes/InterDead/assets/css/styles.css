@@ -15,6 +15,8 @@
   --color-warning: #ffb347;
   --color-link: #b8ffc0;
   --color-link-hover: #e3ffe6;
+  --color-selection-bg: rgba(111, 214, 124, 0.35);
+  --color-selection-text: #eaffec;
   --color-shadow: rgba(0, 0, 0, 0.65);
   --shape-radius: 0;
   --shape-radius-tight: 0;
@@ -32,14 +34,19 @@
   --menu-padding: 10px 18px;
   --transition-fast: 0.2s ease;
   --font-body: 'Calling Code', 'IBM Plex Mono', 'Fira Code', 'JetBrains Mono', monospace;
-  --font-heading: 'Calling Code', 'IBM Plex Mono', 'Fira Code', 'JetBrains Mono', monospace;
+  --font-heading: 'Calling Code', sans-serif;
   --font-console:
     'IBM Plex Mono', 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
 }
 
 html[lang='ja'] {
   --font-body: 'Noto Sans JP', 'Calling Code', 'IBM Plex Mono', monospace;
-  --font-heading: 'Noto Sans JP', 'Calling Code', 'IBM Plex Mono', monospace;
+  --font-heading: 'Noto Sans JP', 'IBM Plex Mono', 'Calling Code', sans-serif;
+}
+
+::selection {
+  background: var(--color-selection-bg);
+  color: var(--color-selection-text);
 }
 
 *,
@@ -1585,7 +1592,7 @@ img.emoji,
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
-  background: rgba(9, 11, 18, 0.9);
+  background: var(--color-bg);
   border: 2px solid rgba(var(--color-accent-rgb), 0.55);
   box-shadow: 0 22px 44px rgba(0, 0, 0, 0.45);
   display: grid;
@@ -2904,12 +2911,12 @@ body.gm-preloaderActive .gm-footer {
 }
 
 .gm-menuModal img.emoji {
-  width: 1em !important;
-  height: 1em !important;
-  min-width: 1em;
-  min-height: 1em;
-  max-width: 1em;
-  max-height: 1em;
+  width: 2em !important;
+  height: 2em !important;
+  min-width: 2em;
+  min-height: 2em;
+  max-width: 2em;
+  max-height: 2em;
   margin: 0;
   padding: 0;
   border-radius: 6px;
@@ -2980,9 +2987,7 @@ img.emoji {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 0;
+  border-radius: 6px;
   border: 1px solid rgba(var(--color-accent-rgb), 0.4);
   background: transparent;
   color: inherit;
@@ -3025,6 +3030,65 @@ img.emoji {
     border-color var(--transition-fast),
     background var(--transition-fast),
     transform var(--transition-fast);
+}
+
+
+.gm-interdeadLauncherModal {
+  z-index: 130;
+}
+
+.gm-interdeadLauncherModal__dialog {
+  --gm-modal-dialog-max-width: 560px;
+  overflow: hidden;
+}
+
+.gm-interdeadLauncherModal__body {
+  padding: 16px;
+}
+
+.gm-interdeadLauncherModal__dialog--chat {
+  position: relative;
+  width: min(1240px, calc(100vw - 40px));
+  height: min(90vh, 960px);
+  padding: 0;
+}
+
+.gm-interdeadLauncherModal--chat .gm-interdeadLauncherModal__header {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  gap: 0;
+}
+
+.gm-interdeadLauncherModal--chat .gm-interdeadLauncherModal__body {
+  height: 100%;
+  padding: 0;
+}
+
+.gm-interdeadLauncherModal--chat .gm-interdeadLauncherModal__header .gm-modal__title {
+  width: 0;
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.gm-interdeadLauncherModal--chat .gm-interdeadLauncherModal__header .gm-modal__close {
+  position: relative;
+  z-index: 5;
+}
+
+.gm-interdeadLauncherModal__iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 .gm-modal__close:hover,

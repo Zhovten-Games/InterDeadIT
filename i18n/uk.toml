@@ -492,3 +492,15 @@ other = "Select one option to continue."
 
 ['minigames.poll2.mediaAlt']
 other = "Pogost sequence record"
+
+['launcher.chat.open']
+other = "Відкрити чат"
+
+['launcher.chat.choose']
+other = "Оберіть спосіб відкриття чату"
+
+['launcher.chat.inline']
+other = "Відкрити прямо на сайті"
+
+['launcher.chat.external']
+other = "Відкрити в новій вкладці"
