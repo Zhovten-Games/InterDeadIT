@@ -89,11 +89,12 @@
       integrity="{{ $siteManifest.Data.Integrity }}"
       crossorigin="anonymous"
     />
-    <meta name="theme-color" content="#0c0a12" />
+    <meta name="theme-color" content="#001501" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.cdnfonts.com/css/calling-code" rel="stylesheet" />
     <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Serif+JP:wght@200..900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@200..900&display=swap"
       rel="stylesheet"
     />
     {{- $styleAsset := resources.Get "css/styles.css" | resources.Minify | fingerprint }}

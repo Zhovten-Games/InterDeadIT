@@ -13,12 +13,12 @@
     {{ partial "components/info-modal.html" . }}
     {{ partial "components/article-toc-script.html" . }}
     <script
-      type="module"
-      src="https://zhovten-games.github.io/InterDeadProto/src/infrastructure/bootstrap/index.js"
+      type="application/json"
       data-interdead-embed="launcher"
-      data-interdead-src="https://zhovten-games.github.io/InterDeadProto/index.html"
-      data-interdead-assets-base="https://zhovten-games.github.io/InterDeadProto/assets/"
+      data-interdead-src="https://noir.phantom-draft.com/"
+      data-interdead-external-src="https://noir.phantom-draft.com/"
     ></script>
+    <script type="module" src='{{ "js/interdead-proto-loader.js" | relURL }}'></script>
     <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
     {{- $scriptAsset := .Scratch.Get "interdeadScript" -}}
     {{- if $scriptAsset -}}

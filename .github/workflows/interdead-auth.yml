@@ -6,6 +6,8 @@ on:
       - main
     paths:
       - "workers/interdead-auth/**"
+      - "themes/InterDead/assets/js/**"
+      - ".github/scripts/build-cf-js.sh"
       - ".github/workflows/interdead-auth.yml"
 
 jobs:
@@ -25,6 +27,18 @@ jobs:
         run: |
           npm ci || npm install
         working-directory: .
+
+      - name: Build JS bundle for Cloudflare (CI-only)
+        shell: bash
+        run: |
+          ./.github/scripts/build-cf-js.sh "${RUNNER_TEMP}/interdead-cf"
+
+      - name: Upload Cloudflare JS bundle artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: interdead-cf-js
+          path: ${{ runner.temp }}/interdead-cf/js
+          if-no-files-found: error
 
       - name: Install Wrangler
         run: npm install -g wrangler

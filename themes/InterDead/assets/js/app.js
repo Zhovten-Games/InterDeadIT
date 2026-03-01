@@ -341,6 +341,56 @@ window.InterdeadPorts.authVisibility = {
   isAuthenticated: () => authVisibilityService.isAuthenticated?.(),
 };
 
+class HostWindowModalPort {
+  constructor({ documentRef = document } = {}) {
+    this.documentRef = documentRef;
+    this.overlay = null;
+    this.content = null;
+  }
+
+  open(node) {
+    if (!this.overlay) {
+      this._ensure();
+    }
+
+    if (node && this.content.firstChild !== node) {
+      this.content.innerHTML = '';
+      this.content.appendChild(node);
+    }
+
+    this.overlay.hidden = false;
+  }
+
+  close() {
+    if (!this.overlay) {
+      return;
+    }
+
+    this.overlay.hidden = true;
+    this.content.innerHTML = '';
+  }
+
+  _ensure() {
+    this.overlay = this.documentRef.createElement('div');
+    this.overlay.className = 'interdead-host-modal';
+    this.overlay.hidden = true;
+
+    this.content = this.documentRef.createElement('div');
+    this.content.className = 'interdead-host-modal__content';
+
+    this.overlay.appendChild(this.content);
+    this.overlay.addEventListener('click', (event) => {
+      if (event.target === this.overlay) {
+        this.close();
+      }
+    });
+
+    this.documentRef.body.appendChild(this.overlay);
+  }
+}
+
+window.InterdeadPorts.modal = new HostWindowModalPort();
+
 window.dispatchEvent(
   new CustomEvent('interdead:ports-ready', {
     detail: { ports: window.InterdeadPorts },
