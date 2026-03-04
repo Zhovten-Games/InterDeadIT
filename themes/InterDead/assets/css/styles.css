@@ -1241,6 +1241,7 @@ img.emoji,
   margin: 0 0 var(--gm-content-block-gap);
   border-collapse: collapse;
   table-layout: auto;
+  scrollbar-color: rgba(var(--color-accent-rgb),.55)rgba(255,255,255,8%);
 }
 
 .gm-content table th,
