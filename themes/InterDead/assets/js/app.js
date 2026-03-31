@@ -38,6 +38,7 @@ import AppPreloaderController from './presentation/controllers/AppPreloaderContr
 import TwemojiController from './presentation/controllers/TwemojiController.js';
 import ScrollEffectsController from './presentation/controllers/ScrollEffectsController.js';
 import TabsController from './presentation/controllers/TabsController.js';
+import FrameworkBridgeController from './presentation/controllers/FrameworkBridgeController.js';
 
 const storage = new LocalStorageAdapter();
 const scrollController = new DocumentScrollController({ target: document.body });
@@ -115,7 +116,16 @@ const infoTriggerController = new InfoTriggerController({
 });
 infoTriggerController.init();
 
-modalService.autoShow();
+const runAutoShowModals = (() => {
+  let didRun = false;
+  return () => {
+    if (didRun) {
+      return;
+    }
+    didRun = true;
+    modalService.autoShow();
+  };
+})();
 
 const isHome = document.body?.dataset?.isHome === 'true';
 const headerElement = document.querySelector('.gm-header');
@@ -138,6 +148,12 @@ const tabsController = new TabsController({
   roots: Array.from(document.querySelectorAll('[data-tabs]')),
 });
 tabsController.init();
+
+const frameworkBridgeController = new FrameworkBridgeController({
+  windowRef: window,
+  documentRef: document,
+});
+frameworkBridgeController.init();
 
 const twemojiController = new TwemojiController({
   root: document.body,
@@ -204,6 +220,7 @@ const appPreloaderController = new AppPreloaderController({
   preloader: document.querySelector('[data-preloader]'),
   authStateService: null,
   eventBus,
+  onReleased: runAutoShowModals,
 });
 
 const apiConfig = {
@@ -413,4 +430,5 @@ window.addEventListener('beforeunload', () => {
   twemojiController?.dispose?.();
   appPreloaderController?.dispose?.();
   authVisibilityService.dispose?.();
+  frameworkBridgeController?.dispose?.();
 });

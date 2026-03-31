@@ -2,6 +2,7 @@
 {{- $description := .Params.description | default .Site.Language.Params.description -}}
 {{- $imageParam := .Params.image | default .Site.Params.defaultImage -}}
 {{- $canonical := .Permalink -}}
+{{- $rootUrl := "/" | absURL -}}
 {{- $lang := .Language.Lang -}}
 {{- $ogType := .Site.Params.ogType | default "website" -}}
 {{- $twitterCard := .Site.Params.twitterCard | default "summary_large_image" -}}
@@ -59,7 +60,7 @@
     {{- range .Translations }}
     <link rel="alternate" hreflang="{{ .Language.LanguageCode }}" href="{{ .Permalink }}" />
     {{- end }}
-    <link rel="alternate" hreflang="x-default" href="{{ .Site.Home.Permalink }}" />
+    <link rel="alternate" hreflang="x-default" href="{{ $rootUrl }}" />
     <link
       rel="apple-touch-icon"
       sizes="180x180"
@@ -93,6 +94,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.cdnfonts.com/css/calling-code" rel="stylesheet" />
+    {{- if eq .Language.Lang "en" }}
+    <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet" />
+    {{- end }}
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@200..900&display=swap"
       rel="stylesheet"
@@ -174,4 +178,10 @@
     data-mode="{{ or (index .Site.Params "defaultMode") "demo" }}"
     data-profile-url="{{ "/profile/" | relLangURL }}"
     data-is-home="{{ if .IsHome }}true{{ else }}false{{ end }}"
+    data-interdead-framework="true"
+    data-framework-membrane="true"
+    data-framework-decorative-title="false"
+    data-framework-decorative-title-selectors="h1"
+    data-framework-membrane-selectors="[data-modal-trigger], [data-auth-button], .gm-slider__arrow"
+    data-framework-reduced-motion-mode="minimal"
   >

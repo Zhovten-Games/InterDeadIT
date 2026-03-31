@@ -1,3 +1,21 @@
+---
+domains: []
+emits: []
+implements: []
+imports: []
+listens: []
+owns: []
+schemaVersion: 1
+source: InterDeadIT/themes/InterDead/assets/js/app.js
+used_by: []
+source_exists: true
+runtime_role: application_bootstrap
+contour_primary: FPN-COMMAND
+contour_secondary: none
+role_group: executive_control
+narrative_role: "front-end bootstrap coordinator"
+---
+
 # JavaScript module map
 
 This page tracks the current front-end modules inside `themes/InterDead/assets/js` and links them to their responsibility boundaries. Keep this file updated whenever a new module is added or removed.
@@ -72,6 +90,7 @@ This page tracks the current front-end modules inside `themes/InterDead/assets/j
 - `presentation/controllers/CountdownController.js`
 - `presentation/controllers/CtaController.js`
 - `presentation/controllers/FaqController.js`
+- `presentation/controllers/FrameworkBridgeController.js`
 - `presentation/controllers/HeaderActionsController.js`
 - `presentation/controllers/HeaderLogoController.js`
 - `presentation/controllers/HomeAuthController.js`

@@ -14,6 +14,8 @@
   {{- $limit = int . -}}
 {{- end -}}
 
+{{- $isArtifactsInformer := in (lower (printf "%v" $category)) "artifacts" -}}
+
 {{- $latestPosts := partial "helpers/posts-informer-feed.html" (dict
   "page" .Page
   "section" $section
@@ -21,9 +23,10 @@
   "limit" $limit
 ) -}}
 
-<section class="gm-section gm-postInformer" id="artifacts">
+<section class="gm-section gm-postInformer{{ if $isArtifactsInformer }} gm-postInformer--artifacts{{ end }}" id="artifacts">
   <div class="gm-container">
-    {{- if $noteText -}}
+    <h2 class="gm-section__title">{{ i18n "categories.artifacts" }}</h2>
+    {{- if and $noteText (not $isArtifactsInformer) -}}
       <p class="gm-postInformer__note gm-note--centered">{{ $noteText }}</p>
     {{- end -}}
     <div class="gm-postInformer__grid">
@@ -66,7 +69,7 @@
             </div>
           {{- end -}}
           <div class="gm-card__content">
-            <h2 class="gm-postInformer__title">
+            <h2 class="gm-postInformer__title{{ if $isArtifactsInformer }} gm-titleCase--lower{{ end }}">
               <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
             </h2>
             {{- with $page.Date -}}

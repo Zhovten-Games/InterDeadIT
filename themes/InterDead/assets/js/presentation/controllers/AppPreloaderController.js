@@ -1,12 +1,13 @@
 import { AUTH_SESSION_EVENTS } from '../../application/auth/AuthStateService.js';
 
 export default class AppPreloaderController {
-  constructor({ body, preloader, authStateService, eventBus, maxWaitMs = 5000 }) {
+  constructor({ body, preloader, authStateService, eventBus, onReleased = null, maxWaitMs = 5000 }) {
     this.body = body;
     this.preloader = preloader;
     this.authStateService = authStateService;
     this.eventBus = eventBus;
     this.maxWaitMs = maxWaitMs;
+    this.onReleased = typeof onReleased === 'function' ? onReleased : null;
     this.unsubscribeUpdated = null;
     this.unsubscribeFailed = null;
     this.timer = null;
@@ -15,6 +16,7 @@ export default class AppPreloaderController {
 
   init() {
     if (!this.body || !this.preloader) {
+      this.release('preloader-unavailable');
       return;
     }
 
@@ -44,14 +46,17 @@ export default class AppPreloaderController {
     }
   }
 
-  release() {
-    if (this.released || !this.body || !this.preloader) {
+  release(reason = 'released') {
+    if (this.released) {
       return;
     }
 
     this.released = true;
-    this.body.classList.remove('gm-preloaderActive');
-    this.preloader.classList.add('gm-preloader--hidden');
+    if (this.body && this.preloader) {
+      this.body.classList.remove('gm-preloaderActive');
+      this.preloader.classList.add('gm-preloader--hidden');
+    }
+    this.onReleased?.({ reason });
     this.dispose();
   }
 }

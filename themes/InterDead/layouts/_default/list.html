@@ -33,6 +33,12 @@
       {{ if $categoryParam }}
         {{ $categories = index $page.Params $categoryParam | default (slice) }}
       {{ end }}
+      {{ $isArtifactsEntry := false }}
+      {{ range $categories }}
+        {{ if eq (lower (printf "%v" .)) "artifacts" }}
+          {{ $isArtifactsEntry = true }}
+        {{ end }}
+      {{ end }}
       {{ if $hasMedia }}
         <div class="gm-card__mediaBlock">
           <figure class="gm-card__media">
@@ -72,7 +78,7 @@
           {{ if and (not $hasMedia) $categories }} {{ partial "components/category-list.html" (dict
           "page" $page "site" $.Site "categories" $categories "basePath" $categoryBasePath "class" "gm-card__categories"
           "label" $categoryLabel) }} {{ end }}
-          <h2 class="gm-collection__itemTitle">
+          <h2 class="gm-collection__itemTitle{{ if and (eq $.Section "blog") $isArtifactsEntry }} gm-titleCase--lower{{ end }}">
             <a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a>
           </h2>
           <div class="gm-card__meta">

@@ -40,3 +40,17 @@ InterDeadIT JavaScript tests are implemented as Node.js unit/integration tests u
 - DOM-heavy module: prefer adapter tests with mocked HTML containers.
 - Bridge/integration module: include fallback-path coverage (failed network, missing host API, or missing DOM marker).
 - If a test is removed, remove or update the corresponding item in this file in the same change set.
+
+
+## Pre-rollout check for decorativeTitle on `h1`
+
+Before enabling broad decorativeTitle rollout for headings, validate the one-`h1` rule in generated pages:
+
+```bash
+hugo --destination public
+./tests/scripts/audit-h1-count.sh public
+```
+
+The audit fails when a page has zero `<h1>` tags or more than one `<h1>` tag, which protects decorativeTitle-on-`h1` from ambiguous page structure.
+
+Note: decorativeTitle-on-`h1` is currently **in development** and is disabled in the active InterDeadIT runtime marker by default. Keep this audit command ready for the next rollout stage.

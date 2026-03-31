@@ -3,7 +3,21 @@
   <div class="gm-container">
     <header class="gm-article__header">
       <div class="gm-article__heading">
-        <h1 class="gm-section__title">{{ .Title }}</h1>
+        {{ $categoryConfig := partial "helpers/section-category-config.html" . }}
+        {{ $categoryParam := index $categoryConfig "param" }}
+        {{ $categoryBasePath := index $categoryConfig "basePath" }}
+        {{ $categoryLabel := index $categoryConfig "label" }}
+        {{ $categories := slice }}
+        {{ if $categoryParam }}
+          {{ $categories = index .Params $categoryParam | default (slice) }}
+        {{ end }}
+        {{ $isArtifactsEntry := false }}
+        {{ range $categories }}
+          {{ if eq (lower (printf "%v" .)) "artifacts" }}
+            {{ $isArtifactsEntry = true }}
+          {{ end }}
+        {{ end }}
+        <h1 class="gm-section__title{{ if and (eq .Section "blog") $isArtifactsEntry }} gm-titleCase--lower{{ end }}">{{ .Title }}</h1>
       </div>
       {{ if and (eq .Section "blog") .Date }}
       <p class="gm-text--fine gm-article__date">{{ .Date.Format "02 Jan 2006" }}</p>
@@ -21,15 +35,7 @@
         {{ partial "components/article-toc.html" (dict "toc" $toc) }}
       {{ end }}
       <div class="gm-card gm-article__body gm-content">
-    {{ $categoryConfig := partial "helpers/section-category-config.html" . }}
-    {{ $categoryParam := index $categoryConfig "param" }}
-    {{ $categoryBasePath := index $categoryConfig "basePath" }}
-    {{ $categoryLabel := index $categoryConfig "label" }}
-    {{ $categories := slice }}
-    {{ if $categoryParam }}
-      {{ $categories = index .Params $categoryParam | default (slice) }}
-    {{ end }}
-    {{ if or $categories (and .Date (ne .Section "blog")) (eq .Section "blog") }}
+        {{ if or $categories (and .Date (ne .Section "blog")) (eq .Section "blog") }}
         <div class="gm-article__meta">
           {{ if and (eq .Section "blog") $categories }}
           <span class="gm-categories__label gm-article__categoryLabel" data-i18n="blog.categoryLabel">

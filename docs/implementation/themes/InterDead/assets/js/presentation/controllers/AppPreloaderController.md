@@ -1,0 +1,21 @@
+---
+domains: []
+emits: []
+implements: []
+imports: []
+listens: []
+owns: []
+schemaVersion: 1
+source: InterDeadIT/themes/InterDead/assets/js/presentation/controllers/AppPreloaderController.js
+used_by: []
+source_exists: true
+runtime_role: app_preloader_controller
+contour_primary: FPN-COMMAND
+contour_secondary: none
+role_group: executive_control
+narrative_role: "application preloader flow coordinator"
+---
+
+# AppPreloaderController
+
+Implementation reference for `InterDeadIT/themes/InterDead/assets/js/presentation/controllers/AppPreloaderController.js`.

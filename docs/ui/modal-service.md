@@ -1,3 +1,21 @@
+---
+domains: []
+emits: []
+implements: []
+imports: []
+listens: []
+owns: []
+schemaVersion: 1
+source: InterDeadIT/themes/InterDead/assets/js/application/modal/ModalService.js
+used_by: []
+source_exists: true
+runtime_role: modal_service
+contour_primary: SAL-SWITCH
+contour_secondary: none
+role_group: salience_threat
+narrative_role: "modal state switch"
+---
+
 # Modal service
 
 The modal system is built around `ModalService`, which orchestrates modal instances and delegates view operations to a `ModalViewPort` implementation. This keeps modal behavior reusable and testable.

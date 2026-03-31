@@ -1,2 +1,4 @@
 **/node_modules/
 **/dist/
+tests/local-auth-overlay/public/
+tests/local-auth-overlay/packages-workspace/
