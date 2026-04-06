@@ -23,11 +23,11 @@
   --color-panel: rgba(0, 12, 2, 0.78);
   --color-badge-bg: rgba(var(--color-accent-rgb), 0.14);
   --color-warning: #ffb347;
-  --color-link: #cda24a;
-  --color-link-hover: #f0c96a;
-  --color-link-focus: #ffe6a3;
-  --color-link-visited: #8c6b2f;
-  --color-link-active: #b8842f;
+  --color-link: #e53935;
+  --color-link-hover: #ff5a4f;
+  --color-link-focus: #ff8a80;
+  --color-link-visited: #c62828;
+  --color-link-active: #d32f2f;
   --color-selection-bg: rgba(111, 214, 124, 0.35);
   --color-selection-text: #eaffec;
   --color-shadow: rgba(0, 0, 0, 0.65);
@@ -48,12 +48,18 @@
   --transition-fast: 0.2s ease;
   --font-body: 'Calling Code', 'IBM Plex Mono', 'Fira Code', 'JetBrains Mono', monospace;
   --font-heading: 'Calling Code', sans-serif;
+  --color-link-rgb: 229, 57, 53;
   --font-console:
     'IBM Plex Mono', 'Fira Code', 'JetBrains Mono', 'SFMono-Regular', Menlo, Consolas, monospace;
 }
 
 html[lang='en'] {
   --font-heading: 'Pirata One', 'Calling Code', sans-serif;
+}
+
+html[lang='ru'],
+html[lang='uk'] {
+  --font-heading: 'Triodion', 'Calling Code', sans-serif;
 }
 
 html[lang='ja'] {
@@ -606,6 +612,7 @@ img.emoji,
 .gm-btn:hover {
   transform: translateY(-1px);
   border-color: rgba(var(--color-accent-rgb), 0.45);
+  background: rgba(var(--color-link-rgb), 0.12);
 }
 
 .gm-btn--primary {
@@ -617,7 +624,7 @@ img.emoji,
 }
 
 .gm-btn--primary:hover {
-  background: rgba(var(--color-accent-rgb), 0.2);
+  background: rgba(var(--color-link-rgb), 0.2);
 }
 
 .auth-button {
@@ -1063,7 +1070,6 @@ img.emoji,
   overflow: hidden;
   background: none;
   box-shadow: none;
-  pointer-events: none;
 }
 
 .gm-hero__logoImage {
@@ -1073,6 +1079,13 @@ img.emoji,
   object-fit: contain;
   object-position: center;
   clip-path: inset(1px 1px 1px 1px);
+}
+
+.gm-hero__mediaVideo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 /* ===== Sections ===== */

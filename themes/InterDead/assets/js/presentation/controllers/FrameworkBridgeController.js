@@ -1,4 +1,5 @@
-import { FrameworkRuntime, HugoConfigSourceAdapter } from '@interdead/framework';
+import { FrameworkRuntime } from '@interdead/framework';
+import HostMembraneConfigSourceAdapter from '../../infrastructure/config/HostMembraneConfigSourceAdapter';
 
 export default class FrameworkBridgeController {
   constructor({ windowRef = window, documentRef = document, logger = console } = {}) {
@@ -9,10 +10,13 @@ export default class FrameworkBridgeController {
   }
 
   init() {
-    this.runtime = new FrameworkRuntime(new HugoConfigSourceAdapter(this.documentRef), {
-      windowRef: this.windowRef,
-      documentRef: this.documentRef,
-    });
+    this.runtime = new FrameworkRuntime(
+      new HostMembraneConfigSourceAdapter({ documentRef: this.documentRef }),
+      {
+        windowRef: this.windowRef,
+        documentRef: this.documentRef,
+      },
+    );
 
     this.runtime.boot();
     this.logger.info('[InterDead][FrameworkBridge] Framework runtime booted from Hugo adapter.');

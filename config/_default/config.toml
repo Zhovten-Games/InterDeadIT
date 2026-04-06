@@ -34,7 +34,7 @@ theme = "InterDead"
   defaultImage = "assets/images/logo.png"
   ogType = "website"
   twitterCard = "summary_large_image"
-  appVersion = "000.4"
+  appVersion = "000.5"
 
   [params.navigation]
     [[params.navigation.items]]

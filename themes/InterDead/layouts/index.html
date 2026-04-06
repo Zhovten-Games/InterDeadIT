@@ -69,14 +69,17 @@
             {{ i18n "auth.efbd.hint" }}
           </p>
         </div>
-          <div class="gm-hero__media">
-            <div class="gm-hero__logoFrame" data-hero-media>
-              {{- $logo := resources.Get "images/logo_png.png" | fingerprint -}}
-              <img
-                src="{{ $logo.RelPermalink }}"
-                alt="{{ i18n "meta.ogImageAlt" }}"
-                class="gm-hero__logoImage"
-            />
+        <div class="gm-hero__media">
+          <div class="gm-hero__logoFrame" data-hero-media>
+            <iframe
+              class="gm-hero__mediaVideo"
+              src="https://www.youtube.com/embed/lXtiV2F-ogA?autoplay=0&loop=1&playlist=lXtiV2F-ogA&controls=1&modestbranding=1&rel=0&playsinline=1"
+              title="InterDead hero media"
+              loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
           </div>
         </div>
       </div>

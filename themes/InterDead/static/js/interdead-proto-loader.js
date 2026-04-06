@@ -265,7 +265,7 @@ class InterDeadChoiceDialog {
     const wrapper = this.documentRef.createElement('div');
     wrapper.className = 'interdead-choice-dialog';
 
-    const title = this.documentRef.createElement('h2');
+    const title = this.documentRef.createElement('p');
     title.className = 'interdead-choice-dialog__title';
     title.textContent = this.labels.chooserTitle;
 

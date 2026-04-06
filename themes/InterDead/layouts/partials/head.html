@@ -97,6 +97,9 @@
     {{- if eq .Language.Lang "en" }}
     <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet" />
     {{- end }}
+    {{- if or (eq .Language.Lang "ru") (eq .Language.Lang "uk") }}
+    <link href="https://fonts.googleapis.com/css2?family=Triodion&display=swap" rel="stylesheet" />
+    {{- end }}
     <link
       href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Noto+Sans+JP:wght@200..900&display=swap"
       rel="stylesheet"
