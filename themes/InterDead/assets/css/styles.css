@@ -455,12 +455,59 @@ img.emoji,
     transform var(--transition-fast);
 }
 
+.gm-header__actionButton {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  min-height: 44px;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-text);
+  font: inherit;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: none;
+  transform: none;
+  filter: none;
+}
+
+.gm-header__actionButton.auth-button {
+  min-width: 0;
+  padding: 10px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--color-text);
+  filter: none;
+}
+
+.gm-header__actionButton.auth-button--compact {
+  min-height: 44px;
+}
+
+.gm-header__actionButton .auth-button__label,
+.gm-header__actionButton .auth-button__status {
+  line-height: 1.1;
+}
+
 .gm-header__wordmarkButton:hover,
-.gm-header__wordmarkButton:focus-visible {
+.gm-header__wordmarkButton:focus-visible,
+.gm-header__actionButton:hover,
+.gm-header__actionButton:focus-visible {
   border-color: rgba(var(--color-accent-rgb), 0.5);
   background: rgba(var(--color-accent-rgb), 0.08);
   outline: none;
   transform: translateY(-1px);
+  box-shadow: none;
+  filter: none;
 }
 
 .gm-header__wordmarkLabel {
@@ -517,14 +564,10 @@ img.emoji,
 
 .gm-header__langTrigger {
   appearance: none;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: transparent;
   color: var(--color-text);
-  border-radius: 0;
-  padding: 6px 12px;
   font: inherit;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: capitalize;
   display: inline-flex;
   align-items: center;
@@ -835,6 +878,10 @@ img.emoji,
   pointer-events: none;
 }
 
+.gm-header__actionButton.auth-button--discord::before {
+  display: none;
+}
+
 @keyframes auth-button-spin {
   from {
     transform: rotate(0deg);
@@ -999,6 +1046,41 @@ img.emoji,
   align-items: stretch;
 }
 
+.gm-hero__ctaShell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  gap: 18px;
+  align-items: stretch;
+  width: 100%;
+  max-width: 760px;
+}
+
+.gm-hero__cta--primary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 14px;
+  min-height: 76px;
+  padding: 16px 20px;
+  background: transparent;
+  position: relative;
+}
+
+.gm-hero__cta--primary::after {
+  content: '';
+  position: absolute;
+  top: 16px;
+  right: -9px;
+  bottom: 16px;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.gm-hero__ctaShell:has(> .gm-hero__countdown--hidden) .gm-hero__cta--primary::after {
+  display: none;
+}
+
 .gm-hero__cta > .gm-btn,
 .gm-hero__cta > .gm-badge {
   flex-shrink: 0;
@@ -1008,7 +1090,7 @@ img.emoji,
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 60px;
+  min-height: 44px;
 }
 
 .gm-hero__cta > .auth-button {
@@ -1016,8 +1098,53 @@ img.emoji,
   flex: 1 1 320px;
 }
 
-.gm-hero__countdown {
-  padding: 12px 16px;
+.gm-hero__ctaShell > .gm-hero__countdown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 76px;
+  padding: 16px 20px;
+  text-align: center;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--color-text);
+  position: relative;
+}
+
+.gm-hero__ctaShell > .gm-hero__countdown.gm-badge,
+.gm-hero__ctaShell > .gm-hero__countdown.gm-badge--countdown {
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--color-text);
+  padding: 16px 20px;
+}
+
+.gm-hero__ctaShell > .gm-hero__countdown > span:first-child {
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.gm-hero__timer {
+  font-size: clamp(1rem, 2vw, 1.24rem);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.gm-hero__cta--primary > .auth-button {
+  min-width: min(100%, 420px);
+  flex: 1 1 320px;
+  justify-content: center;
+}
+
+.gm-hero__cta--primary > .auth-badge {
+  justify-content: center;
 }
 
 .gm-hero__countdown--hidden {
@@ -3640,6 +3767,26 @@ body[data-mode='demo'] [data-show~='demo'] {
 
   .gm-hero__title {
     font-size: clamp(2rem, 8vw, 2.6rem);
+  }
+
+  .gm-hero__ctaShell {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .gm-hero__cta--primary,
+  .gm-hero__ctaShell > .gm-hero__countdown {
+    min-height: auto;
+    padding: 14px 16px;
+  }
+
+  .gm-hero__cta--primary::after {
+    display: none;
+  }
+
+  .gm-hero__cta--primary > .auth-button {
+    min-width: 100%;
+    flex-basis: 100%;
   }
 
   .gm-footer__inner {

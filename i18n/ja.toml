@@ -504,3 +504,6 @@ other = "このサイト内で開く"
 
 ['launcher.chat.external']
 other = "新しいタブで開く"
+
+['launcher.chat.itch']
+other = "Itch.io版を開く"

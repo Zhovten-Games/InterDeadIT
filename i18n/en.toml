@@ -504,3 +504,6 @@ other = "Open directly on this site"
 
 ['launcher.chat.external']
 other = "Open in a new tab"
+
+['launcher.chat.itch']
+other = "Open on Itch.io"

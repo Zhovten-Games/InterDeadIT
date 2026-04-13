@@ -234,7 +234,7 @@ const apiConfig = {
 
 const profileLink = document.body?.dataset?.profileUrl || '';
 
-const heroCta = document.querySelector('.gm-hero__cta[data-cta-anchor]');
+const heroCta = document.querySelector('[data-cta-anchor][data-auth-copy-idle]');
 const authCopy = {
   idle:
     heroCta?.dataset?.authCopyIdle ||

@@ -15,10 +15,14 @@ class LaunchTargetResolver {
     const appSrc = this._normalizeUrl(marker.dataset.interdeadSrc);
     const externalCandidate = this._normalizeUrl(marker.dataset.interdeadExternalSrc);
     const externalSrc = externalCandidate || appSrc;
+    const itchCandidate = this._normalizeUrl(marker.dataset.interdeadItchSrc);
     const warnings = [];
 
     if (marker.dataset.interdeadExternalSrc && !externalCandidate) {
       warnings.push('invalid external src, falling back to app src');
+    }
+    if (marker.dataset.interdeadItchSrc && !itchCandidate) {
+      warnings.push('invalid itch src, hiding itch choice');
     }
 
     if (!appSrc || !externalSrc) {
@@ -30,6 +34,7 @@ class LaunchTargetResolver {
       marker,
       appSrc,
       externalSrc,
+      itchSrc: itchCandidate,
       embedPolicy: {
         allow: marker.dataset.interdeadIframeAllow || '',
         referrerPolicy: marker.dataset.interdeadIframeReferrerPolicy || '',
@@ -40,6 +45,7 @@ class LaunchTargetResolver {
         chooserTitle: marker.dataset.interdeadChooserTitle || 'Choose how to open chat',
         inline: marker.dataset.interdeadInlineLabel || 'Open directly on this site',
         external: marker.dataset.interdeadExternalLabel || 'Open in a new tab',
+        itch: marker.dataset.interdeadItchLabel || 'Open Itch.io version',
         close: marker.dataset.interdeadCloseLabel || 'Close',
       },
       launcherAvatarSrc: this._normalizeAssetUrl(marker.dataset.interdeadLauncherAvatar),
@@ -149,7 +155,12 @@ class PopupWindowManager {
 }
 
 class FullscreenEmbedModal {
-  constructor({ documentRef = document, windowRef = window, labels = {}, modalId = 'interdead-launcher' } = {}) {
+  constructor({
+    documentRef = document,
+    windowRef = window,
+    labels = {},
+    modalId = 'interdead-launcher',
+  } = {}) {
     this.documentRef = documentRef;
     this.windowRef = windowRef;
     this.labels = labels;
@@ -254,11 +265,12 @@ class FullscreenEmbedModal {
 }
 
 class InterDeadChoiceDialog {
-  constructor({ documentRef = document, labels, onInline, onExternal } = {}) {
+  constructor({ documentRef = document, labels, onInline, onExternal, onItch } = {}) {
     this.documentRef = documentRef;
     this.labels = labels;
     this.onInline = onInline;
     this.onExternal = onExternal;
+    this.onItch = onItch;
   }
 
   render() {
@@ -286,6 +298,15 @@ class InterDeadChoiceDialog {
 
     actions.appendChild(inlineButton);
     actions.appendChild(externalButton);
+
+    if (this.onItch) {
+      const itchButton = this._createButton(
+        this.labels.itch,
+        'interdead-choice-dialog__button--itch',
+      );
+      itchButton.addEventListener('click', () => this.onItch?.());
+      actions.appendChild(itchButton);
+    }
 
     wrapper.appendChild(title);
     wrapper.appendChild(actions);
@@ -382,10 +403,10 @@ class InterDeadProtoLoader {
   _openChoiceDialog() {
     const chooser = new InterDeadChoiceDialog({
       documentRef: this.documentRef,
-      windowRef: this.windowRef,
       labels: this._launchConfig.labels,
       onInline: () => this._openInline(),
       onExternal: () => this._openExternal(),
+      onItch: this._launchConfig.itchSrc ? () => this._openItch() : null,
     });
 
     this.modal.open(chooser.render(), {
@@ -424,6 +445,17 @@ class InterDeadProtoLoader {
     if (!opened) {
       this.logger.error(
         '[InterDead][LauncherLoader] External mode failed to open because the popup was blocked.',
+      );
+    }
+  }
+
+  _openItch() {
+    this.logger.info?.('[InterDead][LauncherLoader] Opening mode: itch.');
+    this.modal.close();
+    const opened = this.popupManager.openNewTabAndCloseCurrent(this._launchConfig.itchSrc);
+    if (!opened) {
+      this.logger.error(
+        '[InterDead][LauncherLoader] Itch mode failed to open because the popup was blocked.',
       );
     }
   }

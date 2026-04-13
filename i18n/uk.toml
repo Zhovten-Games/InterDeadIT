@@ -504,3 +504,6 @@ other = "Відкрити прямо на сайті"
 
 ['launcher.chat.external']
 other = "Відкрити в новій вкладці"
+
+['launcher.chat.itch']
+other = "Відкрити версію на Itch.io"
