@@ -1,12 +1,15 @@
-{{- $pages := where .Site.Pages ".Params.sitemap_exclude" "!=" true -}}
-{{- $pages = where $pages ".Params.robots" "!=" "noindex,nofollow" -}}
-{{- $pages = where $pages "Kind" "!=" "RSS" -}}
+{{- $pages := where .Site.Pages "Kind" "!=" "RSS" -}}
 {{- printf "<?xml version=\"1.0\" encoding=\"utf-8\"?>" | safeHTML -}}
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   {{- range $pages }}
+  {{- $seoPolicy := partial "helpers/seo-policy.html" . -}}
+  {{- $robots := index $seoPolicy "robots" -}}
+  {{- $sitemapExclude := index $seoPolicy "sitemap_exclude" -}}
+  {{- if and (not $sitemapExclude) (not (in $robots "noindex")) -}}
   <url>
     <loc>{{ .Permalink }}</loc>
     {{- with .Lastmod }}<lastmod>{{ .Format "2006-01-02T15:04:05Z07:00" }}</lastmod>{{ end }}
   </url>
+  {{- end }}
   {{- end }}
 </urlset>

@@ -6,6 +6,8 @@
 {{- $lang := .Language.Lang -}}
 {{- $ogType := .Site.Params.ogType | default "website" -}}
 {{- $twitterCard := .Site.Params.twitterCard | default "summary_large_image" -}}
+{{- $seoPolicy := partial "helpers/seo-policy.html" . -}}
+{{- $robots := index $seoPolicy "robots" -}}
 {{- $logo := resources.Get "images/logo.png" | fingerprint -}}
 {{- $appleTouchIcon := resources.Get "favicons/apple-touch-icon.png" | fingerprint -}}
 {{- $favicon32 := resources.Get "favicons/favicon-32x32.png" | fingerprint -}}
@@ -38,7 +40,7 @@
     <meta property="og:description" content="{{ . | plainify }}" />
     <meta name="twitter:description" content="{{ . | plainify }}" />
     {{- end }}
-    {{- with .Params.robots }}
+    {{- with $robots }}
     <meta name="robots" content="{{ . }}" />
     {{- end }}
     <link rel="canonical" href="{{ $canonical }}" />

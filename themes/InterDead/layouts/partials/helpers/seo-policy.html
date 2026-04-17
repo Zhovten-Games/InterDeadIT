@@ -1,0 +1,22 @@
+{{- $sectionPolicies := .Site.Params.seo.sectionPolicies | default dict -}}
+{{- $sectionPolicy := dict -}}
+{{- with .Section -}}
+  {{- with index $sectionPolicies . -}}
+    {{- $sectionPolicy = . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- $robots := index $sectionPolicy "robots" | default "" | lower -}}
+{{- if isset .Params "robots" -}}
+  {{- $robots = .Params.robots | lower -}}
+{{- end -}}
+
+{{- $sitemapExclude := index $sectionPolicy "sitemap_exclude" | default false -}}
+{{- if isset .Params "sitemap_exclude" -}}
+  {{- $sitemapExclude = .Params.sitemap_exclude -}}
+{{- end -}}
+
+{{- return (dict
+  "robots" $robots
+  "sitemap_exclude" $sitemapExclude
+) -}}

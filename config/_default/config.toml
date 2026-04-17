@@ -36,6 +36,12 @@ theme = "InterDead"
   twitterCard = "summary_large_image"
   appVersion = "000.6"
 
+  [params.seo]
+    [params.seo.sectionPolicies]
+      [params.seo.sectionPolicies.informers]
+        robots = "noindex,follow"
+        sitemap_exclude = true
+
   [params.navigation]
     [[params.navigation.items]]
       id = "about"
