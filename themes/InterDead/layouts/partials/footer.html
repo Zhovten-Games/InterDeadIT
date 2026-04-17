@@ -39,6 +39,13 @@
             rel="noopener"
             >GitHub</a
           >
+          <a
+            class="gm-footer__link"
+            href="https://www.instagram.com/zhovtengames/"
+            target="_blank"
+            rel="noopener"
+            >Instagram</a
+          >
         </div>
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.media" }}</span>
@@ -58,11 +65,16 @@
         <div class="gm-footer__linkGroup">
           <span class="gm-footer__linkLabel">{{ i18n "footer.links.legal" }}</span>
           {{- $termsPage := .Site.GetPage "/pages/terms-of-use" -}} {{- $privacyPage :=
-          .Site.GetPage "/pages/privacy-policy" -}} {{- if $termsPage -}}
+          .Site.GetPage "/pages/privacy-policy" -}} {{- $aiPolicyPage := .Site.GetPage
+          "/pages/ai-policy" -}} {{- if $termsPage -}}
           <a class="gm-footer__link" href="{{ $termsPage.RelPermalink }}">{{ $termsPage.Title }}</a>
           {{- end -}} {{- if $privacyPage -}}
           <a class="gm-footer__link" href="{{ $privacyPage.RelPermalink }}"
             >{{ $privacyPage.Title }}</a
+          >
+          {{- end -}} {{- if $aiPolicyPage -}}
+          <a class="gm-footer__link" href="{{ $aiPolicyPage.RelPermalink }}"
+            >{{ $aiPolicyPage.Title }}</a
           >
           {{- end -}}
         </div>

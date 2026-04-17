@@ -1,0 +1,137 @@
+{
+  "$schema": "https://schemas.interdead.dev/codemap/manifest/v1",
+  "schemaVersion": "2.0.0",
+  "project": {
+    "name": "interdead-it",
+    "defaultBranch": "main"
+  },
+  "validation": {
+    "profiles": {
+      "default": {
+        "bundleName": "it-default",
+        "families": {
+          "architecture": {
+            "enabled": true,
+            "failOn": [
+              "error",
+              "critical"
+            ],
+            "thresholds": {
+              "error": 0
+            }
+          },
+          "documentation-contract": {
+            "enabled": true,
+            "failOn": [
+              "error",
+              "critical"
+            ],
+            "thresholds": {
+              "error": 0
+            }
+          }
+        },
+        "mode": "advisory",
+        "documentation": {
+          "mode": "advisory",
+          "requiredHeaders": [
+            "source",
+            "source_exists",
+            "runtime_role",
+            "contour_primary",
+            "role_group"
+          ],
+          "pathScopes": [
+            {
+              "include": "docs/**/*.md",
+              "mode": "advisory"
+            }
+          ],
+          "projectModes": {
+            "interdead-it": "advisory"
+          }
+        }
+      }
+    }
+  },
+  "scan": {
+    "include": [
+      "src/**/*.{js,jsx,ts,tsx,mjs,cjs}",
+      "docs/**/*.md"
+    ],
+    "exclude": [
+      "**/node_modules/**",
+      "**/dist/**"
+    ],
+    "followSymlinks": false,
+    "parser": {
+      "javascript": true,
+      "typescript": true,
+      "markdown": true
+    }
+  },
+  "methodology": {
+    "visual": {
+      "id": "hexagonal",
+      "version": "1.0.0"
+    },
+    "semantic": {
+      "id": "layered-boundaries",
+      "version": "1.0.0"
+    }
+  },
+  "documentation": {
+    "sources": [
+      {
+        "id": "it-docs",
+        "type": "markdown-headers",
+        "include": [
+          "docs/**/*.md"
+        ],
+        "mode": "partial"
+      }
+    ]
+  },
+  "publish": {
+    "mode": "artifacts-only",
+    "readme": {
+      "enabled": false
+    },
+    "preview": {
+      "enabled": false
+    }
+  },
+  "output": {
+    "rootDir": "code-map/generated",
+    "artifacts": [
+      {
+        "id": "map-json",
+        "kind": "json",
+        "enabled": true,
+        "path": "map/code-map.json",
+        "publicSafe": false
+      },
+      {
+        "id": "map-report",
+        "kind": "markdown",
+        "enabled": true,
+        "path": "reports/code-map-report.md",
+        "publicSafe": true
+      },
+      {
+        "id": "map-mermaid",
+        "kind": "mermaid",
+        "enabled": true,
+        "path": "map/code-map.mmd",
+        "publicSafe": true
+      },
+      {
+        "id": "diagnostics-summary",
+        "kind": "json",
+        "enabled": true,
+        "path": "diagnostics/diagnostics.json",
+        "publicSafe": true
+      }
+    ]
+  }
+}

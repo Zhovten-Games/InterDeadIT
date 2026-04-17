@@ -6,7 +6,7 @@ date: 2026-01-23
 
 ## Introduction
 
-_InterDead is a psychologically oriented horror project within speculative fiction (SpecFi), centered on the development of a game and a meta-universe gradually forming around the concept of a “messenger for the dead.” The game is currently in development by Zhovten Games. Alongside the game, the universe is also planned to expand through tabletop role-playing sessions._
+_InterDead is a psychologically oriented horror project within speculative fiction (SpecFi), centered on the development of a game and a meta-universe gradually forming around the concept of a “messenger for the dead,” memory, and forms of consciousness that may not be human. The game is currently in development by Zhovten Games. Alongside the game, the universe is also planned to expand through tabletop role-playing sessions._
 
 Usually, this is where a thousand words are written about who we are.
 Who stands behind the project, where we come from, what inspires us, and why we can be trusted. We understand — this can indeed be interesting.

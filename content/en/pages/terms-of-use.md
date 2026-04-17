@@ -1,59 +1,130 @@
 ---
 title: 'Zhovten Games Terms of Use'
-description: 'Current terms for using the Zhovten Games site and prototypes.'
 slug: 'terms-of-use'
-date: 2025-11-07
-lastmod: 2025-11-07
+date: 2026-04-17
+lastmod: 2026-04-17
 ---
 
-**Date of update:** 07 Nov 2025
+**Date of update:** 17 Apr 2026
 
-## 1) Who we are and subject of the Agreement
+## Effective Date: 17 Apr 2026
 
-This site is an entry point into the meta-universe of the Zhovten Games title, used for artistic and promotional purposes. It is not a real service and not a commercial application. Participation on the site constitutes acceptance of these Terms.
+## 1. Acceptance
 
-The site is intended for users 18+ only. If you are under 18, please leave the site.
+By accessing or using this website, you agree to these Terms.
 
-Right holder: Zhovten Games (Жовтен Геймс).
+If you do not agree, discontinue use.
 
-## 2) Technical infrastructure and access
+## 2. Nature of the Site
 
-The site is built with the static generator Hugo; development and builds are run via GitHub; hosting/delivery/protection are provided by Cloudflare (including CDN, Workers, and Cloudflare-provided databases). Availability depends on external platforms and the network; the service is provided “as is” and “as available.”
+This website may contain:
 
-## 3) Accounts and integrations (planned)
+* fiction
+* prototypes
+* unfinished systems
+* experimental mechanics
+* promotional content
+* interactive tests
+* game-connected systems
 
-Voluntary sign-in via Discord and/or Telegram is planned. When this feature is enabled, a record will be created in a Cloudflare database (platform technical identifiers, nickname/login, link to avatar, a flag for subscription/role status, record creation/update timestamps).
+Some features may change, break, disappear, or mutate without notice.
 
-The purpose is to open access to the “closed testing/news” sections and ensure automatic integration with game content (subscription/role checks).
+## 3. Eligibility
 
-The feature is not active yet. Details of data processing are set out in the Privacy Policy; upon launch there will also be a procedure for deleting an account and retention periods.
+Use is intended for adults (18+) or the age of majority in your jurisdiction.
 
-## 4) Content rights and license
+## 4. Intellectual Property
 
-All site materials (texts, graphics, prototypes, lore elements, etc.) are protected by law and belong to Zhovten Games, or are used on lawful grounds.
+Unless otherwise stated, materials on this website are owned by or lawfully used by Zhovten Games.
 
-We grant you a limited, non-exclusive, revocable license for personal, non-commercial use of the site (viewing/reading). Prohibited: copying “as is” for commercial purposes, modification, reverse engineering, circumvention of technical measures, and other abusive exploitation.
+This may include:
 
-## 5) Rules of conduct
+* text
+* branding
+* logos
+* code
+* game systems
+* worldbuilding
+* audiovisual materials
+* design concepts
 
-Actions that may harm the site/users/infrastructure are prohibited: attempts to hack, injection of malicious code, traffic flooding, bypassing authorization/roles, and unauthorized data collection.
+No transfer of ownership occurs through site access.
 
-## 6) External platforms and links
+## 5. Limited License
 
-We directly operate and publish materials on: LinkedIn, Discord, Telegram. These services are governed by their own terms and privacy policies; review them separately. By following external links, you act at your own risk. If the list of services is expanded, we will explicitly update this section.
+You receive a limited, revocable, non-exclusive license for personal, non-commercial use.
 
-## 7) Analytics, cookies, and privacy
+You may not:
 
-We use de-identified, aggregated analytics (e.g., by countries/regions; when using a VPN, data may be inaccurate). See the Privacy Policy for details. Technical cookies/web storage may be used for site operation and metrics.
+* commercially exploit site materials
+* republish as your own
+* scrape content abusively
+* reverse engineer protected systems
+* bypass access controls
+* attack infrastructure
+* impersonate users or staff
 
-## 8) No warranties and limitation of liability
+## 6. Accounts
 
-The site and materials are provided “as is.” To the extent permitted by applicable law, Zhovten Games is not liable for indirect, incidental, punitive damages, loss of data or profits, or for failures caused by external platforms and networks.
+If accounts are available, you are responsible for activity associated with your chosen authentication method.
 
-## 9) Changes to the Terms
+We may suspend or restrict access in cases of abuse, fraud, disruption, or risk.
 
-We may update the Terms as the project evolves. The current version is published on this page with the date indicated.
+## 7. User Conduct
 
-## 10) Contacts
+You agree not to:
 
-Questions about the terms of use: [contact via LinkedIn](https://www.linkedin.com/company/zhovten-games/).
+* upload malicious content
+* interfere with services
+* automate abusive traffic
+* harass others
+* attempt unauthorized access
+* manipulate questionnaires dishonestly at scale
+
+Even chaos benefits from boundaries.
+
+## 8. Experimental Features
+
+Interactive profiling, questionnaires, adaptive systems, or gameplay-linked tools may be experimental.
+
+Outputs may be approximate, interpretive, probabilistic, or revised later.
+
+## 8A. Account Operation Limits
+
+To prevent abuse of service resources, account creation and deletion flows may be subject to technical limits, cooldowns, or rate restrictions.
+
+Account deletion may be limited to no more than once per day.
+
+Data related to completed games may remain outside automatic account deletion flows unless explicitly included in a verified deletion request.
+
+## 9. External Services
+
+Links or integrations with Discord, GitHub, Telegram, LinkedIn, or other services are governed by their own rules.
+
+## 9A. Proto Application / NOIR Features
+
+Some features may involve the InterDeadProto application or related NOIR interface experiences.
+
+Where such features rely on local browser permissions, device-side processing may occur without transferring raw camera input or precise location data to our servers, unless explicitly stated otherwise for a specific feature.
+
+## 10. Disclaimer of Warranties
+
+The website and services are provided **as is** and **as available**.
+
+We do not guarantee uninterrupted access, error-free operation, or eternal uptime.
+
+## 11. Limitation of Liability
+
+To the maximum extent allowed by law, Zhovten Games is not liable for indirect, incidental, consequential, or lost-profit damages arising from use of the site.
+
+## 12. Termination / Restriction
+
+We may suspend access or remove features where necessary for security, legal compliance, or project management.
+
+## 13. Governing Updates
+
+These Terms may be updated over time. Continued use after updates indicates acceptance of the revised version.
+
+## 14. Contact
+
+https://www.linkedin.com/company/zhovten-games/

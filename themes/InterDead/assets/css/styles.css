@@ -1050,6 +1050,7 @@ img.emoji,
   --gm-hero-cta-gap: 18px;
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
+  grid-auto-rows: 1fr;
   gap: var(--gm-hero-cta-gap);
   align-items: stretch;
   width: 100%;
@@ -1063,6 +1064,7 @@ img.emoji,
   align-items: stretch;
   justify-content: center;
   gap: 14px;
+  height: 100%;
   min-height: 76px;
   padding: 16px 20px;
   background: transparent;
@@ -1110,6 +1112,7 @@ img.emoji,
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  height: 100%;
   align-self: stretch;
   min-height: 76px;
   padding: 16px 20px;
@@ -3676,7 +3679,8 @@ body[data-mode='demo'] [data-show~='demo'] {
   }
 
   .gm-hero__ctaItem {
-    width: min(100%, 420px);
+    width: 100%;
+    max-width: 420px;
   }
 }
 
@@ -3793,8 +3797,12 @@ body[data-mode='demo'] [data-show~='demo'] {
 
   .gm-hero__cta--primary,
   .gm-hero__ctaShell > .gm-hero__countdown {
-    min-height: auto;
+    min-height: 76px;
     padding: 14px 16px;
+  }
+
+  .gm-hero__ctaItem {
+    max-width: none;
   }
 
   .gm-hero__cta--primary::after {

@@ -278,7 +278,7 @@ other = "アーティファクト"
 
 
 ['footer.adult']
-other = "InterDead© (aka NOIR©) — 死者のためのメッセンジャー。"
+other = "InterDead (aka NOIR) — 死者のためのメッセンジャー。"
 
 ['footer.note']
 other = "Zhovten Games は、いかなるサティライトの活動も管理していないことを皆さまにお伝えします。サティライト側は、自分たちのソフトウェアは99%の時間で動作し、これまでに当社アプリで呼び出された幽霊が生者を殺したと証明された事例は一度もないと述べています。どうぞ安心してテスターグループに参加してください。ここでは場違いに聞こえるかもしれませんが、「我らがスポンサーに栄光あれ！」"
@@ -301,11 +301,14 @@ other = "利用規約"
 ['agegate.links.privacy']
 other = "プライバシーポリシー"
 
+['agegate.links.ai']
+other = "AI 利用および生成技術ポリシー"
+
 ['agegate.sectionPrimary']
 other = """
 ## ようこそ
 
-InterDead（インターデッド）は、Zhovten Games スタジオによる心理志向ホラー・プロジェクトであり、スペキュレイティブ・フィクション（SpecFi）の枠組みに基づいた「死者のためのメッセンジャー」をめぐる物語です。このサイトは、その世界への入口となります。
+InterDead は、Zhovten Games による speculative fiction（SpecFi）の枠組みに属する心理志向ホラープロジェクトです。死者のためのメッセンジャー、記憶、そして人間ではないかもしれない意識のあり方をめぐる物語です。
 
 世界観と現在開発中のゲームの構想がどのように生まれたのかについては、連作「消えない記憶のエコー」の[第1章](/about/)で詳しく説明しています。これは本プロジェクトの拡張版「About」です。
 
@@ -317,6 +320,7 @@ InterDead（インターデッド）は、Zhovten Games スタジオによる心
 
 - [{{ .TermsTitle }}]({{ .TermsURL }})
 - [{{ .PrivacyTitle }}]({{ .PrivacyURL }})
+- [{{ .AIPolicyTitle }}]({{ .AIPolicyURL }})
 - [LinkedIn で連絡]({{ .LinkedInURL }})
 
 「入る」をクリックすると、あなたは18歳以上（またはお住まいの法域における成人年齢以上）であることを確認し、利用規約に同意したものとみなされます。

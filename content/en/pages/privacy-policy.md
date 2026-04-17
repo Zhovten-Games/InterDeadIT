@@ -1,61 +1,216 @@
 ---
 title: 'Zhovten Games Privacy Policy'
-description: 'How Zhovten Games handles data on the site and upcoming services.'
 slug: 'privacy-policy'
-date: 2025-11-07
-lastmod: 2025-11-07
+date: 2026-04-17
+lastmod: 2026-04-17
 ---
 
-**Date of update:** 07 Nov 2025
+**Date of update:** 17 Apr 2026
 
-## 1) Who we are and what this site is
+## Effective Date: 17 Apr 2026
 
-This site is an entry point into the meta-universe of the Zhovten Games title and is used solely for artistic and promotional purposes. It is not a real service and not a commercial application. Any mentions of organizations, events, and characters are fictitious.
+## 1. Who We Are
 
-The site is intended for users 18+ only. If you are under 18, please leave the site.
+Zhovten Games is an independent creative studio developing interactive entertainment, fictional worlds, websites, prototypes, and related digital experiences.
 
-Right holder: Жовтен Геймс (Zhovten Games).
+This website may include experimental systems, community functions, questionnaires, and promotional materials connected to current or future projects.
 
-## 2) Project technologies
+## 2. Age Notice
 
-The site is built with the static generator Hugo; source code and builds are managed via GitHub; hosting/delivery/protection are provided by Cloudflare (including CDN, Workers, and Cloudflare-level databases). This is standard technical infrastructure; it may process network requests and temporary logs to ensure availability and security.
+This website and related content may contain mature themes, psychological horror, violence, death-related themes, or other material intended for adults.
 
-## 3) What we collect now
+Use is intended for persons aged 18+ or the age of majority in your jurisdiction.
 
-We do not create user accounts and do not collect personal data (full name, e-mail, phone, etc.).
+## 3. Information We Collect
 
-To assess interest in site pages we use de-identified analytics, where our reports show only aggregated data by countries/regions without IP addresses and without precise geolocation. When using VPN/proxy, the country may be displayed inaccurately. We do not attempt to de-anonymize users and do not match metrics to a visitor’s identity.
+Depending on how you use the site, we may process:
 
-## 4) Planned account functionality (Discord/Telegram)
+### A. Technical Data
 
-We plan to launch voluntary sign-in via Discord and/or Telegram. When it is enabled, a record will be created in a Cloudflare database (for example: platform technical identifiers, nickname/login, avatar/link to avatar, a mark of subscription status to our channels/server, record creation/update timestamps).
+* browser type
+* device type
+* operating system
+* language preferences
+* approximate country or region
+* referrer data
+* diagnostic and security logs
 
-Such an account is needed solely to open sections for “closed testing/news” and for automatic integration with game content (checking subscription/role and granting corresponding access to interactives). At present this functionality is not used. Upon launch we will update this section, add an account deletion form, and describe retention periods and the exact data fields.
+### B. Account Data
 
-## 5) Cookies and analytics
+Where sign-in is available (for example via Discord or similar providers):
 
-Technical cookies/web storage may be used as necessary for site operation and aggregated analytics. We do not run targeted advertising and do not perform profiling.
+* platform user ID
+* username / public nickname
+* avatar URL
+* role or membership indicators
+* account timestamps
 
-## 6) Transfer of data to third parties
+### C. Interaction Data
 
-We do not sell and do not transfer personal data to third parties for marketing purposes. Technical data may be processed by infrastructure providers (see §2) within the scope of hosting/security services.
+* questionnaire submissions
+* gameplay preference signals
+* profile progress states
+* feature usage data
+* voluntary feedback
 
-## 7) External platforms
+## 4. Accounts and Authentication
 
-We directly work with and publish materials on: LinkedIn, Discord, Telegram. These platforms have their own rules and privacy policies. If the list of services is expanded, we will explicitly update this section.
+Where available on this site, users may sign in via third-party identity providers such as Discord.
 
-## 8) Legal grounds and security
+Authentication may be used for:
 
-Processing of de-identified metrics and technical data is performed on the basis of the legitimate interest of the site owner—maintaining operability and improving content. We apply organizational and technical measures to protect the project’s infrastructure.
+* access to gated sections
+* preserving progress
+* profile-linked experiences
+* testing participation
+* community integrations
 
-## 9) Your choices
+Use of third-party sign-in is also subject to that provider's own terms and privacy rules.
 
-You may limit cookies and tracking via your browser settings/extensions—the site will remain available, although some functions may behave differently. After the account feature is launched, there will be tools for managing your account (view/delete).
+## 4A. Account Deletion Limits
 
-## 10) Changes to this policy
+You may delete your account no more than once per day.
 
-As the project evolves (including launching sign-in), we will update this text on this page with the date indicated.
+Please note: data related to games you have completed is not automatically deleted.
 
-## 11) Contacts
+These limitations are introduced to prevent abuse of the service's resources.
 
-For privacy questions: [contact via LinkedIn](https://www.linkedin.com/company/zhovten-games/).
+To request full deletion of your personal data, please contact us via email and include your Discord username.
+
+## 5. Questionnaires and Assessments
+
+This website may contain questionnaires, psychological-style scales, preference tools, profiling systems, or experimental gameplay diagnostics.
+
+These systems are intended for:
+
+* entertainment
+* personalization
+* game design research
+* adaptive experiences
+* user preference modelling
+
+Results may be stored as part of a user profile for personalization and future project integration.
+
+They are **not medical, psychiatric, or clinical diagnostic tools**.
+
+No result should be treated as healthcare advice, diagnosis, or treatment guidance.
+
+## 6. Cookies, Storage and Analytics
+
+We may use cookies, browser storage, and privacy-conscious analytics for:
+
+* language settings
+* session continuity
+* remembering preferences
+* measuring feature usage
+* site performance
+* security and abuse prevention
+
+Where used, analytics may include Google Analytics or equivalent privacy-conscious measurement tools.
+
+Google may process data collected through its analytics technologies in accordance with its own policies:
+https://policies.google.com/privacy
+https://policies.google.com/technologies/cookies
+
+We do not knowingly sell personal data.
+
+We do not use invasive advertising profiling as a core business model.
+
+## 7. How We Use Information
+
+We may use collected data to:
+
+* operate the website
+* improve performance and security
+* maintain accounts
+* personalize experiences
+* analyze aggregated usage trends
+* develop future products
+* prevent abuse or fraud
+
+## 8. Third-Party Providers
+
+Infrastructure or connected services may involve providers such as:
+
+* Cloudflare
+* GitHub
+* Discord
+* analytics vendors
+* hosting and CDN vendors
+
+Those services may process data under their own policies.
+
+## 8A. Proto Application / “Messenger for the Dead” / NOIR
+
+This site may provide access to the InterDeadProto application, also presented as a fictional “messenger for the dead” / NOIR interface.
+
+Where gameplay features use local device capabilities such as camera access or browser geolocation, such processing is intended to occur locally on the user's device as part of a browser-based, serverless gameplay experience.
+
+We do not store raw camera input on our servers.
+
+We do not store precise geolocation data obtained through such gameplay features on our servers, unless explicitly stated otherwise for a specific feature.
+
+Local permissions requested by such features are used only for immediate gameplay functionality within the browser session, unless explicitly stated otherwise.
+
+## 8B. Public Infrastructure and Open-Source Components
+
+Parts of the current project infrastructure, mechanics, documentation, and prototype layer are publicly available as open-source or public-reference materials.
+
+Certain operational components, credentials, secrets, and other sensitive infrastructure elements are not published.
+
+Public entry points include:
+
+* InterDeadReferenceLibrary
+* InterDeadProto
+
+These repositories are provided for transparency, reference, and project documentation purposes and may evolve over time.
+
+## 9. Legal Bases (Where Applicable)
+
+Where required by law, processing may rely on:
+
+* consent
+* legitimate interests
+* contractual necessity
+* legal compliance obligations
+
+## 10. Data Retention
+
+We retain data only as long as reasonably necessary for operations, security, legal obligations, or account functionality.
+
+Inactive or obsolete data may be deleted or anonymized.
+
+## 11. Your Rights
+
+Depending on jurisdiction, you may have rights to request:
+
+* access
+* correction
+* deletion
+* restriction
+* objection
+* portability (where applicable)
+
+Requests may be subject to identity verification and legal limits.
+
+## 12. Security
+
+We apply reasonable technical and organizational safeguards.
+
+No internet system guarantees absolute security. Tradition remains undefeated.
+
+## 13. International Processing
+
+Because online infrastructure may be global, information may be processed in countries different from your residence.
+
+## 14. Changes
+
+We may revise this Policy as services evolve. Updated versions will appear on this page.
+
+## 15. Contact
+
+For privacy-related inquiries or full deletion requests, please contact us via email:
+
+interdead@phantom-draft.com
+
+If your request concerns account deletion, please include your Discord username.

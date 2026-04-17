@@ -278,7 +278,7 @@ other = "Artifacts"
 
 
 ['footer.adult']
-other = "InterDead© (aka NOIR©) — Messenger for the dead."
+other = "InterDead (aka NOIR) — Messenger for the dead."
 
 ['footer.note']
 other = "Zhovten Games reminds you that it does not control the activities of any Satilites. The Satilites note that their software works 99% of the time and that there has never been a proven case of a ghost summoned through our app killing a living person. Join the tester group with confidence. However out of place this may sound here: \"Glory to our sponsors!\""
@@ -301,11 +301,14 @@ other = "Terms of Use"
 ['agegate.links.privacy']
 other = "Privacy Policy"
 
+['agegate.links.ai']
+other = "AI Usage & Generative Technologies Policy"
+
 ['agegate.sectionPrimary']
 other = """
 ## Welcome
 
-InterDead is a psychologically oriented horror project by Zhovten Games within speculative fiction (SpecFi): a story about a messenger for the dead, around which a meta-universe is growing. This site is the entry point into it.
+InterDead is a psychologically oriented horror project by Zhovten Games within speculative fiction (SpecFi): a story about a messenger for the dead, memory, and forms of consciousness that may not be human.
 
 We describe in detail how the idea of the world and the game currently in development was born in the [first chapter of the cycle “Echo of an Unfading Memory”](/about/) — our extended “About”.
 
@@ -317,6 +320,7 @@ If you need to step outside the fiction, the legal documents and contact informa
 
 - [{{ .TermsTitle }}]({{ .TermsURL }})
 - [{{ .PrivacyTitle }}]({{ .PrivacyURL }})
+- [{{ .AIPolicyTitle }}]({{ .AIPolicyURL }})
 - [Contact via LinkedIn]({{ .LinkedInURL }})
 
 By clicking “Enter,” you confirm that you are 18+ (or the age of majority in your jurisdiction) and that you accept the terms.
