@@ -3691,6 +3691,8 @@ body[data-mode='demo'] [data-show~='demo'] {
   .gm-hero__cta--primary {
     grid-area: primary;
     width: 100%;
+    flex-direction: column;
+    flex-wrap: nowrap;
   }
 
   .gm-hero__ctaShell > .gm-hero__countdown {

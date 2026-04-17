@@ -5,9 +5,8 @@ date: 2026-04-17
 lastmod: 2026-04-17
 ---
 
-**Date of update:** 17 Apr 2026
-
-## Effective Date: 17 Apr 2026
+* **Date of update:** 17 Apr 2026
+* **Effective Date:** 17 Apr 2026
 
 ## 1. General Position
 

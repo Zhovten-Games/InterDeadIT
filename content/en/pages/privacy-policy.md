@@ -5,9 +5,8 @@ date: 2026-04-17
 lastmod: 2026-04-17
 ---
 
-**Date of update:** 17 Apr 2026
-
-## Effective Date: 17 Apr 2026
+* **Date of update:** 17 Apr 2026
+* **Effective Date:** 17 Apr 2026
 
 ## 1. Who We Are
 
@@ -143,6 +142,13 @@ Those services may process data under their own policies.
 ## 8A. Proto Application / “Messenger for the Dead” / NOIR
 
 This site may provide access to the InterDeadProto application, also presented as a fictional “messenger for the dead” / NOIR interface.
+
+The current project codebase is stored on GitHub.
+
+The main production version is deployed on Cloudflare, with a parallel deployment on itch.io.
+
+Some in-game components of the Proto layer use Cocos technology. For Cocos license terms, see:
+https://www.cocos.com/en/engine/license
 
 Where gameplay features use local device capabilities such as camera access or browser geolocation, such processing is intended to occur locally on the user's device as part of a browser-based, serverless gameplay experience.
 

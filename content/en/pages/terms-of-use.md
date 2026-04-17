@@ -5,9 +5,8 @@ date: 2026-04-17
 lastmod: 2026-04-17
 ---
 
-**Date of update:** 17 Apr 2026
-
-## Effective Date: 17 Apr 2026
+* **Date of update:** 17 Apr 2026
+* **Effective Date:** 17 Apr 2026
 
 ## 1. Acceptance
 
@@ -101,9 +100,16 @@ Data related to completed games may remain outside automatic account deletion fl
 
 Links or integrations with Discord, GitHub, Telegram, LinkedIn, or other services are governed by their own rules.
 
+The current project codebase is stored on GitHub.
+
+The main production version is deployed on Cloudflare, with a parallel deployment on itch.io.
+
 ## 9A. Proto Application / NOIR Features
 
 Some features may involve the InterDeadProto application or related NOIR interface experiences.
+
+Some in-game components of the Proto layer use Cocos technology. For Cocos license terms, see:
+https://www.cocos.com/en/engine/license
 
 Where such features rely on local browser permissions, device-side processing may occur without transferring raw camera input or precise location data to our servers, unless explicitly stated otherwise for a specific feature.
 
