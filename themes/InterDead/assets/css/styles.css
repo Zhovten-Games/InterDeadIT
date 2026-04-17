@@ -3674,13 +3674,39 @@ body[data-mode='demo'] [data-show~='demo'] {
     justify-content: center;
   }
 
+  .gm-hero__ctaShell {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'primary'
+      'countdown';
+    max-width: none;
+    gap: 10px;
+  }
+
   .gm-hero__cta {
     justify-content: center;
+    width: 100%;
+  }
+
+  .gm-hero__cta--primary {
+    grid-area: primary;
+    width: 100%;
+  }
+
+  .gm-hero__ctaShell > .gm-hero__countdown {
+    grid-area: countdown;
+    width: 100%;
   }
 
   .gm-hero__ctaItem {
     width: 100%;
-    max-width: 420px;
+    max-width: none;
+  }
+
+  .gm-hero__cta--primary > .auth-button,
+  .gm-hero__cta--primary > .auth-badge {
+    width: 100%;
+    flex-basis: 100%;
   }
 }
 
