@@ -1047,26 +1047,24 @@ img.emoji,
 }
 
 .gm-hero__ctaShell {
-  --gm-hero-cta-gap: 18px;
+  --gm-hero-cta-gap: 16px;
   display: grid;
-  grid-template-columns: minmax(0, 1.35fr) minmax(240px, 0.65fr);
-  grid-auto-rows: 1fr;
-  gap: var(--gm-hero-cta-gap);
+  grid-template-columns: minmax(0, 1.35fr) minmax(220px, 0.65fr);
   align-items: stretch;
+  gap: var(--gm-hero-cta-gap);
   width: 100%;
   max-width: 760px;
-  margin-inline: auto;
+  margin: 0;
 }
 
 .gm-hero__cta--primary {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  justify-content: center;
   gap: 14px;
-  height: 100%;
-  min-height: 76px;
-  padding: 16px 20px;
+  min-width: 0;
+  min-height: 72px;
+  padding: 12px 16px;
   background: transparent;
   position: relative;
 }
@@ -1074,9 +1072,9 @@ img.emoji,
 .gm-hero__cta--primary::after {
   content: '';
   position: absolute;
-  top: 16px;
+  top: 12px;
   right: calc(var(--gm-hero-cta-gap) * -0.5);
-  bottom: 16px;
+  bottom: 12px;
   width: 1px;
   background: rgba(255, 255, 255, 0.08);
 }
@@ -1086,8 +1084,8 @@ img.emoji,
 }
 
 .gm-hero__ctaShell:has(> .gm-hero__countdown--hidden) {
-  grid-template-columns: minmax(0, 1fr);
   max-width: 620px;
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .gm-hero__cta > .gm-btn,
@@ -1100,6 +1098,7 @@ img.emoji,
   align-items: center;
   justify-content: center;
   min-height: 44px;
+  min-width: 0;
 }
 
 .gm-hero__cta > .auth-button {
@@ -1110,12 +1109,12 @@ img.emoji,
 .gm-hero__ctaShell > .gm-hero__countdown {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  height: 100%;
+  justify-content: center;
   align-self: stretch;
-  min-height: 76px;
-  padding: 16px 20px;
+  min-width: 0;
+  min-height: 72px;
+  padding: 12px 16px;
   text-align: center;
   background: transparent;
   border: 0;
@@ -1132,7 +1131,7 @@ img.emoji,
   border-radius: 0;
   box-shadow: none;
   color: var(--color-text);
-  padding: 16px 20px;
+  padding: 12px 16px;
 }
 
 .gm-hero__ctaShell > .gm-hero__countdown > span:first-child {
@@ -1140,6 +1139,7 @@ img.emoji,
   font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  line-height: 1.2;
 }
 
 .gm-hero__timer {
@@ -1149,17 +1149,23 @@ img.emoji,
 }
 
 .gm-hero__cta--primary > .auth-button {
-  min-width: min(100%, 420px);
+  min-width: 0;
   flex: 1 1 320px;
-  justify-content: center;
+  width: auto;
 }
 
 .gm-hero__cta--primary > .auth-badge {
-  justify-content: center;
+  flex: 1 1 320px;
+  min-width: 0;
+  width: auto;
 }
 
 .gm-hero__countdown--hidden {
   display: none !important;
+}
+
+.gm-hero__cta--primary .auth-button__status {
+  display: none;
 }
 
 .gm-hero__authHint {
@@ -3629,7 +3635,7 @@ img.emoji {
 
 body[data-mode='adult'] [data-show~='adult'],
 body[data-mode='demo'] [data-show~='demo'] {
-  display: inherit;
+  display: grid;
 }
 
 /* ===== Responsive tweaks ===== */
@@ -3650,6 +3656,14 @@ body[data-mode='demo'] [data-show~='demo'] {
 
   .gm-hero__media {
     order: -1;
+  }
+
+  .gm-hero__authHint {
+    display: none;
+  }
+
+  .gm-hero__cta--primary .auth-button__status {
+    display: block;
   }
 }
 
@@ -3675,12 +3689,9 @@ body[data-mode='demo'] [data-show~='demo'] {
   }
 
   .gm-hero__ctaShell {
-    grid-template-columns: minmax(0, 1fr);
-    grid-template-areas:
-      'primary'
-      'countdown';
-    max-width: none;
+    grid-template-columns: 1fr;
     gap: 10px;
+    max-width: 100%;
   }
 
   .gm-hero__cta {
@@ -3689,15 +3700,15 @@ body[data-mode='demo'] [data-show~='demo'] {
   }
 
   .gm-hero__cta--primary {
-    grid-area: primary;
     width: 100%;
     flex-direction: column;
-    flex-wrap: nowrap;
+    padding: 0;
   }
 
   .gm-hero__ctaShell > .gm-hero__countdown {
-    grid-area: countdown;
     width: 100%;
+    min-width: 0;
+    min-height: 0;
   }
 
   .gm-hero__ctaItem {
@@ -3710,16 +3721,26 @@ body[data-mode='demo'] [data-show~='demo'] {
     width: 100%;
     flex-basis: 100%;
   }
+
+  .gm-hero__ctaShell > .gm-hero__countdown,
+  .gm-hero__ctaShell > .gm-hero__countdown.gm-badge,
+  .gm-hero__ctaShell > .gm-hero__countdown.gm-badge--countdown {
+    padding: 10px 12px;
+  }
 }
 
 @media (max-width: 900px) {
   .gm-hero__ctaShell {
     grid-template-columns: 1fr;
-    --gm-hero-cta-gap: 12px;
+    max-width: 100%;
   }
 
   .gm-hero__cta--primary::after {
     display: none;
+  }
+
+  .gm-hero__cta--primary {
+    padding: 0;
   }
 
   .gm-header__bar {
@@ -3825,8 +3846,7 @@ body[data-mode='demo'] [data-show~='demo'] {
 
   .gm-hero__cta--primary,
   .gm-hero__ctaShell > .gm-hero__countdown {
-    min-height: 76px;
-    padding: 14px 16px;
+    min-height: 0;
   }
 
   .gm-hero__ctaItem {
@@ -3838,8 +3858,25 @@ body[data-mode='demo'] [data-show~='demo'] {
   }
 
   .gm-hero__cta--primary > .auth-button {
-    min-width: 100%;
-    flex-basis: 100%;
+    min-width: 0;
+    flex-basis: auto;
+    width: 100%;
+  }
+
+  .gm-hero__cta--primary > .auth-badge {
+    flex-basis: auto;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .gm-hero__cta--primary {
+    padding: 0;
+  }
+
+  .gm-hero__ctaShell > .gm-hero__countdown,
+  .gm-hero__ctaShell > .gm-hero__countdown.gm-badge,
+  .gm-hero__ctaShell > .gm-hero__countdown.gm-badge--countdown {
+    padding: 10px 14px;
   }
 
   .gm-footer__inner {
