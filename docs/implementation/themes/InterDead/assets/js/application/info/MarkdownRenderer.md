@@ -13,7 +13,7 @@ runtime_role: markdown_renderer
 contour_primary: PREDICT-LOOP
 contour_secondary: none
 role_group: executive_control
-narrative_role: "markdown structure interpretation renderer"
+narrative_role: 'markdown structure interpretation renderer'
 ---
 
 # MarkdownRenderer

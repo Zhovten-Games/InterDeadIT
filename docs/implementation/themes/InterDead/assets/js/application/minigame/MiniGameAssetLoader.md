@@ -13,7 +13,7 @@ runtime_role: mini_game_asset_loader
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "mini-game asset ingress loader"
+narrative_role: 'mini-game asset ingress loader'
 ---
 
 # MiniGameAssetLoader

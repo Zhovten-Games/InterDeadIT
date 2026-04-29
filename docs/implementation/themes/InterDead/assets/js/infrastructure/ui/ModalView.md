@@ -13,7 +13,7 @@ runtime_role: modal_view
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "modal render adapter"
+narrative_role: 'modal render adapter'
 ---
 
 # ModalView

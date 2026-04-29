@@ -13,7 +13,7 @@ runtime_role: efbd_api_adapter
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "efbd transport ingress adapter"
+narrative_role: 'efbd transport ingress adapter'
 ---
 
 # EfbdApiAdapter

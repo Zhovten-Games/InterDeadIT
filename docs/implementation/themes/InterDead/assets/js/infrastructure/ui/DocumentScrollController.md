@@ -13,7 +13,7 @@ runtime_role: document_scroll_controller
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "scroll behavior regulator"
+narrative_role: 'scroll behavior regulator'
 ---
 
 # DocumentScrollController

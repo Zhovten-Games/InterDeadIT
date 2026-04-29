@@ -13,7 +13,7 @@ runtime_role: notification_service
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "notification priority switch"
+narrative_role: 'notification priority switch'
 ---
 
 # NotificationService

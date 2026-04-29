@@ -13,7 +13,7 @@ runtime_role: efbd_scale_bridge_service
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "efbd write ingress bridge"
+narrative_role: 'efbd write ingress bridge'
 ---
 
 # EfbdScaleBridgeService

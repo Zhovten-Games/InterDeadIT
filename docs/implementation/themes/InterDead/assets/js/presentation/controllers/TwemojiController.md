@@ -13,7 +13,7 @@ runtime_role: twemoji_controller
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "ui interaction controller"
+narrative_role: 'ui interaction controller'
 ---
 
 # TwemojiController

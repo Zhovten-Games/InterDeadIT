@@ -13,7 +13,7 @@ runtime_role: metadata_controller
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "metadata dom synchronization controller"
+narrative_role: 'metadata dom synchronization controller'
 ---
 
 # MetadataController

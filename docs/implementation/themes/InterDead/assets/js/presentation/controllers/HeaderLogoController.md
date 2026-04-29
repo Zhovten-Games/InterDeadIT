@@ -13,7 +13,7 @@ runtime_role: header_logo_controller
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "header logo visibility switch"
+narrative_role: 'header logo visibility switch'
 ---
 
 # HeaderLogoController

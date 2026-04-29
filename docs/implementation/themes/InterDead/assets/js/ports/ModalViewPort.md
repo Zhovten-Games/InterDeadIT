@@ -13,7 +13,7 @@ runtime_role: modal_view_port
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "modal visibility port contract"
+narrative_role: 'modal visibility port contract'
 ---
 
 # ModalViewPort

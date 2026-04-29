@@ -13,7 +13,7 @@ runtime_role: home_auth_controller
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "auth state visibility controller"
+narrative_role: 'auth state visibility controller'
 ---
 
 # HomeAuthController

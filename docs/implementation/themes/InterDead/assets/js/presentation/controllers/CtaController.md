@@ -13,7 +13,7 @@ runtime_role: cta_controller
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "call-to-action routing controller"
+narrative_role: 'call-to-action routing controller'
 ---
 
 # CtaController

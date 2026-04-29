@@ -13,7 +13,7 @@ runtime_role: info_panel_view
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "info panel render adapter"
+narrative_role: 'info panel render adapter'
 ---
 
 # InfoPanelView

@@ -1,7 +1,14 @@
 import { AUTH_SESSION_EVENTS } from '../../application/auth/AuthStateService.js';
 
 export default class AppPreloaderController {
-  constructor({ body, preloader, authStateService, eventBus, onReleased = null, maxWaitMs = 5000 }) {
+  constructor({
+    body,
+    preloader,
+    authStateService,
+    eventBus,
+    onReleased = null,
+    maxWaitMs = 5000,
+  }) {
     this.body = body;
     this.preloader = preloader;
     this.authStateService = authStateService;

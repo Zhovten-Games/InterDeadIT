@@ -13,7 +13,7 @@ runtime_role: info_panel_service
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "panel content ingestion and display orchestrator"
+narrative_role: 'panel content ingestion and display orchestrator'
 ---
 
 # InfoPanelService

@@ -5,8 +5,8 @@ date: 2026-04-17
 lastmod: 2026-04-17
 ---
 
-* **Date of update:** 17 Apr 2026
-* **Effective Date:** 17 Apr 2026
+- **Date of update:** 17 Apr 2026
+- **Effective Date:** 17 Apr 2026
 
 ## 1. Acceptance
 
@@ -18,13 +18,13 @@ If you do not agree, discontinue use.
 
 This website may contain:
 
-* fiction
-* prototypes
-* unfinished systems
-* experimental mechanics
-* promotional content
-* interactive tests
-* game-connected systems
+- fiction
+- prototypes
+- unfinished systems
+- experimental mechanics
+- promotional content
+- interactive tests
+- game-connected systems
 
 Some features may change, break, disappear, or mutate without notice.
 
@@ -38,14 +38,14 @@ Unless otherwise stated, materials on this website are owned by or lawfully used
 
 This may include:
 
-* text
-* branding
-* logos
-* code
-* game systems
-* worldbuilding
-* audiovisual materials
-* design concepts
+- text
+- branding
+- logos
+- code
+- game systems
+- worldbuilding
+- audiovisual materials
+- design concepts
 
 No transfer of ownership occurs through site access.
 
@@ -55,13 +55,13 @@ You receive a limited, revocable, non-exclusive license for personal, non-commer
 
 You may not:
 
-* commercially exploit site materials
-* republish as your own
-* scrape content abusively
-* reverse engineer protected systems
-* bypass access controls
-* attack infrastructure
-* impersonate users or staff
+- commercially exploit site materials
+- republish as your own
+- scrape content abusively
+- reverse engineer protected systems
+- bypass access controls
+- attack infrastructure
+- impersonate users or staff
 
 ## 6. Accounts
 
@@ -73,12 +73,12 @@ We may suspend or restrict access in cases of abuse, fraud, disruption, or risk.
 
 You agree not to:
 
-* upload malicious content
-* interfere with services
-* automate abusive traffic
-* harass others
-* attempt unauthorized access
-* manipulate questionnaires dishonestly at scale
+- upload malicious content
+- interfere with services
+- automate abusive traffic
+- harass others
+- attempt unauthorized access
+- manipulate questionnaires dishonestly at scale
 
 Even chaos benefits from boundaries.
 

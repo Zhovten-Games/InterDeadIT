@@ -13,7 +13,7 @@ runtime_role: modal_dom_mapper
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "modal dom mapping adapter"
+narrative_role: 'modal dom mapping adapter'
 ---
 
 # ModalDomMapper

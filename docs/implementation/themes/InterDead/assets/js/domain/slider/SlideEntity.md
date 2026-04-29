@@ -13,7 +13,7 @@ runtime_role: slide_entity
 contour_primary: HIPPO-INDEX
 contour_secondary: none
 role_group: memory_narrative
-narrative_role: "domain state model"
+narrative_role: 'domain state model'
 ---
 
 # SlideEntity

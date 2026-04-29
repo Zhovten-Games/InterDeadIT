@@ -13,7 +13,7 @@ runtime_role: marquee_controller
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "overflow text motion regulator"
+narrative_role: 'overflow text motion regulator'
 ---
 
 # Marquee controller

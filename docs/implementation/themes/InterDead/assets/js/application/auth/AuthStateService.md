@@ -13,7 +13,7 @@ runtime_role: auth_state_service
 contour_primary: HIPPO-INDEX
 contour_secondary: none
 role_group: memory_narrative
-narrative_role: "authenticated session state store"
+narrative_role: 'authenticated session state store'
 ---
 
 # AuthStateService

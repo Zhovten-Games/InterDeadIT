@@ -13,7 +13,7 @@ runtime_role: scroll_effects_controller
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "scroll scene visibility regulator"
+narrative_role: 'scroll scene visibility regulator'
 ---
 
 # Scroll effects controller

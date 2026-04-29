@@ -13,7 +13,7 @@ runtime_role: header_actions_controller
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "header actions visibility switch"
+narrative_role: 'header actions visibility switch'
 ---
 
 # HeaderActionsController

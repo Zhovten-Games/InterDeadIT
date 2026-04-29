@@ -46,19 +46,18 @@ Dependency readiness check is heuristic: the policy verifies that `node_modules`
 
 When `--local-packages-prepare-mode link` is used, the runner uses directory symlink first and automatically falls back to Windows junctions on `EPERM` to support environments without symlink privileges.
 
-
 ## Install/build decision matrix
 
-| Condition | Install step | Build step |
-| --- | --- | --- |
-| `--force-local-package-build` | run (`install required: forced rebuild`) | run (`build required: forced rebuild`) |
-| `--skip-local-package-build` + `dist/` exists | skip (`skip install: dist exists and build not required`) | skip (`skip build: flag enabled and dist exists`) |
-| `--skip-local-package-build` + `dist/` missing | fail fast (policy error) | fail fast (`build skipped but dist artifacts are missing`) |
-| no force/skip flags + `dist/` missing | run (`install required: dist missing`) | run (`build required: dist missing`) |
-| no force/skip flags + `dist/` exists and outdated + dependencies missing | run (`install required: build required and dependencies missing`) | run (`build required: dist outdated`) |
-| no force/skip flags + `dist/` exists and outdated + dependencies present | skip (`skip install: dist exists and dependencies are available`) | run (`build required: dist outdated`) |
-| no force/skip flags + `dist/` exists and up-to-date + dependencies missing | skip (`skip install: dist exists and build not required`) | skip (`skip build: dist exists and up-to-date`) |
-| no force/skip flags + `dist/` exists and up-to-date + dependencies present | skip (`skip install: dist exists and dependencies are available`) | skip (`skip build: dist exists and up-to-date`) |
+| Condition                                                                  | Install step                                                      | Build step                                                 |
+| -------------------------------------------------------------------------- | ----------------------------------------------------------------- | ---------------------------------------------------------- |
+| `--force-local-package-build`                                              | run (`install required: forced rebuild`)                          | run (`build required: forced rebuild`)                     |
+| `--skip-local-package-build` + `dist/` exists                              | skip (`skip install: dist exists and build not required`)         | skip (`skip build: flag enabled and dist exists`)          |
+| `--skip-local-package-build` + `dist/` missing                             | fail fast (policy error)                                          | fail fast (`build skipped but dist artifacts are missing`) |
+| no force/skip flags + `dist/` missing                                      | run (`install required: dist missing`)                            | run (`build required: dist missing`)                       |
+| no force/skip flags + `dist/` exists and outdated + dependencies missing   | run (`install required: build required and dependencies missing`) | run (`build required: dist outdated`)                      |
+| no force/skip flags + `dist/` exists and outdated + dependencies present   | skip (`skip install: dist exists and dependencies are available`) | run (`build required: dist outdated`)                      |
+| no force/skip flags + `dist/` exists and up-to-date + dependencies missing | skip (`skip install: dist exists and build not required`)         | skip (`skip build: dist exists and up-to-date`)            |
+| no force/skip flags + `dist/` exists and up-to-date + dependencies present | skip (`skip install: dist exists and dependencies are available`) | skip (`skip build: dist exists and up-to-date`)            |
 
 Use `--force-local-package-build` when you need deterministic rebuilds. Use `--skip-local-package-build` only when artifacts already exist and you intentionally want to trust them.
 
@@ -75,7 +74,6 @@ Use `--force-local-package-build` when you need deterministic rebuilds. Use `--s
 - `--local-package-audit <off|report|strict>` — audit mode (default `off`).
 - `--local-package-audit-level <moderate|high|critical>` — threshold for strict mode (default `moderate`).
 - `--local-package-map <name>=<path>`
-
 
 ## Local package audit modes
 

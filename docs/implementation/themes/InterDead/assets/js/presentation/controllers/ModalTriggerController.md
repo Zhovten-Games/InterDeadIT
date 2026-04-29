@@ -13,7 +13,7 @@ runtime_role: modal_trigger_controller
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "modal interaction switch controller"
+narrative_role: 'modal interaction switch controller'
 ---
 
 # ModalTriggerController

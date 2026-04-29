@@ -23,9 +23,9 @@ Use the `blogcategory` key in blog content:
 
 ```yaml
 ---
-title: "Example"
+title: 'Example'
 blogcategory:
-  - "artifacts"
+  - 'artifacts'
 ---
 ```
 

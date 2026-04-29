@@ -13,7 +13,7 @@ runtime_role: auth_visibility_service
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "auth visibility gate"
+narrative_role: 'auth visibility gate'
 ---
 
 # AuthVisibilityService

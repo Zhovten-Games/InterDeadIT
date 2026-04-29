@@ -15,6 +15,7 @@ import { CookieSessionStore, timingSafeEqual } from './session.js';
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize';
 const DEFAULT_SITE_BASE_URL = 'https://interdead.phantom-draft.com';
 const DEFAULT_ALLOWED_ORIGINS = [DEFAULT_SITE_BASE_URL];
+const CSRF_HEADER = 'X-CSRF-Token';
 
 class CorsService {
   constructor(env) {
@@ -518,13 +519,57 @@ class DiscordAuthController {
     );
   }
 
+  normalizeRedirect(rawRedirect, allowedOriginUrl) {
+    const fallback = '/';
+    if (typeof rawRedirect !== 'string' || !rawRedirect.trim()) {
+      return fallback;
+    }
+    const candidate = rawRedirect.trim();
+    if (candidate.startsWith('//')) {
+      return fallback;
+    }
+    try {
+      const parsed = new URL(candidate, allowedOriginUrl.origin);
+      if (parsed.origin !== allowedOriginUrl.origin) {
+        return fallback;
+      }
+      return `${parsed.pathname}${parsed.search}${parsed.hash}` || fallback;
+    } catch (error) {
+      return candidate.startsWith('/') ? candidate : fallback;
+    }
+  }
+
+  async issueCsrfToken(sessionStore, { reuseExisting = false } = {}) {
+    if (reuseExisting) {
+      const existing = await sessionStore.get('interdead_csrf');
+      if (existing) {
+        return existing;
+      }
+    }
+
+    const tokenBytes = new Uint8Array(32);
+    crypto.getRandomValues(tokenBytes);
+    const token = Array.from(tokenBytes, (byte) => byte.toString(16).padStart(2, '0')).join('');
+    await sessionStore.set('interdead_csrf', token);
+    return token;
+  }
+
+  async validateCsrf(request, sessionStore) {
+    const expected = await sessionStore.get('interdead_csrf');
+    const received = request.headers.get(CSRF_HEADER);
+    return Boolean(expected && received && timingSafeEqual(String(expected), String(received)));
+  }
+
   async buildStartRedirect(requestUrl, cookies) {
     if (!this.isConfigured()) {
       return new Response('Discord authentication is disabled', { status: 503 });
     }
 
     const { identity, sessionStore } = this.buildIdentity(cookies);
-    const redirectTarget = requestUrl.searchParams.get('redirect') || '/';
+    const redirectTarget = this.normalizeRedirect(
+      requestUrl.searchParams.get('redirect') || '/',
+      requestUrl,
+    );
     const existingSession = await sessionStore.readSession();
     if (this.guardRepository && existingSession?.profileId) {
       const guard = await this.guardRepository.findByProfileId(existingSession.profileId);
@@ -541,6 +586,7 @@ class DiscordAuthController {
     };
 
     await identity.linkService.beginDiscordLogin(sessionStore.stateKey, statePayload);
+    await this.issueCsrfToken(sessionStore);
     const stateToken = sessionStore.getRaw(sessionStore.stateKey);
     if (!stateToken) {
       return new Response('Failed to issue OAuth state', { status: 500 });
@@ -688,27 +734,28 @@ class DiscordAuthController {
       });
     }
 
-    const rawRedirect =
-      state && typeof state.redirect === 'string' && state.redirect.trim()
-        ? state.redirect.trim()
-        : '/';
-
-    const siteBaseUrl = this.getSiteBaseUrl().replace(/\/+$/, '');
-    let redirectLocation;
-
-    if (/^https?:\/\//i.test(rawRedirect)) {
-      redirectLocation = rawRedirect;
-    } else if (rawRedirect.startsWith('/')) {
-      redirectLocation = `${siteBaseUrl}${rawRedirect}`;
-    } else {
-      redirectLocation = `${siteBaseUrl}/${rawRedirect}`;
-    }
+    const siteBaseUrl = new URL(this.getSiteBaseUrl());
+    const safeRedirect = this.normalizeRedirect(state?.redirect || '/', siteBaseUrl);
+    const redirectLocation = `${siteBaseUrl.origin}${safeRedirect}`;
 
     const response = new Response(null, {
       status: 302,
       headers: {
         Location: redirectLocation,
       },
+    });
+    sessionStore.collectCookies().forEach((cookie) => {
+      response.headers.append('Set-Cookie', cookie);
+    });
+    return response;
+  }
+
+  async handleCsrf(cookies) {
+    const { sessionStore } = this.buildIdentity(cookies);
+    const token = await this.issueCsrfToken(sessionStore, { reuseExisting: true });
+    const response = new Response(JSON.stringify({ csrfToken: token }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' },
     });
     sessionStore.collectCookies().forEach((cookie) => {
       response.headers.append('Set-Cookie', cookie);
@@ -753,6 +800,12 @@ class DiscordAuthController {
 
   async handleCleanup(request, cookies) {
     const { identity, sessionStore } = this.buildIdentity(cookies);
+    if (!(await this.validateCsrf(request, sessionStore))) {
+      return new Response(JSON.stringify({ error: 'csrf_invalid' }), {
+        status: 403,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
     const session = await sessionStore.readSession();
     if (!session?.profileId) {
       return new Response(JSON.stringify({ error: 'unauthorized' }), { status: 401 });
@@ -872,6 +925,11 @@ class EfbdController {
     }
 
     const { sessionStore, session } = await this.readSession(cookies);
+    const csrfToken = request.headers.get(CSRF_HEADER);
+    const expectedCsrf = sessionStore ? await sessionStore.get('interdead_csrf') : null;
+    if (!csrfToken || !expectedCsrf || !timingSafeEqual(String(csrfToken), String(expectedCsrf))) {
+      return this.buildJsonResponse({ error: 'csrf_invalid' }, 403, sessionStore);
+    }
     const profileId = this.resolveProfileId(trigger, session?.profileId);
     if (this.guardRepository && profileId) {
       const guard = await this.guardRepository.findByProfileId(profileId);
@@ -1089,6 +1147,11 @@ export default {
 
       if (request.method === 'GET' && url.pathname === '/auth/discord/callback') {
         const response = await authController.handleCallback(url, cookies);
+        return cors.apply(request, response);
+      }
+
+      if (request.method === 'GET' && url.pathname === '/auth/csrf') {
+        const response = await authController.handleCsrf(cookies);
         return cors.apply(request, response);
       }
 

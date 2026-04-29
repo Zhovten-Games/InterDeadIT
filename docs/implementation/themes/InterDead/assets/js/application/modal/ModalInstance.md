@@ -13,7 +13,7 @@ runtime_role: modal_instance
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "single modal lifecycle switch"
+narrative_role: 'single modal lifecycle switch'
 ---
 
 # ModalInstance

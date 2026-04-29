@@ -13,7 +13,7 @@ runtime_role: info_content_adapter
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "content ingress adapter"
+narrative_role: 'content ingress adapter'
 ---
 
 # InfoContentAdapter

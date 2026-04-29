@@ -5,8 +5,8 @@ date: 2026-04-17
 lastmod: 2026-04-17
 ---
 
-* **Date of update:** 17 Apr 2026
-* **Effective Date:** 17 Apr 2026
+- **Date of update:** 17 Apr 2026
+- **Effective Date:** 17 Apr 2026
 
 ## 1. General Position
 
@@ -18,12 +18,12 @@ We regard such tools as instruments comparable to engines, editors, cameras, sam
 
 Our workflows may include tools such as:
 
-* OpenAI systems
-* Suno systems
-* automation tools
-* editing tools
-* internal pipelines
-* future equivalent technologies
+- OpenAI systems
+- Suno systems
+- automation tools
+- editing tools
+- internal pipelines
+- future equivalent technologies
 
 Tooling may change over time.
 
@@ -31,15 +31,15 @@ Tooling may change over time.
 
 AI-assisted systems may be used for:
 
-* ideation
-* drafting
-* editing
-* prototyping
-* code assistance
-* research support
-* localization support
-* audio experimentation
-* production acceleration
+- ideation
+- drafting
+- editing
+- prototyping
+- code assistance
+- research support
+- localization support
+- audio experimentation
+- production acceleration
 
 ## 4. Human Responsibility
 
@@ -51,12 +51,12 @@ Outputs may be heavily modified, recombined, rewritten, or used only as intermed
 
 Use of third-party AI tools does not transfer ownership of our original:
 
-* brands
-* lore
-* game systems
-* site architecture
-* narrative settings
-* proprietary creative direction
+- brands
+- lore
+- game systems
+- site architecture
+- narrative settings
+- proprietary creative direction
 
 Except where third-party published terms explicitly require otherwise.
 

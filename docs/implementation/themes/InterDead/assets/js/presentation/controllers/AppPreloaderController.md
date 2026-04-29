@@ -13,7 +13,7 @@ runtime_role: app_preloader_controller
 contour_primary: FPN-COMMAND
 contour_secondary: none
 role_group: executive_control
-narrative_role: "application preloader flow coordinator"
+narrative_role: 'application preloader flow coordinator'
 ---
 
 # AppPreloaderController

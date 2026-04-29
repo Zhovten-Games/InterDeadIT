@@ -13,7 +13,7 @@ runtime_role: feature_flag_service
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "feature branch selector"
+narrative_role: 'feature branch selector'
 ---
 
 # FeatureFlagService

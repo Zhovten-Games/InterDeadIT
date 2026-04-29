@@ -41,7 +41,6 @@ InterDeadIT JavaScript tests are implemented as Node.js unit/integration tests u
 - Bridge/integration module: include fallback-path coverage (failed network, missing host API, or missing DOM marker).
 - If a test is removed, remove or update the corresponding item in this file in the same change set.
 
-
 ## Pre-rollout check for decorativeTitle on `h1`
 
 Before enabling broad decorativeTitle rollout for headings, validate the one-`h1` rule in generated pages:

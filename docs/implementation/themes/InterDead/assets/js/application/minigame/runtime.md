@@ -13,7 +13,7 @@ runtime_role: mini_game_runtime
 contour_primary: FPN-COMMAND
 contour_secondary: none
 role_group: executive_control
-narrative_role: "mini-game runtime coordinator"
+narrative_role: 'mini-game runtime coordinator'
 ---
 
 # runtime

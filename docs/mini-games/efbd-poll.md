@@ -13,7 +13,7 @@ runtime_role: efbd_poll_widget
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "poll choice and submission flow runtime"
+narrative_role: 'poll choice and submission flow runtime'
 ---
 
 # EFBD poll mini-game

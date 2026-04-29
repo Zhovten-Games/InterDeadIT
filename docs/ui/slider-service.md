@@ -13,7 +13,7 @@ runtime_role: slider_service
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "slide selection controller"
+narrative_role: 'slide selection controller'
 ---
 
 # Slider service

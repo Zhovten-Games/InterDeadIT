@@ -13,7 +13,7 @@ runtime_role: discord_oauth_adapter
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "authentication ingress adapter"
+narrative_role: 'authentication ingress adapter'
 ---
 
 # DiscordOAuthAdapter

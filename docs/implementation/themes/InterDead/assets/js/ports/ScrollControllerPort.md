@@ -13,7 +13,7 @@ runtime_role: scroll_controller_port
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "scroll control port contract"
+narrative_role: 'scroll control port contract'
 ---
 
 # ScrollControllerPort

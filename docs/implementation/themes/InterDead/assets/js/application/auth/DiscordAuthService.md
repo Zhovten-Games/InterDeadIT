@@ -13,7 +13,7 @@ runtime_role: discord_auth_service
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "discord auth ingress orchestrator"
+narrative_role: 'discord auth ingress orchestrator'
 ---
 
 # DiscordAuthService

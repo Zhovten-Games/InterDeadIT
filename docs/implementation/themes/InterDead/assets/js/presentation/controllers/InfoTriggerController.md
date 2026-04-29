@@ -13,7 +13,7 @@ runtime_role: info_trigger_controller
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "info panel trigger switch"
+narrative_role: 'info panel trigger switch'
 ---
 
 # InfoTriggerController

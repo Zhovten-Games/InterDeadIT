@@ -76,20 +76,20 @@ Across cultures, the structure manifests differently:<br>
 [[tab id="tab-2" label="Canción de cuna para dormir a un niño"]]
 (Lullaby to Put a Child to Sleep — Anonymous Folk Text, Mexico / Latin America)<br>
 
-| Original                      | Translation                   |
-| ----------------------------- | ----------------------------- |
-| Duérmete, niño del alma,      | Sleep, child of my soul,      |
-| que la noche va a llegar.     | for the night is coming.      |
-| Si no cierras los ojitos,     | If you do not close your eyes,|
-| la muerte los cerrará.        | death will close them for you.|
-| La calaca está rondando,      | La Calaca is circling nearby, |
-| vestidita de azahar,          | dressed in orange blossom,    |
+| Original                      | Translation                         |
+| ----------------------------- | ----------------------------------- |
+| Duérmete, niño del alma,      | Sleep, child of my soul,            |
+| que la noche va a llegar.     | for the night is coming.            |
+| Si no cierras los ojitos,     | If you do not close your eyes,      |
+| la muerte los cerrará.        | death will close them for you.      |
+| La calaca está rondando,      | La Calaca is circling nearby,       |
+| vestidita de azahar,          | dressed in orange blossom,          |
 | y en sus manos lleva sueños   | and in her hands she carries dreams |
-| que no vas a despertar.       | from which you will not awake.|
-| Duérmete, niño del cielo,     | Sleep, child of heaven,       |
-| que ya el día se va a acabar. | for the day is almost done.   |
-| Si no duermes por las buenas, | If you do not sleep willingly,|
-| por las malas dormirás.       | you will sleep by force.      |
+| que no vas a despertar.       | from which you will not awake.      |
+| Duérmete, niño del cielo,     | Sleep, child of heaven,             |
+| que ya el día se va a acabar. | for the day is almost done.         |
+| Si no duermes por las buenas, | If you do not sleep willingly,      |
+| por las malas dormirás.       | you will sleep by force.            |
 
 [[/tab]]
 

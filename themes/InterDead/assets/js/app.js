@@ -104,6 +104,7 @@ const infoPanelView = new InfoPanelView({
 });
 const markedRef = typeof window !== 'undefined' ? window.marked : null;
 const infoPanelService = new InfoPanelService({
+  sanitizer: window.DOMPurify || null,
   adapter: new InfoContentAdapter(),
   modalService,
   view: infoPanelView,
@@ -213,6 +214,11 @@ const scrollEffectsController = new ScrollEffectsController({
 scrollEffectsController.init();
 
 const runtimeConfig = window.__INTERDEAD_CONFIG__ ?? {};
+const isDebug = runtimeConfig.debug === true;
+const silentLogger = { info() {}, warn() {}, error() {} };
+const logger = isDebug ? console : silentLogger;
+const csrfState = { token: '' };
+const csrfTokenProvider = () => csrfState.token;
 const featureFlags = new FeatureFlagService(runtimeConfig.featureFlags);
 const eventBus = new EventBus();
 const appPreloaderController = new AppPreloaderController({
@@ -249,11 +255,29 @@ const authCopy = {
 const authAdapter = new DiscordOAuthAdapter({ apiConfig });
 const authSessionAdapter = new AuthSessionAdapter({ apiConfig });
 const authService = new DiscordAuthService({ authAdapter, eventBus, featureFlags });
+fetch(new URL('/auth/csrf', runtimeConfig.api?.baseUrl || window.location.origin).toString(), {
+  credentials: 'include',
+})
+  .then((response) => response.json())
+  .then((payload) => {
+    csrfState.token = payload?.csrfToken || '';
+  })
+  .catch(() => {
+    csrfState.token = '';
+  });
+
 const authStateService = new AuthStateService({ sessionAdapter: authSessionAdapter, eventBus });
 appPreloaderController.authStateService = authStateService;
 appPreloaderController.init();
-const profileCleanupAdapter = new ProfileCleanupAdapter({ apiConfig });
-const authVisibilityService = new AuthVisibilityService({ authStateService, eventBus });
+const profileCleanupAdapter = new ProfileCleanupAdapter({
+  csrfTokenProvider,
+  apiConfig,
+});
+const authVisibilityService = new AuthVisibilityService({
+  logger,
+  authStateService,
+  eventBus,
+});
 const authButtonController = new AuthButtonController({
   buttons: [
     document.querySelector('[data-auth-button="hero"]'),
@@ -285,7 +309,10 @@ const authBadgeController = new AuthBadgeController({
 });
 authBadgeController.init();
 
-const efbdAdapter = new EfbdApiAdapter({ apiConfig });
+const efbdAdapter = new EfbdApiAdapter({
+  apiConfig,
+  csrfTokenProvider,
+});
 const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFlags, eventBus });
 window.InterdeadPorts = window.InterdeadPorts || {};
 window.InterdeadPorts.modalService = modalService;

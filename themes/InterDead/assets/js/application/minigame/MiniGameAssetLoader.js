@@ -64,9 +64,21 @@ export default class MiniGameAssetLoader {
     return success;
   }
 
+  isAllowedScriptUrl(normalizedUrl) {
+    try {
+      const resolved = new URL(normalizedUrl, window.location.origin);
+      return (
+        resolved.origin === window.location.origin &&
+        resolved.pathname.startsWith('/assets/minigames/')
+      );
+    } catch (error) {
+      return false;
+    }
+  }
+
   async loadScriptModule(url) {
     const normalizedUrl = this.normalizeUrl(url);
-    if (!normalizedUrl) {
+    if (!normalizedUrl || !this.isAllowedScriptUrl(normalizedUrl)) {
       return null;
     }
 

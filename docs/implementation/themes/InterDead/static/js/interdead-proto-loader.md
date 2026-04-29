@@ -13,7 +13,7 @@ runtime_role: interdead_proto_loader
 contour_primary: FPN-COMMAND
 contour_secondary: none
 role_group: executive_control
-narrative_role: "embedded proto launch orchestrator"
+narrative_role: 'embedded proto launch orchestrator'
 ---
 
 # interdead-proto-loader

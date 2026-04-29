@@ -13,7 +13,7 @@ runtime_role: slider_controller
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "ui branch selection controller"
+narrative_role: 'ui branch selection controller'
 ---
 
 # SliderController

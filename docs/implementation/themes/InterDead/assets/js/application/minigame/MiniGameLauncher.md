@@ -13,7 +13,7 @@ runtime_role: mini_game_launcher
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "mini-game launch branch selector"
+narrative_role: 'mini-game launch branch selector'
 ---
 
 # MiniGameLauncher

@@ -13,7 +13,7 @@ runtime_role: cta_link_service
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "cta routing selector"
+narrative_role: 'cta routing selector'
 ---
 
 # CtaLinkService

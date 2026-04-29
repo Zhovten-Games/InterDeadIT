@@ -13,7 +13,7 @@ runtime_role: efbd_scale_write_port
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "efbd write transport port"
+narrative_role: 'efbd write transport port'
 ---
 
 # IEfbdScaleWritePort

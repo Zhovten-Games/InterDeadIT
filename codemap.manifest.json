@@ -12,20 +12,14 @@
         "families": {
           "architecture": {
             "enabled": true,
-            "failOn": [
-              "error",
-              "critical"
-            ],
+            "failOn": ["error", "critical"],
             "thresholds": {
               "error": 0
             }
           },
           "documentation-contract": {
             "enabled": true,
-            "failOn": [
-              "error",
-              "critical"
-            ],
+            "failOn": ["error", "critical"],
             "thresholds": {
               "error": 0
             }
@@ -55,14 +49,8 @@
     }
   },
   "scan": {
-    "include": [
-      "src/**/*.{js,jsx,ts,tsx,mjs,cjs}",
-      "docs/**/*.md"
-    ],
-    "exclude": [
-      "**/node_modules/**",
-      "**/dist/**"
-    ],
+    "include": ["src/**/*.{js,jsx,ts,tsx,mjs,cjs}", "docs/**/*.md"],
+    "exclude": ["**/node_modules/**", "**/dist/**"],
     "followSymlinks": false,
     "parser": {
       "javascript": true,
@@ -85,9 +73,7 @@
       {
         "id": "it-docs",
         "type": "markdown-headers",
-        "include": [
-          "docs/**/*.md"
-        ],
+        "include": ["docs/**/*.md"],
         "mode": "partial"
       }
     ]

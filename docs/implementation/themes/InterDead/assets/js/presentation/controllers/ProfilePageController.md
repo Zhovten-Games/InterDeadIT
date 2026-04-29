@@ -13,7 +13,7 @@ runtime_role: profile_page_controller
 contour_primary: FPN-COMMAND
 contour_secondary: none
 role_group: executive_control
-narrative_role: "profile page flow orchestrator"
+narrative_role: 'profile page flow orchestrator'
 ---
 
 # ProfilePageController

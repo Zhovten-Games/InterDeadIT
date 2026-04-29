@@ -1,7 +1,8 @@
 export default class EfbdApiAdapter {
-  constructor({ apiConfig = {}, fetcher = fetch }) {
+  constructor({ apiConfig = {}, fetcher = fetch, csrfTokenProvider = null }) {
     this.apiConfig = apiConfig;
     this.fetcher = this.bindFetcher(fetcher);
+    this.csrfTokenProvider = csrfTokenProvider;
   }
 
   get baseUrl() {
@@ -37,7 +38,10 @@ export default class EfbdApiAdapter {
     try {
       const response = await this.fetcher(new URL(this.triggerPath, baseUrl).toString(), {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': this.csrfTokenProvider?.() || '',
+        },
         credentials: 'include',
         body: JSON.stringify(trigger ?? {}),
       });

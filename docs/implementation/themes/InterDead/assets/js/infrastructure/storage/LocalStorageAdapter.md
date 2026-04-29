@@ -13,7 +13,7 @@ runtime_role: local_storage_adapter
 contour_primary: HIPPO-INDEX
 contour_secondary: none
 role_group: memory_narrative
-narrative_role: "persistent context store"
+narrative_role: 'persistent context store'
 ---
 
 # LocalStorageAdapter

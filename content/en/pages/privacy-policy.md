@@ -5,8 +5,8 @@ date: 2026-04-17
 lastmod: 2026-04-17
 ---
 
-* **Date of update:** 17 Apr 2026
-* **Effective Date:** 17 Apr 2026
+- **Date of update:** 17 Apr 2026
+- **Effective Date:** 17 Apr 2026
 
 ## 1. Who We Are
 
@@ -26,31 +26,31 @@ Depending on how you use the site, we may process:
 
 ### A. Technical Data
 
-* browser type
-* device type
-* operating system
-* language preferences
-* approximate country or region
-* referrer data
-* diagnostic and security logs
+- browser type
+- device type
+- operating system
+- language preferences
+- approximate country or region
+- referrer data
+- diagnostic and security logs
 
 ### B. Account Data
 
 Where sign-in is available (for example via Discord or similar providers):
 
-* platform user ID
-* username / public nickname
-* avatar URL
-* role or membership indicators
-* account timestamps
+- platform user ID
+- username / public nickname
+- avatar URL
+- role or membership indicators
+- account timestamps
 
 ### C. Interaction Data
 
-* questionnaire submissions
-* gameplay preference signals
-* profile progress states
-* feature usage data
-* voluntary feedback
+- questionnaire submissions
+- gameplay preference signals
+- profile progress states
+- feature usage data
+- voluntary feedback
 
 ## 4. Accounts and Authentication
 
@@ -58,11 +58,11 @@ Where available on this site, users may sign in via third-party identity provide
 
 Authentication may be used for:
 
-* access to gated sections
-* preserving progress
-* profile-linked experiences
-* testing participation
-* community integrations
+- access to gated sections
+- preserving progress
+- profile-linked experiences
+- testing participation
+- community integrations
 
 Use of third-party sign-in is also subject to that provider's own terms and privacy rules.
 
@@ -82,11 +82,11 @@ This website may contain questionnaires, psychological-style scales, preference 
 
 These systems are intended for:
 
-* entertainment
-* personalization
-* game design research
-* adaptive experiences
-* user preference modelling
+- entertainment
+- personalization
+- game design research
+- adaptive experiences
+- user preference modelling
 
 Results may be stored as part of a user profile for personalization and future project integration.
 
@@ -98,12 +98,12 @@ No result should be treated as healthcare advice, diagnosis, or treatment guidan
 
 We may use cookies, browser storage, and privacy-conscious analytics for:
 
-* language settings
-* session continuity
-* remembering preferences
-* measuring feature usage
-* site performance
-* security and abuse prevention
+- language settings
+- session continuity
+- remembering preferences
+- measuring feature usage
+- site performance
+- security and abuse prevention
 
 Where used, analytics may include Google Analytics or equivalent privacy-conscious measurement tools.
 
@@ -119,23 +119,23 @@ We do not use invasive advertising profiling as a core business model.
 
 We may use collected data to:
 
-* operate the website
-* improve performance and security
-* maintain accounts
-* personalize experiences
-* analyze aggregated usage trends
-* develop future products
-* prevent abuse or fraud
+- operate the website
+- improve performance and security
+- maintain accounts
+- personalize experiences
+- analyze aggregated usage trends
+- develop future products
+- prevent abuse or fraud
 
 ## 8. Third-Party Providers
 
 Infrastructure or connected services may involve providers such as:
 
-* Cloudflare
-* GitHub
-* Discord
-* analytics vendors
-* hosting and CDN vendors
+- Cloudflare
+- GitHub
+- Discord
+- analytics vendors
+- hosting and CDN vendors
 
 Those services may process data under their own policies.
 
@@ -166,8 +166,8 @@ Certain operational components, credentials, secrets, and other sensitive infras
 
 Public entry points include:
 
-* InterDeadReferenceLibrary
-* InterDeadProto
+- InterDeadReferenceLibrary
+- InterDeadProto
 
 These repositories are provided for transparency, reference, and project documentation purposes and may evolve over time.
 
@@ -175,10 +175,10 @@ These repositories are provided for transparency, reference, and project documen
 
 Where required by law, processing may rely on:
 
-* consent
-* legitimate interests
-* contractual necessity
-* legal compliance obligations
+- consent
+- legitimate interests
+- contractual necessity
+- legal compliance obligations
 
 ## 10. Data Retention
 
@@ -190,12 +190,12 @@ Inactive or obsolete data may be deleted or anonymized.
 
 Depending on jurisdiction, you may have rights to request:
 
-* access
-* correction
-* deletion
-* restriction
-* objection
-* portability (where applicable)
+- access
+- correction
+- deletion
+- restriction
+- objection
+- portability (where applicable)
 
 Requests may be subject to identity verification and legal limits.
 

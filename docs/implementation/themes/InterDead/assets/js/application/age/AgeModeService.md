@@ -13,7 +13,7 @@ runtime_role: age_mode_service
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "age mode decision controller"
+narrative_role: 'age mode decision controller'
 ---
 
 # AgeModeService

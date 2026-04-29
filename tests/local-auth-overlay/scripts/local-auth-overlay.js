@@ -10,7 +10,6 @@ const KNOWN_LOCAL_PACKAGES = {
   '@interdead/efbd-scale': 'efbd-scale',
 };
 
-
 class DirectoryLinkOperator {
   static create({ sourcePath, targetPath }) {
     try {
@@ -125,14 +124,16 @@ class CliOptions {
         continue;
       }
       if (current === '--local-packages-prepare-mode') {
-        this.localPackagesPrepareMode =
-          ((this.rawArgs[index + 1] || '').trim() || 'copy').toLowerCase();
+        this.localPackagesPrepareMode = (
+          (this.rawArgs[index + 1] || '').trim() || 'copy'
+        ).toLowerCase();
         index += 1;
         continue;
       }
       if (current.startsWith('--local-packages-prepare-mode=')) {
-        this.localPackagesPrepareMode =
-          (current.slice('--local-packages-prepare-mode='.length).trim() || 'copy').toLowerCase();
+        this.localPackagesPrepareMode = (
+          current.slice('--local-packages-prepare-mode='.length).trim() || 'copy'
+        ).toLowerCase();
         continue;
       }
       if (current === '--skip-local-package-build') {
@@ -153,18 +154,22 @@ class CliOptions {
         continue;
       }
       if (current.startsWith('--local-package-audit=')) {
-        this.localPackageAudit = (current.slice('--local-package-audit='.length).trim() || 'off').toLowerCase();
+        this.localPackageAudit = (
+          current.slice('--local-package-audit='.length).trim() || 'off'
+        ).toLowerCase();
         continue;
       }
       if (current === '--local-package-audit-level') {
-        this.localPackageAuditLevel =
-          ((this.rawArgs[index + 1] || '').trim() || 'moderate').toLowerCase();
+        this.localPackageAuditLevel = (
+          (this.rawArgs[index + 1] || '').trim() || 'moderate'
+        ).toLowerCase();
         index += 1;
         continue;
       }
       if (current.startsWith('--local-package-audit-level=')) {
-        this.localPackageAuditLevel =
-          (current.slice('--local-package-audit-level='.length).trim() || 'moderate').toLowerCase();
+        this.localPackageAuditLevel = (
+          current.slice('--local-package-audit-level='.length).trim() || 'moderate'
+        ).toLowerCase();
         continue;
       }
       if (current.startsWith('--local-packages-root=')) {
@@ -568,7 +573,10 @@ class LocalPackageWorkspaceManager {
   }
 
   resolveWorkspaceRoot() {
-    const defaultRoot = path.resolve(this.projectRoot, 'tests/local-auth-overlay/packages-workspace');
+    const defaultRoot = path.resolve(
+      this.projectRoot,
+      'tests/local-auth-overlay/packages-workspace',
+    );
     if (!this.options.localPackagesWorkspace) {
       return defaultRoot;
     }
@@ -625,15 +633,21 @@ class LocalPackageWorkspaceManager {
 
   buildPackage(packageName, packagePath, preparationPlan) {
     if (!preparationPlan.build.required) {
-      this.logger.info(`[LocalAuthOverlay] ${packageName}: skip build: ${preparationPlan.build.reason}`);
+      this.logger.info(
+        `[LocalAuthOverlay] ${packageName}: skip build: ${preparationPlan.build.reason}`,
+      );
       return;
     }
 
-    this.logger.info(`[LocalAuthOverlay] ${packageName}: build required: ${preparationPlan.build.reason}`);
+    this.logger.info(
+      `[LocalAuthOverlay] ${packageName}: build required: ${preparationPlan.build.reason}`,
+    );
 
     const packageJson = JSON.parse(fs.readFileSync(path.join(packagePath, 'package.json'), 'utf8'));
     if (!packageJson.scripts || !packageJson.scripts.build) {
-      this.logger.info(`[LocalAuthOverlay] Build script not found for ${packageName}; skipping build.`);
+      this.logger.info(
+        `[LocalAuthOverlay] Build script not found for ${packageName}; skipping build.`,
+      );
       return;
     }
     this.runNpmCommand({
@@ -651,7 +665,9 @@ class LocalPackageWorkspaceManager {
     const expectedEntries = this.collectEntryPoints(packageJson);
 
     if (fs.existsSync(distDir)) {
-      this.logger.info(`[LocalAuthOverlay] Validate step passed for ${packageName}: dist directory exists.`);
+      this.logger.info(
+        `[LocalAuthOverlay] Validate step passed for ${packageName}: dist directory exists.`,
+      );
       return;
     }
 
@@ -661,14 +677,18 @@ class LocalPackageWorkspaceManager {
       );
     }
 
-    const missingEntries = expectedEntries.filter((entry) => !fs.existsSync(path.join(packagePath, entry)));
+    const missingEntries = expectedEntries.filter(
+      (entry) => !fs.existsSync(path.join(packagePath, entry)),
+    );
     if (missingEntries.length > 0) {
       throw new Error(
         `Validation failed for ${packageName} (${packagePath}): missing entry points ${missingEntries.join(', ')}.`,
       );
     }
 
-    this.logger.info(`[LocalAuthOverlay] Validate step passed for ${packageName}: export entry points exist.`);
+    this.logger.info(
+      `[LocalAuthOverlay] Validate step passed for ${packageName}: export entry points exist.`,
+    );
   }
 
   collectEntryPoints(packageJson) {
@@ -711,7 +731,9 @@ class LocalPackageWorkspaceManager {
 
   runNpmCommand({ packageName, packagePath, args, stepLabel }) {
     const commandString = `npm ${args.join(' ')}`;
-    this.logger.info(`[LocalAuthOverlay] Prepare step ${stepLabel} for ${packageName}: ${commandString}`);
+    this.logger.info(
+      `[LocalAuthOverlay] Prepare step ${stepLabel} for ${packageName}: ${commandString}`,
+    );
 
     const status = this.npmCommandRunner.run({
       args,
@@ -765,7 +787,17 @@ class LocalPackageStateInspector {
       ignoredFileNames: new Set(),
     });
     const newestSourceMTime = this.collectNewestMTime(packagePath, {
-      ignoredDirectories: new Set(['dist', 'node_modules', '.git', 'test', 'tests', '__tests__', 'docs', 'doc', 'coverage']),
+      ignoredDirectories: new Set([
+        'dist',
+        'node_modules',
+        '.git',
+        'test',
+        'tests',
+        '__tests__',
+        'docs',
+        'doc',
+        'coverage',
+      ]),
       ignoredExtensions: new Set(['.md', '.markdown', '.txt']),
       ignoredFileNames: new Set(['pnpm-debug.log', 'npm-debug.log']),
     });
@@ -838,8 +870,16 @@ class LocalPackagePreparationPolicy {
     const hasDist = snapshot.hasDist;
     const hasNodeModules = this.stateInspector.hasNodeModulesDirectory(packagePath);
 
-    const build = this.evaluateBuild({ hasDist, isDistOutdated: snapshot.isDistOutdated, packagePath });
-    const install = this.evaluateInstall({ hasDist, hasNodeModules, buildRequired: build.required });
+    const build = this.evaluateBuild({
+      hasDist,
+      isDistOutdated: snapshot.isDistOutdated,
+      packagePath,
+    });
+    const install = this.evaluateInstall({
+      hasDist,
+      hasNodeModules,
+      buildRequired: build.required,
+    });
 
     this.logger.info(
       `[LocalAuthOverlay] Policy for ${packageName}: install=${install.required ? 'run' : 'skip'}, build=${build.required ? 'run' : 'skip'}`,
@@ -897,7 +937,9 @@ class LocalPackagePreparationPolicy {
   resolveInstallCommand(packagePath) {
     const lockFilePath = this.path.join(packagePath, 'package-lock.json');
     const shrinkwrapPath = this.path.join(packagePath, 'npm-shrinkwrap.json');
-    return this.fs.existsSync(lockFilePath) || this.fs.existsSync(shrinkwrapPath) ? 'ci' : 'install';
+    return this.fs.existsSync(lockFilePath) || this.fs.existsSync(shrinkwrapPath)
+      ? 'ci'
+      : 'install';
   }
 }
 

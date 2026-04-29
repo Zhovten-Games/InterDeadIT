@@ -13,7 +13,7 @@ runtime_role: modal_service
 contour_primary: SAL-SWITCH
 contour_secondary: none
 role_group: salience_threat
-narrative_role: "modal state switch"
+narrative_role: 'modal state switch'
 ---
 
 # Modal service

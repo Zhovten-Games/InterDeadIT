@@ -13,7 +13,7 @@ runtime_role: efbd_scale_trigger_port
 contour_primary: THAL-GATE
 contour_secondary: none
 role_group: sensory_ingress
-narrative_role: "mini-game answer ingress adapter"
+narrative_role: 'mini-game answer ingress adapter'
 ---
 
 # EfbdScaleTriggerPort

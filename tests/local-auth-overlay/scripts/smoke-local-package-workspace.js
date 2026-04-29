@@ -49,7 +49,8 @@ class SmokeFixtureBuilder {
         name: packageName,
         version: '0.0.0-smoke',
         scripts: {
-          build: "node -e \"require('fs').mkdirSync('dist',{recursive:true}); require('fs').writeFileSync('dist/index.js','module.exports={ok:true};')\"",
+          build:
+            "node -e \"require('fs').mkdirSync('dist',{recursive:true}); require('fs').writeFileSync('dist/index.js','module.exports={ok:true};')\"",
         },
         main: './dist/index.js',
         exports: './dist/index.js',
@@ -59,9 +60,17 @@ class SmokeFixtureBuilder {
 
   createExistingNodeModulesPackages() {
     this.packageNames.forEach((packageName) => {
-      const existingPackagePath = path.join(this.projectRoot, 'node_modules', ...packageName.split('/'));
+      const existingPackagePath = path.join(
+        this.projectRoot,
+        'node_modules',
+        ...packageName.split('/'),
+      );
       fs.mkdirSync(existingPackagePath, { recursive: true });
-      fs.writeFileSync(path.join(existingPackagePath, 'restore-marker.txt'), `existing-${packageName}`, 'utf8');
+      fs.writeFileSync(
+        path.join(existingPackagePath, 'restore-marker.txt'),
+        `existing-${packageName}`,
+        'utf8',
+      );
     });
   }
 
@@ -157,7 +166,11 @@ class LocalPackageWorkspaceFlowSmokeTest {
       linker.apply(preparedTargets);
 
       preparedTargets.forEach((target) => {
-        const linkedPath = path.join(fixture.projectRoot, 'node_modules', ...target.packageName.split('/'));
+        const linkedPath = path.join(
+          fixture.projectRoot,
+          'node_modules',
+          ...target.packageName.split('/'),
+        );
         SmokeAsserts.ok(
           fs.lstatSync(linkedPath).isSymbolicLink(),
           `Expected linked package to be a symlink for ${target.packageName}.`,
@@ -170,7 +183,11 @@ class LocalPackageWorkspaceFlowSmokeTest {
 
       linker.restore();
       fixture.packageNames.forEach((packageName) => {
-        const restoredPath = path.join(fixture.projectRoot, 'node_modules', ...packageName.split('/'));
+        const restoredPath = path.join(
+          fixture.projectRoot,
+          'node_modules',
+          ...packageName.split('/'),
+        );
         SmokeAsserts.ok(
           fs.existsSync(path.join(restoredPath, 'restore-marker.txt')),
           `Original package was not restored for ${packageName}.`,
@@ -179,19 +196,22 @@ class LocalPackageWorkspaceFlowSmokeTest {
 
       workspaceManager.cleanupWorkspaceIfRequested();
       SmokeAsserts.ok(
-        !fs.existsSync(path.join(fixture.projectRoot, 'tests', 'local-auth-overlay', 'packages-workspace')),
+        !fs.existsSync(
+          path.join(fixture.projectRoot, 'tests', 'local-auth-overlay', 'packages-workspace'),
+        ),
         'Workspace cleanup flag did not remove workspace directory.',
       );
 
       this.runAuditModeChecks(fixture);
       this.runNpmCommandRunnerChecks();
 
-      console.log('[Smoke] Workspace prepare/link/restore flow completed successfully for all known packages.');
+      console.log(
+        '[Smoke] Workspace prepare/link/restore flow completed successfully for all known packages.',
+      );
     } finally {
       fixture.teardown();
     }
   }
-
 
   runNpmCommandRunnerChecks() {
     const spawnCalls = [];
@@ -230,7 +250,8 @@ class LocalPackageWorkspaceFlowSmokeTest {
         'Expected Windows npm command to execute through COMSPEC/cmd.exe.',
       );
       SmokeAsserts.ok(
-        JSON.stringify(spawnCalls[0].commandArgs.slice(0, 4)) === JSON.stringify(['/d', '/s', '/c', 'npm.cmd']),
+        JSON.stringify(spawnCalls[0].commandArgs.slice(0, 4)) ===
+          JSON.stringify(['/d', '/s', '/c', 'npm.cmd']),
         'Expected Windows npm command args to start with /d /s /c npm.cmd.',
       );
       SmokeAsserts.ok(

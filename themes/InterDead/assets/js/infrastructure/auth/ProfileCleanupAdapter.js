@@ -1,7 +1,8 @@
 export default class ProfileCleanupAdapter {
-  constructor({ apiConfig = {}, fetcher = fetch } = {}) {
+  constructor({ apiConfig = {}, fetcher = fetch, csrfTokenProvider = null } = {}) {
     this.apiConfig = apiConfig;
     this.fetcher = typeof fetcher === 'function' ? fetcher.bind(globalThis) : null;
+    this.csrfTokenProvider = csrfTokenProvider;
   }
 
   get baseUrl() {
@@ -26,6 +27,7 @@ export default class ProfileCleanupAdapter {
           'Content-Type': 'application/json',
           Accept: 'application/json',
           'X-Timezone': timezone || '',
+          'X-CSRF-Token': this.csrfTokenProvider?.() || '',
         },
         body: JSON.stringify({ timezone }),
       });

@@ -13,7 +13,7 @@ runtime_role: age_gate_controller
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "age access branch gate controller"
+narrative_role: 'age access branch gate controller'
 ---
 
 # AgeGateController

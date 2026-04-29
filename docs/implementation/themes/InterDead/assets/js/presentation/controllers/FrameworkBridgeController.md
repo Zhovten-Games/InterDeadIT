@@ -13,7 +13,7 @@ runtime_role: framework_bridge_controller
 contour_primary: FPN-COMMAND
 contour_secondary: none
 role_group: executive_control
-narrative_role: "framework bridge orchestrator"
+narrative_role: 'framework bridge orchestrator'
 ---
 
 # FrameworkBridgeController

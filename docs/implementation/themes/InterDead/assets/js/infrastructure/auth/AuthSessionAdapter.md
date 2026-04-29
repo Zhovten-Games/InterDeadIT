@@ -13,7 +13,7 @@ runtime_role: auth_session_adapter
 contour_primary: HIPPO-INDEX
 contour_secondary: none
 role_group: memory_narrative
-narrative_role: "auth session persistence adapter"
+narrative_role: 'auth session persistence adapter'
 ---
 
 # AuthSessionAdapter

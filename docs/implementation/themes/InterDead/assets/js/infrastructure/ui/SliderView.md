@@ -13,7 +13,7 @@ runtime_role: slider_view
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "slider render adapter"
+narrative_role: 'slider render adapter'
 ---
 
 # SliderView

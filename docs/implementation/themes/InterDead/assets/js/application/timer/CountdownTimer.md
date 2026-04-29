@@ -13,7 +13,7 @@ runtime_role: countdown_timer
 contour_primary: BG-SELECT
 contour_secondary: none
 role_group: executive_control
-narrative_role: "time-bound state progression controller"
+narrative_role: 'time-bound state progression controller'
 ---
 
 # CountdownTimer

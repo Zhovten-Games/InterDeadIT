@@ -13,7 +13,7 @@ runtime_role: slider_dom_mapper
 contour_primary: INS-BODY
 contour_secondary: none
 role_group: body_regulation
-narrative_role: "slider dom mapping adapter"
+narrative_role: 'slider dom mapping adapter'
 ---
 
 # SliderDomMapper
