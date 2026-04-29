@@ -67,9 +67,14 @@ export default class MiniGameAssetLoader {
   isAllowedScriptUrl(normalizedUrl) {
     try {
       const resolved = new URL(normalizedUrl, window.location.origin);
+      const allowedPrefixes = [
+        '/assets/minigames/',
+        '/js/mini-games/',
+      ];
+
       return (
         resolved.origin === window.location.origin &&
-        resolved.pathname.startsWith('/assets/minigames/')
+        allowedPrefixes.some((prefix) => resolved.pathname.startsWith(prefix))
       );
     } catch (error) {
       return false;
