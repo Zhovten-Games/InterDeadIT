@@ -217,6 +217,6 @@ https://www.cocos.com/en/engine/license
 
 З питань конфіденційності або повного видалення даних зв’яжіться з нами електронною поштою:
 
-interdead@phantom-draft.com
+interdead@zhovten.games
 
 Якщо запит стосується видалення акаунта, вкажіть ваше ім’я користувача в Discord.

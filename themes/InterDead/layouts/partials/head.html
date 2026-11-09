@@ -133,7 +133,8 @@
     {{- end }}
     {{- $featureFlags := .Site.Params.featureFlags | default dict -}}
     {{- $api := .Site.Params.api | default dict -}}
-    {{- $auth := .Site.Params.auth | default dict -}}
+    {{- $authEnabled := partial "helpers/auth-enabled.html" . -}}
+    {{- $auth := merge (.Site.Params.auth | default dict) (dict "enabled" $authEnabled) -}}
     {{- $envBaseUrl := getenv (default "" $api.envVarBaseUrl) -}}
     <script>
       (() => {
@@ -148,7 +149,6 @@
         })();
         const envBaseMap = {
           ...config.api.baseUrlByHost,
-          'interdead.phantom-draft.com': config.api.baseUrlByHost?.['interdead.phantom-draft.com'] || config.api.prodBaseUrl,
         };
         const envMappedBaseUrl = envBaseMap[hostname];
         const baseUrlCandidates = [

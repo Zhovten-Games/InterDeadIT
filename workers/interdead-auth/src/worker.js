@@ -1,3 +1,4 @@
+import endpoints from '../../../config/endpoints.json';
 import { createIdentityCore, ProfileMetadata } from '@interdead/identity-core';
 import {
   CloudflareScaleRepositoryAdapter,
@@ -13,7 +14,7 @@ import { DiscordOAuthAdapter } from '@interdead/identity-core';
 import { CookieSessionStore, timingSafeEqual } from './session.js';
 
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize';
-const DEFAULT_SITE_BASE_URL = 'https://interdead.phantom-draft.com';
+const DEFAULT_SITE_BASE_URL = endpoints.site;
 const DEFAULT_ALLOWED_ORIGINS = [DEFAULT_SITE_BASE_URL];
 const CSRF_HEADER = 'X-CSRF-Token';
 

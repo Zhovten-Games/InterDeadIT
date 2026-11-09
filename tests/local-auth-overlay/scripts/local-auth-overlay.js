@@ -1320,6 +1320,9 @@ Behavior:
       return;
     }
 
+    // The mock-session diagnostic uses the production auth switch as well.
+    // Without a key the normal config (including public mode) is preserved.
+    if (this.options.localAuthKey) process.env.HUGO_INTERDEAD_AUTH_ENABLED = 'true';
     this.ensureHugoAvailable();
     this.applyLocalPackagesIfRequested();
 

@@ -17,8 +17,8 @@
     <script
       type="application/json"
       data-interdead-embed="launcher"
-      data-interdead-src="https://noir.phantom-draft.com/"
-      data-interdead-external-src="https://noir.phantom-draft.com/"
+      data-interdead-src="{{ getenv "HUGO_INTERDEAD_PROTO_URL" | default .Site.Params.interdeadProtoURL }}"
+      data-interdead-external-src="{{ getenv "HUGO_INTERDEAD_PROTO_URL" | default .Site.Params.interdeadProtoURL }}"
       data-interdead-iframe-allow="camera; microphone; geolocation; fullscreen; clipboard-read; clipboard-write"
       data-interdead-entry-src="{{ .Site.Params.interdeadEntrySrc | default "" }}"
       data-interdead-launcher-label="{{ i18n "launcher.chat.open" }}"

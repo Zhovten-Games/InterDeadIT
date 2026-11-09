@@ -1,6 +1,7 @@
 import MiniGameAssetLoader from './MiniGameAssetLoader.js';
 import MiniGameLauncher from './MiniGameLauncher.js';
 import EfbdScaleTriggerPort from '../../infrastructure/minigame/EfbdScaleTriggerPort.js';
+import { authorizationEnabled } from '../auth/AccessPolicy.js';
 
 const loader = new MiniGameAssetLoader({ documentRef: document });
 const scalePort = new EfbdScaleTriggerPort({
@@ -13,6 +14,7 @@ const resolvePorts = () => {
 };
 
 const launcher = new MiniGameLauncher({
+  authEnabled: authorizationEnabled(window.__INTERDEAD_CONFIG__),
   authVisibilityPort: resolvePorts().authVisibilityPort,
   assetLoader: loader,
   documentRef: document,

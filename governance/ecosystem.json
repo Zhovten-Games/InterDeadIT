@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "project": "InterDeadIT",
+  "revision": "1.0.0",
+  "status": "operative",
+  "adoption": "governance/adoption-2026-11-07.json",
+  "constitution": {
+    "repository": "https://github.com/FOP-Oksana-Dubinetska/code-constitution",
+    "revision": "220dc9c286ae06f8b6ed60cdda75112eed0408ed",
+    "path": "vendor/code-constitution/CONSTITUTION_CODE-ru.md",
+    "sha256": "864bf72a9072d394d77d09de40089f8f0f3ecc0ff8f77c41ef173f0852adf2ee"
+  },
+  "repositories": [
+    "InterDeadReferenceLibrary",
+    "InterDeadProto",
+    "InterDeadIT",
+    "InterDeadCore",
+    "PsyFramework",
+    "InterDead",
+    "SPIDER"
+  ],
+  "endpoints": {
+    "site": "https://interdead.zhovten.games",
+    "api": "https://api.interdead.zhovten.games",
+    "proto": "https://noir.zhovten.games"
+  },
+  "checks": [
+    {
+      "id": "auth.policy-and-launcher",
+      "command": [
+        "$node",
+        "--experimental-vm-modules",
+        "--test",
+        "tests/authorization.test.cjs"
+      ]
+    },
+    {
+      "id": "auth.render-matrix",
+      "command": [
+        "$node",
+        "tools/check-auth-render.mjs"
+      ]
+    },
+    {
+      "id": "local-package-overlay",
+      "command": [
+        "$node",
+        "tests/local-auth-overlay/scripts/smoke-local-package-workspace.js"
+      ]
+    }
+  ]
+}

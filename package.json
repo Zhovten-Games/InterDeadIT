@@ -9,9 +9,11 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node tools/warden.mjs",
     "format": "prettier --write \"**/*.{md,html,js,ts,json}\"",
-    "format:check": "prettier --check \"**/*.{md,html,js,ts,json}\""
+    "format:check": "prettier --check \"**/*.{md,html,js,ts,json}\"",
+    "check": "node tools/warden.mjs",
+    "warden": "node tools/warden.mjs"
   },
   "repository": {
     "type": "git",

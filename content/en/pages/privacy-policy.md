@@ -217,6 +217,6 @@ We may revise this Policy as services evolve. Updated versions will appear on th
 
 For privacy-related inquiries or full deletion requests, please contact us via email:
 
-interdead@phantom-draft.com
+interdead@zhovten.games
 
 If your request concerns account deletion, please include your Discord username.

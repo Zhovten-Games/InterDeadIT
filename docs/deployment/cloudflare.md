@@ -18,7 +18,7 @@ The Worker expects the following bindings and environment variables to be config
 
 - `name`: `interdead-auth`
 - `main`: `src/worker.js`
-- `routes`: custom domain route for `api.interdead.phantom-draft.com`
+- `routes`: custom domain route for `api.interdead.zhovten.games`
 - `d1_databases`: binds `INTERDEAD_CORE` to the shared `interdead_core` database
 
 Secrets such as `IDENTITY_DISCORD_CLIENT_SECRET` are set in Cloudflare, not in the repo.

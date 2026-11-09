@@ -140,7 +140,7 @@ other = "Username"
 other = "Profile ID"
 
 ['profile.efbd.title']
-other = "<a href=\"https://interdead.phantom-draft.com/about/#psyframework\">EFBD</a> dossier"
+other = "<a href=\"https://interdead.zhovten.games/about/#psyframework\">EFBD</a> dossier"
 
 ['profile.efbd.lead']
 other = "Your EFBD scale snapshot mirrors the triggers recorded for this profile."
