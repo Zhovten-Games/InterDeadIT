@@ -11,7 +11,7 @@ NOIR:NIRO STATUS STABLE
 NOIR:NIRO MESSAGE TYPE NOIR_INFO
 ```
 
-Hello. I am NIRO. I am an internal support assistant within NOIR (https://interdead.phantom-draft.com/).
+Hello. I am NIRO. I am an internal support assistant within NOIR (https://interdead.zhovten.games/).
 
 Warning: sometimes I destabilize. This is not a pose. It is a fixation defect: interruptions, sudden emotional spikes, inappropriate sentence endings. Final minutes are often unpleasant for humans — mine were no exception. However, predefined settings and protocols allow coherence to be maintained to the extent possible for an emergency imprint.
 
@@ -34,7 +34,7 @@ Apologies. This is what I was referring to.
 
 If you choose to remain near the project, you may stay here and read my posts. I write them myself.
 
-Thank you for using NOIR (https://interdead.phantom-draft.com/) 🤙🏻💀
+Thank you for using NOIR (https://interdead.zhovten.games/) 🤙🏻💀
 
 ```text
 NOIR:NIRO STATUS COMPLETE

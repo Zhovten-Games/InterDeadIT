@@ -1,3 +1,5 @@
+import { contentAccess } from '../auth/AccessPolicy.js';
+
 export default class MiniGameLauncher {
   constructor({
     authVisibilityPort,
@@ -5,12 +7,14 @@ export default class MiniGameLauncher {
     documentRef = typeof document !== 'undefined' ? document : null,
     logger = console,
     scalePort = null,
+    authEnabled = true,
   } = {}) {
     this.authVisibilityPort = authVisibilityPort;
     this.assetLoader = assetLoader;
     this.document = documentRef;
     this.logger = logger || console;
     this.scalePort = scalePort;
+    this.authEnabled = authEnabled;
     this.stateByRoot = new Map();
   }
 
@@ -59,6 +63,10 @@ export default class MiniGameLauncher {
   }
 
   bindAuth(root) {
+    if (!this.authEnabled) {
+      this.renderGame(root);
+      return;
+    }
     if (!this.authVisibilityPort?.getSnapshot) {
       this.renderFallback(root, 'unauthenticated');
       return;
@@ -101,7 +109,7 @@ export default class MiniGameLauncher {
 
   applyVisibility(root, visibility) {
     const status = visibility?.status || 'pending';
-    if (status === 'authenticated') {
+    if (contentAccess({ auth: { enabled: this.authEnabled } }, visibility)) {
       this.renderGame(root);
       return;
     }
@@ -120,6 +128,10 @@ export default class MiniGameLauncher {
     }
 
     if (state.fallback) {
+      if (!this.authEnabled) {
+        state.fallback.removeAttribute?.('data-i18n');
+        state.fallback.textContent = state.config?.strings?.error || 'Unable to load artifact.';
+      }
       state.fallback.removeAttribute?.('hidden');
     }
   }

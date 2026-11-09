@@ -23,3 +23,7 @@ A dedicated Cloudflare Worker for Discord OAuth hand-off and EFBD trigger ingest
   persists the profile in `profiles`, and returns a signed `interdead_session` cookie.
 
 Deploy the Worker from this folder (`workers/interdead-auth/`) to avoid leaking credentials into the frontend bundle. The Hugo site reads the Worker base URL from `params.api.*` and exposes it via `window.__INTERDEAD_CONFIG__`.
+
+## Domain configuration
+
+Canonical endpoints are in `config/endpoints.json` at the repository root. Run `node tools/configure-worker.mjs` from that root to refresh routes and public Worker variables while preserving D1 bindings and secrets. Configure the same callback in Discord Developer Portal before enabling website authentication. Build-time public mode is independent of Worker authorization; protected API writes keep session/CSRF enforcement.

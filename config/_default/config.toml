@@ -1,4 +1,4 @@
-baseURL = "https://interdead.phantom-draft.com/"
+baseURL = "https://interdead.zhovten.games/"
 title = "InterDead"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
@@ -35,6 +35,7 @@ theme = "InterDead"
   ogType = "website"
   twitterCard = "summary_large_image"
   appVersion = "000.6"
+  interdeadProtoURL = "https://noir.zhovten.games/"
 
   [params.seo]
     [params.seo.sectionPolicies]
@@ -89,11 +90,11 @@ theme = "InterDead"
     telegram = "https://t.me/inter_dead"
 
   [params.api]
-    baseUrl = "https://api.interdead.phantom-draft.com"
-    defaultBaseUrl = "https://api.interdead.phantom-draft.com"
-    devBaseUrl = "https://api.dev.interdead.phantom-draft.com"
-    stagingBaseUrl = "https://api.staging.interdead.phantom-draft.com"
-    prodBaseUrl = "https://api.interdead.phantom-draft.com"
+    baseUrl = "https://api.interdead.zhovten.games"
+    defaultBaseUrl = "https://api.interdead.zhovten.games"
+    devBaseUrl = "https://api.dev.interdead.zhovten.games"
+    stagingBaseUrl = "https://api.staging.interdead.zhovten.games"
+    prodBaseUrl = "https://api.interdead.zhovten.games"
     identityStartPath = "/auth/discord/start"
     identitySessionPath = "/auth/session"
     efbdTriggerPath = "/efbd/trigger"
@@ -101,9 +102,10 @@ theme = "InterDead"
     envVarBaseUrl = "HUGO_INTERDEAD_API_BASE_URL"
 
     [params.api.baseUrlByHost]
-      "interdead.phantom-draft.com" = "https://api.interdead.phantom-draft.com"
+      "interdead.zhovten.games" = "https://api.interdead.zhovten.games"
 
   [params.auth]
+    enabled = false
     workerProjectPath = "workers/interdead-auth"
     d1Binding = "INTERDEAD_CORE"
     sessionBinding = "INTERDEAD_SESSION"
@@ -111,9 +113,9 @@ theme = "InterDead"
     ownerCloudflare = "SRE/Platform"
 
     [params.auth.redirects]
-      dev = "https://dev.interdead.phantom-draft.com/auth/discord/callback"
-      staging = "https://staging.interdead.phantom-draft.com/auth/discord/callback"
-      prod = "https://interdead.phantom-draft.com/auth/discord/callback"
+      dev = "https://dev.interdead.zhovten.games/auth/discord/callback"
+      staging = "https://staging.interdead.zhovten.games/auth/discord/callback"
+      prod = "https://api.interdead.zhovten.games/auth/discord/callback"
 
 [services]
   [services.googleAnalytics]

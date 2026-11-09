@@ -21,6 +21,7 @@ import EventBus from './application/events/EventBus.js';
 import DiscordAuthService from './application/auth/DiscordAuthService.js';
 import AuthStateService from './application/auth/AuthStateService.js';
 import AuthVisibilityService from './application/auth/AuthVisibilityService.js';
+import { authorizationEnabled } from './application/auth/AccessPolicy.js';
 import DiscordOAuthAdapter from './infrastructure/auth/DiscordOAuthAdapter.js';
 import AuthSessionAdapter from './infrastructure/auth/AuthSessionAdapter.js';
 import AuthButtonController from './presentation/controllers/AuthButtonController.js';
@@ -219,7 +220,11 @@ const silentLogger = { info() {}, warn() {}, error() {} };
 const logger = isDebug ? console : silentLogger;
 const csrfState = { token: '' };
 const csrfTokenProvider = () => csrfState.token;
-const featureFlags = new FeatureFlagService(runtimeConfig.featureFlags);
+const authEnabled = authorizationEnabled(runtimeConfig);
+const featureFlags = new FeatureFlagService({
+  ...runtimeConfig.featureFlags,
+  ...(!authEnabled ? { identityCoreEnabled: false, efbdScaleEnabled: false } : {}),
+});
 const eventBus = new EventBus();
 const appPreloaderController = new AppPreloaderController({
   body: document.body,
@@ -255,19 +260,20 @@ const authCopy = {
 const authAdapter = new DiscordOAuthAdapter({ apiConfig });
 const authSessionAdapter = new AuthSessionAdapter({ apiConfig });
 const authService = new DiscordAuthService({ authAdapter, eventBus, featureFlags });
-fetch(new URL('/auth/csrf', runtimeConfig.api?.baseUrl || window.location.origin).toString(), {
-  credentials: 'include',
-})
-  .then((response) => response.json())
-  .then((payload) => {
-    csrfState.token = payload?.csrfToken || '';
+if (authEnabled)
+  fetch(new URL('/auth/csrf', runtimeConfig.api?.baseUrl || window.location.origin).toString(), {
+    credentials: 'include',
   })
-  .catch(() => {
-    csrfState.token = '';
-  });
+    .then((response) => response.json())
+    .then((payload) => {
+      csrfState.token = payload?.csrfToken || '';
+    })
+    .catch(() => {
+      csrfState.token = '';
+    });
 
 const authStateService = new AuthStateService({ sessionAdapter: authSessionAdapter, eventBus });
-appPreloaderController.authStateService = authStateService;
+appPreloaderController.authStateService = authEnabled ? authStateService : null;
 appPreloaderController.init();
 const profileCleanupAdapter = new ProfileCleanupAdapter({
   csrfTokenProvider,
@@ -336,48 +342,50 @@ const faqController = new FaqController({
 faqController.init();
 
 const profilePageRoot = document.querySelector('[data-profile-page-root]');
-const profilePageController = profilePageRoot
-  ? new ProfilePageController({
-      authVisibilityService,
-      eventBus,
-      efbdService: efbdBridge,
-      elements: {
-        authenticatedBlock: Array.from(document.querySelectorAll('[data-profile-authenticated]')),
-        unauthenticatedBlock: Array.from(
-          document.querySelectorAll('[data-profile-unauthenticated]'),
-        ),
-        displayName: Array.from(document.querySelectorAll('[data-profile-display-name]')),
-        username: Array.from(document.querySelectorAll('[data-profile-username]')),
-        profileId: Array.from(document.querySelectorAll('[data-profile-id]')),
-        deleteButton: Array.from(document.querySelectorAll('[data-profile-delete]')),
-        avatar: document.querySelector('[data-profile-avatar]'),
-        efbdCard: document.querySelector('[data-profile-efbd-card]'),
-        efbdStatus: document.querySelector('[data-profile-efbd-status]'),
-        efbdUpdated: document.querySelector('[data-profile-efbd-updated]'),
-        efbdAxes: document.querySelector('[data-profile-efbd-axes]'),
-        cleanupAdapter: profileCleanupAdapter,
-        notificationService,
-        authStateService,
-      },
-    })
-  : null;
+const profilePageController =
+  authEnabled && profilePageRoot
+    ? new ProfilePageController({
+        authVisibilityService,
+        eventBus,
+        efbdService: efbdBridge,
+        elements: {
+          authenticatedBlock: Array.from(document.querySelectorAll('[data-profile-authenticated]')),
+          unauthenticatedBlock: Array.from(
+            document.querySelectorAll('[data-profile-unauthenticated]'),
+          ),
+          displayName: Array.from(document.querySelectorAll('[data-profile-display-name]')),
+          username: Array.from(document.querySelectorAll('[data-profile-username]')),
+          profileId: Array.from(document.querySelectorAll('[data-profile-id]')),
+          deleteButton: Array.from(document.querySelectorAll('[data-profile-delete]')),
+          avatar: document.querySelector('[data-profile-avatar]'),
+          efbdCard: document.querySelector('[data-profile-efbd-card]'),
+          efbdStatus: document.querySelector('[data-profile-efbd-status]'),
+          efbdUpdated: document.querySelector('[data-profile-efbd-updated]'),
+          efbdAxes: document.querySelector('[data-profile-efbd-axes]'),
+          cleanupAdapter: profileCleanupAdapter,
+          notificationService,
+          authStateService,
+        },
+      })
+    : null;
 profilePageController?.init?.();
-authStateService.refresh?.();
+if (authEnabled) authStateService.refresh?.();
 
 const heroRoot = document.querySelector('.gm-hero');
 const heroCountdownBlocks = [
   document.querySelector('.gm-hero__countdown'),
   document.querySelector('.gm-hero__beta'),
 ];
-const homeAuthController = heroRoot
-  ? new HomeAuthController({
-      root: heroRoot,
-      countdownBlocks: heroCountdownBlocks,
-      countdownController,
-      authVisibilityService,
-      eventBus,
-    })
-  : null;
+const homeAuthController =
+  authEnabled && heroRoot
+    ? new HomeAuthController({
+        root: heroRoot,
+        countdownBlocks: heroCountdownBlocks,
+        countdownController,
+        authVisibilityService,
+        eventBus,
+      })
+    : null;
 homeAuthController?.init?.();
 
 window.InterdeadPorts.authVisibility = {

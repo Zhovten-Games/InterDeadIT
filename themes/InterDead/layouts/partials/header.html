@@ -29,6 +29,7 @@
     </div>
     <nav class="gm-header__nav" aria-label="Primary actions">
       <div class="gm-header__actions" data-header-actions>
+        {{ if partial "helpers/auth-enabled.html" . }}
         <div class="gm-header__cta" data-show="adult">
           <button class="auth-button auth-button--discord auth-button--compact gm-header__actionButton" type="button" data-auth-button="header">
             <span class="auth-button__icon" aria-hidden="true">
@@ -60,6 +61,7 @@
             </span>
           </a>
         </div>
+        {{ end }}
         <div class="gm-header__cta" data-show="demo">
           <a
             class="gm-btn"

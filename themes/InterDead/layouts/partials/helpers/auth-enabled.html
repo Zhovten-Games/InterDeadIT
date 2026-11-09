@@ -1,0 +1,14 @@
+{{- /* One switch for HTML, runtime, and local builds. Keep explicit false. */ -}}
+{{- $enabled := true -}}
+{{- if isset .Site.Params.auth "enabled" -}}
+  {{- $enabled = .Site.Params.auth.enabled -}}
+{{- end -}}
+{{- $override := getenv "HUGO_INTERDEAD_AUTH_ENABLED" -}}
+{{- if ne $override "" -}}
+  {{- $normalized := lower $override -}}
+  {{- if not (in (slice "true" "false" "1" "0") $normalized) -}}
+    {{- errorf "HUGO_INTERDEAD_AUTH_ENABLED must be true, false, 1, or 0" -}}
+  {{- end -}}
+  {{- $enabled = in (slice "true" "1") $normalized -}}
+{{- end -}}
+{{- return $enabled -}}

@@ -7,6 +7,7 @@
         <div class="gm-hero__copy">
           <h1 class="gm-hero__title">{{ i18n "hero.title" }}</h1>
           <p class="gm-hero__lead">{{ i18n "hero.lead" }}</p>
+          {{ if partial "helpers/auth-enabled.html" . }}
           <div
             class="gm-hero__ctaShell"
             data-cta-anchor
@@ -52,6 +53,7 @@
               <span class="gm-hero__timer" data-countdown="primary">--:--:--</span>
             </span>
           </div>
+          {{ end }}
           <div class="gm-hero__cta gm-hero__cta--demo" data-cta-anchor data-show="demo">
             <a
               class="gm-btn gm-btn--primary"
@@ -67,9 +69,11 @@
               <span class="gm-hero__timer" data-countdown="beta">--:--:--</span>
             </span>
           </div>
+          {{ if partial "helpers/auth-enabled.html" . }}
           <p class="gm-hero__authHint" data-auth-helper>
             {{ i18n "auth.efbd.hint" }}
           </p>
+          {{ end }}
         </div>
         <div class="gm-hero__media">
           <div class="gm-hero__logoFrame" data-hero-media>

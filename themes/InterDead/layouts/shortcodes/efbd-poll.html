@@ -33,10 +33,10 @@ js.Build $runtimeOptions | fingerprint -}} {{- $options := slice (dict "axis" "E
   data-minigame-root
   data-map-url="{{ $mapAsset.RelPermalink }}"
 >
-  <div class="gm-minigame__fallback" data-minigame-fallback data-i18n="minigames.poll.unauthenticated">
+  <div class="gm-minigame__fallback" data-minigame-fallback {{ if not (partial "helpers/auth-enabled.html" .) }}hidden{{ end }} data-i18n="minigames.poll.unauthenticated">
     {{ i18n "minigames.poll.unauthenticated" }}
   </div>
-  <div class="gm-minigame__mount" data-minigame-mount hidden></div>
+  <div class="gm-minigame__mount" data-minigame-mount {{ if partial "helpers/auth-enabled.html" . }}hidden{{ end }}></div>
 </div>
 <script>
   window.InterdeadMiniGamesQueue = window.InterdeadMiniGamesQueue || [];
