@@ -13,6 +13,14 @@ export default class EfbdScaleTriggerPort extends IEfbdScaleWritePort {
     }
   }
 
+  getPersistence() {
+    return window?.InterdeadPorts?.pollProgress?.snapshot().persistence;
+  }
+
+  isCompleted(id) {
+    return window?.InterdeadPorts?.pollProgress?.hasCompleted(id) ?? false;
+  }
+
   async recordAnswer({ axis, value = 1, context = {} } = {}) {
     if (typeof axis !== 'string' || axis.trim().length === 0) {
       return { status: 'invalid' };

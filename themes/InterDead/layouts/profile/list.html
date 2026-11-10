@@ -1,9 +1,19 @@
 {{ define "main" }}
-  <section class="gm-section gm-profile" data-profile-page-root>
+  {{ $authEnabled := partial "helpers/auth-enabled.html" . }}
+  <section class="gm-section gm-profile" data-profile-page-root
+    data-local-visitor="{{ i18n "profile.local.visitor" }}"
+    data-local-mode="{{ i18n "profile.local.mode" }}"
+    data-local-persistent="{{ i18n "profile.local.persistent" }}"
+    data-local-temporary="{{ i18n "profile.local.temporary" }}"
+    data-local-corrupt="{{ i18n "profile.local.corrupt" }}"
+    data-local-imported="{{ i18n "profile.local.imported" }}"
+    data-local-invalid="{{ i18n "profile.local.invalid" }}"
+    data-local-cleared="{{ i18n "profile.local.cleared" }}"
+    data-local-confirm="{{ i18n "profile.local.confirm" }}">
     <div class="gm-container">
       <header class="gm-profile__intro">
         <h1 class="gm-section__title" data-i18n="profile.title">{{ i18n "profile.title" }}</h1>
-        <p class="gm-section__lead" data-i18n="profile.lead">{{ i18n "profile.lead" }}</p>
+        <p class="gm-section__lead" data-i18n="profile.lead">{{ if $authEnabled }}{{ i18n "profile.lead" }}{{ else }}{{ i18n "profile.local.lead" }}{{ end }}</p>
       </header>
 
       <div class="gm-profile__layout gm-profile__layout--hidden" data-profile-authenticated>
@@ -32,13 +42,25 @@
                 <dd class="gm-profile__value" data-profile-id></dd>
                 <div class="gm-profile__actions">
                   <button class="gm-button gm-button--danger gm-profile__delete" data-profile-delete data-i18n="profile.delete">
-                    {{ i18n "profile.delete" }}
+                    {{ if $authEnabled }}{{ i18n "profile.delete" }}{{ else }}{{ i18n "profile.local.clear" }}{{ end }}
                   </button>
-                  {{ partial "components/profile-delete-info-trigger.html" . }}
+                  {{ if $authEnabled }}{{ partial "components/profile-delete-info-trigger.html" . }}{{ end }}
                 </div>
               </div>
             </dl>
           </div>
+          {{ if not $authEnabled }}
+          <p class="gm-profile__hint" data-local-profile-persistence></p>
+          <p class="gm-profile__hint">{{ i18n "profile.local.transfer" }}</p>
+          <p class="gm-profile__hint">{{ i18n "profile.local.completed" }}: <span data-local-completed-count>0</span></p>
+          <div class="gm-profile__actions">
+            <button class="gm-button" type="button" data-local-profile-export>{{ i18n "profile.local.export" }}</button>
+            <label class="gm-profile__hint">{{ i18n "profile.local.import" }}
+              <input type="file" accept=".json,application/json" data-local-profile-import />
+            </label>
+          </div>
+          <p class="gm-profile__status" role="status" aria-live="polite" data-local-profile-feedback hidden></p>
+          {{ end }}
         </div>
 
         <div

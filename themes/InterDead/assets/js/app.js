@@ -27,6 +27,8 @@ import AuthSessionAdapter from './infrastructure/auth/AuthSessionAdapter.js';
 import AuthButtonController from './presentation/controllers/AuthButtonController.js';
 import AuthBadgeController from './presentation/controllers/AuthBadgeController.js';
 import ProfilePageController from './presentation/controllers/ProfilePageController.js';
+import LocalProfileController from './presentation/controllers/LocalProfileController.js';
+import { PollProfile, browserStorage, STORAGE_KEY } from './application/profile/poll-progress.mjs';
 import EfbdApiAdapter from './infrastructure/efbd/EfbdApiAdapter.js';
 import EfbdScaleBridgeService from './application/efbd/EfbdScaleBridgeService.js';
 import HomeAuthController from './presentation/controllers/HomeAuthController.js';
@@ -320,10 +322,30 @@ const efbdAdapter = new EfbdApiAdapter({
   csrfTokenProvider,
 });
 const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFlags, eventBus });
+const localProfile = authEnabled
+  ? null
+  : new PollProfile({
+      storage: browserStorage(window),
+      onChange: (snapshot) =>
+        window.dispatchEvent(
+          new CustomEvent('interdead:poll-progress-updated', { detail: snapshot }),
+        ),
+    });
+const refreshLocalProfile = (event) => {
+  if (event.key === STORAGE_KEY) {
+    localProfile?.observeExternal(event.newValue);
+  }
+};
+if (localProfile) window.addEventListener('storage', refreshLocalProfile);
 window.InterdeadPorts = window.InterdeadPorts || {};
 window.InterdeadPorts.modalService = modalService;
+window.InterdeadPorts.pollProgress = localProfile;
 window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
-  efbdBridge.emitTrigger({ axis, value, context });
+  localProfile
+    ? Promise.resolve()
+        .then(() => localProfile.complete(context.source, axis))
+        .catch(() => ({ status: 'invalid' }))
+    : efbdBridge.emitTrigger({ axis, value, context });
 window.InterdeadNotifications = notificationService;
 
 const countdownController = new CountdownController({
@@ -369,6 +391,11 @@ const profilePageController =
       })
     : null;
 profilePageController?.init?.();
+const localProfileController =
+  !authEnabled && profilePageRoot
+    ? new LocalProfileController({ profile: localProfile, root: profilePageRoot })
+    : null;
+localProfileController?.init();
 if (authEnabled) authStateService.refresh?.();
 
 const heroRoot = document.querySelector('.gm-hero');
@@ -458,6 +485,8 @@ window.addEventListener('beforeunload', () => {
   authBadgeController.dispose?.();
   authButtonController.dispose?.();
   profilePageController?.dispose?.();
+  localProfileController?.dispose();
+  window.removeEventListener('storage', refreshLocalProfile);
   homeAuthController?.dispose?.();
   menuModalController?.dispose?.();
   marqueeController?.dispose?.();

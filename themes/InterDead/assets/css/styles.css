@@ -4242,3 +4242,21 @@ body.gm-membrane-active::after {
   mix-blend-mode: screen;
   opacity: 0.88;
 }
+
+/* Local profile transfer controls retain the profile card typography and palette. */
+[data-local-profile-import] {
+  display: block;
+  max-width: 100%;
+  margin-top: 0.5rem;
+  font: inherit;
+  color: inherit;
+}
+[data-local-profile-import]::file-selector-button {
+  margin-right: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}

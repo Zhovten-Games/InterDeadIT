@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "Zhovten-Games/InterDeadReferenceLibrary",
+  "sourcePath": "tools/shared/poll-progress.mjs",
+  "sourceBlob": "e8dcb0f5034f678954f195d67c2e4daafc7faee4",
+  "sha256": "35bd383684562d18943ff9736d48fb2eb6fed7dcd17338207bdd4287e0ecb279",
+  "wireVersion": 1,
+  "status": "derived-copy",
+  "localPath": "themes/InterDead/assets/js/application/profile/poll-progress.mjs"
+}

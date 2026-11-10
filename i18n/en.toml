@@ -511,3 +511,48 @@ other = "Open in a new tab"
 
 ['launcher.chat.itch']
 other = "Open on Itch.io"
+
+["profile.local.visitor"]
+other = "Local visitor"
+
+["profile.local.mode"]
+other = "This browser"
+
+["profile.local.persistent"]
+other = "Your responses are stored in this browser."
+
+["profile.local.temporary"]
+other = "Temporary storage: download your progress before closing this tab."
+
+["profile.local.corrupt"]
+other = "Stored data could not be read. The original is preserved; download this session or explicitly clear local data."
+
+["profile.local.imported"]
+other = "Completed polls imported. Existing responses are preserved."
+
+["profile.local.invalid"]
+other = "The file is invalid or incompatible. Current responses are preserved."
+
+["profile.local.cleared"]
+other = "Local poll data cleared."
+
+["profile.local.confirm"]
+other = "Clear local poll results in this browser? Download your progress first if you want to keep it."
+
+["profile.local.transfer"]
+other = "The download transfers completed polls between this website and InterDead. Import marks polls as completed; story state, identity and scores are handled separately."
+
+["profile.local.completed"]
+other = "Completed polls"
+
+["profile.local.export"]
+other = "Download poll progress"
+
+["profile.local.import"]
+other = "Import poll progress or an InterDead save"
+
+["profile.local.clear"]
+other = "Clear local data"
+
+["profile.local.lead"]
+other = "Your local responses and portable poll progress."

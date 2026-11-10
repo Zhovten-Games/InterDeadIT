@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -35,11 +35,15 @@ gate('governance.adoption', () => {
   assert(registry.status === 'operative', 'Governance is not operative');
   const record = json(registry.adoption);
   assert(
-    record.authority === 'Sam Starling' && record.basis === 'owner-instruction-2026-11-07',
+    record.authority === 'Sam Starling' &&
+      ['owner-instruction-2026-11-07', 'owner-instruction-2026-11-10'].includes(record.basis),
     'Unknown adoption authority',
   );
   for (const [name, hash] of Object.entries(record.documents)) {
     assert(digest(name) === hash, `Adoption hash mismatch: ${name}`);
+  }
+  for (const control of record.verificationControls || []) {
+    assert(digest(control.path) === control.after, `Verification control drift: ${control.path}`);
   }
   assert(read(registry.constitution.path).length > 50000, 'Universal corpus unavailable');
   assert(
@@ -55,7 +59,43 @@ gate('ecosystem.links', () => {
   assert(registry.endpoints.api === 'https://api.interdead.zhovten.games', 'Wrong API origin');
   assert(registry.endpoints.proto === 'https://noir.zhovten.games', 'Wrong prototype origin');
 });
-if (!process.argv.includes('--governance')) {
+if (registry.interop)
+  gate('interop.source-snapshot', () => {
+    const receipt = json(registry.interop.receipt);
+    assert(
+      receipt.localPath === registry.interop.module && receipt.wireVersion === 1,
+      'Interop source identity differs',
+    );
+    assert(
+      digest(registry.interop.module) === receipt.sha256,
+      'Interop snapshot differs from its source receipt',
+    );
+  });
+gate('guest.documentation', () => {
+  const body = read('README.md');
+  assert(
+    !body.includes('The operator runbook and variable registry accompany'),
+    'Retired private-operations paragraph',
+  );
+  const pre = body.match(/<pre>([\s\S]*?)<\/pre>/)?.[1];
+  if (pre) {
+    const widths = pre
+      .trim()
+      .split('\n')
+      .map((line) => Array.from(line.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&')).length);
+    assert(new Set(widths).size === 1, 'Pseudographic frame has inconsistent visible widths');
+  }
+  for (const match of body.matchAll(/\[[^\]]+\]\(([^)]+)\)/g)) {
+    const target = match[1].split('#')[0];
+    if (!target || /^(?:https?:|mailto:|\/)/.test(target)) continue;
+    assert(
+      existsSync(path.resolve(root, decodeURIComponent(target))),
+      `Missing README target: ${target}`,
+    );
+  }
+});
+const documentationOnly = process.argv.includes('--docs');
+if (!process.argv.includes('--governance') && !documentationOnly) {
   for (const task of registry.checks) {
     const result = spawnSync(
       task.command[0] === '$node' ? process.execPath : task.command[0],
@@ -79,19 +119,33 @@ if (!process.argv.includes('--governance')) {
     });
   }
 }
-const git = (args) => spawnSync('git', args, { cwd: root, encoding: 'utf8' }).stdout?.trim();
+const gitResult = (args) => spawnSync('git', args, { cwd: root, encoding: 'utf8' });
+const revision = gitResult(['rev-parse', 'HEAD']);
+const worktree = gitResult(['status', '--porcelain']);
+gate('source.provenance', () => {
+  assert(
+    revision.status === 0 && worktree.status === 0,
+    revision.stderr?.trim() || worktree.stderr?.trim() || 'Git source identity unavailable',
+  );
+});
 const passed = gates.length > 0 && gates.every((row) => row.status === 'passed');
 const report = {
   schemaVersion: 1,
   project: registry.project,
-  mode: process.argv.includes('--governance') ? 'governance' : 'full',
-  sourceSha: git(['rev-parse', 'HEAD']),
-  dirty: !!git(['status', '--porcelain']),
+  mode: documentationOnly
+    ? 'documentation'
+    : process.argv.includes('--governance')
+      ? 'governance'
+      : 'full',
+  sourceSha: revision.status === 0 ? revision.stdout.trim() : null,
+  dirty: worktree.status === 0 ? !!worktree.stdout.trim() : null,
   toolchain: { node: process.version },
   governanceRevision: registry.revision,
   gates,
   status: passed ? 'passed' : 'failed',
-  scope: 'Repository checks; deployment and game acceptance have separate evidence',
+  scope: documentationOnly
+    ? 'README, adopted profile and ecosystem links only; no runtime or release acceptance'
+    : 'Repository checks; deployment and game acceptance have separate evidence',
   finishedAt: new Date().toISOString(),
 };
 mkdirSync(path.join(root, '.warden'), { recursive: true });

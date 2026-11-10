@@ -511,3 +511,48 @@ other = "新しいタブで開く"
 
 ['launcher.chat.itch']
 other = "Itch.io版を開く"
+
+["profile.local.visitor"]
+other = "ローカルの訪問者"
+
+["profile.local.mode"]
+other = "このブラウザー"
+
+["profile.local.persistent"]
+other = "回答はこのブラウザーに保存されています。"
+
+["profile.local.temporary"]
+other = "一時保存です。このタブを閉じる前に結果をダウンロードしてください。"
+
+["profile.local.corrupt"]
+other = "保存されたデータを読み込めませんでした。元データは保持されています。現在の結果をダウンロードするか、ローカルデータを明示的に消去してください。"
+
+["profile.local.imported"]
+other = "完了済みのアンケートを読み込みました。既存の回答は保持されています。"
+
+["profile.local.invalid"]
+other = "ファイルが無効か、互換性がありません。現在の回答は保持されています。"
+
+["profile.local.cleared"]
+other = "ローカルのアンケート結果を消去しました。"
+
+["profile.local.confirm"]
+other = "このブラウザーのアンケート結果を消去しますか？残したい場合は先にダウンロードしてください。"
+
+["profile.local.transfer"]
+other = "このファイルで、ウェブサイトとInterDeadの間でアンケートの完了情報を移せます。読み込みではアンケートを完了済みにします。物語の進行、アカウント、スコアは別に扱われます。"
+
+["profile.local.completed"]
+other = "完了済みのアンケート"
+
+["profile.local.export"]
+other = "アンケート結果をダウンロード"
+
+["profile.local.import"]
+other = "結果またはInterDeadのセーブを読み込む"
+
+["profile.local.clear"]
+other = "ローカルデータを消去"
+
+["profile.local.lead"]
+other = "ローカルの回答とアンケート結果の移行。"

@@ -2,10 +2,10 @@
 title: 'Zhovten Games Privacy Policy'
 slug: 'privacy-policy'
 date: 2026-04-17
-lastmod: 2026-04-17
+lastmod: 2026-11-10
 ---
 
-- **Date of update:** 17 Apr 2026
+- **Date of update:** 10 Nov 2026
 - **Effective Date:** 17 Apr 2026
 
 ## 1. Who We Are
@@ -220,3 +220,7 @@ For privacy-related inquiries or full deletion requests, please contact us via e
 interdead@zhovten.games
 
 If your request concerns account deletion, please include your Discord username.
+
+## Local poll progress
+
+With sign-in disabled, this browser stores your poll answers and completion marks locally. The profile provides download, import and clear controls. A portable progress file transfers completion marks between the website and InterDead; the website reads the relevant fields locally when you select a file. Game state, account identity and remote scores keep their separate processing paths. Downloaded files remain under your own control.

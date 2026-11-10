@@ -3,7 +3,7 @@
   "project": "InterDeadIT",
   "revision": "1.0.0",
   "status": "operative",
-  "adoption": "governance/adoption-2026-11-07.json",
+  "adoption": "governance/adoption-2026-11-10.json",
   "constitution": {
     "repository": "https://github.com/FOP-Oksana-Dubinetska/code-constitution",
     "revision": "220dc9c286ae06f8b6ed60cdda75112eed0408ed",
@@ -47,6 +47,27 @@
         "$node",
         "tests/local-auth-overlay/scripts/smoke-local-package-workspace.js"
       ]
+    },
+    {
+      "id": "local-profile.interoperability",
+      "command": [
+        "$node",
+        "--test",
+        "tests/poll-progress.test.mjs"
+      ]
+    },
+    {
+      "id": "local-profile.localized-dom",
+      "command": [
+        "$node",
+        "--experimental-vm-modules",
+        "--test",
+        "tests/local-profile-dom.test.cjs"
+      ]
     }
-  ]
+  ],
+  "interop": {
+    "receipt": "docs/interop/module-source.json",
+    "module": "themes/InterDead/assets/js/application/profile/poll-progress.mjs"
+  }
 }

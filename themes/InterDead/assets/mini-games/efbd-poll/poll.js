@@ -478,6 +478,24 @@ export function initEfbdPoll({
     renderMessageContent(status, resolvedMessage);
   };
 
+  const reflectCompletion = () => {
+    if (!scalePort.isCompleted?.(gameId)) return;
+    form.querySelectorAll('input, button').forEach((element) => {
+      element.disabled = true;
+    });
+    const message =
+      scalePort.getPersistence?.() && scalePort.getPersistence() !== 'persistent'
+        ? `${mergedStrings.completed || ''} ${strings.temporary || ''}`
+        : mergedStrings.completed;
+    setStatus(buildProfileMessage(message), 'success');
+  };
+  const progressChanged = () => {
+    if (root.isConnected === false)
+      window.removeEventListener('interdead:poll-progress-updated', progressChanged);
+    else reflectCompletion();
+  };
+  window.addEventListener('interdead:poll-progress-updated', progressChanged);
+
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     const selected = form.querySelector('input[name="efbd-poll-option"]:checked');
@@ -516,7 +534,10 @@ export function initEfbdPoll({
     if (response?.status === 'ok' || response?.status === 'disabled') {
       const successMessage =
         mergedStrings.success || defaultStrings.success || 'Your response has been recorded.';
-      setStatus(successMessage, 'success');
+      setStatus(
+        response.persistent === false ? strings.temporary || successMessage : successMessage,
+        'success',
+      );
       window.InterdeadNotifications?.showSuccess?.(buildProfileMessage(successMessage));
     } else if (replayBlockedMessageBuilder.isCompletedReplay(response)) {
       const completedMessage = replayBlockedMessageBuilder.build(response?.message);
@@ -533,10 +554,12 @@ export function initEfbdPoll({
     }
 
     submit.disabled = false;
+    reflectCompletion();
   });
 
   mount.innerHTML = '';
   mount.appendChild(form);
+  reflectCompletion();
 
   return true;
 }

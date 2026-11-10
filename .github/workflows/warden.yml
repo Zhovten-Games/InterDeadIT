@@ -9,15 +9,36 @@ jobs:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           submodules: recursive
+          fetch-depth: 2
+      - name: Classify README-only changes
+        id: scope
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          node --input-type=module <<'JS'
+          import { execFileSync } from 'node:child_process';
+          import { appendFileSync } from 'node:fs';
+          let documentation = false;
+          const base = process.env.BASE_SHA || '';
+          if (/^[0-9a-f]{40}$/.test(base) && !/^0+$/.test(base)) {
+            try {
+              const paths = execFileSync('git', ['diff', '--name-only', '-z', base, 'HEAD'], { encoding: 'utf8' }).split('\0').filter(Boolean);
+              documentation = paths.length > 0 && paths.every(path => path === 'README.md');
+            } catch { /* A missing base requires the complete corpus. */ }
+          }
+          appendFileSync(process.env.GITHUB_OUTPUT, `docs=${documentation}\n`);
+          JS
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 24.19.0
-      - run: npm ci
+      - if: steps.scope.outputs.docs != 'true'
+        run: npm ci
       - name: Install pinned Hugo
+        if: steps.scope.outputs.docs != 'true'
         run: |
           curl -fL --retry 2 https://github.com/gohugoio/hugo/releases/download/v0.147.9/hugo_0.147.9_linux-amd64.tar.gz -o "$RUNNER_TEMP/hugo.tar.gz"
           echo "96d367bc839b170cfc34470e41844594f4b7846a39e87850b2cb1f8c81b0d11b  $RUNNER_TEMP/hugo.tar.gz" | sha256sum --check
           mkdir -p "$RUNNER_TEMP/hugo-bin"
           tar -xzf "$RUNNER_TEMP/hugo.tar.gz" -C "$RUNNER_TEMP/hugo-bin" hugo
           echo "$RUNNER_TEMP/hugo-bin" >> "$GITHUB_PATH"
-      - run: node tools/warden.mjs
+      - run: node tools/warden.mjs ${{ steps.scope.outputs.docs == 'true' && '--docs' || '' }}

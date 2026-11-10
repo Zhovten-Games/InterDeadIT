@@ -36,6 +36,22 @@ try {
         enabled,
         `Profile hint: ${locale}/${enabled}`,
       );
+      const profile = readFileSync(path.join(output, locale, 'profile/index.html'), 'utf8');
+      assert.equal(
+        profile.includes('data-local-profile-export'),
+        !enabled,
+        `Local export: ${locale}/${enabled}`,
+      );
+      assert.equal(
+        profile.includes('data-local-profile-import'),
+        !enabled,
+        `Local import: ${locale}/${enabled}`,
+      );
+      assert.equal(
+        profile.includes('data-local-completed-count'),
+        !enabled,
+        `Completion summary: ${locale}/${enabled}`,
+      );
       const mount = article.match(/<div[^>]*data-minigame-mount[^>]*>/)?.[0];
       assert.ok(mount, `Missing real artifact: ${locale}`);
       assert.equal(/\bhidden\b/.test(mount), enabled, `Artifact access: ${locale}/${enabled}`);

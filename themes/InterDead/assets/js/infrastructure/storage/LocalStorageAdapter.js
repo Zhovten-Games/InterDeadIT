@@ -1,9 +1,13 @@
 import StoragePort from '../../ports/StoragePort.js';
 
 export default class LocalStorageAdapter extends StoragePort {
-  constructor(storage = window.localStorage) {
+  constructor(storage) {
     super();
-    this.storage = storage;
+    try {
+      this.storage = storage === undefined ? window.localStorage : storage;
+    } catch {
+      this.storage = null;
+    }
   }
 
   get(key) {
