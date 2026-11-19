@@ -1,0 +1,36 @@
+{{- $shortcode := .shortcode -}}
+{{- $id := printf "%s-%d" .name now.UnixNano -}}
+{{- $styleAsset := resources.Get "mini-games/efbd-poll/styles.css" | fingerprint -}}
+{{- $scriptOptions := dict "targetPath" "js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}}
+{{- $scriptAsset := resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}}
+{{- $runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not hugo.IsServer) -}}
+{{- $runtimeAsset := resources.Get "js/application/minigame/runtime.js" | js.Build $runtimeOptions | fingerprint -}}
+{{- $queueConfig := dict
+  "rootId" $id
+  "assets" (dict
+    "styleUrl" $styleAsset.RelPermalink
+    "styleIntegrity" $styleAsset.Data.Integrity
+    "scriptUrl" $scriptAsset.RelPermalink
+  )
+  "options" .options
+  "strings" (merge .strings (dict "temporary" (i18n "profile.local.temporary")))
+  "stringKeys" .stringKeys
+  "mapUrl" .mapUrl
+  "media" .media
+  "locale" $shortcode.Site.Language.Lang
+  "gameId" .gameId
+-}}
+{{- if not ($shortcode.Page.Scratch.Get "miniGameRuntimeInjected") -}}
+<script type="module" src="{{ $runtimeAsset.RelPermalink }}" integrity="{{ $runtimeAsset.Data.Integrity }}" crossorigin="anonymous"></script>
+{{- $shortcode.Page.Scratch.Set "miniGameRuntimeInjected" true -}}
+{{- end -}}
+<div class="gm-minigame gm-minigame--poll" id="{{ $id }}" data-minigame-root data-map-url="{{ .mapUrl }}">
+  <div class="gm-minigame__fallback" data-minigame-fallback {{ if not (partial "helpers/auth-enabled.html" $shortcode) }}hidden{{ end }} data-i18n="minigames.poll.unauthenticated">
+    {{ i18n "minigames.poll.unauthenticated" }}
+  </div>
+  <div class="gm-minigame__mount" data-minigame-mount {{ if partial "helpers/auth-enabled.html" $shortcode }}hidden{{ end }}></div>
+</div>
+<script>
+  window.InterdeadMiniGamesQueue = window.InterdeadMiniGamesQueue || [];
+  window.InterdeadMiniGamesQueue.push({{ $queueConfig | jsonify | safeJS }});
+</script>

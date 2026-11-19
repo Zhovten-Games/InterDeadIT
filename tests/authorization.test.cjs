@@ -103,3 +103,5 @@ test('an absent switch keeps legacy protected mode; explicit false opens content
   assert.equal(policy.contentAccess({}, { status: 'pending' }), false);
   assert.equal(policy.contentAccess({ auth: { enabled: false } }, null), true);
 });
+
+require('./mini-games-regression.test.cjs');

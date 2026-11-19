@@ -63,11 +63,16 @@ export default class MiniGameLauncher {
   }
 
   bindAuth(root) {
+    const state = this.stateByRoot.get(root);
+    if (!state) return;
+    state.unsubscribe?.();
+    state.unsubscribe = null;
     if (!this.authEnabled) {
-      this.renderGame(root);
+      this.applyVisibility(root, null);
       return;
     }
     if (!this.authVisibilityPort?.getSnapshot) {
+      state.visible = false;
       this.renderFallback(root, 'unauthenticated');
       return;
     }
@@ -108,8 +113,11 @@ export default class MiniGameLauncher {
   }
 
   applyVisibility(root, visibility) {
+    const state = this.stateByRoot.get(root);
+    if (!state) return;
     const status = visibility?.status || 'pending';
-    if (contentAccess({ auth: { enabled: this.authEnabled } }, visibility)) {
+    state.visible = contentAccess({ auth: { enabled: this.authEnabled } }, visibility);
+    if (state.visible) {
       this.renderGame(root);
       return;
     }
@@ -136,17 +144,30 @@ export default class MiniGameLauncher {
     }
   }
 
-  async renderGame(root) {
+  renderGame(root) {
     const state = this.stateByRoot.get(root);
-    if (!state || state.initialized) {
+    if (!state?.config || !state.mount) return;
+    if (state.initialized) {
+      this.showGame(root, state);
       return;
     }
+    // Auth snapshots and ports-ready may arrive while the same module is loading.
+    if (!state.loading) {
+      state.loading = this.initializeGame(root, state).finally(() => {
+        state.loading = null;
+      });
+    }
+    return state.loading;
+  }
 
+  showGame(root, state) {
+    if (this.stateByRoot.get(root) !== state || state.visible === false) return;
+    state.fallback?.setAttribute?.('hidden', 'true');
+    state.mount?.removeAttribute?.('hidden');
+  }
+
+  async initializeGame(root, state) {
     const { config, mount, fallback } = state;
-    if (!config || !mount) {
-      return;
-    }
-
     const normalizedRootId = this.normalizeRootId(config.rootId || root?.id);
     const logContext = {
       id: normalizedRootId || config.rootId || root?.id,
@@ -167,7 +188,6 @@ export default class MiniGameLauncher {
       media = {},
       gameId,
     } = config;
-    const stylePromise = this.assetLoader?.loadStyle?.(assets.styleUrl, assets.styleIntegrity);
     if (assets?.styleUrl) {
       this.logger?.info?.('[InterDead][MiniGame] Loading mini-game styles', {
         ...logContext,
@@ -177,17 +197,21 @@ export default class MiniGameLauncher {
 
     let module;
     try {
-      module = await this.assetLoader?.loadScriptModule?.(assets.scriptUrl);
+      [module] = await Promise.all([
+        this.assetLoader?.loadScriptModule?.(assets.scriptUrl),
+        this.assetLoader?.loadStyle?.(assets.styleUrl, assets.styleIntegrity),
+      ]);
     } catch (error) {
       this.logger?.error?.('[InterDead][MiniGame] Failed to load mini-game module', {
         ...logContext,
         scriptUrl: assets.scriptUrl,
         error,
       });
-      this.renderFallback(root);
+      if (this.stateByRoot.get(root) === state) this.renderFallback(root);
       return;
     }
 
+    if (this.stateByRoot.get(root) !== state) return;
     if (!module) {
       this.logger?.warn?.('[InterDead][MiniGame] Mini-game module missing after load', {
         ...logContext,
@@ -228,10 +252,11 @@ export default class MiniGameLauncher {
         scriptUrl: assets.scriptUrl,
         error,
       });
-      this.renderFallback(root);
+      if (this.stateByRoot.get(root) === state) this.renderFallback(root);
       return;
     }
 
+    if (this.stateByRoot.get(root) !== state) return;
     this.logger?.info?.('[InterDead][MiniGame] Mini-game initializer result', {
       ...logContext,
       scriptUrl: assets.scriptUrl,
@@ -247,12 +272,7 @@ export default class MiniGameLauncher {
       return;
     }
 
-    fallback?.setAttribute?.('hidden', 'true');
-    mount.removeAttribute?.('hidden');
-
     state.initialized = true;
-    this.stateByRoot.set(root, state);
-
-    await stylePromise;
+    this.showGame(root, state);
   }
 }

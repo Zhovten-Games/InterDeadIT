@@ -1,11 +1,5 @@
-{{- $id := printf "efbd-poll-2-%d" now.UnixNano -}}
 {{- $gameId := .Get "gameId" | default "2-efbd-poll" -}}
-{{- $styleAsset := resources.Get "mini-games/efbd-poll/styles.css" | fingerprint -}}
 {{- $mapAsset := resources.Get "images/blog/ARTIFACT-THE_LULLABY.webp" | fingerprint -}}
-{{- $scriptOptions := dict "targetPath" "js/mini-games/efbd-poll.js" "format" "esm" "minify" (not hugo.IsServer) -}}
-{{- $scriptAsset := resources.Get "mini-games/efbd-poll/poll.js" | js.Build $scriptOptions | fingerprint -}}
-{{- $runtimeOptions := dict "targetPath" "js/mini-games/runtime.js" "format" "esm" "minify" (not hugo.IsServer) -}}
-{{- $runtimeAsset := resources.Get "js/application/minigame/runtime.js" | js.Build $runtimeOptions | fingerprint -}}
 {{- $options := slice
   (dict "axis" "EBF-MIND" "label" (i18n "minigames.poll2.option.mind") "i18nKey" "minigames.poll2.option.mind")
   (dict "axis" "EBF-SOCIAL" "label" (i18n "minigames.poll2.option.social") "i18nKey" "minigames.poll2.option.social")
@@ -31,7 +25,6 @@
 {{- end -}}
 {{- $media := dict "images" $images -}}
 {{- $strings := dict
-  "temporary" (i18n "profile.local.temporary")
   "title" ""
   "prompt" ""
   "submit" (i18n "minigames.poll2.submit")
@@ -52,32 +45,13 @@
   "required" "minigames.poll2.required"
   "mapAlt" "minigames.poll2.mediaAlt"
 -}}
-{{- $queueConfig := dict
-  "rootId" $id
-  "assets" (dict
-    "styleUrl" $styleAsset.RelPermalink
-    "styleIntegrity" $styleAsset.Data.Integrity
-    "scriptUrl" $scriptAsset.RelPermalink
-  )
+{{- partial "mini-games/efbd-poll.html" (dict
+  "shortcode" .
+  "name" "efbd-poll-2"
+  "gameId" $gameId
   "options" $options
   "strings" $strings
   "stringKeys" $stringKeys
   "mapUrl" $mapAsset.RelPermalink
   "media" $media
-  "locale" .Site.Language.Lang
-  "gameId" $gameId
--}}
-{{- if not ($.Page.Scratch.Get "miniGameRuntimeInjected") -}}
-<script type="module" src="{{ $runtimeAsset.RelPermalink }}" integrity="{{ $runtimeAsset.Data.Integrity }}" crossorigin="anonymous"></script>
-{{- $.Page.Scratch.Set "miniGameRuntimeInjected" true -}}
-{{- end -}}
-<div class="gm-minigame gm-minigame--poll" id="{{ $id }}" data-minigame-root data-map-url="{{ $mapAsset.RelPermalink }}">
-  <div class="gm-minigame__fallback" data-minigame-fallback {{ if not (partial "helpers/auth-enabled.html" .) }}hidden{{ end }} data-i18n="minigames.poll.unauthenticated">
-    {{ i18n "minigames.poll.unauthenticated" }}
-  </div>
-  <div class="gm-minigame__mount" data-minigame-mount {{ if partial "helpers/auth-enabled.html" . }}hidden{{ end }}></div>
-</div>
-<script>
-  window.InterdeadMiniGamesQueue = window.InterdeadMiniGamesQueue || [];
-  window.InterdeadMiniGamesQueue.push({{ $queueConfig | jsonify | safeJS }});
-</script>
+) -}}

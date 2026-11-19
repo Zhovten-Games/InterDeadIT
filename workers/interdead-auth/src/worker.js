@@ -12,11 +12,35 @@ import {
 } from '@interdead/efbd-scale';
 import { DiscordOAuthAdapter } from '@interdead/identity-core';
 import { CookieSessionStore, timingSafeEqual } from './session.js';
+import { POLLS } from '../../../themes/InterDead/assets/js/application/profile/poll-progress.mjs';
 
 const DISCORD_AUTHORIZE_URL = 'https://discord.com/oauth2/authorize';
 const DEFAULT_SITE_BASE_URL = endpoints.site;
 const DEFAULT_ALLOWED_ORIGINS = [DEFAULT_SITE_BASE_URL];
 const CSRF_HEADER = 'X-CSRF-Token';
+
+// Locale is display metadata. Both current and formerly JSON-quoted IDs identify one poll.
+function canonicalPollId(value) {
+  if (typeof value !== 'string') return null;
+  let id = value.trim();
+  if (id.startsWith('"')) {
+    try {
+      id = JSON.parse(id);
+    } catch {
+      return null;
+    }
+  }
+  return typeof id === 'string' && Object.hasOwn(POLLS, id) ? id : null;
+}
+
+function resolvePollId(trigger) {
+  const sources = [trigger?.source, trigger?.context?.source].filter(
+    (value) => value !== undefined,
+  );
+  if (!sources.length) return '1-efbd-poll';
+  const ids = sources.map(canonicalPollId);
+  return ids.every((id) => id && id === ids[0]) ? ids[0] : null;
+}
 
 class CorsService {
   constructor(env) {
@@ -295,7 +319,9 @@ class ProfileGuardRepository {
   deserializeGuardRow(row) {
     if (!row) return null;
     const data = this.parseProfileData(row.data);
-    const completedGames = Array.isArray(data.completedGames) ? data.completedGames : [];
+    const completedGames = Array.isArray(data.completedGames)
+      ? [...new Set(data.completedGames.map((id) => canonicalPollId(id) || id))]
+      : [];
     const loginAudit = data.loginAudit || {};
     return {
       profileId: row.profile_id || data?.metadata?.profileId || null,
@@ -925,6 +951,11 @@ class EfbdController {
       return new Response('Invalid trigger score', { status: 400 });
     }
 
+    const gameId = resolvePollId(trigger);
+    if (!gameId || !POLLS[gameId].includes(axisCode)) {
+      return new Response('Invalid poll or option', { status: 400 });
+    }
+
     const { sessionStore, session } = await this.readSession(cookies);
     const csrfToken = request.headers.get(CSRF_HEADER);
     const expectedCsrf = sessionStore ? await sessionStore.get('interdead_csrf') : null;
@@ -934,7 +965,6 @@ class EfbdController {
     const profileId = this.resolveProfileId(trigger, session?.profileId);
     if (this.guardRepository && profileId) {
       const guard = await this.guardRepository.findByProfileId(profileId);
-      const gameId = trigger?.source || trigger?.context?.source || '1-efbd-poll';
       if (guard?.completedGames?.includes?.(gameId)) {
         return this.buildJsonResponse(
           { error: 'replay_blocked', reason: 'completed', message: 'Mini-game already completed.' },
@@ -966,13 +996,12 @@ class EfbdController {
         triggers: [
           {
             axis: axisCode,
-            source: trigger?.source || 'interdead-it',
+            source: gameId,
             metadata: trigger?.metadata,
           },
         ],
       });
       if (this.guardRepository && profileId) {
-        const gameId = trigger?.source || trigger?.context?.source || '1-efbd-poll';
         await this.guardRepository.markCompleted(profileId, gameId);
       }
     } catch (error) {
@@ -1008,8 +1037,14 @@ class EfbdController {
     }
 
     const payload = this.serializeSnapshot(snapshot);
+    const guard = await this.guardRepository?.findByProfileId(session.profileId);
     return this.buildJsonResponse(
-      { authenticated: true, profileId: snapshot.profileId, ...payload },
+      {
+        authenticated: true,
+        profileId: snapshot.profileId,
+        ...payload,
+        completedGames: guard?.completedGames || [],
+      },
       200,
       sessionStore,
     );

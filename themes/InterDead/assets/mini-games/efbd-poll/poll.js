@@ -496,8 +496,13 @@ export function initEfbdPoll({
   };
   window.addEventListener('interdead:poll-progress-updated', progressChanged);
 
+  let submitting = false;
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (submitting || scalePort.isCompleted?.(gameId)) {
+      reflectCompletion();
+      return;
+    }
     const selected = form.querySelector('input[name="efbd-poll-option"]:checked');
     if (!selected) {
       setStatus(mergedStrings.required, 'error');
@@ -511,18 +516,25 @@ export function initEfbdPoll({
     }
 
     submit.disabled = true;
+    submitting = true;
     setStatus('', 'info');
 
-    const response = await scalePort.recordAnswer({
-      axis,
-      value: 1,
-      context: {
-        source: gameId,
-        answerKey: axis,
-        locale,
-        timestamp: new Date().toISOString(),
-      },
-    });
+    let response;
+    try {
+      response = await scalePort.recordAnswer({
+        axis,
+        value: 1,
+        context: {
+          source: gameId,
+          answerKey: axis,
+          locale,
+          timestamp: new Date().toISOString(),
+        },
+      });
+    } catch (error) {
+      logger?.error?.('[InterDead][MiniGame][Poll] Failed to submit answer', error);
+      response = { status: 'error' };
+    }
 
     logger?.info?.('[InterDead][MiniGame][Poll] Submitted answer', {
       ...logContext,
@@ -554,6 +566,7 @@ export function initEfbdPoll({
     }
 
     submit.disabled = false;
+    submitting = false;
     reflectCompletion();
   });
 

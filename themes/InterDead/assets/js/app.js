@@ -19,7 +19,7 @@ import InfoPanelView from './infrastructure/ui/InfoPanelView.js';
 import FeatureFlagService from './application/config/FeatureFlagService.js';
 import EventBus from './application/events/EventBus.js';
 import DiscordAuthService from './application/auth/DiscordAuthService.js';
-import AuthStateService from './application/auth/AuthStateService.js';
+import AuthStateService, { AUTH_SESSION_EVENTS } from './application/auth/AuthStateService.js';
 import AuthVisibilityService from './application/auth/AuthVisibilityService.js';
 import { authorizationEnabled } from './application/auth/AccessPolicy.js';
 import DiscordOAuthAdapter from './infrastructure/auth/DiscordOAuthAdapter.js';
@@ -30,7 +30,7 @@ import ProfilePageController from './presentation/controllers/ProfilePageControl
 import LocalProfileController from './presentation/controllers/LocalProfileController.js';
 import { PollProfile, browserStorage, STORAGE_KEY } from './application/profile/poll-progress.mjs';
 import EfbdApiAdapter from './infrastructure/efbd/EfbdApiAdapter.js';
-import EfbdScaleBridgeService from './application/efbd/EfbdScaleBridgeService.js';
+import EfbdScaleBridgeService, { EFBD_EVENTS } from './application/efbd/EfbdScaleBridgeService.js';
 import HomeAuthController from './presentation/controllers/HomeAuthController.js';
 import NotificationService from './application/notification/NotificationService.js';
 import ProfileCleanupAdapter from './infrastructure/auth/ProfileCleanupAdapter.js';
@@ -322,6 +322,17 @@ const efbdAdapter = new EfbdApiAdapter({
   csrfTokenProvider,
 });
 const efbdBridge = new EfbdScaleBridgeService({ adapter: efbdAdapter, featureFlags, eventBus });
+if (authEnabled) {
+  eventBus.on(AUTH_SESSION_EVENTS.UPDATED, (session) => {
+    efbdBridge.setProfile(session.authenticated ? session.profileId : null);
+    if (session.authenticated) efbdBridge.fetchSummary();
+  });
+  for (const event of [EFBD_EVENTS.UPDATED, EFBD_EVENTS.SUMMARY_LOADED]) {
+    eventBus.on(event, () =>
+      window.dispatchEvent(new CustomEvent('interdead:poll-progress-updated')),
+    );
+  }
+}
 const localProfile = authEnabled
   ? null
   : new PollProfile({
@@ -339,7 +350,7 @@ const refreshLocalProfile = (event) => {
 if (localProfile) window.addEventListener('storage', refreshLocalProfile);
 window.InterdeadPorts = window.InterdeadPorts || {};
 window.InterdeadPorts.modalService = modalService;
-window.InterdeadPorts.pollProgress = localProfile;
+window.InterdeadPorts.pollProgress = localProfile || efbdBridge;
 window.InterdeadPorts.emitScaleTrigger = (axis, value, context = {}) =>
   localProfile
     ? Promise.resolve()

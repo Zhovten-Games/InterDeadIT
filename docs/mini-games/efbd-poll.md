@@ -25,7 +25,7 @@ The EFBD poll is the canonical mini-game implementation and the reference for ne
 - `themes/InterDead/layouts/shortcodes/efbd-poll.html`
 - `themes/InterDead/layouts/shortcodes/efbd-poll-2.html`
 
-The shortcode fingerprints its CSS and JS, injects the mini-game runtime, and queues configuration into `window.InterdeadMiniGamesQueue`.
+Both presets call `themes/InterDead/layouts/partials/mini-games/efbd-poll.html`. This shared renderer fingerprints CSS and JS, injects one mini-game runtime per page, and queues configuration into `window.InterdeadMiniGamesQueue`. It serializes the complete configuration once with HTML-safe JSON and emits that object as a JavaScript expression. Arrays and dictionaries retain their types; IDs, locale codes and asset URLs remain ordinary strings.
 
 ## Assets
 
@@ -94,6 +94,18 @@ Use shortcode parameters to deploy independent polls with isolated replay guards
 {{< efbd-poll-2 gameId="2-efbd-poll" >}}
 ```
 
-- `gameId` is forwarded to EFBD trigger `context.source` and used by the replay guard.
+- `gameId` is forwarded to EFBD trigger `context.source` and used by the replay guard. Every translation of a poll uses the same ID. `context.locale` records the display language; completion is shared across languages.
+
+Local completion uses the existing origin-wide `PollProfile` storage key and canonical poll registry. The CF Worker uses that registry to validate poll IDs and options, accepts matching top-level or nested source fields, and rejects conflicting or unknown IDs. Previously JSON-quoted IDs in saved CF completion records resolve to their canonical IDs, preserving their replay guards.
+
+Authenticated EFBD summaries include `completedGames`. The browser loads this state when the authenticated profile becomes available and shares it with the poll write port. Completed polls disable their controls on translated pages as well. Changing accounts clears the browser's remote completion cache and invalidates pending responses from the previous account.
+
+The launcher shares one in-flight initialization per registered root, replaces its auth subscription when ports refresh, and preserves the current access state while assets load. The form allows one pending submission, restores submission after a rejected write, and checks completion before forwarding another answer.
+
+Regression coverage is part of `tests/authorization.test.cjs` through `tests/mini-games-regression.test.cjs`. It builds real Hugo pages in public and authenticated modes, exercises both published polls in all supported locales, and runs the production CF Worker and Core adapters against an isolated SQLite database. Run it with the pinned Hugo binary available and locked dependencies installed:
+
+```sh
+node --experimental-vm-modules --test tests/authorization.test.cjs
+```
 
 `efbd-poll` and `efbd-poll-2` presets intentionally leave `title` and `prompt` empty while preserving support for those fields in the shared poll renderer. `efbd-poll-2` keeps a separate `gameId` (`2-efbd-poll`) and the MIND/SOCIAL/ABANDON axes.
