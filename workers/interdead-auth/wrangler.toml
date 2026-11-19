@@ -1,6 +1,7 @@
 name = "interdead-auth"
 main = "src/worker.js"
 compatibility_date = "2024-11-28"
+account_id = "6ddf96b86ba90c6b0b9bcbd1c9e4d3d5"
 
 workers_dev = false
 preview_urls = false
