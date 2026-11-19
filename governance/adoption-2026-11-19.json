@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "authority": "Sam Starling",
+  "basis": "owner-instruction-2026-11-19",
+  "date": "2026-11-19",
+  "decision": "governance/decisions/2026-11-19-source-references.md",
+  "previousAdoption": "governance/adoption-2026-11-10.json",
+  "documents": {
+    "governance/PROFILE.md": "03fda749e8ebee63c1dd8420d7d5646ac5735f27a7349d9545ce691d72cfa3ba",
+    "governance/legislation/ECOSYSTEM.md": "84c5ba2a6d6f1503e94cf8561e3b797ab68035720cf061b9268bc611104c673f",
+    "governance/ecosystem.json": "0bdc75768d1da6e0c2519e088017cb1bd86c577d89ee32e5cb38a6a61e634d82",
+    "governance/decisions/2026-11-07-adoption.md": "35052159267f6db24c3fd9b49652ee44617a22db867f51a3d0298cb201b3da8c",
+    "governance/LICENSE.md": "674b09586e4a067cfac723cb2ec15b651336cb9cb8dec18cb02c41bfe8b9c3bf",
+    "governance/decisions/2026-11-10-editorial-profile.md": "336773fafb5938469dd9d0d978955ffd21defda0d36e2837660363df32a7d570",
+    "governance/SOURCES.json": "34f15bf374908f9510112b1998e85a43d7c2bb2332a2c8bfbc0107e6983c82c4",
+    "governance/decisions/2026-11-19-source-references.md": "e98ef018ab15728085cfcde1b839798420df506c91258a6a80825b550dc38c72",
+    ".gitmodules": "587dcc670109fdd34c40927d954b9fd92fb3492c4de362b70d3c786d5112efd3"
+  },
+  "verificationControls": [
+    {
+      "path": "tools/warden.mjs",
+      "before": "53b56666a070419226ec86f28d6d274125064e339c9d18995460a57243cf6201",
+      "after": "fd2145455cc8d6308c5a7ccbfb0ed70cbf63147502665193a83c22b5e237c3f3"
+    },
+    {
+      "path": ".github/workflows/warden.yml",
+      "before": "843e77f56883cc7b7c581e19529b5da48412fc95c750fdaae8bf05def65d6573",
+      "after": "843e77f56883cc7b7c581e19529b5da48412fc95c750fdaae8bf05def65d6573"
+    }
+  ]
+}

@@ -1,14 +1,15 @@
 {
   "schemaVersion": 1,
   "project": "InterDeadIT",
-  "revision": "1.0.0",
+  "revision": "1.0.1",
   "status": "operative",
-  "adoption": "governance/adoption-2026-11-10.json",
+  "adoption": "governance/adoption-2026-11-19.json",
   "constitution": {
     "repository": "https://github.com/FOP-Oksana-Dubinetska/code-constitution",
-    "revision": "220dc9c286ae06f8b6ed60cdda75112eed0408ed",
-    "path": "vendor/code-constitution/CONSTITUTION_CODE-ru.md",
-    "sha256": "864bf72a9072d394d77d09de40089f8f0f3ecc0ff8f77c41ef173f0852adf2ee"
+    "revision": "7ee225ba60dbade07b4a9941b090e5597d02cd89",
+    "path": ".code-constitution/locales/ru/CONSTITUTION_CODE.md",
+    "sha256": "864bf72a9072d394d77d09de40089f8f0f3ecc0ff8f77c41ef173f0852adf2ee",
+    "originalNormativeRevision": "220dc9c286ae06f8b6ed60cdda75112eed0408ed"
   },
   "repositories": [
     "InterDeadReferenceLibrary",

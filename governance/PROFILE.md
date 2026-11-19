@@ -1,6 +1,6 @@
 # Founding Profile — InterDeadIT
 
-ID: `interdeadit-profile`. Revision: `1.0.0`. Status: `operative`.
+ID: `interdeadit-profile`. Revision: `1.0.1`. Status: `operative`.
 Authority: owner instruction of 2026-11-07; the local patch includes its adoption record.
 
 ## P01. Identity and scope
@@ -14,7 +14,7 @@ Existing LICENSE, third-party notices and applicable platform obligations retain
 The current owner instruction and authoritative project specifications establish engineering intent. Sam Starling owns systems design, technical architecture and implementation decisions within this task. Narrative sources keep their authorial status; draft content requires its separate authorial decision.
 
 ## P04. Official corpus
-The committed Git tree is canonical for implementation and local law. `vendor/code-constitution/SOURCE.json` identifies the universal Russian corpus at `220dc9c286ae06f8b6ed60cdda75112eed0408ed`. Upstream repository-local BASE legislation applies only through explicit local selection. README and generated reports provide navigation/evidence.
+The committed Git tree is canonical for implementation and local law. `governance/SOURCES.json` identifies the universal Russian corpus in `.code-constitution/locales/ru/CONSTITUTION_CODE.md`, referenced at `7ee225ba60dbade07b4a9941b090e5597d02cd89` with the unchanged normative SHA-256 `864bf72a9072d394d77d09de40089f8f0f3ecc0ff8f77c41ef173f0852adf2ee` from original revision `220dc9c286ae06f8b6ed60cdda75112eed0408ed`. Upstream repository-local BASE legislation applies only through explicit local selection. README and generated reports provide navigation/evidence.
 
 ## P05. Founding roles
 Sam Starling is founding holder, proposal author, normative editor, organizer, engineering ratifier, certifier and maintainer. These roles may be combined; the combination is disclosed in the adoption decision. Oksana Dubinetska holds organizational/legal representation and access custody. Codex is the delegated drafting/implementation/testing executor; it has no independent ratifying authority. No separate Oksana consent or completed human technical review is asserted.

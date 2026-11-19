@@ -36,7 +36,7 @@ gate('governance.adoption', () => {
   const record = json(registry.adoption);
   assert(
     record.authority === 'Sam Starling' &&
-      ['owner-instruction-2026-11-07', 'owner-instruction-2026-11-10'].includes(record.basis),
+      ['owner-instruction-2026-11-07', 'owner-instruction-2026-11-10', 'owner-instruction-2026-11-19'].includes(record.basis),
     'Unknown adoption authority',
   );
   for (const [name, hash] of Object.entries(record.documents)) {
@@ -44,6 +44,16 @@ gate('governance.adoption', () => {
   }
   for (const control of record.verificationControls || []) {
     assert(digest(control.path) === control.after, `Verification control drift: ${control.path}`);
+  }
+  const sources = json('governance/SOURCES.json');
+  assert(sources.constitution.revision === registry.constitution.revision, 'Constitution reference differs');
+  assert(sources.constitution.normativePath === registry.constitution.path, 'Constitution source path differs');
+  assert(sources.constitution.normativeSha256 === registry.constitution.sha256, 'Constitution source hash differs');
+  for (const source of [sources.constitution, sources.licensingPolicy]) {
+    const staged = spawnSync('git', ['ls-files', '--stage', '--', source.gitlink], {cwd: root, encoding: 'utf8'});
+    assert(staged.status === 0 && staged.stdout.startsWith(`160000 ${source.revision} `), `Source gitlink differs: ${source.gitlink}`);
+    const checkout = spawnSync('git', ['-C', path.join(root, source.gitlink), 'rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'});
+    assert(checkout.status === 0 && checkout.stdout.trim() === source.revision, `Initialize pinned submodule: ${source.gitlink}`);
   }
   assert(read(registry.constitution.path).length > 50000, 'Universal corpus unavailable');
   assert(
